@@ -1,12 +1,15 @@
 [package]
 name = "tauri-plugin-board"
 version = "1.0.0"
-authors = [ "cleveng <cleveng@gmail.com>" ]
+authors = ["cleveng <cleveng@gmail.com>"]
 description = "vending machine development board of kits for tauri, use java or kotlin"
 license = "MIT"
 edition = "2021"
+repository = "https://github.com/cakioe/tauri-plugin-board.git"
 rust-version = "1.60"
 exclude = []
+links = ""
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
 tauri-plugin-cli = "2.0.0-beta"
