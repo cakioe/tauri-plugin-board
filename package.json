@@ -1,0 +1,19 @@
+{
+  "name": "tauri-plugin-board",
+  "module": "index.ts",
+  "devDependencies": {
+    "@types/bun": "latest"
+  },
+  "peerDependencies": {
+    "typescript": "^5.0.0"
+  },
+  "license": "MIT",
+  "scripts": {
+    "tauri": "tauri"
+  },
+  "type": "module",
+  "dependencies": {
+    "@tauri-apps/api": ">=2.0.0-beta.0",
+    "@tauri-apps/cli": "^2.0.0-beta.17"
+  }
+}
