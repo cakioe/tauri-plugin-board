@@ -1,6 +1,6 @@
 {
   "name": "tauri-plugin-board",
-  "module": "index.ts",
+  "module": "webview-src/index.ts",
   "devDependencies": {
     "@types/bun": "latest"
   },
