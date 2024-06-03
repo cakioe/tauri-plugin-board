@@ -1,0 +1,12 @@
+[package]
+name = "tauri-plugin-board"
+version = "1.0.0"
+authors = [ "cleveng <cleveng@gmail.com>" ]
+description = "vending machine development of kits for tauri, use java or kotlin"
+license = "MIT"
+edition = "2021"
+rust-version = "1.60"
+exclude = ["/examples"]
+
+[dependencies]
+tauri = { version = "1.6.4" }
