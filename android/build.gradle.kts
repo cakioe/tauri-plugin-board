@@ -19,8 +19,8 @@ android {
         release {
             isMinifyEnabled = false
             proguardFiles(
-                getDefaultProguardFile("proguard-android-optimize.txt"),
-                "proguard-rules.pro"
+                    getDefaultProguardFile("proguard-android-optimize.txt"),
+                    "proguard-rules.pro"
             )
         }
     }
@@ -44,5 +44,5 @@ dependencies {
     implementation(project(":tauri-android"))
 
     // import vending machine development board of jar files
-    implementation fileTree(dir: "libs", include: ["*.jar", "*.aar"])
+    implementation(fileTree(dir: "libs", include:["*.jar", "*.aar"]))
 }

@@ -16,11 +16,22 @@ class PingArgs {
   var value: String? = null
 }
 
+@InvokeArg
+class StatusBar {
+  var value: Boolean? = true
+}
+
+@InvokeArg
+class GestureStatusBar {
+  var value: Boolean? = true
+}
+
 @TauriPlugin
 class DevicePlugin(private val activity: Activity): Plugin(activity) {
     private val implementation = Device()
-    // jar包 初始化
-    zcapi zcApi
+
+    // private var zcapi: zcapi
+    private var zcapi zcApi
 
     @Command
     fun ping(invoke: Invoke) {
@@ -32,7 +43,8 @@ class DevicePlugin(private val activity: Activity): Plugin(activity) {
     }
 
     override fun load(webView: WebView) {
-        zcApi = new zcapi()
+        this.zcapi = new zcapi()
+        this.zcapi.getContext(webView.getContext())
         // zcApi.getContext(getApplicationContext())
     }
 
@@ -42,6 +54,8 @@ class DevicePlugin(private val activity: Activity): Plugin(activity) {
      */
     @Command
     fun shutdown(invoke: Invoke) {
+        this.zcapi.shutdown()
+
         val ret = JSObject()
         invoke.resolve(ret)
     }
@@ -52,6 +66,8 @@ class DevicePlugin(private val activity: Activity): Plugin(activity) {
      */
     @Command
     fun reboot(invoke: Invoke) {
+        this.zcapi.reboot()
+
         val ret = JSObject()
         invoke.resolve(ret)
     }
@@ -62,6 +78,9 @@ class DevicePlugin(private val activity: Activity): Plugin(activity) {
      */
     @Command
     fun setStatusBar(invoke: Invoke) {
+        val args = invoke.parseArgs(StatusBar::class.java)
+        this.zcapi.setStatusBar(args.value ?: true)
+
         val ret = JSObject()
         invoke.resolve(ret)
     }
@@ -72,6 +91,9 @@ class DevicePlugin(private val activity: Activity): Plugin(activity) {
      */
     @Command
     fun setGestureStatusBar(invoke: Invoke) {
+        val args = invoke.parseArgs(GestureStatusBar::class.java)
+        this.zcapi.setGestureStatusBar(args.value ?: true)
+
         val ret = JSObject()
         invoke.resolve(ret)
     }
