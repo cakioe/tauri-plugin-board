@@ -1,7 +1,8 @@
 {
   "name": "tauri-plugin-board",
-  "module": "webview-src/index.ts",
-  "version": "1.0.2",
+  "module": "webview-src/index.mjs",
+  "main": "webview-src/index.mjs",
+  "version": "1.0.3",
   "type": "module",
   "license": "MIT",
   "authors": [
@@ -17,6 +18,7 @@
     "typescript": "^5.0.0"
   },
   "dependencies": {
+    "@rollup/plugin-terser": "^0.4.4",
     "@rollup/plugin-typescript": "^11.1.6",
     "@tauri-apps/api": ">=2.0.0-beta.0",
     "@tauri-apps/cli": "^2.0.0-beta.17",
@@ -24,7 +26,7 @@
     "tslib": "^2.6.3"
   },
   "exports": {
-    "import": "./webview-dist/index.js",
+    "import": "./webview-dist/index.mjs",
     "require": "./webview-dist/index.cjs"
   },
   "files": [
