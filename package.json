@@ -2,7 +2,7 @@
   "name": "tauri-plugin-board",
   "module": "webview-src/index.mjs",
   "main": "webview-src/index.mjs",
-  "version": "1.0.3",
+  "version": "1.0.5",
   "type": "module",
   "license": "MIT",
   "authors": [
@@ -23,12 +23,14 @@
     "@tauri-apps/api": ">=2.0.0-beta.0",
     "@tauri-apps/cli": "^2.0.0-beta.17",
     "rollup": "4.18.0",
+    "rollup-plugin-dts": "^6.1.1",
     "tslib": "^2.6.3"
   },
   "exports": {
     "import": "./webview-dist/index.mjs",
     "require": "./webview-dist/index.cjs"
   },
+  "types": "webview-dist/index.d.ts",
   "files": [
     "webview-dist",
     "README.md",
