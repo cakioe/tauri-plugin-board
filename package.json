@@ -1,8 +1,8 @@
 {
-  "name": "tauri-plugin-board",
-  "module": "webview-src/index.mjs",
-  "main": "webview-src/index.mjs",
-  "version": "1.0.5",
+  "name": "@cakioe/tauri-plugin-board",
+  "module": "webview-dist/index.mjs",
+  "main": "webview-dist/index.mjs",
+  "version": "1.0.6",
   "type": "module",
   "license": "MIT",
   "authors": [
