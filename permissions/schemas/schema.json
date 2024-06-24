@@ -309,6 +309,34 @@
           ]
         },
         {
+          "description": "allow-getBuildModel -> Enables the getBuildModel command without any pre-configured scope.",
+          "type": "string",
+          "enum": [
+            "allow-getBuildModel"
+          ]
+        },
+        {
+          "description": "deny-getBuildModel -> Denies the getBuildModel command without any pre-configured scope.",
+          "type": "string",
+          "enum": [
+            "deny-getBuildModel"
+          ]
+        },
+        {
+          "description": "allow-getBuildSerial -> Enables the getBuildSerial command without any pre-configured scope.",
+          "type": "string",
+          "enum": [
+            "allow-getBuildSerial"
+          ]
+        },
+        {
+          "description": "deny-getBuildSerial -> Denies the getBuildSerial command without any pre-configured scope.",
+          "type": "string",
+          "enum": [
+            "deny-getBuildSerial"
+          ]
+        },
+        {
           "description": "allow-ping -> Enables the ping command without any pre-configured scope.",
           "type": "string",
           "enum": [
@@ -320,6 +348,76 @@
           "type": "string",
           "enum": [
             "deny-ping"
+          ]
+        },
+        {
+          "description": "allow-reboot -> Enables the reboot command without any pre-configured scope.",
+          "type": "string",
+          "enum": [
+            "allow-reboot"
+          ]
+        },
+        {
+          "description": "deny-reboot -> Denies the reboot command without any pre-configured scope.",
+          "type": "string",
+          "enum": [
+            "deny-reboot"
+          ]
+        },
+        {
+          "description": "allow-setGestureStatusBar -> Enables the setGestureStatusBar command without any pre-configured scope.",
+          "type": "string",
+          "enum": [
+            "allow-setGestureStatusBar"
+          ]
+        },
+        {
+          "description": "deny-setGestureStatusBar -> Denies the setGestureStatusBar command without any pre-configured scope.",
+          "type": "string",
+          "enum": [
+            "deny-setGestureStatusBar"
+          ]
+        },
+        {
+          "description": "allow-setLcdOnOff -> Enables the setLcdOnOff command without any pre-configured scope.",
+          "type": "string",
+          "enum": [
+            "allow-setLcdOnOff"
+          ]
+        },
+        {
+          "description": "deny-setLcdOnOff -> Denies the setLcdOnOff command without any pre-configured scope.",
+          "type": "string",
+          "enum": [
+            "deny-setLcdOnOff"
+          ]
+        },
+        {
+          "description": "allow-setStatusBar -> Enables the setStatusBar command without any pre-configured scope.",
+          "type": "string",
+          "enum": [
+            "allow-setStatusBar"
+          ]
+        },
+        {
+          "description": "deny-setStatusBar -> Denies the setStatusBar command without any pre-configured scope.",
+          "type": "string",
+          "enum": [
+            "deny-setStatusBar"
+          ]
+        },
+        {
+          "description": "allow-shutdown -> Enables the shutdown command without any pre-configured scope.",
+          "type": "string",
+          "enum": [
+            "allow-shutdown"
+          ]
+        },
+        {
+          "description": "deny-shutdown -> Denies the shutdown command without any pre-configured scope.",
+          "type": "string",
+          "enum": [
+            "deny-shutdown"
           ]
         }
       ]
