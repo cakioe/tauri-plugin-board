@@ -1,6 +1,4 @@
-'use strict';
-
-var core = require('@tauri-apps/api/core');
+import { invoke } from '@tauri-apps/api/core';
 
 // @ts-ignore
 /**
@@ -8,14 +6,14 @@ var core = require('@tauri-apps/api/core');
  * @description: shutdown the board
  */
 async function shutdown() {
-    await core.invoke('plugin:board|shutdown', {});
+    await invoke('plugin:board|shutdown', {});
 }
 /**
  * @method reboot
  * @description: reboot the board
  */
 async function reboot() {
-    await core.invoke('plugin:board|reboot', {});
+    await invoke('plugin:board|reboot', {});
 }
 /**
  * @method setStatusBar
@@ -23,7 +21,7 @@ async function reboot() {
  * @param enable
  */
 async function setStatusBar(enable) {
-    await core.invoke('plugin:board|setStatusBar', { enable });
+    await invoke('plugin:board|setStatusBar', { enable });
 }
 /**
  * @method setGestureStatusBar
@@ -31,21 +29,21 @@ async function setStatusBar(enable) {
  * @param enable
  */
 async function setGestureStatusBar(enable) {
-    await core.invoke('plugin:board|setGestureStatusBar', { enable });
+    await invoke('plugin:board|setGestureStatusBar', { enable });
 }
 /**
  * @method getBuildModel
  * @description: get build model
  */
 async function getBuildModel() {
-    await core.invoke('plugin:board|getBuildModel', {});
+    await invoke('plugin:board|getBuildModel', {});
 }
 /**
  * @method getBuildSerial
  * @description: get build serial
  */
 async function getBuildSerial() {
-    await core.invoke('plugin:board|getBuildSerial', {});
+    await invoke('plugin:board|getBuildSerial', {});
 }
 /**
  * @method setLcdOnOff
@@ -53,13 +51,7 @@ async function getBuildSerial() {
  * @param enable
  */
 async function setLcdOnOff(enable) {
-    await core.invoke('plugin:board|setLcdOnOff', { enable });
+    await invoke('plugin:board|setLcdOnOff', { enable });
 }
 
-exports.getBuildModel = getBuildModel;
-exports.getBuildSerial = getBuildSerial;
-exports.reboot = reboot;
-exports.setGestureStatusBar = setGestureStatusBar;
-exports.setLcdOnOff = setLcdOnOff;
-exports.setStatusBar = setStatusBar;
-exports.shutdown = shutdown;
+export { getBuildModel, getBuildSerial, reboot, setGestureStatusBar, setLcdOnOff, setStatusBar, shutdown };

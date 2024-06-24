@@ -1,38 +1,38 @@
-// typescript types
-
 /**
- * shutdown
+ * @method shutdown
+ * @description: shutdown the board
  */
-declare var shutdown: () => Promise<void>
-
+export declare function shutdown(): Promise<void>;
 /**
- * reboot
+ * @method reboot
+ * @description: reboot the board
  */
-declare var reboot: () => Promise<void>
-
+export declare function reboot(): Promise<void>;
 /**
- * setStatusBar
+ * @method setStatusBar
+ * @description: set status bar
+ * @param enable
  */
-declare var setStatusBar: (enable: boolean) => Promise<void>
-
+export declare function setStatusBar(enable: boolean): Promise<void>;
 /**
- * setGestureStatusBar
+ * @method setGestureStatusBar
+ * @description: set gesture status bar
+ * @param enable
  */
-declare var setGestureStatusBar: (enable: boolean) => Promise<void>
-
+export declare function setGestureStatusBar(enable: boolean): Promise<void>;
 /**
- * getBuildModel
+ * @method getBuildModel
+ * @description: get build model
  */
-declare var getBuildModel: () => Promise<void>
-
+export declare function getBuildModel(): Promise<void>;
 /**
- * getBuildSerial
+ * @method getBuildSerial
+ * @description: get build serial
  */
-declare var getBuildSerial: () => Promise<void>
-
+export declare function getBuildSerial(): Promise<void>;
 /**
- * setLcdOnOff
+ * @method setLcdOnOff
+ * @description: set lcd on off
+ * @param enable
  */
-declare var setLcdOnOff: (enable: boolean) => Promise<void>
-
-export { getBuildModel, getBuildSerial, reboot, setGestureStatusBar, setLcdOnOff, setStatusBar, shutdown };
+export declare function setLcdOnOff(enable: boolean): Promise<void>;

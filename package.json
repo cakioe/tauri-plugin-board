@@ -1,36 +1,38 @@
 {
   "name": "@cakioe/tauri-plugin-board",
-  "module": "webview-dist/index.mjs",
-  "main": "webview-dist/index.mjs",
-  "version": "1.0.6",
-  "type": "module",
+  "version": "1.0.7",
   "license": "MIT",
   "authors": [
     "cleveng <cleveng@gmail.com>"
   ],
+  "type": "module",
+  "types": "./webview-dist/index.d.ts",
+  "main": "./webview-dist/index.js",
+  "module": "./webview-dist/index.js",
+  "exports": {
+    "types": "./webview-dist/index.d.ts",
+    "import": "./webview-dist/index.js",
+    "require": "./webview-dist/index.cjs"
+  },
   "scripts": {
     "build": "rollup -c"
   },
   "devDependencies": {
-    "@types/bun": "latest"
+    "@types/bun": "latest",
+    "process": "^0.11.10"
   },
   "peerDependencies": {
     "typescript": "^5.0.0"
   },
   "dependencies": {
+    "@rollup/plugin-node-resolve": "^15.2.3",
     "@rollup/plugin-terser": "^0.4.4",
     "@rollup/plugin-typescript": "^11.1.6",
     "@tauri-apps/api": ">=2.0.0-beta.0",
     "@tauri-apps/cli": "^2.0.0-beta.17",
     "rollup": "4.18.0",
-    "rollup-plugin-dts": "^6.1.1",
     "tslib": "^2.6.3"
   },
-  "exports": {
-    "import": "./webview-dist/index.mjs",
-    "require": "./webview-dist/index.cjs"
-  },
-  "types": "webview-dist/index.d.ts",
   "files": [
     "webview-dist",
     "README.md",
