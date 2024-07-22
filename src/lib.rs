@@ -34,12 +34,12 @@ pub struct Board<R: Runtime>(PluginHandle<R>);
 
 impl<R: Runtime> Board<R> {
     pub fn shutdown(&self) -> crate::Result<()> {
-        self.0.run_mobile_plugin("shutdown")?;
+        self.0.run_mobile_plugin("shutdown", ())?;
         Ok(())
     }
 
     pub fn reboot(&self) -> crate::Result<()> {
-        self.0.run_mobile_plugin("reboot")?;
+        self.0.run_mobile_plugin("reboot", ())?;
         Ok(())
     }
 
@@ -57,12 +57,12 @@ impl<R: Runtime> Board<R> {
     }
 
     pub fn get_build_model(&self) -> crate::Result<()> {
-        self.0.run_mobile_plugin::<String>("get_build_model")?;
+        self.0.run_mobile_plugin("get_build_model", ())?;
         Ok(())
     }
 
     pub fn get_build_serial(&self) -> crate::Result<()> {
-        self.0.run_mobile_plugin::<String>("get_build_serial")?;
+        self.0.run_mobile_plugin("get_build_serial", ())?;
         Ok(())
     }
 
