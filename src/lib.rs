@@ -2,7 +2,6 @@
 
 #![cfg(mobile)]
 
-use serde_json::json;
 use tauri::{
     plugin::{Builder, PluginHandle, TauriPlugin},
     Manager, Runtime,
@@ -29,15 +28,17 @@ impl<R: Runtime> Board<R> {
     }
 
     pub fn set_status_bar(&self, enable: bool) -> crate::Result<()> {
+        println!("set_status_bar: {}", enable);
         self.0
-            .run_mobile_plugin::<StatusBar>("set_status_bar", json!(value: enable))?;
+            .run_mobile_plugin("set_status_bar", ())?;
         Ok(())
     }
 
     pub fn set_gesture_status_bar(&self, enable: bool) -> crate::Result<()> {
-        self.0.run_mobile_plugin::<GestureStatusBar>(
+        println!("set_gesture_status_bar: {}", enable);
+        self.0.run_mobile_plugin(
             "set_gesture_status_bar",
-            json!(value: enable),
+            (),
         )?;
         Ok(())
     }
@@ -53,8 +54,9 @@ impl<R: Runtime> Board<R> {
     }
 
     pub fn set_lcd_on_off(&self, enable: bool) -> crate::Result<()> {
+        println!("set_lcd_on_off: {}", enable);
         self.0
-            .run_mobile_plugin::<LcdOnOff>("set_lcd_on_off", json!(value: enable))?;
+            .run_mobile_plugin("set_lcd_on_off", ())?;
         Ok(())
     }
 }
