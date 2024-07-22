@@ -1,4 +1,5 @@
 /build
 /.tauri
+local.properties
 .gradle
-.idea
+gradle

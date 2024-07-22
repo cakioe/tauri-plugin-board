@@ -49,7 +49,7 @@
           "minimum": 1.0
         },
         "description": {
-          "description": "Human-readable description of what the permission does.",
+          "description": "Human-readable description of what the permission does. Tauri convention is to use <h4> headings in markdown content for Tauri documentation generation purposes.",
           "type": [
             "string",
             "null"
@@ -111,7 +111,7 @@
           "type": "string"
         },
         "description": {
-          "description": "Human-readable description of what the permission does.",
+          "description": "Human-readable description of what the permission does. Tauri internal convention is to use <h4> headings in markdown content for Tauri documentation generation purposes.",
           "type": [
             "string",
             "null"
@@ -172,7 +172,7 @@
       }
     },
     "Scopes": {
-      "description": "A restriction of the command/endpoint functionality.\n\nIt can be of any serde serializable type and is used for allowing or preventing certain actions inside a Tauri command.\n\nThe scope is passed to the command and handled/enforced by the command itself.",
+      "description": "An argument for fine grained behavior control of Tauri commands.\n\nIt can be of any serde serializable type and is used to allow or prevent certain actions inside a Tauri command. The configured scope is passed to the command and will be enforced by the command implementation.\n\n## Example\n\n```json { \"allow\": [{ \"path\": \"$HOME/**\" }], \"deny\": [{ \"path\": \"$HOME/secret.txt\" }] } ```",
       "type": "object",
       "properties": {
         "allow": {
@@ -186,7 +186,7 @@
           }
         },
         "deny": {
-          "description": "Data that defines what is denied by the scope.",
+          "description": "Data that defines what is denied by the scope. This should be prioritized by validation logic.",
           "type": [
             "array",
             "null"
@@ -337,6 +337,34 @@
           ]
         },
         {
+          "description": "allow-get-build-model -> Enables the get_build_model command without any pre-configured scope.",
+          "type": "string",
+          "enum": [
+            "allow-get-build-model"
+          ]
+        },
+        {
+          "description": "deny-get-build-model -> Denies the get_build_model command without any pre-configured scope.",
+          "type": "string",
+          "enum": [
+            "deny-get-build-model"
+          ]
+        },
+        {
+          "description": "allow-get-build-serial -> Enables the get_build_serial command without any pre-configured scope.",
+          "type": "string",
+          "enum": [
+            "allow-get-build-serial"
+          ]
+        },
+        {
+          "description": "deny-get-build-serial -> Denies the get_build_serial command without any pre-configured scope.",
+          "type": "string",
+          "enum": [
+            "deny-get-build-serial"
+          ]
+        },
+        {
           "description": "allow-ping -> Enables the ping command without any pre-configured scope.",
           "type": "string",
           "enum": [
@@ -404,6 +432,48 @@
           "type": "string",
           "enum": [
             "deny-setStatusBar"
+          ]
+        },
+        {
+          "description": "allow-set-gesture-status-bar -> Enables the set_gesture_status_bar command without any pre-configured scope.",
+          "type": "string",
+          "enum": [
+            "allow-set-gesture-status-bar"
+          ]
+        },
+        {
+          "description": "deny-set-gesture-status-bar -> Denies the set_gesture_status_bar command without any pre-configured scope.",
+          "type": "string",
+          "enum": [
+            "deny-set-gesture-status-bar"
+          ]
+        },
+        {
+          "description": "allow-set-lcd-on-off -> Enables the set_lcd_on_off command without any pre-configured scope.",
+          "type": "string",
+          "enum": [
+            "allow-set-lcd-on-off"
+          ]
+        },
+        {
+          "description": "deny-set-lcd-on-off -> Denies the set_lcd_on_off command without any pre-configured scope.",
+          "type": "string",
+          "enum": [
+            "deny-set-lcd-on-off"
+          ]
+        },
+        {
+          "description": "allow-set-status-bar -> Enables the set_status_bar command without any pre-configured scope.",
+          "type": "string",
+          "enum": [
+            "allow-set-status-bar"
+          ]
+        },
+        {
+          "description": "deny-set-status-bar -> Denies the set_status_bar command without any pre-configured scope.",
+          "type": "string",
+          "enum": [
+            "deny-set-status-bar"
           ]
         },
         {

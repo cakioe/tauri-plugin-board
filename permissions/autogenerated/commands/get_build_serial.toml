@@ -1,0 +1,13 @@
+# Automatically generated - DO NOT EDIT!
+
+"$schema" = "../../schemas/schema.json"
+
+[[permission]]
+identifier = "allow-get-build-serial"
+description = "Enables the get_build_serial command without any pre-configured scope."
+commands.allow = ["get_build_serial"]
+
+[[permission]]
+identifier = "deny-get-build-serial"
+description = "Denies the get_build_serial command without any pre-configured scope."
+commands.deny = ["get_build_serial"]

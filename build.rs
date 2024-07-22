@@ -3,20 +3,20 @@
 /**
  * shutdown => 关机
  * reboot => 重启
- * setStatusBar => 设置状态栏
- * setGestureStatusBar => 设置手势状态栏
- * getBuildModel => 获取型号
- * getBuildSerial => 获取序列号
- * setLcdOnOff => 设置屏幕
+ * set_status_bar => 设置状态栏
+ * set_gesture_status_bar => 设置手势状态栏
+ * get_build_model => 获取型号
+ * get_build_serial => 获取序列号
+ * set_lcd_on_off => 设置屏幕
  */
 const COMMANDS: &[&str] = &[
     "shutdown",
     "reboot",
-    "setStatusBar",
-    "setGestureStatusBar",
-    "getBuildModel",
-    "getBuildSerial",
-    "setLcdOnOff",
+    "set_status_bar",
+    "set_gesture_status_bar",
+    "get_build_model",
+    "get_build_serial",
+    "set_lcd_on_off",
 ];
 
 fn main() {
