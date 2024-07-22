@@ -1,6 +1,6 @@
 {
   "name": "@cakioe/tauri-plugin-board",
-  "version": "1.0.7",
+  "version": "1.0.8",
   "license": "MIT",
   "authors": [
     "cleveng <cleveng@gmail.com>"
@@ -22,14 +22,14 @@
     "process": "^0.11.10"
   },
   "peerDependencies": {
-    "typescript": "^5.0.0"
+    "typescript": "^5.4.5"
   },
   "dependencies": {
     "@rollup/plugin-node-resolve": "^15.2.3",
     "@rollup/plugin-terser": "^0.4.4",
     "@rollup/plugin-typescript": "^11.1.6",
-    "@tauri-apps/api": ">=2.0.0-beta.0",
-    "@tauri-apps/cli": "^2.0.0-beta.17",
+    "@tauri-apps/api": "^2.0.0-beta.15",
+    "@tauri-apps/cli": "^2.0.0-beta.22",
     "rollup": "4.18.0",
     "tslib": "^2.6.3"
   },
