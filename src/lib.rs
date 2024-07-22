@@ -2,7 +2,7 @@
 
 #![cfg(mobile)]
 
-use serde::Deserialize;
+use serde_json::json;
 use tauri::{
     plugin::{Builder, PluginHandle, TauriPlugin},
     Manager, Runtime,
@@ -11,21 +11,6 @@ use tauri::{
 mod error;
 
 pub use error::{Error, Result};
-
-#[derive(Debug, Deserialize)]
-struct StatusBar {
-    value: bool,
-}
-
-#[derive(Debug, Deserialize)]
-struct GestureStatusBar {
-    value: bool,
-}
-
-#[derive(Debug, Deserialize)]
-struct LcdOnOff {
-    value: bool,
-}
 
 // #[cfg(target_os = "android")]
 const PLUGIN_IDENTIFIER: &str = "com.plugin.board";
@@ -44,15 +29,16 @@ impl<R: Runtime> Board<R> {
     }
 
     pub fn set_status_bar(&self, enable: bool) -> crate::Result<()> {
-        let status_bar = StatusBar { value: enable };
-        self.0.run_mobile_plugin::<StatusBar>("set_status_bar", status_bar)?;
+        self.0
+            .run_mobile_plugin::<StatusBar>("set_status_bar", json!(value: enable))?;
         Ok(())
     }
 
     pub fn set_gesture_status_bar(&self, enable: bool) -> crate::Result<()> {
-        let gesture_status_bar = GestureStatusBar { value: enable };
-        self.0
-            .run_mobile_plugin::<GestureStatusBar>("set_gesture_status_bar", gesture_status_bar)?;
+        self.0.run_mobile_plugin::<GestureStatusBar>(
+            "set_gesture_status_bar",
+            json!(value: enable),
+        )?;
         Ok(())
     }
 
@@ -67,9 +53,8 @@ impl<R: Runtime> Board<R> {
     }
 
     pub fn set_lcd_on_off(&self, enable: bool) -> crate::Result<()> {
-        let lcd_on_off = LcdOnOff { value: enable };
         self.0
-            .run_mobile_plugin::<LcdOnOff>("set_lcd_on_off", lcd_on_off)?;
+            .run_mobile_plugin::<LcdOnOff>("set_lcd_on_off", json!(value: enable))?;
         Ok(())
     }
 }
