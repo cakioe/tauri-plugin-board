@@ -21,7 +21,7 @@ async function reboot() {
  * @param enable
  */
 async function setStatusBar(enable) {
-    await invoke('plugin:board|setStatusBar', { enable });
+    await invoke('plugin:board|set_status_bar', { enable });
 }
 /**
  * @method setGestureStatusBar
@@ -29,21 +29,21 @@ async function setStatusBar(enable) {
  * @param enable
  */
 async function setGestureStatusBar(enable) {
-    await invoke('plugin:board|setGestureStatusBar', { enable });
+    await invoke('plugin:board|set_gesture_status_bar', { enable });
 }
 /**
  * @method getBuildModel
  * @description: get build model
  */
 async function getBuildModel() {
-    await invoke('plugin:board|getBuildModel', {});
+    await invoke('plugin:board|get_build_model', {});
 }
 /**
  * @method getBuildSerial
  * @description: get build serial
  */
 async function getBuildSerial() {
-    await invoke('plugin:board|getBuildSerial', {});
+    await invoke('plugin:board|get_build_serial', {});
 }
 /**
  * @method setLcdOnOff
@@ -51,7 +51,7 @@ async function getBuildSerial() {
  * @param enable
  */
 async function setLcdOnOff(enable) {
-    await invoke('plugin:board|setLcdOnOff', { enable });
+    await invoke('plugin:board|set_lcd_on_off', { enable });
 }
 
 export { getBuildModel, getBuildSerial, reboot, setGestureStatusBar, setLcdOnOff, setStatusBar, shutdown };

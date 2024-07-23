@@ -23,7 +23,7 @@ export async function reboot(): Promise<void> {
  * @param enable
  */
 export async function setStatusBar(enable: boolean): Promise<void> {
-  await invoke('plugin:board|setStatusBar', { enable })
+  await invoke('plugin:board|set_status_bar', { enable })
 }
 
 /**
@@ -32,7 +32,7 @@ export async function setStatusBar(enable: boolean): Promise<void> {
  * @param enable
  */
 export async function setGestureStatusBar(enable: boolean): Promise<void> {
-  await invoke('plugin:board|setGestureStatusBar', { enable })
+  await invoke('plugin:board|set_gesture_status_bar', { enable })
 }
 
 /**
@@ -40,7 +40,7 @@ export async function setGestureStatusBar(enable: boolean): Promise<void> {
  * @description: get build model
  */
 export async function getBuildModel(): Promise<void> {
-  await invoke('plugin:board|getBuildModel', {})
+  await invoke('plugin:board|get_build_model', {})
 }
 
 /**
@@ -48,7 +48,7 @@ export async function getBuildModel(): Promise<void> {
  * @description: get build serial
  */
 export async function getBuildSerial(): Promise<void> {
-  await invoke('plugin:board|getBuildSerial', {})
+  await invoke('plugin:board|get_build_serial', {})
 }
 
 /**
@@ -57,6 +57,6 @@ export async function getBuildSerial(): Promise<void> {
  * @param enable
  */
 export async function setLcdOnOff(enable: boolean): Promise<void> {
-  await invoke('plugin:board|setLcdOnOff', { enable })
+  await invoke('plugin:board|set_lcd_on_off', { enable })
 }
 

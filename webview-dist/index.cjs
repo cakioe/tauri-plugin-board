@@ -23,7 +23,7 @@ async function reboot() {
  * @param enable
  */
 async function setStatusBar(enable) {
-    await core.invoke('plugin:board|setStatusBar', { enable });
+    await core.invoke('plugin:board|set_status_bar', { enable });
 }
 /**
  * @method setGestureStatusBar
@@ -31,21 +31,21 @@ async function setStatusBar(enable) {
  * @param enable
  */
 async function setGestureStatusBar(enable) {
-    await core.invoke('plugin:board|setGestureStatusBar', { enable });
+    await core.invoke('plugin:board|set_gesture_status_bar', { enable });
 }
 /**
  * @method getBuildModel
  * @description: get build model
  */
 async function getBuildModel() {
-    await core.invoke('plugin:board|getBuildModel', {});
+    await core.invoke('plugin:board|get_build_model', {});
 }
 /**
  * @method getBuildSerial
  * @description: get build serial
  */
 async function getBuildSerial() {
-    await core.invoke('plugin:board|getBuildSerial', {});
+    await core.invoke('plugin:board|get_build_serial', {});
 }
 /**
  * @method setLcdOnOff
@@ -53,7 +53,7 @@ async function getBuildSerial() {
  * @param enable
  */
 async function setLcdOnOff(enable) {
-    await core.invoke('plugin:board|setLcdOnOff', { enable });
+    await core.invoke('plugin:board|set_lcd_on_off', { enable });
 }
 
 exports.getBuildModel = getBuildModel;
