@@ -8,14 +8,14 @@ var core = require('@tauri-apps/api/core');
  * @description: shutdown the board
  */
 async function shutdown() {
-    await core.invoke('plugin:board|shutdown', {});
+    await core.invoke('plugin:board|shutdown');
 }
 /**
  * @method reboot
  * @description: reboot the board
  */
 async function reboot() {
-    await core.invoke('plugin:board|reboot', {});
+    await core.invoke('plugin:board|reboot');
 }
 /**
  * @method setStatusBar
@@ -38,14 +38,14 @@ async function setGestureStatusBar(enable) {
  * @description: get build model
  */
 async function getBuildModel() {
-    await core.invoke('plugin:board|get_build_model', {});
+    await core.invoke('plugin:board|get_build_model');
 }
 /**
  * @method getBuildSerial
  * @description: get build serial
  */
 async function getBuildSerial() {
-    await core.invoke('plugin:board|get_build_serial', {});
+    await core.invoke('plugin:board|get_build_serial');
 }
 /**
  * @method setLcdOnOff

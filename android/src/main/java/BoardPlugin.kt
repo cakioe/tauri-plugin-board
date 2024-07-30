@@ -1,6 +1,7 @@
 package com.plugin.board
 
 import android.app.Activity
+import android.webkit.WebView
 import app.tauri.annotation.Command
 import app.tauri.annotation.InvokeArg
 import app.tauri.annotation.TauriPlugin
@@ -27,6 +28,11 @@ class LcdOnOff {
 @TauriPlugin
 class BoardPlugin(private val activity: Activity): Plugin(activity) {
     private val zc = zcapi()
+
+    // https://v2.tauri.app/zh-cn/develop/plugins/develop-mobile/#%E6%8F%92%E4%BB%B6%E9%85%8D%E7%BD%AE
+    override fun load(webView: WebView) {
+        this.zc.getContext(webView.context)
+    }
 
     /**
      * reboot the machine by board

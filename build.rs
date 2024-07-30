@@ -20,6 +20,7 @@ const COMMANDS: &[&str] = &[
 ];
 
 fn main() {
+    // https://github.com/tauri-apps/plugins-workspace/blob/v2/plugins/notification/build.rs
     if let Err(error) = tauri_plugin::Builder::new(COMMANDS)
         .global_api_script_path("./api-iife.js")
         .android_path("android")

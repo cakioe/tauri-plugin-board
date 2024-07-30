@@ -6,7 +6,7 @@ import { invoke } from '@tauri-apps/api/core'
  * @description: shutdown the board
  */
 export async function shutdown(): Promise<void> {
-  await invoke('plugin:board|shutdown', {})
+  await invoke('plugin:board|shutdown')
 }
 
 /**
@@ -14,7 +14,7 @@ export async function shutdown(): Promise<void> {
  * @description: reboot the board
  */
 export async function reboot(): Promise<void> {
-  await invoke('plugin:board|reboot', {})
+  await invoke('plugin:board|reboot')
 }
 
 /**
@@ -40,7 +40,7 @@ export async function setGestureStatusBar(enable: boolean): Promise<void> {
  * @description: get build model
  */
 export async function getBuildModel(): Promise<void> {
-  await invoke('plugin:board|get_build_model', {})
+  await invoke('plugin:board|get_build_model')
 }
 
 /**
@@ -48,7 +48,7 @@ export async function getBuildModel(): Promise<void> {
  * @description: get build serial
  */
 export async function getBuildSerial(): Promise<void> {
-  await invoke('plugin:board|get_build_serial', {})
+  await invoke('plugin:board|get_build_serial')
 }
 
 /**
