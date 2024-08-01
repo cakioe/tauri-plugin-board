@@ -1,38 +1,89 @@
 /**
- * @method shutdown
- * @description: shutdown the board
+ * @example
+ * ```typescript
+ * import { shutdown } from '@cakioe/tauri-plugin-board';
+ * await shutdown();
+ * ```
+ *
+ * @since 1.2.0
  */
 export declare function shutdown(): Promise<void>;
 /**
- * @method reboot
- * @description: reboot the board
+ * @example
+ * ```typescript
+ * import { reboot } from '@cakioe/tauri-plugin-board';
+ * await reboot();
+ * ```
+ *
+ * @since 1.2.0
  */
 export declare function reboot(): Promise<void>;
 /**
- * @method setStatusBar
- * @description: set status bar
- * @param enable
+ * @example
+ * ```typescript
+ * import { setStatusBar } from '@cakioe/tauri-plugin-board';
+ * await setStatusBar(enable);
+ * ```
+ *
+ * @since 1.2.0
  */
 export declare function setStatusBar(enable: boolean): Promise<void>;
 /**
- * @method setGestureStatusBar
- * @description: set gesture status bar
- * @param enable
+ * @example
+ * ```typescript
+ * import { setGestureStatusBar } from '@cakioe/tauri-plugin-board';
+ * await setGestureStatusBar(enable);
+ * ```
+ *
+ * @since 1.2.0
  */
 export declare function setGestureStatusBar(enable: boolean): Promise<void>;
 /**
- * @method getBuildModel
- * @description: get build model
+ * @example
+ * ```typescript
+ * import { getBuildModel } from '@cakioe/tauri-plugin-board';
+ * const no = await getBuildModel();
+ * if (no) {
+ *    // use the no string here
+ * }
+ * ```
+ *
+ * @since 1.2.0
  */
-export declare function getBuildModel(): Promise<void>;
+export declare function getBuildModel(): Promise<string>;
 /**
- * @method getBuildSerial
- * @description: get build serial
+ * @example
+ * ```typescript
+ * import { getBuildSerial } from '@cakioe/tauri-plugin-board';
+ * const no = await getBuildSerial();
+ * if (no) {
+ *    // use the no string here
+ * }
+ * ```
+ *
+ * @since 1.2.0
  */
-export declare function getBuildSerial(): Promise<void>;
+export declare function getBuildSerial(): Promise<string>;
 /**
- * @method setLcdOnOff
- * @description: set lcd on off
- * @param enable
+ * @example
+ * ```typescript
+ * import { setLcdOnOff } from '@cakioe/tauri-plugin-board';
+ * await setLcdOnOff(enable);
+ * ```
+ *
+ * @since 1.2.0
  */
 export declare function setLcdOnOff(enable: boolean): Promise<void>;
+/**
+ * @example
+ * ```typescript
+ * import { ping } from '@cakioe/tauri-plugin-board';
+ * const pong = await ping();
+ * if (pong) {
+ *    // use the pong string here
+ * }
+ * ```
+ *
+ * @since 1.2.0
+ */
+export declare function ping(): Promise<string>;

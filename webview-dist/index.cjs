@@ -4,60 +4,114 @@ var core = require('@tauri-apps/api/core');
 
 // @ts-ignore
 /**
- * @method shutdown
- * @description: shutdown the board
+ * @example
+ * ```typescript
+ * import { shutdown } from '@cakioe/tauri-plugin-board';
+ * await shutdown();
+ * ```
+ *
+ * @since 1.2.0
  */
 async function shutdown() {
     await core.invoke('plugin:board|shutdown');
 }
 /**
- * @method reboot
- * @description: reboot the board
+ * @example
+ * ```typescript
+ * import { reboot } from '@cakioe/tauri-plugin-board';
+ * await reboot();
+ * ```
+ *
+ * @since 1.2.0
  */
 async function reboot() {
     await core.invoke('plugin:board|reboot');
 }
 /**
- * @method setStatusBar
- * @description: set status bar
- * @param enable
+ * @example
+ * ```typescript
+ * import { setStatusBar } from '@cakioe/tauri-plugin-board';
+ * await setStatusBar(enable);
+ * ```
+ *
+ * @since 1.2.0
  */
 async function setStatusBar(enable) {
     await core.invoke('plugin:board|set_status_bar', { enable });
 }
 /**
- * @method setGestureStatusBar
- * @description: set gesture status bar
- * @param enable
+ * @example
+ * ```typescript
+ * import { setGestureStatusBar } from '@cakioe/tauri-plugin-board';
+ * await setGestureStatusBar(enable);
+ * ```
+ *
+ * @since 1.2.0
  */
 async function setGestureStatusBar(enable) {
     await core.invoke('plugin:board|set_gesture_status_bar', { enable });
 }
 /**
- * @method getBuildModel
- * @description: get build model
+ * @example
+ * ```typescript
+ * import { getBuildModel } from '@cakioe/tauri-plugin-board';
+ * const no = await getBuildModel();
+ * if (no) {
+ *    // use the no string here
+ * }
+ * ```
+ *
+ * @since 1.2.0
  */
 async function getBuildModel() {
-    await core.invoke('plugin:board|get_build_model');
+    return await core.invoke('plugin:board|get_build_model');
 }
 /**
- * @method getBuildSerial
- * @description: get build serial
+ * @example
+ * ```typescript
+ * import { getBuildSerial } from '@cakioe/tauri-plugin-board';
+ * const no = await getBuildSerial();
+ * if (no) {
+ *    // use the no string here
+ * }
+ * ```
+ *
+ * @since 1.2.0
  */
 async function getBuildSerial() {
-    await core.invoke('plugin:board|get_build_serial');
+    return await core.invoke('plugin:board|get_build_serial');
 }
 /**
- * @method setLcdOnOff
- * @description: set lcd on off
- * @param enable
+ * @example
+ * ```typescript
+ * import { setLcdOnOff } from '@cakioe/tauri-plugin-board';
+ * await setLcdOnOff(enable);
+ * ```
+ *
+ * @since 1.2.0
  */
 async function setLcdOnOff(enable) {
     await core.invoke('plugin:board|set_lcd_on_off', { enable });
 }
+/**
+ * @example
+ * ```typescript
+ * import { ping } from '@cakioe/tauri-plugin-board';
+ * const pong = await ping();
+ * if (pong) {
+ *    // use the pong string here
+ * }
+ * ```
+ *
+ * @since 1.2.0
+ */
+async function ping() {
+    return await core.invoke('plugin:board|ping');
+}
 
 exports.getBuildModel = getBuildModel;
 exports.getBuildSerial = getBuildSerial;
+exports.ping = ping;
 exports.reboot = reboot;
 exports.setGestureStatusBar = setGestureStatusBar;
 exports.setLcdOnOff = setLcdOnOff;

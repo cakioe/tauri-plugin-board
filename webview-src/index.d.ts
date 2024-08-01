@@ -23,24 +23,21 @@ declare var setGestureStatusBar: (enable: boolean) => Promise<void>
 /**
  * getBuildModel
  */
-declare var getBuildModel: () => Promise<void>
+declare var getBuildModel: () => Promise<string>
 
 /**
  * getBuildSerial
  */
-declare var getBuildSerial: () => Promise<void>
+declare var getBuildSerial: () => Promise<string>
 
 /**
  * setLcdOnOff
  */
 declare var setLcdOnOff: (enable: boolean) => Promise<void>
 
-export {
-  shutdown,
-  reboot,
-  setStatusBar,
-  setGestureStatusBar,
-  getBuildModel,
-  getBuildSerial,
-  setLcdOnOff
-}
+/**
+ * ping
+ */
+declare var ping: () => Promise<string>
+
+export { shutdown, reboot, setStatusBar, setGestureStatusBar, getBuildModel, getBuildSerial, setLcdOnOff, ping }
