@@ -36,8 +36,8 @@ async function reboot() {
  *
  * @since 1.2.0
  */
-async function setStatusBar(enable) {
-    await core.invoke('plugin:board|set_status_bar', { enable });
+async function setStatusBar(options) {
+    await core.invoke('plugin:board|set_status_bar', { ...options });
 }
 /**
  * @example
@@ -48,8 +48,8 @@ async function setStatusBar(enable) {
  *
  * @since 1.2.0
  */
-async function setGestureStatusBar(enable) {
-    await core.invoke('plugin:board|set_gesture_status_bar', { enable });
+async function setGestureStatusBar(options) {
+    await core.invoke('plugin:board|set_gesture_status_bar', { ...options });
 }
 /**
  * @example
@@ -90,8 +90,8 @@ async function getBuildSerial() {
  *
  * @since 1.2.0
  */
-async function setLcdOnOff(enable) {
-    await core.invoke('plugin:board|set_lcd_on_off', { enable });
+async function setLcdOnOff(options) {
+    await core.invoke('plugin:board|set_lcd_on_off', { ...options });
 }
 /**
  * @example

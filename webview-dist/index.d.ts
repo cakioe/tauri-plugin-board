@@ -1,3 +1,12 @@
+export interface StatusBar {
+    enable?: boolean;
+}
+export interface GestureStatusBar {
+    enable?: boolean;
+}
+export interface LcdOnOff {
+    enable?: boolean;
+}
 /**
  * @example
  * ```typescript
@@ -27,7 +36,7 @@ export declare function reboot(): Promise<void>;
  *
  * @since 1.2.0
  */
-export declare function setStatusBar(enable: boolean): Promise<void>;
+export declare function setStatusBar(options?: StatusBar): Promise<void>;
 /**
  * @example
  * ```typescript
@@ -37,7 +46,7 @@ export declare function setStatusBar(enable: boolean): Promise<void>;
  *
  * @since 1.2.0
  */
-export declare function setGestureStatusBar(enable: boolean): Promise<void>;
+export declare function setGestureStatusBar(options?: GestureStatusBar): Promise<void>;
 /**
  * @example
  * ```typescript
@@ -73,7 +82,7 @@ export declare function getBuildSerial(): Promise<string>;
  *
  * @since 1.2.0
  */
-export declare function setLcdOnOff(enable: boolean): Promise<void>;
+export declare function setLcdOnOff(options?: LcdOnOff): Promise<void>;
 /**
  * @example
  * ```typescript

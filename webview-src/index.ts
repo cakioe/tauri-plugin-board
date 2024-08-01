@@ -1,6 +1,18 @@
 // @ts-ignore
 import { invoke } from '@tauri-apps/api/core'
 
+export interface StatusBar {
+  enable?: boolean
+}
+
+export interface GestureStatusBar {
+  enable?: boolean
+}
+
+export interface LcdOnOff {
+  enable?: boolean
+}
+
 /**
  * @example
  * ```typescript
@@ -36,8 +48,8 @@ export async function reboot(): Promise<void> {
  *
  * @since 1.2.0
  */
-export async function setStatusBar(enable: boolean): Promise<void> {
-  await invoke('plugin:board|set_status_bar', { enable })
+export async function setStatusBar(options?: StatusBar): Promise<void> {
+  await invoke('plugin:board|set_status_bar', { ...options })
 }
 
 /**
@@ -49,8 +61,8 @@ export async function setStatusBar(enable: boolean): Promise<void> {
  *
  * @since 1.2.0
  */
-export async function setGestureStatusBar(enable: boolean): Promise<void> {
-  await invoke('plugin:board|set_gesture_status_bar', { enable })
+export async function setGestureStatusBar(options?: GestureStatusBar): Promise<void> {
+  await invoke('plugin:board|set_gesture_status_bar', { ...options })
 }
 
 /**
@@ -94,8 +106,8 @@ export async function getBuildSerial(): Promise<string> {
  *
  * @since 1.2.0
  */
-export async function setLcdOnOff(enable: boolean): Promise<void> {
-  await invoke('plugin:board|set_lcd_on_off', { enable })
+export async function setLcdOnOff(options?: LcdOnOff): Promise<void> {
+  await invoke('plugin:board|set_lcd_on_off', { ...options })
 }
 
 /**
