@@ -40,4 +40,28 @@ declare var setLcdOnOff: (enable: boolean) => Promise<void>
  */
 declare var ping: () => Promise<string>
 
-export { shutdown, reboot, setStatusBar, setGestureStatusBar, getBuildModel, getBuildSerial, setLcdOnOff, ping }
+/**
+ * ping
+ */
+export interface PowerOnOffTime {
+  enable: boolean
+  on_time: number[] // year,month,day,hour,minute
+  off_time: number[] // year,month,day,hour,minute
+}
+declare var setPowerOnOffTime: (options?: PowerOnOffTime) => Promise<void>
+
+export interface JSObject {
+  value: string
+}
+
+export {
+  shutdown,
+  reboot,
+  setStatusBar,
+  setGestureStatusBar,
+  getBuildModel,
+  getBuildSerial,
+  setLcdOnOff,
+  ping,
+  setPowerOnOffTime
+}

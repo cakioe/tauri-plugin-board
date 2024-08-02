@@ -1,3 +1,4 @@
+import type { PowerOnOffTime } from './index.d';
 /**
  * @example
  * ```typescript
@@ -99,15 +100,10 @@ export declare function ping(): Promise<string>;
 /**
  * @example
  * ```typescript
- * import { setPowetOnOffTime } from '@cakioe/tauri-plugin-board';
- * await setPowetOnOffTime();
+ * import { setPowerOnOffTime } from '@cakioe/tauri-plugin-board';
+ * await setPowerOnOffTime();
  * ```
  *
  * @since 1.2.0
  */
-export interface PowetOnOffTime {
-    enable: boolean;
-    on_time: number[];
-    off_time: number[];
-}
-export declare function setPowetOnOffTime(options?: PowetOnOffTime): Promise<void>;
+export declare function setPowerOnOffTime(options?: PowerOnOffTime): Promise<void>;

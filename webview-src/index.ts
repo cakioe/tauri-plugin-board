@@ -1,5 +1,6 @@
 // @ts-ignore
 import { invoke } from '@tauri-apps/api/core'
+import type { PowerOnOffTime, JSObject } from './index.d'
 
 /**
  * @example
@@ -76,7 +77,10 @@ export async function setGestureStatusBar(options?: GestureStatusBar): Promise<v
  * @since 1.2.0
  */
 export async function getBuildModel(): Promise<string> {
-  return await invoke('plugin:board|get_build_model')
+  return await invoke('plugin:board|get_build_model').then((res: string) => {
+     const data = JSON.parse(res) as JSObject
+     return data.value
+  })
 }
 
 /**
@@ -92,7 +96,10 @@ export async function getBuildModel(): Promise<string> {
  * @since 1.2.0
  */
 export async function getBuildSerial(): Promise<string> {
-  return await invoke('plugin:board|get_build_serial')
+  return await invoke('plugin:board|get_build_serial').then((res: string) => {
+    const data = JSON.parse(res) as JSObject
+    return data.value
+  })
 }
 
 /**
@@ -125,26 +132,24 @@ export async function setLcdOnOff(options?: LcdOnOff): Promise<void> {
  * @since 1.2.0
  */
 export async function ping(): Promise<string> {
-  return await invoke('plugin:board|ping')
+  return await invoke('plugin:board|ping').then((res: string) => {
+    const data = JSON.parse(res) as JSObject
+    return data.value
+  })
 }
 
 /**
  * @example
  * ```typescript
- * import { setPowetOnOffTime } from '@cakioe/tauri-plugin-board';
- * await setPowetOnOffTime();
+ * import { setPowerOnOffTime } from '@cakioe/tauri-plugin-board';
+ * await setPowerOnOffTime();
  * ```
  *
  * @since 1.2.0
  */
-export interface PowetOnOffTime {
-  enable: boolean
-  on_time: number[] // year,month,day,hour,minute
-  off_time: number[] // year,month,day,hour,minute
-}
 
-export async function setPowetOnOffTime(options?: PowetOnOffTime): Promise<void> {
-  await invoke('plugin:board|set_powet_on_off_time', { ...options })
+export async function setPowerOnOffTime(options?: PowerOnOffTime): Promise<void> {
+  await invoke('plugin:board|set_power_on_off_time', { ...options })
 }
 
 // 控制系统亮度
