@@ -77,10 +77,7 @@ export async function setGestureStatusBar(options?: GestureStatusBar): Promise<v
  * @since 1.2.0
  */
 export async function getBuildModel(): Promise<string> {
-  return await invoke('plugin:board|get_build_model').then((res: string) => {
-     const data = JSON.parse(res) as JSObject
-     return data.value
-  })
+  return await invoke<JSObject>('plugin:board|get_build_model').then(r => r.value)
 }
 
 /**
@@ -96,10 +93,7 @@ export async function getBuildModel(): Promise<string> {
  * @since 1.2.0
  */
 export async function getBuildSerial(): Promise<string> {
-  return await invoke('plugin:board|get_build_serial').then((res: string) => {
-    const data = JSON.parse(res) as JSObject
-    return data.value
-  })
+  return await invoke<JSObject>('plugin:board|get_build_serial').then(r => r.value)
 }
 
 /**
@@ -132,10 +126,7 @@ export async function setLcdOnOff(options?: LcdOnOff): Promise<void> {
  * @since 1.2.0
  */
 export async function ping(): Promise<string> {
-  return await invoke('plugin:board|ping').then((res: string) => {
-    const data = JSON.parse(res) as JSObject
-    return data.value
-  })
+  return await invoke<JSObject>('plugin:board|ping').then(r => r.value)
 }
 
 /**

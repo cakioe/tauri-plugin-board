@@ -44,10 +44,7 @@ async function setGestureStatusBar(options) {
  * @since 1.2.0
  */
 async function getBuildModel() {
-    return await invoke('plugin:board|get_build_model').then((res) => {
-        const data = JSON.parse(res);
-        return data.value;
-    });
+    return await invoke('plugin:board|get_build_model').then(r => r.value);
 }
 /**
  * @example
@@ -62,10 +59,7 @@ async function getBuildModel() {
  * @since 1.2.0
  */
 async function getBuildSerial() {
-    return await invoke('plugin:board|get_build_serial').then((res) => {
-        const data = JSON.parse(res);
-        return data.value;
-    });
+    return await invoke('plugin:board|get_build_serial').then(r => r.value);
 }
 async function setLcdOnOff(options) {
     await invoke('plugin:board|set_lcd_on_off', { ...options });
@@ -83,10 +77,7 @@ async function setLcdOnOff(options) {
  * @since 1.2.0
  */
 async function ping() {
-    return await invoke('plugin:board|ping').then((res) => {
-        const data = JSON.parse(res);
-        return data.value;
-    });
+    return await invoke('plugin:board|ping').then(r => r.value);
 }
 /**
  * @example
