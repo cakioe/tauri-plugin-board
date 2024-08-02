@@ -1,12 +1,3 @@
-export interface StatusBar {
-    enable?: boolean;
-}
-export interface GestureStatusBar {
-    enable?: boolean;
-}
-export interface LcdOnOff {
-    enable?: boolean;
-}
 /**
  * @example
  * ```typescript
@@ -36,6 +27,9 @@ export declare function reboot(): Promise<void>;
  *
  * @since 1.2.0
  */
+export interface StatusBar {
+    enable?: boolean;
+}
 export declare function setStatusBar(options?: StatusBar): Promise<void>;
 /**
  * @example
@@ -46,6 +40,9 @@ export declare function setStatusBar(options?: StatusBar): Promise<void>;
  *
  * @since 1.2.0
  */
+export interface GestureStatusBar {
+    enable?: boolean;
+}
 export declare function setGestureStatusBar(options?: GestureStatusBar): Promise<void>;
 /**
  * @example
@@ -82,6 +79,9 @@ export declare function getBuildSerial(): Promise<string>;
  *
  * @since 1.2.0
  */
+export interface LcdOnOff {
+    enable?: boolean;
+}
 export declare function setLcdOnOff(options?: LcdOnOff): Promise<void>;
 /**
  * @example
@@ -96,3 +96,18 @@ export declare function setLcdOnOff(options?: LcdOnOff): Promise<void>;
  * @since 1.2.0
  */
 export declare function ping(): Promise<string>;
+/**
+ * @example
+ * ```typescript
+ * import { setPowetOnOffTime } from '@cakioe/tauri-plugin-board';
+ * await setPowetOnOffTime();
+ * ```
+ *
+ * @since 1.2.0
+ */
+export interface PowetOnOffTime {
+    enable: boolean;
+    on_time: number[];
+    off_time: number[];
+}
+export declare function setPowetOnOffTime(options?: PowetOnOffTime): Promise<void>;

@@ -17,6 +17,7 @@ const COMMANDS: &[&str] = &[
     "get_build_model",
     "get_build_serial",
     "set_lcd_on_off",
+    "ping"
 ];
 
 fn main() {

@@ -1,18 +1,6 @@
 // @ts-ignore
 import { invoke } from '@tauri-apps/api/core'
 
-export interface StatusBar {
-  enable?: boolean
-}
-
-export interface GestureStatusBar {
-  enable?: boolean
-}
-
-export interface LcdOnOff {
-  enable?: boolean
-}
-
 /**
  * @example
  * ```typescript
@@ -48,6 +36,11 @@ export async function reboot(): Promise<void> {
  *
  * @since 1.2.0
  */
+
+export interface StatusBar {
+  enable?: boolean
+}
+
 export async function setStatusBar(options?: StatusBar): Promise<void> {
   await invoke('plugin:board|set_status_bar', { ...options })
 }
@@ -61,6 +54,11 @@ export async function setStatusBar(options?: StatusBar): Promise<void> {
  *
  * @since 1.2.0
  */
+
+export interface GestureStatusBar {
+  enable?: boolean
+}
+
 export async function setGestureStatusBar(options?: GestureStatusBar): Promise<void> {
   await invoke('plugin:board|set_gesture_status_bar', { ...options })
 }
@@ -106,6 +104,10 @@ export async function getBuildSerial(): Promise<string> {
  *
  * @since 1.2.0
  */
+export interface LcdOnOff {
+  enable?: boolean
+}
+
 export async function setLcdOnOff(options?: LcdOnOff): Promise<void> {
   await invoke('plugin:board|set_lcd_on_off', { ...options })
 }
@@ -125,3 +127,24 @@ export async function setLcdOnOff(options?: LcdOnOff): Promise<void> {
 export async function ping(): Promise<string> {
   return await invoke('plugin:board|ping')
 }
+
+/**
+ * @example
+ * ```typescript
+ * import { setPowetOnOffTime } from '@cakioe/tauri-plugin-board';
+ * await setPowetOnOffTime();
+ * ```
+ *
+ * @since 1.2.0
+ */
+export interface PowetOnOffTime {
+  enable: boolean
+  on_time: number[] // year,month,day,hour,minute
+  off_time: number[] // year,month,day,hour,minute
+}
+
+export async function setPowetOnOffTime(options?: PowetOnOffTime): Promise<void> {
+  await invoke('plugin:board|set_powet_on_off_time', { ...options })
+}
+
+// 控制系统亮度

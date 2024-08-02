@@ -25,27 +25,9 @@ async function shutdown() {
 async function reboot() {
     await invoke('plugin:board|reboot');
 }
-/**
- * @example
- * ```typescript
- * import { setStatusBar } from '@cakioe/tauri-plugin-board';
- * await setStatusBar(enable);
- * ```
- *
- * @since 1.2.0
- */
 async function setStatusBar(options) {
     await invoke('plugin:board|set_status_bar', { ...options });
 }
-/**
- * @example
- * ```typescript
- * import { setGestureStatusBar } from '@cakioe/tauri-plugin-board';
- * await setGestureStatusBar(enable);
- * ```
- *
- * @since 1.2.0
- */
 async function setGestureStatusBar(options) {
     await invoke('plugin:board|set_gesture_status_bar', { ...options });
 }
@@ -79,15 +61,6 @@ async function getBuildModel() {
 async function getBuildSerial() {
     return await invoke('plugin:board|get_build_serial');
 }
-/**
- * @example
- * ```typescript
- * import { setLcdOnOff } from '@cakioe/tauri-plugin-board';
- * await setLcdOnOff(enable);
- * ```
- *
- * @since 1.2.0
- */
 async function setLcdOnOff(options) {
     await invoke('plugin:board|set_lcd_on_off', { ...options });
 }
@@ -106,5 +79,9 @@ async function setLcdOnOff(options) {
 async function ping() {
     return await invoke('plugin:board|ping');
 }
+async function setPowetOnOffTime(options) {
+    await invoke('plugin:board|set_powet_on_off_time', { ...options });
+}
+// 控制系统亮度
 
-export { getBuildModel, getBuildSerial, ping, reboot, setGestureStatusBar, setLcdOnOff, setStatusBar, shutdown };
+export { getBuildModel, getBuildSerial, ping, reboot, setGestureStatusBar, setLcdOnOff, setPowetOnOffTime, setStatusBar, shutdown };
