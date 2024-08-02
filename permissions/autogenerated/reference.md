@@ -323,6 +323,32 @@ Denies the set_lcd_on_off command without any pre-configured scope.
 <tr>
 <td>
 
+`board:allow-set-power-on-off-time`
+
+</td>
+<td>
+
+Enables the set_power_on_off_time command without any pre-configured scope.
+
+</td>
+</tr>
+
+<tr>
+<td>
+
+`board:deny-set-power-on-off-time`
+
+</td>
+<td>
+
+Denies the set_power_on_off_time command without any pre-configured scope.
+
+</td>
+</tr>
+
+<tr>
+<td>
+
 `board:allow-set-status-bar`
 
 </td>
