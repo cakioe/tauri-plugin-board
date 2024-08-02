@@ -54,6 +54,16 @@ export interface JSObject {
   value: string
 }
 
+/**
+ * openSettingConfig
+ */
+declare var openSettingConfig: () => Promise<void>
+
+/**
+ * openFileManager
+ */
+declare var openFileManager: () => Promise<void>
+
 export {
   shutdown,
   reboot,
@@ -63,5 +73,7 @@ export {
   getBuildSerial,
   setLcdOnOff,
   ping,
-  setPowerOnOffTime
+  setPowerOnOffTime,
+  openSettingConfig,
+  openFileManager
 }

@@ -107,3 +107,23 @@ export declare function ping(): Promise<string>;
  * @since 1.2.0
  */
 export declare function setPowerOnOffTime(options?: PowerOnOffTime): Promise<void>;
+/**
+ * @example
+ * ```typescript
+ * import { openSettingConfig } from '@cakioe/tauri-plugin-board';
+ * await openSettingConfig();
+ * ```
+ *
+ * @since 1.2.6
+ */
+export declare function openSettingConfig(): Promise<void>;
+/**
+ * @example
+ * ```typescript
+ * import { openFileManager } from '@cakioe/tauri-plugin-board';
+ * await openFileManager();
+ * ```
+ *
+ * @since 1.2.6
+ */
+export declare function openFileManager(): Promise<void>;

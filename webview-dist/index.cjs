@@ -93,10 +93,35 @@ async function ping() {
 async function setPowerOnOffTime(options) {
     await core.invoke('plugin:board|set_power_on_off_time', { ...options });
 }
-// 控制系统亮度
+/**
+ * @example
+ * ```typescript
+ * import { openSettingConfig } from '@cakioe/tauri-plugin-board';
+ * await openSettingConfig();
+ * ```
+ *
+ * @since 1.2.6
+ */
+async function openSettingConfig() {
+    await core.invoke('plugin:board|open_setting_config');
+}
+/**
+ * @example
+ * ```typescript
+ * import { openFileManager } from '@cakioe/tauri-plugin-board';
+ * await openFileManager();
+ * ```
+ *
+ * @since 1.2.6
+ */
+async function openFileManager() {
+    await core.invoke('plugin:board|open_file_manager');
+}
 
 exports.getBuildModel = getBuildModel;
 exports.getBuildSerial = getBuildSerial;
+exports.openFileManager = openFileManager;
+exports.openSettingConfig = openSettingConfig;
 exports.ping = ping;
 exports.reboot = reboot;
 exports.setGestureStatusBar = setGestureStatusBar;

@@ -143,4 +143,28 @@ export async function setPowerOnOffTime(options?: PowerOnOffTime): Promise<void>
   await invoke('plugin:board|set_power_on_off_time', { ...options })
 }
 
-// 控制系统亮度
+/**
+ * @example
+ * ```typescript
+ * import { openSettingConfig } from '@cakioe/tauri-plugin-board';
+ * await openSettingConfig();
+ * ```
+ *
+ * @since 1.2.6
+ */
+export async function openSettingConfig(): Promise<void> {
+  await invoke('plugin:board|open_setting_config')
+}
+
+/**
+ * @example
+ * ```typescript
+ * import { openFileManager } from '@cakioe/tauri-plugin-board';
+ * await openFileManager();
+ * ```
+ *
+ * @since 1.2.6
+ */
+export async function openFileManager(): Promise<void> {
+  await invoke('plugin:board|open_file_manager')
+}

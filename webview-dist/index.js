@@ -91,6 +91,29 @@ async function ping() {
 async function setPowerOnOffTime(options) {
     await invoke('plugin:board|set_power_on_off_time', { ...options });
 }
-// 控制系统亮度
+/**
+ * @example
+ * ```typescript
+ * import { openSettingConfig } from '@cakioe/tauri-plugin-board';
+ * await openSettingConfig();
+ * ```
+ *
+ * @since 1.2.6
+ */
+async function openSettingConfig() {
+    await invoke('plugin:board|open_setting_config');
+}
+/**
+ * @example
+ * ```typescript
+ * import { openFileManager } from '@cakioe/tauri-plugin-board';
+ * await openFileManager();
+ * ```
+ *
+ * @since 1.2.6
+ */
+async function openFileManager() {
+    await invoke('plugin:board|open_file_manager');
+}
 
-export { getBuildModel, getBuildSerial, ping, reboot, setGestureStatusBar, setLcdOnOff, setPowerOnOffTime, setStatusBar, shutdown };
+export { getBuildModel, getBuildSerial, openFileManager, openSettingConfig, ping, reboot, setGestureStatusBar, setLcdOnOff, setPowerOnOffTime, setStatusBar, shutdown };
