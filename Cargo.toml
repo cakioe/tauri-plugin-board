@@ -1,12 +1,12 @@
 [package]
 name = "tauri-plugin-board"
-version = "1.0.5"
+version = "1.0.6"
 authors = ["cleveng <cleveng@gmail.com>"]
 description = "vending machine development board of kits for tauri, use java or kotlin"
 license = "MIT"
 edition = "2021"
 repository = "https://github.com/cakioe/tauri-plugin-board.git"
-rust-version = "1.56.0"
+rust-version = "1.60.0"
 exclude = []
 links = "tauri-plugin-board"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html

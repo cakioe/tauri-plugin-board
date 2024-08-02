@@ -8,6 +8,7 @@
  * get_build_model => 获取型号
  * get_build_serial => 获取序列号
  * set_lcd_on_off => 设置屏幕
+ * set_power_on_off_time => 设置开关机
  */
 const COMMANDS: &[&str] = &[
     "shutdown",
@@ -17,7 +18,8 @@ const COMMANDS: &[&str] = &[
     "get_build_model",
     "get_build_serial",
     "set_lcd_on_off",
-    "ping"
+    "ping",
+    "set_power_on_off_time"
 ];
 
 fn main() {
