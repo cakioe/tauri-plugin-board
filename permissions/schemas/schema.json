@@ -365,6 +365,34 @@
           ]
         },
         {
+          "description": "allow-open-file-manager -> Enables the open_file_manager command without any pre-configured scope.",
+          "type": "string",
+          "enum": [
+            "allow-open-file-manager"
+          ]
+        },
+        {
+          "description": "deny-open-file-manager -> Denies the open_file_manager command without any pre-configured scope.",
+          "type": "string",
+          "enum": [
+            "deny-open-file-manager"
+          ]
+        },
+        {
+          "description": "allow-open-setting-config -> Enables the open_setting_config command without any pre-configured scope.",
+          "type": "string",
+          "enum": [
+            "allow-open-setting-config"
+          ]
+        },
+        {
+          "description": "deny-open-setting-config -> Denies the open_setting_config command without any pre-configured scope.",
+          "type": "string",
+          "enum": [
+            "deny-open-setting-config"
+          ]
+        },
+        {
           "description": "allow-ping -> Enables the ping command without any pre-configured scope.",
           "type": "string",
           "enum": [

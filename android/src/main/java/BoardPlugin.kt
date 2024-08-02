@@ -1,6 +1,7 @@
 package com.plugin.board
 
 import android.app.Activity
+import android.content.Intent
 import android.webkit.WebView
 import android.util.Log
 import app.tauri.annotation.Command
@@ -140,6 +141,28 @@ class BoardPlugin(private val activity: Activity): Plugin(activity) {
     fun setPowerOnOffTime(invoke: Invoke) {
         val argv = invoke.parseArgs(PowerOnOffTime::class.java)
         this.zc.setPowetOnOffTime(argv.enable, argv.onTime, argv.offTime)
+        invoke.resolve()
+    }
+
+    /**
+     * open setting config
+     */
+    @Command
+    fun openSettingConfig(invoke: Invoke) {
+        val intent = Intent(android.provider.Settings.ACTION_SETTINGS)
+        startActivityForResult(invoke, intent, "")
+        invoke.resolve()
+    }
+
+    /**
+     * open file manager
+     */
+    @Command
+    fun openFileManager(invoke: Invoke) {
+        val intent = Intent(Intent.ACTION_GET_CONTENT).apply {
+            type = "image/*"
+        }
+        startActivityForResult(invoke, intent, "")
         invoke.resolve()
     }
 }

@@ -9,6 +9,8 @@
  * get_build_serial => 获取序列号
  * set_lcd_on_off => 设置屏幕
  * set_power_on_off_time => 设置开关机
+ * open_setting_config => 打开设置
+ * open_file_manager => 打开文件
  */
 const COMMANDS: &[&str] = &[
     "shutdown",
@@ -19,7 +21,9 @@ const COMMANDS: &[&str] = &[
     "get_build_serial",
     "set_lcd_on_off",
     "ping",
-    "set_power_on_off_time"
+    "set_power_on_off_time",
+    "open_setting_config",
+    "open_file_manager"
 ];
 
 fn main() {

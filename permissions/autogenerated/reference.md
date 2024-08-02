@@ -141,6 +141,58 @@ Denies the get_build_serial command without any pre-configured scope.
 <tr>
 <td>
 
+`board:allow-open-file-manager`
+
+</td>
+<td>
+
+Enables the open_file_manager command without any pre-configured scope.
+
+</td>
+</tr>
+
+<tr>
+<td>
+
+`board:deny-open-file-manager`
+
+</td>
+<td>
+
+Denies the open_file_manager command without any pre-configured scope.
+
+</td>
+</tr>
+
+<tr>
+<td>
+
+`board:allow-open-setting-config`
+
+</td>
+<td>
+
+Enables the open_setting_config command without any pre-configured scope.
+
+</td>
+</tr>
+
+<tr>
+<td>
+
+`board:deny-open-setting-config`
+
+</td>
+<td>
+
+Denies the open_setting_config command without any pre-configured scope.
+
+</td>
+</tr>
+
+<tr>
+<td>
+
 `board:allow-ping`
 
 </td>
