@@ -1,4 +1,3 @@
-import type { PowerOnOffTime } from './index.d';
 /**
  * @example
  * ```typescript
@@ -57,6 +56,9 @@ export declare function setGestureStatusBar(options?: GestureStatusBar): Promise
  *
  * @since 1.2.0
  */
+export interface JSObject {
+    value: string;
+}
 export declare function getBuildModel(): Promise<string>;
 /**
  * @example
@@ -106,6 +108,11 @@ export declare function ping(): Promise<string>;
  *
  * @since 1.2.0
  */
+export interface PowerOnOffTime {
+    enable: boolean;
+    on_time: number[];
+    off_time: number[];
+}
 export declare function setPowerOnOffTime(options?: PowerOnOffTime): Promise<void>;
 /**
  * @example

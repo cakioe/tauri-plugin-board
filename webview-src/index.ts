@@ -1,6 +1,5 @@
 // @ts-ignore
 import { invoke } from '@tauri-apps/api/core'
-import type { PowerOnOffTime, JSObject } from './index.d'
 
 /**
  * @example
@@ -76,6 +75,11 @@ export async function setGestureStatusBar(options?: GestureStatusBar): Promise<v
  *
  * @since 1.2.0
  */
+
+export interface JSObject {
+  value: string
+}
+
 export async function getBuildModel(): Promise<string> {
   return await invoke<JSObject>('plugin:board|get_build_model').then(r => r.value)
 }
@@ -138,6 +142,11 @@ export async function ping(): Promise<string> {
  *
  * @since 1.2.0
  */
+export interface PowerOnOffTime {
+  enable: boolean
+  on_time: number[] // year,month,day,hour,minute
+  off_time: number[] // year,month,day,hour,minute
+}
 
 export async function setPowerOnOffTime(options?: PowerOnOffTime): Promise<void> {
   await invoke('plugin:board|set_power_on_off_time', { ...options })

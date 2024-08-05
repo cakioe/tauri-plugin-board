@@ -33,18 +33,6 @@ async function setStatusBar(options) {
 async function setGestureStatusBar(options) {
     await core.invoke('plugin:board|set_gesture_status_bar', { ...options });
 }
-/**
- * @example
- * ```typescript
- * import { getBuildModel } from '@cakioe/tauri-plugin-board';
- * const no = await getBuildModel();
- * if (no) {
- *    // use the no string here
- * }
- * ```
- *
- * @since 1.2.0
- */
 async function getBuildModel() {
     return await core.invoke('plugin:board|get_build_model').then(r => r.value);
 }
@@ -81,15 +69,6 @@ async function setLcdOnOff(options) {
 async function ping() {
     return await core.invoke('plugin:board|ping').then(r => r.value);
 }
-/**
- * @example
- * ```typescript
- * import { setPowerOnOffTime } from '@cakioe/tauri-plugin-board';
- * await setPowerOnOffTime();
- * ```
- *
- * @since 1.2.0
- */
 async function setPowerOnOffTime(options) {
     await core.invoke('plugin:board|set_power_on_off_time', { ...options });
 }
