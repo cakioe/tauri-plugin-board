@@ -144,8 +144,8 @@ export async function ping(): Promise<string> {
  */
 export interface PowerOnOffTime {
   enable: boolean
-  on_time: number[] // year,month,day,hour,minute
-  off_time: number[] // year,month,day,hour,minute
+  on_time: number // year,month,day,hour,minute
+  off_time: number // year,month,day,hour,minute
 }
 
 export async function setPowerOnOffTime(options: PowerOnOffTime): Promise<string> {

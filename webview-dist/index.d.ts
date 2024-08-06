@@ -110,8 +110,8 @@ export declare function ping(): Promise<string>;
  */
 export interface PowerOnOffTime {
     enable: boolean;
-    on_time: number[];
-    off_time: number[];
+    on_time: number;
+    off_time: number;
 }
 export declare function setPowerOnOffTime(options: PowerOnOffTime): Promise<string>;
 /**
