@@ -3,7 +3,6 @@ package com.plugin.board
 import android.app.Activity
 import android.content.Intent
 import android.webkit.WebView
-import android.util.Log
 import app.tauri.annotation.Command
 import app.tauri.annotation.InvokeArg
 import app.tauri.annotation.TauriPlugin
@@ -11,6 +10,7 @@ import app.tauri.plugin.Invoke
 import app.tauri.plugin.JSObject
 import app.tauri.plugin.Plugin
 import com.zcapi
+import java.util.*
 
 @InvokeArg
 class StatusBar {
@@ -34,9 +34,9 @@ class PingArgs {
 
 @InvokeArg
 class PowerOnOffTime {
-    var enable: Boolean = true
-    var onTime: IntArray = intArrayOf(0, 0, 0, 0, 0)
-    var offTime: IntArray = intArrayOf(0, 0, 0, 0, 0)
+    var enable: Boolean? = true
+    var onTime: IntArray? = null // 2024 8 6 14 3
+    var offTime: IntArray? = null
 }
 
 @TauriPlugin
@@ -54,8 +54,6 @@ class BoardPlugin(private val activity: Activity): Plugin(activity) {
     @Command
     fun ping(invoke: Invoke) {
         val args = invoke.parseArgs(PingArgs::class.java)
-        Log.i("Pong", args.enable ?: "default value :(")
-
         val ret = JSObject()
         ret.put("value", args.enable ?: "default value :(")
         invoke.resolve(ret)
@@ -139,8 +137,20 @@ class BoardPlugin(private val activity: Activity): Plugin(activity) {
      */
     @Command
     fun setPowerOnOffTime(invoke: Invoke) {
+        //获取系统的日期
+        val calendar = Calendar.getInstance()
+        val year = calendar[Calendar.YEAR]
+        val month = calendar[Calendar.MONTH] + 1
+        val day = calendar[Calendar.DAY_OF_MONTH]
+        val hour = calendar[Calendar.HOUR_OF_DAY]
+        val minute = calendar[Calendar.MINUTE]
+
         val argv = invoke.parseArgs(PowerOnOffTime::class.java)
-        this.zc.setPowetOnOffTime(argv.enable, argv.onTime, argv.offTime)
+        val enable = argv.enable ?: true
+        val onTime = argv.onTime ?: intArrayOf(year,month,day,hour,minute+3)
+        val offTime  = argv.offTime ?: intArrayOf(year,month,day,hour,minute+1)
+
+        this.zc.setPowetOnOffTime(enable, onTime, offTime)
         invoke.resolve()
     }
 
