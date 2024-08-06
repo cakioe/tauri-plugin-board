@@ -13,12 +13,20 @@ declare var reboot: () => Promise<void>
 /**
  * setStatusBar
  */
-declare var setStatusBar: (enable: boolean) => Promise<void>
+
+export interface StatusBar {
+  enable?: boolean
+}
+
+declare var setStatusBar: (options?: StatusBar) => Promise<void>
 
 /**
  * setGestureStatusBar
  */
-declare var setGestureStatusBar: (enable: boolean) => Promise<void>
+export interface GestureStatusBar {
+  enable?: boolean
+}
+declare var setGestureStatusBar: (options?: GestureStatusBar) => Promise<void>
 
 /**
  * getBuildModel
@@ -33,7 +41,11 @@ declare var getBuildSerial: () => Promise<string>
 /**
  * setLcdOnOff
  */
-declare var setLcdOnOff: (enable: boolean) => Promise<void>
+export interface LcdOnOff {
+  enable?: boolean
+}
+
+declare var setLcdOnOff: (options?: LcdOnOff) => Promise<void>
 
 /**
  * ping
@@ -45,10 +57,10 @@ declare var ping: () => Promise<string>
  */
 export interface PowerOnOffTime {
   enable: boolean
-  on_time: number // year,month,day,hour,minute
-  off_time: number // year,month,day,hour,minute
+  onTime: number // year,month,day,hour,minute
+  offTime: number // year,month,day,hour,minute
 }
-declare var setPowerOnOffTime: (options: PowerOnOffTime) => Promise<string>
+declare var setPowerOnOffTime: (options?: PowerOnOffTime) => Promise<string>
 
 export interface JSObject {
   value: string
