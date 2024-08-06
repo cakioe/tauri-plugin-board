@@ -70,7 +70,7 @@ async function ping() {
     return await core.invoke('plugin:board|ping').then(r => r.value);
 }
 async function setPowerOnOffTime(options) {
-    await core.invoke('plugin:board|set_power_on_off_time', { ...options });
+    return await core.invoke('plugin:board|set_power_on_off_time', { ...options }).then(r => r.value);
 }
 /**
  * @example

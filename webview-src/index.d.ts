@@ -48,7 +48,7 @@ export interface PowerOnOffTime {
   on_time: number[] // year,month,day,hour,minute
   off_time: number[] // year,month,day,hour,minute
 }
-declare var setPowerOnOffTime: (options?: PowerOnOffTime) => Promise<void>
+declare var setPowerOnOffTime: (options: PowerOnOffTime) => Promise<string>
 
 export interface JSObject {
   value: string

@@ -148,8 +148,8 @@ export interface PowerOnOffTime {
   off_time: number[] // year,month,day,hour,minute
 }
 
-export async function setPowerOnOffTime(options?: PowerOnOffTime): Promise<void> {
-  await invoke('plugin:board|set_power_on_off_time', { ...options })
+export async function setPowerOnOffTime(options: PowerOnOffTime): Promise<string> {
+  return await invoke<JSObject>('plugin:board|set_power_on_off_time', { ...options }).then(r => r.value)
 }
 
 /**
