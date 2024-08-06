@@ -33,8 +33,8 @@ class PingArgs {
 }
 
 @InvokeArg
- class PowerOnOffTime {
-     var enable: Boolean? = null
+class PowerOnOffTime {
+     var enable: Boolean = false
      var onTime: Long? = null // 以毫秒为单位
      var offTime: Long? = null // 以毫秒为单位
 }
@@ -137,16 +137,17 @@ class BoardPlugin(private val activity: Activity): Plugin(activity) {
      */
     @Command
     fun setPowerOnOffTime(invoke: Invoke) {
-        val argv = invoke.parseArgs(PowerOnOffTime::class.java)
-        val enable = argv.enable ?: false
-        val onTime = parseTimestamp(argv.onTime)
-        val offTime = parseTimestamp(argv.offTime)
+        val args = invoke.parseArgs(PowerOnOffTime::class.java)
+
+        val enable = args.enable
+        val onTime = parseTimestamp(args.onTime)
+        val offTime = parseTimestamp(args.offTime)
 
         this.zc.setPowetOnOffTime(enable, onTime, offTime)
 
         val ret = JSObject()
-        ret.put("value", println("enable: ${argv.enable}, onTime: ${argv.onTime}, offTime: ${argv.offTime}"))
-        invoke.resolve()
+        ret.put("value", "success")
+        invoke.resolve(ret)
     }
 
     /**
