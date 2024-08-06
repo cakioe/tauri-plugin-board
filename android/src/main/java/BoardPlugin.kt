@@ -33,10 +33,10 @@ class PingArgs {
 }
 
 @InvokeArg
-class PowerOnOffTime {
-    var enable: Boolean? = true
-    var onTime: IntArray? = null // 2024 8 6 14 3
-    var offTime: IntArray? = null
+ class PowerOnOffTime {
+     var enable: Boolean? = null
+     var onTime: Long? = null // 以毫秒为单位
+     var offTime: Long? = null // 以毫秒为单位
 }
 
 @TauriPlugin
@@ -137,20 +137,15 @@ class BoardPlugin(private val activity: Activity): Plugin(activity) {
      */
     @Command
     fun setPowerOnOffTime(invoke: Invoke) {
-        //获取系统的日期
-        val calendar = Calendar.getInstance()
-        val year = calendar[Calendar.YEAR]
-        val month = calendar[Calendar.MONTH] + 1
-        val day = calendar[Calendar.DAY_OF_MONTH]
-        val hour = calendar[Calendar.HOUR_OF_DAY]
-        val minute = calendar[Calendar.MINUTE]
-
         val argv = invoke.parseArgs(PowerOnOffTime::class.java)
-        val enable = argv.enable ?: true
-        val onTime = argv.onTime ?: intArrayOf(year,month,day,hour,minute+3)
-        val offTime  = argv.offTime ?: intArrayOf(year,month,day,hour,minute+1)
+        val enable = argv.enable ?: false
+        val onTime = parseTimestamp(argv.onTime)
+        val offTime = parseTimestamp(argv.offTime)
 
         this.zc.setPowetOnOffTime(enable, onTime, offTime)
+
+        val ret = JSObject()
+        ret.put("value", println("enable: ${argv.enable}, onTime: ${argv.onTime}, offTime: ${argv.offTime}"))
         invoke.resolve()
     }
 
@@ -174,5 +169,21 @@ class BoardPlugin(private val activity: Activity): Plugin(activity) {
         }
         startActivityForResult(invoke, intent, "")
         invoke.resolve()
+    }
+}
+
+fun parseTimestamp(timestamp: Long?): IntArray? {
+    return timestamp?.let {
+        val date = Date(it)
+        val calendar = Calendar.getInstance()
+        calendar.time = date
+
+        val year = calendar.get(Calendar.YEAR)
+        val month = calendar.get(Calendar.MONTH) + 1 // 月份从0开始，所以需要加1
+        val day = calendar.get(Calendar.DAY_OF_MONTH)
+        val hour = calendar.get(Calendar.HOUR_OF_DAY) // 24小时制
+        val minute = calendar.get(Calendar.MINUTE)
+
+        intArrayOf(year, month, day, hour, minute)
     }
 }
