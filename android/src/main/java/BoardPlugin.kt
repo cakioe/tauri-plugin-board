@@ -45,7 +45,7 @@ class PowerOnOffTime {
 
 @InvokeArg
 class AppBrightness {
-    var value: Int = 100 // [20, 255]
+    var value: Int = 255 // [5, 255]
     var isScreen: Boolean = true
 }
 
@@ -189,8 +189,8 @@ class BoardPlugin(private val activity: Activity): Plugin(activity) {
     fun setAppBrightness(invoke: Invoke) {
         val args = invoke.parseArgs(AppBrightness::class.java)
         val value: Int = args.value.let {
-            if (it < 20) {
-                20
+            if (it < 5) {
+                5
             } else if (it > 255) {
                 255
             } else {
@@ -198,17 +198,12 @@ class BoardPlugin(private val activity: Activity): Plugin(activity) {
             }
         }
 
-        val ret = JSObject()
-        val result: String = "success"
-
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             if (!Settings.System.canWrite(activity)) {
                 val intent = Intent(Settings.ACTION_MANAGE_WRITE_SETTINGS)
                 startActivityForResult(invoke, intent, "")
 
-                ret.put("value", "no permission to set brightness")
-                invoke.resolve(ret)
-                return
+                throw Exception("waiting for apply permission to change brightness")
             }
         }
 
@@ -227,8 +222,7 @@ class BoardPlugin(private val activity: Activity): Plugin(activity) {
             }
         }
 
-        ret.put("value", result)
-        invoke.resolve(ret)
+        throw Exception("adjust brightness failed because not support on Android 7.0 and above")
     }
 }
 
