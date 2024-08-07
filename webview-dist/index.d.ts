@@ -145,5 +145,6 @@ export declare function openFileManager(): Promise<void>;
  */
 export interface AppBrightness {
     value: number;
+    isScreen: boolean;
 }
 export declare function setAppBrightness(options?: AppBrightness): Promise<string>;

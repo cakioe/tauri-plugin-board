@@ -189,6 +189,7 @@ export async function openFileManager(): Promise<void> {
  */
 export interface AppBrightness {
   value: number
+  isScreen: boolean
 }
 export async function setAppBrightness(options?: AppBrightness): Promise<string> {
   return await invoke<JSObject>('plugin:board|set_app_brightness', { ...options }).then(r => r.value)
