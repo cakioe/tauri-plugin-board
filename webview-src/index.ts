@@ -177,3 +177,19 @@ export async function openSettingConfig(): Promise<void> {
 export async function openFileManager(): Promise<void> {
   await invoke('plugin:board|open_file_manager')
 }
+
+/**
+ * @example
+ * ```typescript
+ * import { setAppBrightness } from '@cakioe/tauri-plugin-board';
+ * await setAppBrightness({value: 50});
+ * ```
+ *
+ * @since 1.3.2
+ */
+export interface AppBrightness {
+  value: number
+}
+export async function setAppBrightness(options?: AppBrightness): Promise<string> {
+  return await invoke<JSObject>('plugin:board|set_app_brightness', { ...options }).then(r => r.value)
+}

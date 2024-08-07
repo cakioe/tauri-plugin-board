@@ -134,3 +134,16 @@ export declare function openSettingConfig(): Promise<void>;
  * @since 1.2.6
  */
 export declare function openFileManager(): Promise<void>;
+/**
+ * @example
+ * ```typescript
+ * import { setAppBrightness } from '@cakioe/tauri-plugin-board';
+ * await setAppBrightness({value: 50});
+ * ```
+ *
+ * @since 1.3.2
+ */
+export interface AppBrightness {
+    value: number;
+}
+export declare function setAppBrightness(options?: AppBrightness): Promise<string>;

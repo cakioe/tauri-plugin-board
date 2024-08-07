@@ -94,5 +94,8 @@ async function openSettingConfig() {
 async function openFileManager() {
     await invoke('plugin:board|open_file_manager');
 }
+async function setAppBrightness(options) {
+    return await invoke('plugin:board|set_app_brightness', { ...options }).then(r => r.value);
+}
 
-export { getBuildModel, getBuildSerial, openFileManager, openSettingConfig, ping, reboot, setGestureStatusBar, setLcdOnOff, setPowerOnOffTime, setStatusBar, shutdown };
+export { getBuildModel, getBuildSerial, openFileManager, openSettingConfig, ping, reboot, setAppBrightness, setGestureStatusBar, setLcdOnOff, setPowerOnOffTime, setStatusBar, shutdown };
