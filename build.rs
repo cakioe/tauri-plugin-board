@@ -11,6 +11,7 @@
  * set_power_on_off_time => 设置开关机
  * open_setting_config => 打开设置
  * open_file_manager => 打开文件
+ * set_app_brightness => 设置app亮度
  */
 const COMMANDS: &[&str] = &[
     "shutdown",
@@ -23,7 +24,8 @@ const COMMANDS: &[&str] = &[
     "ping",
     "set_power_on_off_time",
     "open_setting_config",
-    "open_file_manager"
+    "open_file_manager",
+    "set_app_brightness"
 ];
 
 fn main() {

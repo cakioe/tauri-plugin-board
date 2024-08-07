@@ -323,6 +323,32 @@ Denies the setStatusBar command without any pre-configured scope.
 <tr>
 <td>
 
+`board:allow-set-app-brightness`
+
+</td>
+<td>
+
+Enables the set_app_brightness command without any pre-configured scope.
+
+</td>
+</tr>
+
+<tr>
+<td>
+
+`board:deny-set-app-brightness`
+
+</td>
+<td>
+
+Denies the set_app_brightness command without any pre-configured scope.
+
+</td>
+</tr>
+
+<tr>
+<td>
+
 `board:allow-set-gesture-status-bar`
 
 </td>

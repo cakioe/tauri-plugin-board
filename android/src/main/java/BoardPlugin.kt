@@ -2,6 +2,10 @@ package com.plugin.board
 
 import android.app.Activity
 import android.content.Intent
+import android.os.Build
+import android.provider.Settings
+import android.view.Window
+import android.view.WindowManager
 import android.webkit.WebView
 import app.tauri.annotation.Command
 import app.tauri.annotation.InvokeArg
@@ -37,6 +41,12 @@ class PowerOnOffTime {
      var enable: Boolean = false
      var onTime: Long? = null // 以毫秒为单位
      var offTime: Long? = null // 以毫秒为单位
+}
+
+@InvokeArg
+class AppBrightness {
+    var value: Int = 100 // [20, 255]
+    var isScreen: Boolean = true
 }
 
 @TauriPlugin
@@ -155,7 +165,7 @@ class BoardPlugin(private val activity: Activity): Plugin(activity) {
      */
     @Command
     fun openSettingConfig(invoke: Invoke) {
-        val intent = Intent(android.provider.Settings.ACTION_SETTINGS)
+        val intent = Intent(Settings.ACTION_SETTINGS)
         startActivityForResult(invoke, intent, "")
         invoke.resolve()
     }
@@ -170,6 +180,55 @@ class BoardPlugin(private val activity: Activity): Plugin(activity) {
         }
         startActivityForResult(invoke, intent, "")
         invoke.resolve()
+    }
+
+    /**
+     * set app brightness
+     */
+    @Command
+    fun setAppBrightness(invoke: Invoke) {
+        val args = invoke.parseArgs(AppBrightness::class.java)
+        val value: Int = args.value.let {
+            if (it < 20) {
+                20
+            } else if (it > 255) {
+                255
+            } else {
+                it
+            }
+        }
+
+        val ret = JSObject()
+        val result: String = "success"
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            if (!Settings.System.canWrite(activity)) {
+                val intent = Intent(Settings.ACTION_MANAGE_WRITE_SETTINGS)
+                startActivityForResult(invoke, intent, "")
+
+                ret.put("value", "no permission to set brightness")
+                invoke.resolve(ret)
+                return
+            }
+        }
+
+        if (!args.isScreen) {
+            try {
+                Settings.System.getUriFor(Settings.System.SCREEN_BRIGHTNESS).let {
+                    Settings.System.putInt(activity.contentResolver, Settings.System.SCREEN_BRIGHTNESS_MODE, Settings.System.SCREEN_BRIGHTNESS_MODE_MANUAL)
+                    Settings.System.putInt(activity.contentResolver, Settings.System.SCREEN_BRIGHTNESS, value)
+                }
+                activity.window.attributes.let {
+                    it.screenBrightness = value / 255f
+                    activity.window.attributes = it
+                }
+            } catch (e: Exception) {
+                throw e
+            }
+        }
+
+        ret.put("value", result)
+        invoke.resolve(ret)
     }
 }
 

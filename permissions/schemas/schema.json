@@ -463,6 +463,20 @@
           ]
         },
         {
+          "description": "allow-set-app-brightness -> Enables the set_app_brightness command without any pre-configured scope.",
+          "type": "string",
+          "enum": [
+            "allow-set-app-brightness"
+          ]
+        },
+        {
+          "description": "deny-set-app-brightness -> Denies the set_app_brightness command without any pre-configured scope.",
+          "type": "string",
+          "enum": [
+            "deny-set-app-brightness"
+          ]
+        },
+        {
           "description": "allow-set-gesture-status-bar -> Enables the set_gesture_status_bar command without any pre-configured scope.",
           "type": "string",
           "enum": [
