@@ -295,48 +295,6 @@
       "type": "string",
       "oneOf": [
         {
-          "description": "allow-execute -> Enables the execute command without any pre-configured scope.",
-          "type": "string",
-          "enum": [
-            "allow-execute"
-          ]
-        },
-        {
-          "description": "deny-execute -> Denies the execute command without any pre-configured scope.",
-          "type": "string",
-          "enum": [
-            "deny-execute"
-          ]
-        },
-        {
-          "description": "allow-getBuildModel -> Enables the getBuildModel command without any pre-configured scope.",
-          "type": "string",
-          "enum": [
-            "allow-getBuildModel"
-          ]
-        },
-        {
-          "description": "deny-getBuildModel -> Denies the getBuildModel command without any pre-configured scope.",
-          "type": "string",
-          "enum": [
-            "deny-getBuildModel"
-          ]
-        },
-        {
-          "description": "allow-getBuildSerial -> Enables the getBuildSerial command without any pre-configured scope.",
-          "type": "string",
-          "enum": [
-            "allow-getBuildSerial"
-          ]
-        },
-        {
-          "description": "deny-getBuildSerial -> Denies the getBuildSerial command without any pre-configured scope.",
-          "type": "string",
-          "enum": [
-            "deny-getBuildSerial"
-          ]
-        },
-        {
           "description": "allow-get-build-model -> Enables the get_build_model command without any pre-configured scope.",
           "type": "string",
           "enum": [
@@ -362,6 +320,20 @@
           "type": "string",
           "enum": [
             "deny-get-build-serial"
+          ]
+        },
+        {
+          "description": "allow-get-serial-paths -> Enables the get_serial_paths command without any pre-configured scope.",
+          "type": "string",
+          "enum": [
+            "allow-get-serial-paths"
+          ]
+        },
+        {
+          "description": "deny-get-serial-paths -> Denies the get_serial_paths command without any pre-configured scope.",
+          "type": "string",
+          "enum": [
+            "deny-get-serial-paths"
           ]
         },
         {
@@ -418,48 +390,6 @@
           "type": "string",
           "enum": [
             "deny-reboot"
-          ]
-        },
-        {
-          "description": "allow-setGestureStatusBar -> Enables the setGestureStatusBar command without any pre-configured scope.",
-          "type": "string",
-          "enum": [
-            "allow-setGestureStatusBar"
-          ]
-        },
-        {
-          "description": "deny-setGestureStatusBar -> Denies the setGestureStatusBar command without any pre-configured scope.",
-          "type": "string",
-          "enum": [
-            "deny-setGestureStatusBar"
-          ]
-        },
-        {
-          "description": "allow-setLcdOnOff -> Enables the setLcdOnOff command without any pre-configured scope.",
-          "type": "string",
-          "enum": [
-            "allow-setLcdOnOff"
-          ]
-        },
-        {
-          "description": "deny-setLcdOnOff -> Denies the setLcdOnOff command without any pre-configured scope.",
-          "type": "string",
-          "enum": [
-            "deny-setLcdOnOff"
-          ]
-        },
-        {
-          "description": "allow-setStatusBar -> Enables the setStatusBar command without any pre-configured scope.",
-          "type": "string",
-          "enum": [
-            "allow-setStatusBar"
-          ]
-        },
-        {
-          "description": "deny-setStatusBar -> Denies the setStatusBar command without any pre-configured scope.",
-          "type": "string",
-          "enum": [
-            "deny-setStatusBar"
           ]
         },
         {

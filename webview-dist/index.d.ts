@@ -148,3 +148,13 @@ export interface AppBrightness {
     isScreen: boolean;
 }
 export declare function setAppBrightness(options?: AppBrightness): Promise<string>;
+/**
+ * @example
+ * ```typescript
+ * import { getSerialPaths } from '@cakioe/tauri-plugin-board';
+ * await getSerialPaths();
+ * ```
+ *
+ * @since 1.4.0-beta.1
+ */
+export declare function getSerialPaths(): Promise<string[]>;

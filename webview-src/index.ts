@@ -194,3 +194,16 @@ export interface AppBrightness {
 export async function setAppBrightness(options?: AppBrightness): Promise<string> {
   return await invoke<JSObject>('plugin:board|set_app_brightness', { ...options }).then(r => r.value)
 }
+
+/**
+ * @example
+ * ```typescript
+ * import { getSerialPaths } from '@cakioe/tauri-plugin-board';
+ * await getSerialPaths();
+ * ```
+ *
+ * @since 1.4.0-beta.1
+ */
+export async function getSerialPaths(): Promise<string[]> {
+  return await invoke<Record<string, string>>('plugin:board|get_serial_paths').then(r => JSON.parse(r.value))
+}

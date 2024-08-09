@@ -4,8 +4,6 @@ import android.app.Activity
 import android.content.Intent
 import android.os.Build
 import android.provider.Settings
-import android.view.Window
-import android.view.WindowManager
 import android.webkit.WebView
 import app.tauri.annotation.Command
 import app.tauri.annotation.InvokeArg
@@ -13,7 +11,11 @@ import app.tauri.annotation.TauriPlugin
 import app.tauri.plugin.Invoke
 import app.tauri.plugin.JSObject
 import app.tauri.plugin.Plugin
+import com.google.gson.Gson
 import com.zcapi
+import java.io.BufferedReader
+import java.io.IOException
+import java.io.InputStreamReader
 import java.util.*
 
 @InvokeArg
@@ -52,6 +54,7 @@ class AppBrightness {
 @TauriPlugin
 class BoardPlugin(private val activity: Activity): Plugin(activity) {
     private val zc = zcapi()
+    private val serialPaths = getAllSerialPaths()
 
     // https://v2.tauri.app/zh-cn/develop/plugins/develop-mobile/#%E6%8F%92%E4%BB%B6%E9%85%8D%E7%BD%AE
     override fun load(webView: WebView) {
@@ -224,6 +227,20 @@ class BoardPlugin(private val activity: Activity): Plugin(activity) {
 
         throw Exception("adjust brightness failed because not support on Android 7.0 and above")
     }
+
+    /**
+     * get serial paths
+     */
+    @Command
+    fun getSerialPaths(invoke: Invoke) {
+        val gson = Gson()
+        this.serialPaths.let {
+            val ret = JSObject()
+            ret.put("value", gson.toJson(it))
+            invoke.resolve(ret)
+            return
+        }
+    }
 }
 
 fun parseTimestamp(timestamp: Long?): IntArray? {
@@ -239,5 +256,30 @@ fun parseTimestamp(timestamp: Long?): IntArray? {
         val minute = calendar.get(Calendar.MINUTE)
 
         intArrayOf(year, month, day, hour, minute)
+    }
+}
+
+fun getAllSerialPaths(): MutableList<String> {
+    val result = mutableListOf<String>()
+    try {
+        val command = arrayOf("sh", "-c", "ls -l /dev/tty*")
+        val process = Runtime.getRuntime().exec(command)
+        val lines = BufferedReader(InputStreamReader(process.inputStream)).readLines()
+
+        for (line in lines) {
+            val parts = line.split(Regex("\\s+"))
+            if (parts.size > 2) {
+                val filename = parts.last() // 文件名
+                val owner = parts[2] // 文件的所有者
+                if (owner == "system") {
+                    result.add(filename) // 添加符合条件的文件
+                }
+            }
+        }
+        process.waitFor()
+
+        return result
+    } catch (e: IOException) {
+        throw e
     }
 }

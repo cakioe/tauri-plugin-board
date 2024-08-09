@@ -99,9 +99,22 @@ async function openFileManager() {
 async function setAppBrightness(options) {
     return await core.invoke('plugin:board|set_app_brightness', { ...options }).then(r => r.value);
 }
+/**
+ * @example
+ * ```typescript
+ * import { getSerialPaths } from '@cakioe/tauri-plugin-board';
+ * await getSerialPaths();
+ * ```
+ *
+ * @since 1.4.0-beta.1
+ */
+async function getSerialPaths() {
+    return await core.invoke('plugin:board|get_serial_paths').then(r => JSON.parse(r.value));
+}
 
 exports.getBuildModel = getBuildModel;
 exports.getBuildSerial = getBuildSerial;
+exports.getSerialPaths = getSerialPaths;
 exports.openFileManager = openFileManager;
 exports.openSettingConfig = openSettingConfig;
 exports.ping = ping;

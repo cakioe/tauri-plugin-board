@@ -12,6 +12,7 @@
  * open_setting_config => 打开设置
  * open_file_manager => 打开文件
  * set_app_brightness => 设置app亮度
+ * get_serial_paths => 获取串口
  */
 const COMMANDS: &[&str] = &[
     "shutdown",
@@ -25,7 +26,8 @@ const COMMANDS: &[&str] = &[
     "set_power_on_off_time",
     "open_setting_config",
     "open_file_manager",
-    "set_app_brightness"
+    "set_app_brightness",
+    "get_serial_paths"
 ];
 
 fn main() {

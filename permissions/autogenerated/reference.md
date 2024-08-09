@@ -11,84 +11,6 @@
 <tr>
 <td>
 
-`board:allow-execute`
-
-</td>
-<td>
-
-Enables the execute command without any pre-configured scope.
-
-</td>
-</tr>
-
-<tr>
-<td>
-
-`board:deny-execute`
-
-</td>
-<td>
-
-Denies the execute command without any pre-configured scope.
-
-</td>
-</tr>
-
-<tr>
-<td>
-
-`board:allow-getBuildModel`
-
-</td>
-<td>
-
-Enables the getBuildModel command without any pre-configured scope.
-
-</td>
-</tr>
-
-<tr>
-<td>
-
-`board:deny-getBuildModel`
-
-</td>
-<td>
-
-Denies the getBuildModel command without any pre-configured scope.
-
-</td>
-</tr>
-
-<tr>
-<td>
-
-`board:allow-getBuildSerial`
-
-</td>
-<td>
-
-Enables the getBuildSerial command without any pre-configured scope.
-
-</td>
-</tr>
-
-<tr>
-<td>
-
-`board:deny-getBuildSerial`
-
-</td>
-<td>
-
-Denies the getBuildSerial command without any pre-configured scope.
-
-</td>
-</tr>
-
-<tr>
-<td>
-
 `board:allow-get-build-model`
 
 </td>
@@ -134,6 +56,32 @@ Enables the get_build_serial command without any pre-configured scope.
 <td>
 
 Denies the get_build_serial command without any pre-configured scope.
+
+</td>
+</tr>
+
+<tr>
+<td>
+
+`board:allow-get-serial-paths`
+
+</td>
+<td>
+
+Enables the get_serial_paths command without any pre-configured scope.
+
+</td>
+</tr>
+
+<tr>
+<td>
+
+`board:deny-get-serial-paths`
+
+</td>
+<td>
+
+Denies the get_serial_paths command without any pre-configured scope.
 
 </td>
 </tr>
@@ -238,84 +186,6 @@ Enables the reboot command without any pre-configured scope.
 <td>
 
 Denies the reboot command without any pre-configured scope.
-
-</td>
-</tr>
-
-<tr>
-<td>
-
-`board:allow-setGestureStatusBar`
-
-</td>
-<td>
-
-Enables the setGestureStatusBar command without any pre-configured scope.
-
-</td>
-</tr>
-
-<tr>
-<td>
-
-`board:deny-setGestureStatusBar`
-
-</td>
-<td>
-
-Denies the setGestureStatusBar command without any pre-configured scope.
-
-</td>
-</tr>
-
-<tr>
-<td>
-
-`board:allow-setLcdOnOff`
-
-</td>
-<td>
-
-Enables the setLcdOnOff command without any pre-configured scope.
-
-</td>
-</tr>
-
-<tr>
-<td>
-
-`board:deny-setLcdOnOff`
-
-</td>
-<td>
-
-Denies the setLcdOnOff command without any pre-configured scope.
-
-</td>
-</tr>
-
-<tr>
-<td>
-
-`board:allow-setStatusBar`
-
-</td>
-<td>
-
-Enables the setStatusBar command without any pre-configured scope.
-
-</td>
-</tr>
-
-<tr>
-<td>
-
-`board:deny-setStatusBar`
-
-</td>
-<td>
-
-Denies the setStatusBar command without any pre-configured scope.
 
 </td>
 </tr>

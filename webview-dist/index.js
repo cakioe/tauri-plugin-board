@@ -97,5 +97,17 @@ async function openFileManager() {
 async function setAppBrightness(options) {
     return await invoke('plugin:board|set_app_brightness', { ...options }).then(r => r.value);
 }
+/**
+ * @example
+ * ```typescript
+ * import { getSerialPaths } from '@cakioe/tauri-plugin-board';
+ * await getSerialPaths();
+ * ```
+ *
+ * @since 1.4.0-beta.1
+ */
+async function getSerialPaths() {
+    return await invoke('plugin:board|get_serial_paths').then(r => JSON.parse(r.value));
+}
 
-export { getBuildModel, getBuildSerial, openFileManager, openSettingConfig, ping, reboot, setAppBrightness, setGestureStatusBar, setLcdOnOff, setPowerOnOffTime, setStatusBar, shutdown };
+export { getBuildModel, getBuildSerial, getSerialPaths, openFileManager, openSettingConfig, ping, reboot, setAppBrightness, setGestureStatusBar, setLcdOnOff, setPowerOnOffTime, setStatusBar, shutdown };
