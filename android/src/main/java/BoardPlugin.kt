@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.Intent
 import android.os.Build
 import android.provider.Settings
+import android.serialport.SerialPortFinder
 import android.webkit.WebView
 import app.tauri.annotation.Command
 import app.tauri.annotation.InvokeArg
@@ -54,7 +55,8 @@ class AppBrightness {
 @TauriPlugin
 class BoardPlugin(private val activity: Activity): Plugin(activity) {
     private val zc = zcapi()
-    private val serialPaths = getAllSerialPaths()
+    private val availableSerialDevices = getAvailableSerialDevices()
+    private val finder = SerialPortFinder()
 
     // https://v2.tauri.app/zh-cn/develop/plugins/develop-mobile/#%E6%8F%92%E4%BB%B6%E9%85%8D%E7%BD%AE
     override fun load(webView: WebView) {
@@ -234,15 +236,40 @@ class BoardPlugin(private val activity: Activity): Plugin(activity) {
     @Command
     fun getSerialPaths(invoke: Invoke) {
         val gson = Gson()
-        this.serialPaths.let {
+        this.availableSerialDevices.let {
             val ret = JSObject()
             ret.put("value", gson.toJson(it))
             invoke.resolve(ret)
             return
         }
     }
+
+    /**
+     * get serial devices path
+     */
+    @Command
+    fun getSerialDevicesPath(invoke: Invoke) {
+        val gson = Gson()
+        val ret = JSObject()
+        ret.put("value", gson.toJson(this.availableSerialDevices))
+        invoke.resolve(ret)
+    }
+
+    /**
+     * get all devices path
+     */
+    @Command
+    fun getAllDevicesPath(invoke: Invoke) {
+        val gson = Gson()
+        val ret = JSObject()
+        ret.put("value", gson.toJson(this.finder.allDevicesPath))
+        invoke.resolve(ret)
+    }
 }
 
+/**
+ * @description: parse timestamp
+ */
 fun parseTimestamp(timestamp: Long?): IntArray? {
     return timestamp?.let {
         val date = Date(it)
@@ -259,7 +286,10 @@ fun parseTimestamp(timestamp: Long?): IntArray? {
     }
 }
 
-fun getAllSerialPaths(): MutableList<String> {
+/**
+ * @description: get available serial devices
+ */
+fun getAvailableSerialDevices() :MutableList<String> {
     val result = mutableListOf<String>()
     try {
         val command = arrayOf("sh", "-c", "ls -l /dev/tty*")

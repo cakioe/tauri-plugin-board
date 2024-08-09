@@ -156,5 +156,26 @@ export declare function setAppBrightness(options?: AppBrightness): Promise<strin
  * ```
  *
  * @since 1.4.0-beta.1
+ * @deprecated 1.5.0
  */
 export declare function getSerialPaths(): Promise<string[]>;
+/**
+ * @example
+ * ```typescript
+ * import { getSerialDevicesPath } from '@cakioe/tauri-plugin-board';
+ * await getSerialDevicesPath();
+ * ```
+ *
+ * @since 1.4.0-beta.2
+ */
+export declare function getSerialDevicesPath(): Promise<string[]>;
+/**
+ * @example
+ * ```typescript
+ * import { getAllDevicesPath } from '@cakioe/tauri-plugin-board';
+ * await getAllDevicesPath();
+ * ```
+ *
+ * @since 1.4.0-beta.2
+ */
+export declare function getAllDevicesPath(): Promise<string[]>;

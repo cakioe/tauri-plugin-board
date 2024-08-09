@@ -295,6 +295,20 @@
       "type": "string",
       "oneOf": [
         {
+          "description": "allow-get-all-devices-path -> Enables the get_all_devices_path command without any pre-configured scope.",
+          "type": "string",
+          "enum": [
+            "allow-get-all-devices-path"
+          ]
+        },
+        {
+          "description": "deny-get-all-devices-path -> Denies the get_all_devices_path command without any pre-configured scope.",
+          "type": "string",
+          "enum": [
+            "deny-get-all-devices-path"
+          ]
+        },
+        {
           "description": "allow-get-build-model -> Enables the get_build_model command without any pre-configured scope.",
           "type": "string",
           "enum": [
@@ -320,6 +334,20 @@
           "type": "string",
           "enum": [
             "deny-get-build-serial"
+          ]
+        },
+        {
+          "description": "allow-get-serial-devices-path -> Enables the get_serial_devices_path command without any pre-configured scope.",
+          "type": "string",
+          "enum": [
+            "allow-get-serial-devices-path"
+          ]
+        },
+        {
+          "description": "deny-get-serial-devices-path -> Denies the get_serial_devices_path command without any pre-configured scope.",
+          "type": "string",
+          "enum": [
+            "deny-get-serial-devices-path"
           ]
         },
         {

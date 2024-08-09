@@ -107,13 +107,40 @@ async function setAppBrightness(options) {
  * ```
  *
  * @since 1.4.0-beta.1
+ * @deprecated 1.5.0
  */
 async function getSerialPaths() {
     return await core.invoke('plugin:board|get_serial_paths').then(r => JSON.parse(r.value));
 }
+/**
+ * @example
+ * ```typescript
+ * import { getSerialDevicesPath } from '@cakioe/tauri-plugin-board';
+ * await getSerialDevicesPath();
+ * ```
+ *
+ * @since 1.4.0-beta.2
+ */
+async function getSerialDevicesPath() {
+    return await core.invoke('plugin:board|get_serial_devices_path').then(r => JSON.parse(r.value));
+}
+/**
+ * @example
+ * ```typescript
+ * import { getAllDevicesPath } from '@cakioe/tauri-plugin-board';
+ * await getAllDevicesPath();
+ * ```
+ *
+ * @since 1.4.0-beta.2
+ */
+async function getAllDevicesPath() {
+    return await core.invoke('plugin:board|get_all_devices_path').then(r => JSON.parse(r.value));
+}
 
+exports.getAllDevicesPath = getAllDevicesPath;
 exports.getBuildModel = getBuildModel;
 exports.getBuildSerial = getBuildSerial;
+exports.getSerialDevicesPath = getSerialDevicesPath;
 exports.getSerialPaths = getSerialPaths;
 exports.openFileManager = openFileManager;
 exports.openSettingConfig = openSettingConfig;

@@ -11,6 +11,32 @@
 <tr>
 <td>
 
+`board:allow-get-all-devices-path`
+
+</td>
+<td>
+
+Enables the get_all_devices_path command without any pre-configured scope.
+
+</td>
+</tr>
+
+<tr>
+<td>
+
+`board:deny-get-all-devices-path`
+
+</td>
+<td>
+
+Denies the get_all_devices_path command without any pre-configured scope.
+
+</td>
+</tr>
+
+<tr>
+<td>
+
 `board:allow-get-build-model`
 
 </td>
@@ -56,6 +82,32 @@ Enables the get_build_serial command without any pre-configured scope.
 <td>
 
 Denies the get_build_serial command without any pre-configured scope.
+
+</td>
+</tr>
+
+<tr>
+<td>
+
+`board:allow-get-serial-devices-path`
+
+</td>
+<td>
+
+Enables the get_serial_devices_path command without any pre-configured scope.
+
+</td>
+</tr>
+
+<tr>
+<td>
+
+`board:deny-get-serial-devices-path`
+
+</td>
+<td>
+
+Denies the get_serial_devices_path command without any pre-configured scope.
 
 </td>
 </tr>

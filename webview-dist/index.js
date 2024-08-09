@@ -105,9 +105,34 @@ async function setAppBrightness(options) {
  * ```
  *
  * @since 1.4.0-beta.1
+ * @deprecated 1.5.0
  */
 async function getSerialPaths() {
     return await invoke('plugin:board|get_serial_paths').then(r => JSON.parse(r.value));
 }
+/**
+ * @example
+ * ```typescript
+ * import { getSerialDevicesPath } from '@cakioe/tauri-plugin-board';
+ * await getSerialDevicesPath();
+ * ```
+ *
+ * @since 1.4.0-beta.2
+ */
+async function getSerialDevicesPath() {
+    return await invoke('plugin:board|get_serial_devices_path').then(r => JSON.parse(r.value));
+}
+/**
+ * @example
+ * ```typescript
+ * import { getAllDevicesPath } from '@cakioe/tauri-plugin-board';
+ * await getAllDevicesPath();
+ * ```
+ *
+ * @since 1.4.0-beta.2
+ */
+async function getAllDevicesPath() {
+    return await invoke('plugin:board|get_all_devices_path').then(r => JSON.parse(r.value));
+}
 
-export { getBuildModel, getBuildSerial, getSerialPaths, openFileManager, openSettingConfig, ping, reboot, setAppBrightness, setGestureStatusBar, setLcdOnOff, setPowerOnOffTime, setStatusBar, shutdown };
+export { getAllDevicesPath, getBuildModel, getBuildSerial, getSerialDevicesPath, getSerialPaths, openFileManager, openSettingConfig, ping, reboot, setAppBrightness, setGestureStatusBar, setLcdOnOff, setPowerOnOffTime, setStatusBar, shutdown };

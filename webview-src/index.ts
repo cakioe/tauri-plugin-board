@@ -203,7 +203,34 @@ export async function setAppBrightness(options?: AppBrightness): Promise<string>
  * ```
  *
  * @since 1.4.0-beta.1
+ * @deprecated 1.5.0
  */
 export async function getSerialPaths(): Promise<string[]> {
   return await invoke<Record<string, string>>('plugin:board|get_serial_paths').then(r => JSON.parse(r.value))
+}
+
+/**
+ * @example
+ * ```typescript
+ * import { getSerialDevicesPath } from '@cakioe/tauri-plugin-board';
+ * await getSerialDevicesPath();
+ * ```
+ *
+ * @since 1.4.0-beta.2
+ */
+export async function getSerialDevicesPath(): Promise<string[]> {
+  return await invoke<Record<string, string>>('plugin:board|get_serial_devices_path').then(r => JSON.parse(r.value))
+}
+
+/**
+ * @example
+ * ```typescript
+ * import { getAllDevicesPath } from '@cakioe/tauri-plugin-board';
+ * await getAllDevicesPath();
+ * ```
+ *
+ * @since 1.4.0-beta.2
+ */
+export async function getAllDevicesPath(): Promise<string[]> {
+  return await invoke<Record<string, string>>('plugin:board|get_all_devices_path').then(r => JSON.parse(r.value))
 }
