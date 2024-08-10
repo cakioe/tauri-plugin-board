@@ -108,7 +108,7 @@ async function setAppBrightness(options) {
  * @deprecated 1.5.0
  */
 async function getSerialPaths() {
-    return await invoke('plugin:board|get_serial_paths').then(r => JSON.parse(r.value));
+    return await invoke('plugin:board|get_serial_devices_path').then(r => JSON.parse(r.value));
 }
 /**
  * @example

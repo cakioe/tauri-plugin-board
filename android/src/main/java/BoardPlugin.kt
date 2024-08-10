@@ -14,10 +14,6 @@ import app.tauri.plugin.JSObject
 import app.tauri.plugin.Plugin
 import com.google.gson.Gson
 import com.zcapi
-import java.io.BufferedReader
-import java.io.IOException
-import java.io.InputStreamReader
-import java.util.*
 
 @InvokeArg
 class StatusBar {
@@ -54,13 +50,32 @@ class AppBrightness {
 
 @TauriPlugin
 class BoardPlugin(private val activity: Activity): Plugin(activity) {
+    // 卓策安卓开发板
     private val zc = zcapi()
-    private val availableSerialDevices = getAvailableSerialDevices()
+
+    // wenzoom开发板 | 鼎商开发板
     private val finder = SerialPortFinder()
 
     // https://v2.tauri.app/zh-cn/develop/plugins/develop-mobile/#%E6%8F%92%E4%BB%B6%E9%85%8D%E7%BD%AE
     override fun load(webView: WebView) {
         this.zc.getContext(webView.context)
+
+        /**
+         * @description 设置状态栏 | 设置手势状态栏
+         */
+        this.zc.buildModel.let { value ->
+            if (value.startsWith("zc") || value.startsWith("ZC")) {
+                this.zc.setStatusBar(false)
+                this.zc.setGestureStatusBar(false)
+            }
+        }
+    }
+
+    /**
+     * 应用程序重新启动
+     */
+    override fun onNewIntent(intent: Intent) {
+        // handle new intent event
     }
 
     /**
@@ -153,10 +168,11 @@ class BoardPlugin(private val activity: Activity): Plugin(activity) {
     @Command
     fun setPowerOnOffTime(invoke: Invoke) {
         val args = invoke.parseArgs(PowerOnOffTime::class.java)
-
+        
+        val carbon = Carbon()
         val enable = args.enable
-        val onTime = parseTimestamp(args.onTime)
-        val offTime = parseTimestamp(args.offTime)
+        val onTime = carbon.parseTimestamp(args.onTime)
+        val offTime = carbon.parseTimestamp(args.offTime)
 
         this.zc.setPowetOnOffTime(enable, onTime, offTime)
 
@@ -236,7 +252,7 @@ class BoardPlugin(private val activity: Activity): Plugin(activity) {
     @Command
     fun getSerialPaths(invoke: Invoke) {
         val gson = Gson()
-        this.availableSerialDevices.let {
+        this.finder.getAvailableSerialDevices().let {
             val ret = JSObject()
             ret.put("value", gson.toJson(it))
             invoke.resolve(ret)
@@ -251,7 +267,7 @@ class BoardPlugin(private val activity: Activity): Plugin(activity) {
     fun getSerialDevicesPath(invoke: Invoke) {
         val gson = Gson()
         val ret = JSObject()
-        ret.put("value", gson.toJson(this.availableSerialDevices))
+        ret.put("value", gson.toJson(this.finder.getAvailableSerialDevices()))
         invoke.resolve(ret)
     }
 
@@ -264,52 +280,5 @@ class BoardPlugin(private val activity: Activity): Plugin(activity) {
         val ret = JSObject()
         ret.put("value", gson.toJson(this.finder.allDevicesPath))
         invoke.resolve(ret)
-    }
-}
-
-/**
- * @description: parse timestamp
- */
-fun parseTimestamp(timestamp: Long?): IntArray? {
-    return timestamp?.let {
-        val date = Date(it)
-        val calendar = Calendar.getInstance()
-        calendar.time = date
-
-        val year = calendar.get(Calendar.YEAR)
-        val month = calendar.get(Calendar.MONTH) + 1 // 月份从0开始，所以需要加1
-        val day = calendar.get(Calendar.DAY_OF_MONTH)
-        val hour = calendar.get(Calendar.HOUR_OF_DAY) // 24小时制
-        val minute = calendar.get(Calendar.MINUTE)
-
-        intArrayOf(year, month, day, hour, minute)
-    }
-}
-
-/**
- * @description: get available serial devices
- */
-fun getAvailableSerialDevices() :MutableList<String> {
-    val result = mutableListOf<String>()
-    try {
-        val command = arrayOf("sh", "-c", "ls -l /dev/tty*")
-        val process = Runtime.getRuntime().exec(command)
-        val lines = BufferedReader(InputStreamReader(process.inputStream)).readLines()
-
-        for (line in lines) {
-            val parts = line.split(Regex("\\s+"))
-            if (parts.size > 2) {
-                val filename = parts.last() // 文件名
-                val owner = parts[2] // 文件的所有者
-                if (owner == "system") {
-                    result.add(filename) // 添加符合条件的文件
-                }
-            }
-        }
-        process.waitFor()
-
-        return result
-    } catch (e: IOException) {
-        throw e
     }
 }

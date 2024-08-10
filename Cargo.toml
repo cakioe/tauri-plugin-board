@@ -1,8 +1,8 @@
 [package]
 name = "tauri-plugin-board"
-version = "1.4.0-beta.3"
+version = "1.4.0-beta.4"
 authors = ["cleveng <cleveng@gmail.com>"]
-description = "vending machine development board of kits for tauri, use java or kotlin"
+description = "vending machine development board of kits for tauri, use kotlin"
 license = "MIT"
 edition = "2021"
 repository = "https://github.com/cakioe/tauri-plugin-board.git"

@@ -206,7 +206,7 @@ export async function setAppBrightness(options?: AppBrightness): Promise<string>
  * @deprecated 1.5.0
  */
 export async function getSerialPaths(): Promise<string[]> {
-  return await invoke<Record<string, string>>('plugin:board|get_serial_paths').then(r => JSON.parse(r.value))
+  return await invoke<Record<string, string>>('plugin:board|get_serial_devices_path').then(r => JSON.parse(r.value))
 }
 
 /**
