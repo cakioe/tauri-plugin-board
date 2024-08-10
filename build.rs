@@ -13,9 +13,9 @@ const COMMANDS: &[&str] = &[
     "open_setting_config",
     "open_file_manager",
     "set_app_brightness",
-    "get_serial_paths",
     "get_serial_devices_path",
-    "get_all_devices_path"
+    "get_all_devices_path",
+    "set_serials_path_index"
 ];
 
 fn main() {

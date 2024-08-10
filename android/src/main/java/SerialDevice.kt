@@ -5,7 +5,9 @@ import java.io.BufferedReader
 import java.io.IOException
 import java.io.InputStreamReader
 
-fun SerialPortFinder.getAvailableSerialDevices() :MutableList<String> {
+data class SerialDevice(val path: String, val active: Boolean, val index: Int)
+
+fun SerialPortFinder.getAvailableSerialDevices(index: Int = 0) :MutableList<String> {
     val result = mutableListOf<String>()
     try {
         val command = arrayOf("sh", "-c", "ls -l /dev/tty*")

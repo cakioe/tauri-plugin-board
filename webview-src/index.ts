@@ -216,9 +216,14 @@ export async function getSerialPaths(): Promise<string[]> {
  * await getSerialDevicesPath();
  * ```
  *
- * @since 1.4.0-beta.2
+ * @since 1.4.0-beta.5
  */
-export async function getSerialDevicesPath(): Promise<string[]> {
+export interface SerialDevice {
+  path: string
+  active: boolean
+  index: number
+}
+export async function getSerialDevicesPath(): Promise<SerialDevice[]> {
   return await invoke<Record<string, string>>('plugin:board|get_serial_devices_path').then(r => JSON.parse(r.value))
 }
 
@@ -233,4 +238,19 @@ export async function getSerialDevicesPath(): Promise<string[]> {
  */
 export async function getAllDevicesPath(): Promise<string[]> {
   return await invoke<Record<string, string>>('plugin:board|get_all_devices_path').then(r => JSON.parse(r.value))
+}
+/**
+ * @example
+ * ```typescript
+ * import { setSerialsPathIndex } from '@cakioe/tauri-plugin-board';
+ * await setSerialsPathIndex({...options});
+ * ```
+ *
+ * @since 1.4.0-beta.5
+ */
+export interface SerialsPathIndex {
+  index: number
+}
+export async function setSerialsPathIndex(options: SerialsPathIndex): Promise<void> {
+  await invoke('plugin:board|set_serials_path_index', { ...options })
 }

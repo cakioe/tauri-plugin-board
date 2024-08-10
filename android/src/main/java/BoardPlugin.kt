@@ -48,6 +48,11 @@ class AppBrightness {
     var isScreen: Boolean = true
 }
 
+@InvokeArg
+class SerialsPathIndex{
+    var index: Int = 0
+}
+
 @TauriPlugin
 class BoardPlugin(private val activity: Activity): Plugin(activity) {
     // 卓策安卓开发板
@@ -55,6 +60,7 @@ class BoardPlugin(private val activity: Activity): Plugin(activity) {
 
     // wenzoom开发板 | 鼎商开发板
     private val finder = SerialPortFinder()
+    private var serialsPathIndex = 0
 
     // https://v2.tauri.app/zh-cn/develop/plugins/develop-mobile/#%E6%8F%92%E4%BB%B6%E9%85%8D%E7%BD%AE
     override fun load(webView: WebView) {
@@ -267,7 +273,18 @@ class BoardPlugin(private val activity: Activity): Plugin(activity) {
     fun getSerialDevicesPath(invoke: Invoke) {
         val gson = Gson()
         val ret = JSObject()
-        ret.put("value", gson.toJson(this.finder.getAvailableSerialDevices()))
+
+        val result = mutableListOf<SerialDevice>()
+        val devices = this.finder.getAvailableSerialDevices()
+        if (this.serialsPathIndex !in devices.indices) {
+            this.serialsPathIndex = 0
+        }
+
+        devices.forEachIndexed { index, path ->
+            result.add(SerialDevice(path, this.serialsPathIndex == index, index))
+        }
+
+        ret.put("value", gson.toJson(result))
         invoke.resolve(ret)
     }
 
@@ -280,5 +297,15 @@ class BoardPlugin(private val activity: Activity): Plugin(activity) {
         val ret = JSObject()
         ret.put("value", gson.toJson(this.finder.allDevicesPath))
         invoke.resolve(ret)
+    }
+
+    /**
+     * set serials path index
+     */
+    @Command
+    fun setSerialsPathIndex(invoke: Invoke) {
+        val args = invoke.parseArgs(SerialsPathIndex::class.java)
+        this.serialsPathIndex = args.index
+        invoke.resolve()
     }
 }

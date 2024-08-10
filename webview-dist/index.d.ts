@@ -166,9 +166,14 @@ export declare function getSerialPaths(): Promise<string[]>;
  * await getSerialDevicesPath();
  * ```
  *
- * @since 1.4.0-beta.2
+ * @since 1.4.0-beta.5
  */
-export declare function getSerialDevicesPath(): Promise<string[]>;
+export interface SerialDevice {
+    path: string;
+    active: boolean;
+    index: number;
+}
+export declare function getSerialDevicesPath(): Promise<SerialDevice[]>;
 /**
  * @example
  * ```typescript
@@ -179,3 +184,16 @@ export declare function getSerialDevicesPath(): Promise<string[]>;
  * @since 1.4.0-beta.2
  */
 export declare function getAllDevicesPath(): Promise<string[]>;
+/**
+ * @example
+ * ```typescript
+ * import { setSerialsPathIndex } from '@cakioe/tauri-plugin-board';
+ * await setSerialsPathIndex({...options});
+ * ```
+ *
+ * @since 1.4.0-beta.5
+ */
+export interface SerialsPathIndex {
+    index: number;
+}
+export declare function setSerialsPathIndex(options: SerialsPathIndex): Promise<void>;

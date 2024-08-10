@@ -349,6 +349,32 @@ Denies the set_power_on_off_time command without any pre-configured scope.
 <tr>
 <td>
 
+`board:allow-set-serials-path-index`
+
+</td>
+<td>
+
+Enables the set_serials_path_index command without any pre-configured scope.
+
+</td>
+</tr>
+
+<tr>
+<td>
+
+`board:deny-set-serials-path-index`
+
+</td>
+<td>
+
+Denies the set_serials_path_index command without any pre-configured scope.
+
+</td>
+</tr>
+
+<tr>
+<td>
+
 `board:allow-set-status-bar`
 
 </td>

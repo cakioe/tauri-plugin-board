@@ -477,6 +477,20 @@
           ]
         },
         {
+          "description": "allow-set-serials-path-index -> Enables the set_serials_path_index command without any pre-configured scope.",
+          "type": "string",
+          "enum": [
+            "allow-set-serials-path-index"
+          ]
+        },
+        {
+          "description": "deny-set-serials-path-index -> Denies the set_serials_path_index command without any pre-configured scope.",
+          "type": "string",
+          "enum": [
+            "deny-set-serials-path-index"
+          ]
+        },
+        {
           "description": "allow-set-status-bar -> Enables the set_status_bar command without any pre-configured scope.",
           "type": "string",
           "enum": [

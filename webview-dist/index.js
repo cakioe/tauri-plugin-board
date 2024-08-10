@@ -110,15 +110,6 @@ async function setAppBrightness(options) {
 async function getSerialPaths() {
     return await invoke('plugin:board|get_serial_devices_path').then(r => JSON.parse(r.value));
 }
-/**
- * @example
- * ```typescript
- * import { getSerialDevicesPath } from '@cakioe/tauri-plugin-board';
- * await getSerialDevicesPath();
- * ```
- *
- * @since 1.4.0-beta.2
- */
 async function getSerialDevicesPath() {
     return await invoke('plugin:board|get_serial_devices_path').then(r => JSON.parse(r.value));
 }
@@ -134,5 +125,8 @@ async function getSerialDevicesPath() {
 async function getAllDevicesPath() {
     return await invoke('plugin:board|get_all_devices_path').then(r => JSON.parse(r.value));
 }
+async function setSerialsPathIndex(options) {
+    await invoke('plugin:board|set_serials_path_index', { ...options });
+}
 
-export { getAllDevicesPath, getBuildModel, getBuildSerial, getSerialDevicesPath, getSerialPaths, openFileManager, openSettingConfig, ping, reboot, setAppBrightness, setGestureStatusBar, setLcdOnOff, setPowerOnOffTime, setStatusBar, shutdown };
+export { getAllDevicesPath, getBuildModel, getBuildSerial, getSerialDevicesPath, getSerialPaths, openFileManager, openSettingConfig, ping, reboot, setAppBrightness, setGestureStatusBar, setLcdOnOff, setPowerOnOffTime, setSerialsPathIndex, setStatusBar, shutdown };
