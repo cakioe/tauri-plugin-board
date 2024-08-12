@@ -224,7 +224,7 @@ export interface SerialDevice {
   index: number
 }
 export async function getSerialDevicesPath(): Promise<SerialDevice[]> {
-  return await invoke<Record<string, string>>('plugin:board|get_serial_devices_path').then(r => JSON.parse(r.value))
+  return await invoke<Record<string, string>>('plugin:board|get_serial_devices_path').then(r => JSON.parse(r.value) as unknown as SerialDevice[])
 }
 
 /**

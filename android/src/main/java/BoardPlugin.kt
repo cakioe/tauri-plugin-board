@@ -13,6 +13,7 @@ import app.tauri.plugin.Invoke
 import app.tauri.plugin.JSObject
 import app.tauri.plugin.Plugin
 import com.google.gson.Gson
+import com.google.gson.annotations.SerializedName
 import com.zcapi
 
 @InvokeArg
@@ -281,7 +282,12 @@ class BoardPlugin(private val activity: Activity): Plugin(activity) {
         }
 
         devices.forEachIndexed { index, path ->
-            result.add(SerialDevice(path, this.serialsPathIndex == index, index))
+            val item = SerialDevice(
+                path = path,
+                active = this.serialsPathIndex == index,
+                index = index
+            )
+            result.add(item)
         }
 
         ret.put("value", gson.toJson(result))

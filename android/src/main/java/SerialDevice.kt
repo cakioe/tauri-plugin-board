@@ -1,11 +1,26 @@
 package com.plugin.board
 
 import android.serialport.SerialPortFinder
+import androidx.annotation.Keep
 import java.io.BufferedReader
 import java.io.IOException
 import java.io.InputStreamReader
+import com.google.gson.annotations.SerializedName
 
-data class SerialDevice(val path: String, val active: Boolean, val index: Int)
+/***
+ * GSON<https://stackoverflow.com/a/46156695/21185153>
+ */
+@Keep
+data class SerialDevice(
+    @SerializedName("path")
+    val path: String,
+
+    @SerializedName("active")
+    val active: Boolean,
+
+    @SerializedName("index")
+    val index: Int
+)
 
 fun SerialPortFinder.getAvailableSerialDevices(index: Int = 0) :MutableList<String> {
     val result = mutableListOf<String>()
