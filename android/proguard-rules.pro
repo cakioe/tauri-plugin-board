@@ -24,3 +24,11 @@
 -keep class com.plugin.board.SerialDevice {
     *;
 }
+
+-keep class com.plugin.board.Env {
+    *;
+}
+
+-keep class cc.uling.usdk.** {
+    *;
+}

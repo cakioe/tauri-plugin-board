@@ -72,29 +72,11 @@ async function ping() {
 async function setPowerOnOffTime(options) {
     return await core.invoke('plugin:board|set_power_on_off_time', { ...options }).then(r => r.value);
 }
-/**
- * @example
- * ```typescript
- * import { openSettingConfig } from '@cakioe/tauri-plugin-board';
- * await openSettingConfig();
- * ```
- *
- * @since 1.2.6
- */
-async function openSettingConfig() {
-    await core.invoke('plugin:board|open_setting_config');
+async function openSettingConfig(options) {
+    await core.invoke('plugin:board|open_setting_config', { ...options });
 }
-/**
- * @example
- * ```typescript
- * import { openFileManager } from '@cakioe/tauri-plugin-board';
- * await openFileManager();
- * ```
- *
- * @since 1.2.6
- */
-async function openFileManager() {
-    await core.invoke('plugin:board|open_file_manager');
+async function openFileManager(options) {
+    await core.invoke('plugin:board|open_file_manager', { ...options });
 }
 async function setAppBrightness(options) {
     return await core.invoke('plugin:board|set_app_brightness', { ...options }).then(r => r.value);
@@ -130,13 +112,30 @@ async function getAllDevicesPath() {
 async function setSerialsPathIndex(options) {
     await core.invoke('plugin:board|set_serials_path_index', { ...options });
 }
+async function getBuildEnv() {
+    return await core.invoke('plugin:board|get_build_env').then(r => JSON.parse(r.value));
+}
+/**
+ * @example
+ * ```typescript
+ * import { openMainActivity } from '@cakioe/tauri-plugin-board';
+ * await openMainActivity();
+ * ```
+ *
+ * @since 1.4.0-beta.14
+ */
+async function openMainActivity() {
+    await core.invoke('plugin:board|open_main_activity');
+}
 
 exports.getAllDevicesPath = getAllDevicesPath;
+exports.getBuildEnv = getBuildEnv;
 exports.getBuildModel = getBuildModel;
 exports.getBuildSerial = getBuildSerial;
 exports.getSerialDevicesPath = getSerialDevicesPath;
 exports.getSerialPaths = getSerialPaths;
 exports.openFileManager = openFileManager;
+exports.openMainActivity = openMainActivity;
 exports.openSettingConfig = openSettingConfig;
 exports.ping = ping;
 exports.reboot = reboot;

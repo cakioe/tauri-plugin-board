@@ -13,7 +13,6 @@ import app.tauri.plugin.Invoke
 import app.tauri.plugin.JSObject
 import app.tauri.plugin.Plugin
 import com.google.gson.Gson
-import com.google.gson.annotations.SerializedName
 import com.zcapi
 
 @InvokeArg
@@ -54,21 +53,48 @@ class SerialsPathIndex{
     var index: Int = 0
 }
 
+@InvokeArg
+class SettingConfig {
+    var enable: Boolean = true
+}
+
+@InvokeArg
+class FileManager {
+    var enable: Boolean = true
+}
+
+/**
+ * vending board plugin of tauri for android use kotlin
+ * @author: <cleveng@gmail.com>
+ *
+ * @constructor creates a plugin for tauri
+ * @property activity of main activity
+ */
 @TauriPlugin
 class BoardPlugin(private val activity: Activity): Plugin(activity) {
-    // 卓策安卓开发板
+    /**
+     * ZC: the control board of screen, from`卓策`
+     */
     private val zc = zcapi()
 
     // wenzoom开发板 | 鼎商开发板
     private val finder = SerialPortFinder()
     private var serialsPathIndex = 0
 
-    // https://v2.tauri.app/zh-cn/develop/plugins/develop-mobile/#%E6%8F%92%E4%BB%B6%E9%85%8D%E7%BD%AE
+    /**
+     * the init method of the plugin
+     *
+     * @document https://v2.tauri.app/zh-cn/develop/plugins/develop-mobile/#%E6%8F%92%E4%BB%B6%E9%85%8D%E7%BD%AE
+     * @param webView the view of main activity
+     * @return void
+     */
     override fun load(webView: WebView) {
         this.zc.getContext(webView.context)
 
         /**
-         * @description 设置状态栏 | 设置手势状态栏
+         * check the control board of screen
+         *
+         * @return void
          */
         this.zc.buildModel.let { value ->
             if (value.startsWith("zc") || value.startsWith("ZC")) {
@@ -79,14 +105,20 @@ class BoardPlugin(private val activity: Activity): Plugin(activity) {
     }
 
     /**
-     * 应用程序重新启动
+     * event of the app relaunch
+     *
+     * @param intent the intent
+     * @return void
      */
     override fun onNewIntent(intent: Intent) {
-        // handle new intent event
+        // TODO: implement
     }
 
     /**
-     * ping
+     * command of `ping`
+     *
+     * @param invoke to invoke [PingArgs] { enable: "" }
+     * @return json
      */
     @Command
     fun ping(invoke: Invoke) {
@@ -97,7 +129,10 @@ class BoardPlugin(private val activity: Activity): Plugin(activity) {
     }
 
     /**
-     * reboot the machine by board
+     * command of `reboot`
+     *
+     * @param invoke to invoke [none] { }
+     * @return void
      */
     @Command
     fun reboot(invoke: Invoke) {
@@ -106,7 +141,10 @@ class BoardPlugin(private val activity: Activity): Plugin(activity) {
     }
 
     /**
-     * shutdown the machine by board
+     * command of `shutdown`
+     *
+     * @param invoke to invoke [none] { }
+     * @return void
      */
     @Command
     fun shutdown(invoke: Invoke) {
@@ -115,7 +153,10 @@ class BoardPlugin(private val activity: Activity): Plugin(activity) {
     }
 
     /**
-     * set status bar on or off by board
+     * command of `setStatusBar`
+     *
+     * @param invoke to invoke [StatusBar] { enable: true }
+     * @return void
      */
     @Command
     fun setStatusBar(invoke: Invoke) {
@@ -125,7 +166,10 @@ class BoardPlugin(private val activity: Activity): Plugin(activity) {
     }
 
     /**
-     * set gesture status bar on or off by board
+     * command of `setGestureStatusBar`
+     *
+     * @param invoke to invoke [GestureStatusBar] { enable: true }
+     * @return void
      */
     @Command
     fun setGestureStatusBar(invoke: Invoke) {
@@ -135,7 +179,11 @@ class BoardPlugin(private val activity: Activity): Plugin(activity) {
     }
 
     /**
-     * get machine build model by board
+     * command of `getBuildModel`
+     *
+     * @param invoke to invoke [none] { }
+     * @return json { value: "" }
+     * @deprecated 1.5.0, use `getBuildEnv` instead
      */
     @Command
     fun getBuildModel(invoke: Invoke) {
@@ -147,7 +195,11 @@ class BoardPlugin(private val activity: Activity): Plugin(activity) {
     }
 
     /**
-     * get machine build serial by board
+     * command of `getBuildSerial`
+     *
+     * @param invoke to invoke [none] { }
+     * @return json { value: "" }
+     * @deprecated 1.5.0, use `getBuildEnv` instead
      */
     @Command
     fun getBuildSerial(invoke: Invoke) {
@@ -159,7 +211,10 @@ class BoardPlugin(private val activity: Activity): Plugin(activity) {
     }
 
     /**
-     * set lcd on or off by board
+     * command of `setLcdOnOff`
+     *
+     * @param invoke to invoke [LcdOnOff] { enable: true }
+     * @return void
      */
     @Command
     fun setLcdOnOff(invoke: Invoke) {
@@ -169,8 +224,10 @@ class BoardPlugin(private val activity: Activity): Plugin(activity) {
     }
 
     /**
-     * set power on or off time
-     * 设定的开机与关机时间必须超过当前时间
+     * command of `setPowerOnOffTime`
+     *
+     * @param invoke to invoke [PowerOnOffTime] { enable: true, onTime: 123, offTime: 123 }
+     * @return json { value: "success" }
      */
     @Command
     fun setPowerOnOffTime(invoke: Invoke) {
@@ -189,20 +246,34 @@ class BoardPlugin(private val activity: Activity): Plugin(activity) {
     }
 
     /**
-     * open setting config
+     * command of `openSettingConfig`
+     *
+     * @param invoke to invoke [SettingConfig] { enable: true }
+     * @return void
      */
     @Command
     fun openSettingConfig(invoke: Invoke) {
+        val argv = invoke.parseArgs(SettingConfig::class.java)
+        this.zc.setStatusBar(argv.enable)
+        this.zc.setGestureStatusBar(argv.enable)
+
         val intent = Intent(Settings.ACTION_SETTINGS)
         startActivityForResult(invoke, intent, "")
         invoke.resolve()
     }
 
     /**
-     * open file manager
+     * command of `openFileManager`
+     *
+     * @param invoke to invoke [FileManager] { enable: true }
+     * @return void
      */
     @Command
     fun openFileManager(invoke: Invoke) {
+        val argv = invoke.parseArgs(FileManager::class.java)
+        this.zc.setStatusBar(argv.enable)
+        this.zc.setGestureStatusBar(argv.enable)
+
         val intent = Intent(Intent.ACTION_GET_CONTENT).apply {
             type = "image/*"
         }
@@ -211,7 +282,10 @@ class BoardPlugin(private val activity: Activity): Plugin(activity) {
     }
 
     /**
-     * set app brightness
+     * command of `setAppBrightness`
+     *
+     * @param invoke to invoke [AppBrightness] { value: 1, isScreen: true }
+     * @return void
      */
     @Command
     fun setAppBrightness(invoke: Invoke) {
@@ -254,7 +328,11 @@ class BoardPlugin(private val activity: Activity): Plugin(activity) {
     }
 
     /**
-     * get serial paths
+     * command of `getSerialPaths`
+     *
+     * @param invoke to invoke [none] { }
+     * @return json { value: string[] }
+     * @deprecated 1.5.0, use `getSerialDevicesPath` instead
      */
     @Command
     fun getSerialPaths(invoke: Invoke) {
@@ -268,7 +346,10 @@ class BoardPlugin(private val activity: Activity): Plugin(activity) {
     }
 
     /**
-     * get serial devices path
+     * command of `getSerialDevicesPath`
+     *
+     * @param invoke to invoke [none] { }
+     * @return json { value: SerialDevice[] }
      */
     @Command
     fun getSerialDevicesPath(invoke: Invoke) {
@@ -290,12 +371,15 @@ class BoardPlugin(private val activity: Activity): Plugin(activity) {
             result.add(item)
         }
 
-        ret.put("value", gson.toJson(result))
+        ret.put("value", gson.toJson(devices))
         invoke.resolve(ret)
     }
 
     /**
-     * get all devices path
+     * command of `getAllDevicesPath`
+     *
+     * @param invoke to invoke [none] { }
+     * @return json { value: string[] }
      */
     @Command
     fun getAllDevicesPath(invoke: Invoke) {
@@ -306,12 +390,60 @@ class BoardPlugin(private val activity: Activity): Plugin(activity) {
     }
 
     /**
-     * set serials path index
+     * command of `setSerialsPathIndex`
+     *
+     * @param invoke to invoke [SerialsPathIndex] { index: 1 }
+     * @return void
+     * @since 1.4.0-beta.11
      */
     @Command
     fun setSerialsPathIndex(invoke: Invoke) {
         val args = invoke.parseArgs(SerialsPathIndex::class.java)
         this.serialsPathIndex = args.index
+        invoke.resolve()
+    }
+
+    /**
+     * command of `getBuildEnv`
+     *
+     * @param invoke to invoke [none] { }
+     * @return void
+     * @since 1.4.0-beta.12
+     */
+    @Command
+    fun getBuildEnv(invoke: Invoke) {
+        val gson = Gson()
+        val ret = JSObject()
+
+        val result: Env = Env(
+            sdkVersion = Build.VERSION.SDK_INT,
+            androidVersion = Build.VERSION.RELEASE,
+            serialSn = this.zc.buildSerial,
+            modelNo = this.zc.buildModel,
+        )
+
+        ret.put("value", gson.toJson(result))
+        invoke.resolve(ret)
+    }
+
+    /**
+     * command of `openMainActivity`
+     *
+     * @param invoke to invoke [none] { }
+     * @return void
+     * @since 1.4.0-beta.14
+     */
+    @Command
+    fun openMainActivity(invoke: Invoke) {
+        this.zc.setStatusBar(true)
+        this.zc.setGestureStatusBar(true)
+
+        val intent = Intent(Intent.ACTION_MAIN).apply {
+            addCategory(Intent.CATEGORY_HOME)
+            flags = Intent.FLAG_ACTIVITY_NEW_TASK
+        }
+        startActivityForResult(invoke, intent, "")
+
         invoke.resolve()
     }
 }

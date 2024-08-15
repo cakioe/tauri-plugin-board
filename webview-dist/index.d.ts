@@ -123,7 +123,10 @@ export declare function setPowerOnOffTime(options?: PowerOnOffTime): Promise<str
  *
  * @since 1.2.6
  */
-export declare function openSettingConfig(): Promise<void>;
+export interface SettingConfig {
+    enable: boolean;
+}
+export declare function openSettingConfig(options: FileManager): Promise<void>;
 /**
  * @example
  * ```typescript
@@ -133,7 +136,10 @@ export declare function openSettingConfig(): Promise<void>;
  *
  * @since 1.2.6
  */
-export declare function openFileManager(): Promise<void>;
+export interface FileManager {
+    enable: boolean;
+}
+export declare function openFileManager(options: FileManager): Promise<void>;
 /**
  * @example
  * ```typescript
@@ -197,3 +203,29 @@ export interface SerialsPathIndex {
     index: number;
 }
 export declare function setSerialsPathIndex(options: SerialsPathIndex): Promise<void>;
+/**
+ * @example
+ * ```typescript
+ * import { getBuildEnv } from '@cakioe/tauri-plugin-board';
+ * await getBuildEnv();
+ * ```
+ *
+ * @since 1.4.0-beta.12
+ */
+export interface EnvConfig {
+    sdk_version: number;
+    android_version: string;
+    serial_sn: string;
+    model_no: string;
+}
+export declare function getBuildEnv(): Promise<EnvConfig>;
+/**
+ * @example
+ * ```typescript
+ * import { openMainActivity } from '@cakioe/tauri-plugin-board';
+ * await openMainActivity();
+ * ```
+ *
+ * @since 1.4.0-beta.14
+ */
+export declare function openMainActivity(): Promise<void>;

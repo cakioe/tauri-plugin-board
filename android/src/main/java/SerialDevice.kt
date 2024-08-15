@@ -2,10 +2,10 @@ package com.plugin.board
 
 import android.serialport.SerialPortFinder
 import androidx.annotation.Keep
+import com.google.gson.annotations.SerializedName
 import java.io.BufferedReader
 import java.io.IOException
 import java.io.InputStreamReader
-import com.google.gson.annotations.SerializedName
 
 /***
  * GSON<https://stackoverflow.com/a/46156695/21185153>

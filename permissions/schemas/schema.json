@@ -309,6 +309,20 @@
           ]
         },
         {
+          "description": "allow-get-build-env -> Enables the get_build_env command without any pre-configured scope.",
+          "type": "string",
+          "enum": [
+            "allow-get-build-env"
+          ]
+        },
+        {
+          "description": "deny-get-build-env -> Denies the get_build_env command without any pre-configured scope.",
+          "type": "string",
+          "enum": [
+            "deny-get-build-env"
+          ]
+        },
+        {
           "description": "allow-get-build-model -> Enables the get_build_model command without any pre-configured scope.",
           "type": "string",
           "enum": [
@@ -376,6 +390,20 @@
           "type": "string",
           "enum": [
             "deny-open-file-manager"
+          ]
+        },
+        {
+          "description": "allow-open-main-activity -> Enables the open_main_activity command without any pre-configured scope.",
+          "type": "string",
+          "enum": [
+            "allow-open-main-activity"
+          ]
+        },
+        {
+          "description": "deny-open-main-activity -> Denies the open_main_activity command without any pre-configured scope.",
+          "type": "string",
+          "enum": [
+            "deny-open-main-activity"
           ]
         },
         {

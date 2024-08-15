@@ -40,7 +40,6 @@ export async function reboot(): Promise<void> {
 export interface StatusBar {
   enable?: boolean
 }
-
 export async function setStatusBar(options?: StatusBar): Promise<void> {
   await invoke('plugin:board|set_status_bar', { ...options })
 }
@@ -58,7 +57,6 @@ export async function setStatusBar(options?: StatusBar): Promise<void> {
 export interface GestureStatusBar {
   enable?: boolean
 }
-
 export async function setGestureStatusBar(options?: GestureStatusBar): Promise<void> {
   await invoke('plugin:board|set_gesture_status_bar', { ...options })
 }
@@ -79,7 +77,6 @@ export async function setGestureStatusBar(options?: GestureStatusBar): Promise<v
 export interface JSObject {
   value: string
 }
-
 export async function getBuildModel(): Promise<string> {
   return await invoke<JSObject>('plugin:board|get_build_model').then(r => r.value)
 }
@@ -112,7 +109,6 @@ export async function getBuildSerial(): Promise<string> {
 export interface LcdOnOff {
   enable?: boolean
 }
-
 export async function setLcdOnOff(options?: LcdOnOff): Promise<void> {
   await invoke('plugin:board|set_lcd_on_off', { ...options })
 }
@@ -147,7 +143,6 @@ export interface PowerOnOffTime {
   onTime: number // year,month,day,hour,minute
   offTime: number // year,month,day,hour,minute
 }
-
 export async function setPowerOnOffTime(options?: PowerOnOffTime): Promise<string> {
   return await invoke<JSObject>('plugin:board|set_power_on_off_time', { ...options }).then(r => r.value)
 }
@@ -161,8 +156,11 @@ export async function setPowerOnOffTime(options?: PowerOnOffTime): Promise<strin
  *
  * @since 1.2.6
  */
-export async function openSettingConfig(): Promise<void> {
-  await invoke('plugin:board|open_setting_config')
+export interface SettingConfig {
+  enable: boolean
+}
+export async function openSettingConfig(options: FileManager): Promise<void> {
+  await invoke('plugin:board|open_setting_config', { ...options })
 }
 
 /**
@@ -174,8 +172,11 @@ export async function openSettingConfig(): Promise<void> {
  *
  * @since 1.2.6
  */
-export async function openFileManager(): Promise<void> {
-  await invoke('plugin:board|open_file_manager')
+export interface FileManager {
+  enable: boolean
+}
+export async function openFileManager(options: FileManager): Promise<void> {
+  await invoke('plugin:board|open_file_manager', { ...options })
 }
 
 /**
@@ -239,6 +240,7 @@ export async function getSerialDevicesPath(): Promise<SerialDevice[]> {
 export async function getAllDevicesPath(): Promise<string[]> {
   return await invoke<Record<string, string>>('plugin:board|get_all_devices_path').then(r => JSON.parse(r.value))
 }
+
 /**
  * @example
  * ```typescript
@@ -253,4 +255,36 @@ export interface SerialsPathIndex {
 }
 export async function setSerialsPathIndex(options: SerialsPathIndex): Promise<void> {
   await invoke('plugin:board|set_serials_path_index', { ...options })
+}
+
+/**
+ * @example
+ * ```typescript
+ * import { getBuildEnv } from '@cakioe/tauri-plugin-board';
+ * await getBuildEnv();
+ * ```
+ *
+ * @since 1.4.0-beta.12
+ */
+export interface EnvConfig {
+  sdk_version: number
+  android_version: string
+  serial_sn: string
+  model_no: string
+}
+export async function getBuildEnv(): Promise<EnvConfig> {
+  return await invoke<Record<string, string>>('plugin:board|get_build_env').then(r => JSON.parse(r.value) as unknown as EnvConfig)
+}
+
+/**
+ * @example
+ * ```typescript
+ * import { openMainActivity } from '@cakioe/tauri-plugin-board';
+ * await openMainActivity();
+ * ```
+ *
+ * @since 1.4.0-beta.14
+ */
+export async function openMainActivity(): Promise<void> {
+  await invoke('plugin:board|open_main_activity')
 }

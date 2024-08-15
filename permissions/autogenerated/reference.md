@@ -37,6 +37,32 @@ Denies the get_all_devices_path command without any pre-configured scope.
 <tr>
 <td>
 
+`board:allow-get-build-env`
+
+</td>
+<td>
+
+Enables the get_build_env command without any pre-configured scope.
+
+</td>
+</tr>
+
+<tr>
+<td>
+
+`board:deny-get-build-env`
+
+</td>
+<td>
+
+Denies the get_build_env command without any pre-configured scope.
+
+</td>
+</tr>
+
+<tr>
+<td>
+
 `board:allow-get-build-model`
 
 </td>
@@ -160,6 +186,32 @@ Enables the open_file_manager command without any pre-configured scope.
 <td>
 
 Denies the open_file_manager command without any pre-configured scope.
+
+</td>
+</tr>
+
+<tr>
+<td>
+
+`board:allow-open-main-activity`
+
+</td>
+<td>
+
+Enables the open_main_activity command without any pre-configured scope.
+
+</td>
+</tr>
+
+<tr>
+<td>
+
+`board:deny-open-main-activity`
+
+</td>
+<td>
+
+Denies the open_main_activity command without any pre-configured scope.
 
 </td>
 </tr>
