@@ -249,10 +249,10 @@ export async function getAllDevicesPath(): Promise<string[]> {
  * @since 1.4.0-beta.5
  */
 export interface SerialsPathIndex {
-  index: number
+  path: string
 }
-export async function setSerialsPathIndex(options: SerialsPathIndex): Promise<void> {
-  await invoke('plugin:board|set_serials_path_index', { ...options })
+export async function setSerialsPathIndex(options: SerialsPathIndex): Promise<string> {
+  return await invoke<Record<string, string>>('plugin:board|set_serials_path_index', { ...options }).then(r => r.value)
 }
 
 /**

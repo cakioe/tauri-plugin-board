@@ -12,6 +12,9 @@ import app.tauri.annotation.TauriPlugin
 import app.tauri.plugin.Invoke
 import app.tauri.plugin.JSObject
 import app.tauri.plugin.Plugin
+import cc.uling.usdk.USDK
+import cc.uling.usdk.board.wz.para.SVReplyPara
+import cc.uling.usdk.constants.ErrorConst
 import com.google.gson.Gson
 import com.zcapi
 
@@ -50,7 +53,7 @@ class AppBrightness {
 
 @InvokeArg
 class SerialsPathIndex{
-    var index: Int = 0
+    var path: String? = null
 }
 
 @InvokeArg
@@ -81,6 +84,9 @@ class BoardPlugin(private val activity: Activity): Plugin(activity) {
     private val finder = SerialPortFinder()
     private var serialsPathIndex = 0
 
+    //
+    private var udk = USDK.getInstance().create("default")
+
     /**
      * the init method of the plugin
      *
@@ -89,6 +95,8 @@ class BoardPlugin(private val activity: Activity): Plugin(activity) {
      * @return void
      */
     override fun load(webView: WebView) {
+        super.load(webView)
+
         this.zc.getContext(webView.context)
         this.initTouchScreen()
     }
@@ -396,15 +404,35 @@ class BoardPlugin(private val activity: Activity): Plugin(activity) {
     /**
      * command of `setSerialsPathIndex`
      *
-     * @param invoke to invoke [SerialsPathIndex] { index: 1 }
+     * @param invoke to invoke [SerialsPathIndex] { path: "" }
      * @return void
      * @since 1.4.0-beta.11
      */
     @Command
     fun setSerialsPathIndex(invoke: Invoke) {
+        val mBoard = this.udk
         val args = invoke.parseArgs(SerialsPathIndex::class.java)
-        this.serialsPathIndex = args.index
-        invoke.resolve()
+
+        val commid = if (args.path != null) {
+            args.path
+        } else {
+            this.finder.getAvailableSerialDevices()[0]
+        }
+
+        mBoard.EF_OpenDev(commid, 9600)
+
+        val ret = JSObject()
+        val para = SVReplyPara(1)
+        mBoard.GetSoftwareVersion(para)
+        if (para.isOK) {
+            ret.put("value", para.version)
+            mBoard.EF_CloseDev()
+            invoke.resolve()
+            return
+        }
+
+        mBoard.EF_CloseDev()
+        throw Exception("setSerialsPathIndex failed")
     }
 
     /**

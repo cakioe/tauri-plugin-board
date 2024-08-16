@@ -199,9 +199,9 @@ export declare function getAllDevicesPath(): Promise<string[]>;
  * @since 1.4.0-beta.5
  */
 export interface SerialsPathIndex {
-    index: number;
+    path: string;
 }
-export declare function setSerialsPathIndex(options: SerialsPathIndex): Promise<void>;
+export declare function setSerialsPathIndex(options: SerialsPathIndex): Promise<string>;
 /**
  * @example
  * ```typescript

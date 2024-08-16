@@ -122,7 +122,7 @@ async function getAllDevicesPath() {
     return await invoke('plugin:board|get_all_devices_path').then(r => JSON.parse(r.value));
 }
 async function setSerialsPathIndex(options) {
-    await invoke('plugin:board|set_serials_path_index', { ...options });
+    return await invoke('plugin:board|set_serials_path_index', { ...options }).then(r => r.value);
 }
 async function getBuildEnv() {
     return await invoke('plugin:board|get_build_env').then(r => JSON.parse(r.value));
