@@ -90,18 +90,7 @@ class BoardPlugin(private val activity: Activity): Plugin(activity) {
      */
     override fun load(webView: WebView) {
         this.zc.getContext(webView.context)
-
-        /**
-         * check the control board of screen
-         *
-         * @return void
-         */
-        this.zc.buildModel.let { value ->
-            if (value.startsWith("zc") || value.startsWith("ZC")) {
-                this.zc.setStatusBar(false)
-                this.zc.setGestureStatusBar(false)
-            }
-        }
+        this.initTouchScreen()
     }
 
     /**
@@ -111,7 +100,22 @@ class BoardPlugin(private val activity: Activity): Plugin(activity) {
      * @return void
      */
     override fun onNewIntent(intent: Intent) {
-        // TODO: implement
+        this.initTouchScreen()
+    }
+
+    /**
+     * initialization of touch screen
+     *
+     * @param
+     * @return void
+     */
+    private fun initTouchScreen() {
+        this.zc.buildModel.let { value ->
+            if (value.startsWith("zc") || value.startsWith("ZC")) {
+                this.zc.setStatusBar(false)
+                this.zc.setGestureStatusBar(false)
+            }
+        }
     }
 
     /**
@@ -356,12 +360,12 @@ class BoardPlugin(private val activity: Activity): Plugin(activity) {
         val gson = Gson()
         val ret = JSObject()
 
-        val result = mutableListOf<SerialDevice>()
         val devices = this.finder.getAvailableSerialDevices()
         if (this.serialsPathIndex !in devices.indices) {
             this.serialsPathIndex = 0
         }
 
+        val result = mutableListOf<SerialDevice>()
         devices.forEachIndexed { index, path ->
             val item = SerialDevice(
                 path = path,
@@ -371,7 +375,7 @@ class BoardPlugin(private val activity: Activity): Plugin(activity) {
             result.add(item)
         }
 
-        ret.put("value", gson.toJson(devices))
+        ret.put("value", gson.toJson(result))
         invoke.resolve(ret)
     }
 

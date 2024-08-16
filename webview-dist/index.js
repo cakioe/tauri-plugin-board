@@ -31,6 +31,19 @@ async function setStatusBar(options) {
 async function setGestureStatusBar(options) {
     await invoke('plugin:board|set_gesture_status_bar', { ...options });
 }
+/**
+ * @example
+ * ```typescript
+ * import { getBuildModel } from '@cakioe/tauri-plugin-board';
+ * const no = await getBuildModel();
+ * if (no) {
+ *    // use the no string here
+ * }
+ * ```
+ *
+ * @since 1.2.0
+ * @deprecated 1.5.0, use `getBuildEnv` instead
+ */
 async function getBuildModel() {
     return await invoke('plugin:board|get_build_model').then(r => r.value);
 }
@@ -45,6 +58,7 @@ async function getBuildModel() {
  * ```
  *
  * @since 1.2.0
+ * @deprecated 1.5.0, use `getBuildEnv` instead
  */
 async function getBuildSerial() {
     return await invoke('plugin:board|get_build_serial').then(r => r.value);

@@ -72,13 +72,10 @@ export async function setGestureStatusBar(options?: GestureStatusBar): Promise<v
  * ```
  *
  * @since 1.2.0
+ * @deprecated 1.5.0, use `getBuildEnv` instead
  */
-
-export interface JSObject {
-  value: string
-}
 export async function getBuildModel(): Promise<string> {
-  return await invoke<JSObject>('plugin:board|get_build_model').then(r => r.value)
+  return await invoke<Record<string, string>>('plugin:board|get_build_model').then(r => r.value)
 }
 
 /**
@@ -92,9 +89,10 @@ export async function getBuildModel(): Promise<string> {
  * ```
  *
  * @since 1.2.0
+ * @deprecated 1.5.0, use `getBuildEnv` instead
  */
 export async function getBuildSerial(): Promise<string> {
-  return await invoke<JSObject>('plugin:board|get_build_serial').then(r => r.value)
+  return await invoke<Record<string, string>>('plugin:board|get_build_serial').then(r => r.value)
 }
 
 /**
@@ -126,7 +124,7 @@ export async function setLcdOnOff(options?: LcdOnOff): Promise<void> {
  * @since 1.2.0
  */
 export async function ping(): Promise<string> {
-  return await invoke<JSObject>('plugin:board|ping').then(r => r.value)
+  return await invoke<Record<string, string>>('plugin:board|ping').then(r => r.value)
 }
 
 /**
@@ -144,7 +142,7 @@ export interface PowerOnOffTime {
   offTime: number // year,month,day,hour,minute
 }
 export async function setPowerOnOffTime(options?: PowerOnOffTime): Promise<string> {
-  return await invoke<JSObject>('plugin:board|set_power_on_off_time', { ...options }).then(r => r.value)
+  return await invoke<Record<string, string>>('plugin:board|set_power_on_off_time', { ...options }).then(r => r.value)
 }
 
 /**
@@ -193,7 +191,7 @@ export interface AppBrightness {
   isScreen: boolean
 }
 export async function setAppBrightness(options?: AppBrightness): Promise<string> {
-  return await invoke<JSObject>('plugin:board|set_app_brightness', { ...options }).then(r => r.value)
+  return await invoke<Record<string, string>>('plugin:board|set_app_brightness', { ...options }).then(r => r.value)
 }
 
 /**

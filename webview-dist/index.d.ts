@@ -55,10 +55,8 @@ export declare function setGestureStatusBar(options?: GestureStatusBar): Promise
  * ```
  *
  * @since 1.2.0
+ * @deprecated 1.5.0, use `getBuildEnv` instead
  */
-export interface JSObject {
-    value: string;
-}
 export declare function getBuildModel(): Promise<string>;
 /**
  * @example
@@ -71,6 +69,7 @@ export declare function getBuildModel(): Promise<string>;
  * ```
  *
  * @since 1.2.0
+ * @deprecated 1.5.0, use `getBuildEnv` instead
  */
 export declare function getBuildSerial(): Promise<string>;
 /**

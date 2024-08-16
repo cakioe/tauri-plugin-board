@@ -25,7 +25,7 @@
     *;
 }
 
--keep class com.plugin.board.Env {
+-keep class Env {
     *;
 }
 
