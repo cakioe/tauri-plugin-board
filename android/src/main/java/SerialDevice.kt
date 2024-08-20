@@ -13,16 +13,19 @@ import java.io.InputStreamReader
 @Keep
 data class SerialDevice(
     @SerializedName("path")
-    val path: String,
+    var path: String,
 
     @SerializedName("active")
-    val active: Boolean,
+    var active: Boolean,
 
     @SerializedName("index")
-    val index: Int
+    var index: Int,
+
+    @SerializedName("disabled")
+    var disabled: Boolean
 )
 
-fun SerialPortFinder.getAvailableSerialDevices(index: Int = 0) :MutableList<String> {
+fun SerialPortFinder.getAvailableSerialDevices():MutableList<String> {
     val result = mutableListOf<String>()
     try {
         val command = arrayOf("sh", "-c", "ls -l /dev/tty*")

@@ -141,6 +141,18 @@ async function getBuildEnv() {
 async function openMainActivity() {
     await core.invoke('plugin:board|open_main_activity');
 }
+/**
+ * @example
+ * ```typescript
+ * import { takeScreenShot } from '@cakioe/tauri-plugin-board';
+ * await takeScreenShot();
+ * ```
+ *
+ * @since 1.4.0-beta.19
+ */
+async function takeScreenShot() {
+    return await core.invoke('plugin:board|take_screen_shot').then(r => r.value);
+}
 
 exports.getAllDevicesPath = getAllDevicesPath;
 exports.getBuildEnv = getBuildEnv;
@@ -160,3 +172,4 @@ exports.setPowerOnOffTime = setPowerOnOffTime;
 exports.setSerialsPathIndex = setSerialsPathIndex;
 exports.setStatusBar = setStatusBar;
 exports.shutdown = shutdown;
+exports.takeScreenShot = takeScreenShot;

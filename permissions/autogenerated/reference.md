@@ -475,4 +475,30 @@ Denies the shutdown command without any pre-configured scope.
 
 </td>
 </tr>
+
+<tr>
+<td>
+
+`board:allow-take-screen-shot`
+
+</td>
+<td>
+
+Enables the take_screen_shot command without any pre-configured scope.
+
+</td>
+</tr>
+
+<tr>
+<td>
+
+`board:deny-take-screen-shot`
+
+</td>
+<td>
+
+Denies the take_screen_shot command without any pre-configured scope.
+
+</td>
+</tr>
 </table>

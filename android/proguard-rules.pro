@@ -25,10 +25,11 @@
     *;
 }
 
--keep class Env {
+-keep class com.plugin.board.BuildEnv {
     *;
 }
 
 -keep class cc.uling.usdk.** {
     *;
 }
+-dontoptimize

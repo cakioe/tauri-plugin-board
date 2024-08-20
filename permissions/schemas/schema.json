@@ -545,6 +545,20 @@
           "enum": [
             "deny-shutdown"
           ]
+        },
+        {
+          "description": "allow-take-screen-shot -> Enables the take_screen_shot command without any pre-configured scope.",
+          "type": "string",
+          "enum": [
+            "allow-take-screen-shot"
+          ]
+        },
+        {
+          "description": "deny-take-screen-shot -> Denies the take_screen_shot command without any pre-configured scope.",
+          "type": "string",
+          "enum": [
+            "deny-take-screen-shot"
+          ]
         }
       ]
     }

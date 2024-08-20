@@ -177,6 +177,7 @@ export interface SerialDevice {
     path: string;
     active: boolean;
     index: number;
+    disabled: boolean;
 }
 export declare function getSerialDevicesPath(): Promise<SerialDevice[]>;
 /**
@@ -211,13 +212,19 @@ export declare function setSerialsPathIndex(options: SerialsPathIndex): Promise<
  *
  * @since 1.4.0-beta.12
  */
-export interface EnvConfig {
+export interface BuildEnv {
     sdk_version: number;
     android_version: string;
     serial_sn: string;
     model_no: string;
+    screen_width: number;
+    screen_height: number;
+    commid: string;
+    baudrate: number;
+    status_bar_on: string;
+    gesture_status_bar_on: string;
 }
-export declare function getBuildEnv(): Promise<EnvConfig>;
+export declare function getBuildEnv(): Promise<BuildEnv>;
 /**
  * @example
  * ```typescript
@@ -228,3 +235,13 @@ export declare function getBuildEnv(): Promise<EnvConfig>;
  * @since 1.4.0-beta.14
  */
 export declare function openMainActivity(): Promise<void>;
+/**
+ * @example
+ * ```typescript
+ * import { takeScreenShot } from '@cakioe/tauri-plugin-board';
+ * await takeScreenShot();
+ * ```
+ *
+ * @since 1.4.0-beta.19
+ */
+export declare function takeScreenShot(): Promise<string>;

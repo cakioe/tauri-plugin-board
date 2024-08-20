@@ -1,11 +1,14 @@
 package com.plugin.board
 
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Intent
 import android.os.Build
 import android.provider.Settings
 import android.serialport.SerialPortFinder
+import android.util.DisplayMetrics
 import android.webkit.WebView
+import android.widget.Toast
 import app.tauri.annotation.Command
 import app.tauri.annotation.InvokeArg
 import app.tauri.annotation.TauriPlugin
@@ -13,10 +16,12 @@ import app.tauri.plugin.Invoke
 import app.tauri.plugin.JSObject
 import app.tauri.plugin.Plugin
 import cc.uling.usdk.USDK
+import cc.uling.usdk.board.UBoard
 import cc.uling.usdk.board.wz.para.SVReplyPara
 import cc.uling.usdk.constants.ErrorConst
 import com.google.gson.Gson
 import com.zcapi
+import kotlinx.coroutines.*
 
 @InvokeArg
 class StatusBar {
@@ -66,6 +71,9 @@ class FileManager {
     var enable: Boolean = true
 }
 
+@SuppressLint("SdCardPath")
+const val SDCARD_DIR = "/sdcard"
+
 /**
  * vending board plugin of tauri for android use kotlin
  * @author: <cleveng@gmail.com>
@@ -76,16 +84,26 @@ class FileManager {
 @TauriPlugin
 class BoardPlugin(private val activity: Activity): Plugin(activity) {
     /**
-     * ZC: the control board of screen, from`卓策`
+     * displayer: the display board of screen, from`zc`
      */
-    private val zc = zcapi()
+    private val displayer = zcapi()
 
-    // wenzoom开发板 | 鼎商开发板
+    // wish-m2301
     private val finder = SerialPortFinder()
     private var serialsPathIndex = 0
 
-    //
-    private var udk = USDK.getInstance().create("default")
+    /**
+     * the driver of the board
+     */
+    private var commid: String = "/dev/ttyS0"
+    private var baudrate: Int = 9600
+    private lateinit var driver: UBoard
+    private lateinit var serialsDevice: MutableList<SerialDevice>
+
+    /**
+     * the env of the android build
+     */
+    private lateinit var buildEnv: BuildEnv
 
     /**
      * the init method of the plugin
@@ -94,11 +112,25 @@ class BoardPlugin(private val activity: Activity): Plugin(activity) {
      * @param webView the view of main activity
      * @return void
      */
+    @OptIn(DelicateCoroutinesApi::class)
     override fun load(webView: WebView) {
         super.load(webView)
 
-        this.zc.getContext(webView.context)
-        this.initTouchScreen()
+        // initialization of the env
+        this.initBuildEnv()
+
+        // initialization of the displayer
+        this.displayer.getContext(webView.context)
+        this.initDisplayer(false)
+
+        // initialization of the driver
+        USDK.getInstance().init(activity.application)
+        GlobalScope.launch(Dispatchers.IO) {
+            // 在后台线程加载数据
+            async {
+                initSerialDriver()
+            }.await()
+        }
     }
 
     /**
@@ -108,20 +140,101 @@ class BoardPlugin(private val activity: Activity): Plugin(activity) {
      * @return void
      */
     override fun onNewIntent(intent: Intent) {
-        this.initTouchScreen()
+        this.initBuildEnv()
+        this.initDisplayer(false)
     }
 
     /**
-     * initialization of touch screen
+     * initialization of the driver
+     */
+    private fun initSerialDriver() {
+        val paths = SerialPortFinder().getAvailableSerialDevices()
+        val result = mutableListOf<SerialDevice>()
+
+        try {
+            paths.forEachIndexed { index, path ->
+                val item: SerialDevice = SerialDevice(
+                    path = path,
+                    index = index + 1,
+                    active = false,
+                    disabled = true
+                )
+
+                val board = USDK.getInstance().create(path)
+                board.let { it ->
+                    val resp = it.EF_OpenDev(path, this.baudrate)
+                    if (resp != ErrorConst.MDB_ERR_NO_ERR) {
+                        result.add(item)
+                        return@forEachIndexed
+                    }
+
+                    val para = SVReplyPara(1)
+                    it.GetSoftwareVersion(para)
+                    if (para.isOK && this.commid == "/dev/ttyS0") {
+                        item.active = para.isOK
+                        item.disabled = false
+                        this.commid = path
+                        this.driver = it
+                    }
+                    result.add(item)
+                }
+            }
+
+            this.serialsDevice = result
+        } catch (e: Exception) {
+            Toast.makeText(activity, e.message, Toast.LENGTH_SHORT).show()
+            throw e
+        }
+    }
+
+    /**
+     * initialization of env
      *
      * @param
      * @return void
      */
-    private fun initTouchScreen() {
-        this.zc.buildModel.let { value ->
+    private fun initBuildEnv() {
+        this.buildEnv = BuildEnv(
+            sdkVersion = Build.VERSION.SDK_INT,
+            androidVersion = Build.VERSION.RELEASE,
+            serialSn = this.displayer.buildSerial,
+            modelNo = this.displayer.buildModel,
+            screenWidth = 0,
+            screenHeight =  0,
+            baudrate = this.baudrate,
+            commid = this.commid,
+            brightness = 255,
+        )
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+            // [system bars]<https://stackoverflow.com/a/63409619/21185153>
+            val windowMetrics = activity.windowManager.currentWindowMetrics
+            this.buildEnv.screenHeight = windowMetrics.bounds.height()
+            this.buildEnv.screenWidth = windowMetrics.bounds.width()
+        } else {
+            DisplayMetrics().let  { item ->
+                @Suppress("DEPRECATION")
+                activity.windowManager.defaultDisplay.getMetrics(item).let {
+                    this.buildEnv.screenHeight = item.widthPixels
+                    this.buildEnv.screenWidth = item.heightPixels
+                }
+            }
+        }
+    }
+
+    /**
+     * initialization of displayer
+     *
+     * @param
+     * @return void
+     */
+    private fun initDisplayer(enable: Boolean = false) {
+        this.buildEnv.modelNo.let { value ->
             if (value.startsWith("zc") || value.startsWith("ZC")) {
-                this.zc.setStatusBar(false)
-                this.zc.setGestureStatusBar(false)
+                this.displayer.setStatusBar(enable)
+                this.displayer.setGestureStatusBar(enable)
+
+                this.buildEnv.statusBarOn = if (enable) "1"  else "0"
+                this.buildEnv.gestureStatusBarOn = if (enable) "1"  else "0"
             }
         }
     }
@@ -131,6 +244,7 @@ class BoardPlugin(private val activity: Activity): Plugin(activity) {
      *
      * @param invoke to invoke [PingArgs] { enable: "" }
      * @return json
+     * @deprecated 1.5.0
      */
     @Command
     fun ping(invoke: Invoke) {
@@ -148,7 +262,7 @@ class BoardPlugin(private val activity: Activity): Plugin(activity) {
      */
     @Command
     fun reboot(invoke: Invoke) {
-        this.zc.reboot()
+        this.displayer.reboot()
         invoke.resolve()
     }
 
@@ -160,7 +274,7 @@ class BoardPlugin(private val activity: Activity): Plugin(activity) {
      */
     @Command
     fun shutdown(invoke: Invoke) {
-        this.zc.shutDown()
+        this.displayer.shutDown()
         invoke.resolve()
     }
 
@@ -172,8 +286,9 @@ class BoardPlugin(private val activity: Activity): Plugin(activity) {
      */
     @Command
     fun setStatusBar(invoke: Invoke) {
-        val argv = invoke.parseArgs(StatusBar::class.java)
-        this.zc.setStatusBar(argv.enable ?: false)
+        val argv = invoke.parseArgs(StatusBar::class.java).enable ?: false
+        this.displayer.setStatusBar(argv)
+        this.buildEnv.statusBarOn = if (argv) "1"  else "0"
         invoke.resolve()
     }
 
@@ -185,8 +300,9 @@ class BoardPlugin(private val activity: Activity): Plugin(activity) {
      */
     @Command
     fun setGestureStatusBar(invoke: Invoke) {
-        val argv = invoke.parseArgs(GestureStatusBar::class.java)
-        this.zc.setGestureStatusBar(argv.enable ?: false)
+        val argv = invoke.parseArgs(GestureStatusBar::class.java).enable ?: false
+        this.displayer.setGestureStatusBar(argv)
+        this.buildEnv.gestureStatusBarOn = if (argv) "1"  else "0"
         invoke.resolve()
     }
 
@@ -199,10 +315,8 @@ class BoardPlugin(private val activity: Activity): Plugin(activity) {
      */
     @Command
     fun getBuildModel(invoke: Invoke) {
-        val argv = this.zc.buildModel
-
         val ret = JSObject()
-        ret.put("value", argv)
+        ret.put("value", this.buildEnv.modelNo)
         invoke.resolve(ret)
     }
 
@@ -215,10 +329,8 @@ class BoardPlugin(private val activity: Activity): Plugin(activity) {
      */
     @Command
     fun getBuildSerial(invoke: Invoke) {
-        val argv = this.zc.buildSerial
-
         val ret = JSObject()
-        ret.put("value", argv)
+        ret.put("value", this.buildEnv.serialSn)
         invoke.resolve(ret)
     }
 
@@ -231,7 +343,7 @@ class BoardPlugin(private val activity: Activity): Plugin(activity) {
     @Command
     fun setLcdOnOff(invoke: Invoke) {
         val argv = invoke.parseArgs(LcdOnOff::class.java)
-        this.zc.setLcdOnOff(argv.enable ?: true)
+        this.displayer.setLcdOnOff(argv.enable ?: true)
         invoke.resolve()
     }
 
@@ -250,7 +362,7 @@ class BoardPlugin(private val activity: Activity): Plugin(activity) {
         val onTime = carbon.parseTimestamp(args.onTime)
         val offTime = carbon.parseTimestamp(args.offTime)
 
-        this.zc.setPowetOnOffTime(enable, onTime, offTime)
+        this.displayer.setPowetOnOffTime(enable, onTime, offTime)
 
         val ret = JSObject()
         ret.put("value", "success")
@@ -266,8 +378,7 @@ class BoardPlugin(private val activity: Activity): Plugin(activity) {
     @Command
     fun openSettingConfig(invoke: Invoke) {
         val argv = invoke.parseArgs(SettingConfig::class.java)
-        this.zc.setStatusBar(argv.enable)
-        this.zc.setGestureStatusBar(argv.enable)
+        this.initDisplayer(argv.enable)
 
         val intent = Intent(Settings.ACTION_SETTINGS)
         startActivityForResult(invoke, intent, "")
@@ -283,8 +394,7 @@ class BoardPlugin(private val activity: Activity): Plugin(activity) {
     @Command
     fun openFileManager(invoke: Invoke) {
         val argv = invoke.parseArgs(FileManager::class.java)
-        this.zc.setStatusBar(argv.enable)
-        this.zc.setGestureStatusBar(argv.enable)
+        this.initDisplayer(argv.enable)
 
         val intent = Intent(Intent.ACTION_GET_CONTENT).apply {
             type = "image/*"
@@ -302,38 +412,25 @@ class BoardPlugin(private val activity: Activity): Plugin(activity) {
     @Command
     fun setAppBrightness(invoke: Invoke) {
         val args = invoke.parseArgs(AppBrightness::class.java)
-        val value: Int = args.value.let {
-            if (it < 5) {
-                5
-            } else if (it > 255) {
-                255
-            } else {
-                it
-            }
+        this.buildEnv.brightness = args.value.coerceIn(5, 255)
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && !Settings.System.canWrite(activity)) {
+            val intent = Intent(Settings.ACTION_MANAGE_WRITE_SETTINGS)
+            startActivityForResult(invoke, intent, "")
+            throw Exception("waiting for apply permission to change brightness")
         }
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            if (!Settings.System.canWrite(activity)) {
-                val intent = Intent(Settings.ACTION_MANAGE_WRITE_SETTINGS)
-                startActivityForResult(invoke, intent, "")
-
-                throw Exception("waiting for apply permission to change brightness")
+        try {
+            Settings.System.getUriFor(Settings.System.SCREEN_BRIGHTNESS).let {
+                Settings.System.putInt(activity.contentResolver, Settings.System.SCREEN_BRIGHTNESS_MODE, Settings.System.SCREEN_BRIGHTNESS_MODE_MANUAL)
+                Settings.System.putInt(activity.contentResolver, Settings.System.SCREEN_BRIGHTNESS, this.buildEnv.brightness)
             }
-        }
-
-        if (!args.isScreen) {
-            try {
-                Settings.System.getUriFor(Settings.System.SCREEN_BRIGHTNESS).let {
-                    Settings.System.putInt(activity.contentResolver, Settings.System.SCREEN_BRIGHTNESS_MODE, Settings.System.SCREEN_BRIGHTNESS_MODE_MANUAL)
-                    Settings.System.putInt(activity.contentResolver, Settings.System.SCREEN_BRIGHTNESS, value)
-                }
-                activity.window.attributes.let {
-                    it.screenBrightness = value / 255f
-                    activity.window.attributes = it
-                }
-            } catch (e: Exception) {
-                throw e
+            activity.window.attributes.let {
+                it.screenBrightness = this.buildEnv.brightness / 255f
+                activity.window.attributes = it
             }
+        } catch (e: Exception) {
+            throw e
         }
 
         throw Exception("adjust brightness failed because not support on Android 7.0 and above")
@@ -367,23 +464,7 @@ class BoardPlugin(private val activity: Activity): Plugin(activity) {
     fun getSerialDevicesPath(invoke: Invoke) {
         val gson = Gson()
         val ret = JSObject()
-
-        val devices = this.finder.getAvailableSerialDevices()
-        if (this.serialsPathIndex !in devices.indices) {
-            this.serialsPathIndex = 0
-        }
-
-        val result = mutableListOf<SerialDevice>()
-        devices.forEachIndexed { index, path ->
-            val item = SerialDevice(
-                path = path,
-                active = this.serialsPathIndex == index,
-                index = index
-            )
-            result.add(item)
-        }
-
-        ret.put("value", gson.toJson(result))
+        ret.put("value", gson.toJson(this.serialsDevice))
         invoke.resolve(ret)
     }
 
@@ -410,29 +491,7 @@ class BoardPlugin(private val activity: Activity): Plugin(activity) {
      */
     @Command
     fun setSerialsPathIndex(invoke: Invoke) {
-        val mBoard = this.udk
-        val args = invoke.parseArgs(SerialsPathIndex::class.java)
-
-        val commid = if (args.path != null) {
-            args.path
-        } else {
-            this.finder.getAvailableSerialDevices()[0]
-        }
-
-        mBoard.EF_OpenDev(commid, 9600)
-
-        val ret = JSObject()
-        val para = SVReplyPara(1)
-        mBoard.GetSoftwareVersion(para)
-        if (para.isOK) {
-            ret.put("value", para.version)
-            mBoard.EF_CloseDev()
-            invoke.resolve()
-            return
-        }
-
-        mBoard.EF_CloseDev()
-        throw Exception("setSerialsPathIndex failed")
+        invoke.resolve()
     }
 
     /**
@@ -446,15 +505,7 @@ class BoardPlugin(private val activity: Activity): Plugin(activity) {
     fun getBuildEnv(invoke: Invoke) {
         val gson = Gson()
         val ret = JSObject()
-
-        val result: Env = Env(
-            sdkVersion = Build.VERSION.SDK_INT,
-            androidVersion = Build.VERSION.RELEASE,
-            serialSn = this.zc.buildSerial,
-            modelNo = this.zc.buildModel,
-        )
-
-        ret.put("value", gson.toJson(result))
+        ret.put("value", gson.toJson(this.buildEnv))
         invoke.resolve(ret)
     }
 
@@ -467,8 +518,7 @@ class BoardPlugin(private val activity: Activity): Plugin(activity) {
      */
     @Command
     fun openMainActivity(invoke: Invoke) {
-        this.zc.setStatusBar(true)
-        this.zc.setGestureStatusBar(true)
+        this.initDisplayer(true)
 
         val intent = Intent(Intent.ACTION_MAIN).apply {
             addCategory(Intent.CATEGORY_HOME)
@@ -476,6 +526,23 @@ class BoardPlugin(private val activity: Activity): Plugin(activity) {
         }
         startActivityForResult(invoke, intent, "")
 
+        invoke.resolve()
+    }
+
+    /**
+     * command of `takeScreenShot`
+     *
+     * @param invoke to invoke [none] { }
+     * @return void
+     * @since 1.4.0-beta.19
+     */
+    @Command
+    fun takeScreenShot(invoke: Invoke) {
+        val filename = "${System.currentTimeMillis()}.png"
+        this.displayer.screenshot(SDCARD_DIR, filename)
+
+        val ret = JSObject()
+        ret.put("value", "${SDCARD_DIR}/${filename}")
         invoke.resolve()
     }
 }

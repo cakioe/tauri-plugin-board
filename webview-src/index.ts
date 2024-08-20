@@ -221,6 +221,7 @@ export interface SerialDevice {
   path: string
   active: boolean
   index: number
+  disabled: boolean
 }
 export async function getSerialDevicesPath(): Promise<SerialDevice[]> {
   return await invoke<Record<string, string>>('plugin:board|get_serial_devices_path').then(r => JSON.parse(r.value) as unknown as SerialDevice[])
@@ -264,14 +265,20 @@ export async function setSerialsPathIndex(options: SerialsPathIndex): Promise<st
  *
  * @since 1.4.0-beta.12
  */
-export interface EnvConfig {
+export interface BuildEnv {
   sdk_version: number
   android_version: string
   serial_sn: string
   model_no: string
+  screen_width: number
+  screen_height: number
+  commid: string
+  baudrate: number
+  status_bar_on: string
+  gesture_status_bar_on: string
 }
-export async function getBuildEnv(): Promise<EnvConfig> {
-  return await invoke<Record<string, string>>('plugin:board|get_build_env').then(r => JSON.parse(r.value) as unknown as EnvConfig)
+export async function getBuildEnv(): Promise<BuildEnv> {
+  return await invoke<Record<string, string>>('plugin:board|get_build_env').then(r => JSON.parse(r.value) as unknown as BuildEnv)
 }
 
 /**
@@ -285,4 +292,17 @@ export async function getBuildEnv(): Promise<EnvConfig> {
  */
 export async function openMainActivity(): Promise<void> {
   await invoke('plugin:board|open_main_activity')
+}
+
+/**
+ * @example
+ * ```typescript
+ * import { takeScreenShot } from '@cakioe/tauri-plugin-board';
+ * await takeScreenShot();
+ * ```
+ *
+ * @since 1.4.0-beta.19
+ */
+export async function takeScreenShot(): Promise<string> {
+    return await invoke<Record<string, string>>('plugin:board|take_screen_shot').then(r => r.value)
 }
