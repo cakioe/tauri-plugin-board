@@ -295,45 +295,31 @@
       "type": "string",
       "oneOf": [
         {
-          "description": "allow-execute -> Enables the execute command without any pre-configured scope.",
+          "description": "allow-get-all-devices-path -> Enables the get_all_devices_path command without any pre-configured scope.",
           "type": "string",
           "enum": [
-            "allow-execute"
+            "allow-get-all-devices-path"
           ]
         },
         {
-          "description": "deny-execute -> Denies the execute command without any pre-configured scope.",
+          "description": "deny-get-all-devices-path -> Denies the get_all_devices_path command without any pre-configured scope.",
           "type": "string",
           "enum": [
-            "deny-execute"
+            "deny-get-all-devices-path"
           ]
         },
         {
-          "description": "allow-getBuildModel -> Enables the getBuildModel command without any pre-configured scope.",
+          "description": "allow-get-build-env -> Enables the get_build_env command without any pre-configured scope.",
           "type": "string",
           "enum": [
-            "allow-getBuildModel"
+            "allow-get-build-env"
           ]
         },
         {
-          "description": "deny-getBuildModel -> Denies the getBuildModel command without any pre-configured scope.",
+          "description": "deny-get-build-env -> Denies the get_build_env command without any pre-configured scope.",
           "type": "string",
           "enum": [
-            "deny-getBuildModel"
-          ]
-        },
-        {
-          "description": "allow-getBuildSerial -> Enables the getBuildSerial command without any pre-configured scope.",
-          "type": "string",
-          "enum": [
-            "allow-getBuildSerial"
-          ]
-        },
-        {
-          "description": "deny-getBuildSerial -> Denies the getBuildSerial command without any pre-configured scope.",
-          "type": "string",
-          "enum": [
-            "deny-getBuildSerial"
+            "deny-get-build-env"
           ]
         },
         {
@@ -365,6 +351,34 @@
           ]
         },
         {
+          "description": "allow-get-serial-devices-path -> Enables the get_serial_devices_path command without any pre-configured scope.",
+          "type": "string",
+          "enum": [
+            "allow-get-serial-devices-path"
+          ]
+        },
+        {
+          "description": "deny-get-serial-devices-path -> Denies the get_serial_devices_path command without any pre-configured scope.",
+          "type": "string",
+          "enum": [
+            "deny-get-serial-devices-path"
+          ]
+        },
+        {
+          "description": "allow-get-serial-paths -> Enables the get_serial_paths command without any pre-configured scope.",
+          "type": "string",
+          "enum": [
+            "allow-get-serial-paths"
+          ]
+        },
+        {
+          "description": "deny-get-serial-paths -> Denies the get_serial_paths command without any pre-configured scope.",
+          "type": "string",
+          "enum": [
+            "deny-get-serial-paths"
+          ]
+        },
+        {
           "description": "allow-open-file-manager -> Enables the open_file_manager command without any pre-configured scope.",
           "type": "string",
           "enum": [
@@ -376,6 +390,20 @@
           "type": "string",
           "enum": [
             "deny-open-file-manager"
+          ]
+        },
+        {
+          "description": "allow-open-main-activity -> Enables the open_main_activity command without any pre-configured scope.",
+          "type": "string",
+          "enum": [
+            "allow-open-main-activity"
+          ]
+        },
+        {
+          "description": "deny-open-main-activity -> Denies the open_main_activity command without any pre-configured scope.",
+          "type": "string",
+          "enum": [
+            "deny-open-main-activity"
           ]
         },
         {
@@ -418,48 +446,6 @@
           "type": "string",
           "enum": [
             "deny-reboot"
-          ]
-        },
-        {
-          "description": "allow-setGestureStatusBar -> Enables the setGestureStatusBar command without any pre-configured scope.",
-          "type": "string",
-          "enum": [
-            "allow-setGestureStatusBar"
-          ]
-        },
-        {
-          "description": "deny-setGestureStatusBar -> Denies the setGestureStatusBar command without any pre-configured scope.",
-          "type": "string",
-          "enum": [
-            "deny-setGestureStatusBar"
-          ]
-        },
-        {
-          "description": "allow-setLcdOnOff -> Enables the setLcdOnOff command without any pre-configured scope.",
-          "type": "string",
-          "enum": [
-            "allow-setLcdOnOff"
-          ]
-        },
-        {
-          "description": "deny-setLcdOnOff -> Denies the setLcdOnOff command without any pre-configured scope.",
-          "type": "string",
-          "enum": [
-            "deny-setLcdOnOff"
-          ]
-        },
-        {
-          "description": "allow-setStatusBar -> Enables the setStatusBar command without any pre-configured scope.",
-          "type": "string",
-          "enum": [
-            "allow-setStatusBar"
-          ]
-        },
-        {
-          "description": "deny-setStatusBar -> Denies the setStatusBar command without any pre-configured scope.",
-          "type": "string",
-          "enum": [
-            "deny-setStatusBar"
           ]
         },
         {
@@ -519,6 +505,20 @@
           ]
         },
         {
+          "description": "allow-set-serials-path-index -> Enables the set_serials_path_index command without any pre-configured scope.",
+          "type": "string",
+          "enum": [
+            "allow-set-serials-path-index"
+          ]
+        },
+        {
+          "description": "deny-set-serials-path-index -> Denies the set_serials_path_index command without any pre-configured scope.",
+          "type": "string",
+          "enum": [
+            "deny-set-serials-path-index"
+          ]
+        },
+        {
           "description": "allow-set-status-bar -> Enables the set_status_bar command without any pre-configured scope.",
           "type": "string",
           "enum": [
@@ -544,6 +544,20 @@
           "type": "string",
           "enum": [
             "deny-shutdown"
+          ]
+        },
+        {
+          "description": "allow-take-screen-shot -> Enables the take_screen_shot command without any pre-configured scope.",
+          "type": "string",
+          "enum": [
+            "allow-take-screen-shot"
+          ]
+        },
+        {
+          "description": "deny-take-screen-shot -> Denies the take_screen_shot command without any pre-configured scope.",
+          "type": "string",
+          "enum": [
+            "deny-take-screen-shot"
           ]
         }
       ]

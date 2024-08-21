@@ -40,7 +40,6 @@ export async function reboot(): Promise<void> {
 export interface StatusBar {
   enable?: boolean
 }
-
 export async function setStatusBar(options?: StatusBar): Promise<void> {
   await invoke('plugin:board|set_status_bar', { ...options })
 }
@@ -58,7 +57,6 @@ export async function setStatusBar(options?: StatusBar): Promise<void> {
 export interface GestureStatusBar {
   enable?: boolean
 }
-
 export async function setGestureStatusBar(options?: GestureStatusBar): Promise<void> {
   await invoke('plugin:board|set_gesture_status_bar', { ...options })
 }
@@ -74,14 +72,10 @@ export async function setGestureStatusBar(options?: GestureStatusBar): Promise<v
  * ```
  *
  * @since 1.2.0
+ * @deprecated 1.5.0, use `getBuildEnv` instead
  */
-
-export interface JSObject {
-  value: string
-}
-
 export async function getBuildModel(): Promise<string> {
-  return await invoke<JSObject>('plugin:board|get_build_model').then(r => r.value)
+  return await invoke<Record<string, string>>('plugin:board|get_build_model').then(r => r.value)
 }
 
 /**
@@ -95,9 +89,10 @@ export async function getBuildModel(): Promise<string> {
  * ```
  *
  * @since 1.2.0
+ * @deprecated 1.5.0, use `getBuildEnv` instead
  */
 export async function getBuildSerial(): Promise<string> {
-  return await invoke<JSObject>('plugin:board|get_build_serial').then(r => r.value)
+  return await invoke<Record<string, string>>('plugin:board|get_build_serial').then(r => r.value)
 }
 
 /**
@@ -112,7 +107,6 @@ export async function getBuildSerial(): Promise<string> {
 export interface LcdOnOff {
   enable?: boolean
 }
-
 export async function setLcdOnOff(options?: LcdOnOff): Promise<void> {
   await invoke('plugin:board|set_lcd_on_off', { ...options })
 }
@@ -130,7 +124,7 @@ export async function setLcdOnOff(options?: LcdOnOff): Promise<void> {
  * @since 1.2.0
  */
 export async function ping(): Promise<string> {
-  return await invoke<JSObject>('plugin:board|ping').then(r => r.value)
+  return await invoke<Record<string, string>>('plugin:board|ping').then(r => r.value)
 }
 
 /**
@@ -147,9 +141,8 @@ export interface PowerOnOffTime {
   onTime: number // year,month,day,hour,minute
   offTime: number // year,month,day,hour,minute
 }
-
 export async function setPowerOnOffTime(options?: PowerOnOffTime): Promise<string> {
-  return await invoke<JSObject>('plugin:board|set_power_on_off_time', { ...options }).then(r => r.value)
+  return await invoke<Record<string, string>>('plugin:board|set_power_on_off_time', { ...options }).then(r => r.value)
 }
 
 /**
@@ -161,8 +154,11 @@ export async function setPowerOnOffTime(options?: PowerOnOffTime): Promise<strin
  *
  * @since 1.2.6
  */
-export async function openSettingConfig(): Promise<void> {
-  await invoke('plugin:board|open_setting_config')
+export interface SettingConfig {
+  enable: boolean
+}
+export async function openSettingConfig(options: FileManager): Promise<void> {
+  await invoke('plugin:board|open_setting_config', { ...options })
 }
 
 /**
@@ -174,8 +170,11 @@ export async function openSettingConfig(): Promise<void> {
  *
  * @since 1.2.6
  */
-export async function openFileManager(): Promise<void> {
-  await invoke('plugin:board|open_file_manager')
+export interface FileManager {
+  enable: boolean
+}
+export async function openFileManager(options: FileManager): Promise<void> {
+  await invoke('plugin:board|open_file_manager', { ...options })
 }
 
 /**
@@ -192,5 +191,118 @@ export interface AppBrightness {
   isScreen: boolean
 }
 export async function setAppBrightness(options?: AppBrightness): Promise<string> {
-  return await invoke<JSObject>('plugin:board|set_app_brightness', { ...options }).then(r => r.value)
+  return await invoke<Record<string, string>>('plugin:board|set_app_brightness', { ...options }).then(r => r.value)
+}
+
+/**
+ * @example
+ * ```typescript
+ * import { getSerialPaths } from '@cakioe/tauri-plugin-board';
+ * await getSerialPaths();
+ * ```
+ *
+ * @since 1.4.0-beta.1
+ * @deprecated 1.5.0
+ */
+export async function getSerialPaths(): Promise<string[]> {
+  return await invoke<Record<string, string>>('plugin:board|get_serial_devices_path').then(r => JSON.parse(r.value))
+}
+
+/**
+ * @example
+ * ```typescript
+ * import { getSerialDevicesPath } from '@cakioe/tauri-plugin-board';
+ * await getSerialDevicesPath();
+ * ```
+ *
+ * @since 1.4.0-beta.5
+ */
+export interface SerialDevice {
+  path: string
+  active: boolean
+  index: number
+  disabled: boolean
+}
+export async function getSerialDevicesPath(): Promise<SerialDevice[]> {
+  return await invoke<Record<string, string>>('plugin:board|get_serial_devices_path').then(r => JSON.parse(r.value) as unknown as SerialDevice[])
+}
+
+/**
+ * @example
+ * ```typescript
+ * import { getAllDevicesPath } from '@cakioe/tauri-plugin-board';
+ * await getAllDevicesPath();
+ * ```
+ *
+ * @since 1.4.0-beta.2
+ */
+export async function getAllDevicesPath(): Promise<string[]> {
+  return await invoke<Record<string, string>>('plugin:board|get_all_devices_path').then(r => JSON.parse(r.value))
+}
+
+/**
+ * @example
+ * ```typescript
+ * import { setSerialsPathIndex } from '@cakioe/tauri-plugin-board';
+ * await setSerialsPathIndex({...options});
+ * ```
+ *
+ * @since 1.4.0-beta.5
+ */
+export interface SerialsPathIndex {
+  path: string
+}
+export async function setSerialsPathIndex(options: SerialsPathIndex): Promise<string> {
+  return await invoke<Record<string, string>>('plugin:board|set_serials_path_index', { ...options }).then(r => r.value)
+}
+
+/**
+ * @example
+ * ```typescript
+ * import { getBuildEnv } from '@cakioe/tauri-plugin-board';
+ * await getBuildEnv();
+ * ```
+ *
+ * @since 1.4.0-beta.12
+ */
+export interface BuildEnv {
+  sdk_version: number
+  android_version: string
+  serial_sn: string
+  model_no: string
+  screen_width: number
+  screen_height: number
+  commid: string
+  baudrate: number
+  status_bar_on: string
+  gesture_status_bar_on: string
+}
+export async function getBuildEnv(): Promise<BuildEnv> {
+  return await invoke<Record<string, string>>('plugin:board|get_build_env').then(r => JSON.parse(r.value) as unknown as BuildEnv)
+}
+
+/**
+ * @example
+ * ```typescript
+ * import { openMainActivity } from '@cakioe/tauri-plugin-board';
+ * await openMainActivity();
+ * ```
+ *
+ * @since 1.4.0-beta.14
+ */
+export async function openMainActivity(): Promise<void> {
+  await invoke('plugin:board|open_main_activity')
+}
+
+/**
+ * @example
+ * ```typescript
+ * import { takeScreenShot } from '@cakioe/tauri-plugin-board';
+ * await takeScreenShot();
+ * ```
+ *
+ * @since 1.4.0-beta.19
+ */
+export async function takeScreenShot(): Promise<string> {
+    return await invoke<Record<string, string>>('plugin:board|take_screen_shot').then(r => r.value)
 }

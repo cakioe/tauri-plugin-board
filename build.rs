@@ -1,18 +1,5 @@
 // COMMAND
 
-/**
- * shutdown => 关机
- * reboot => 重启
- * set_status_bar => 设置状态栏
- * set_gesture_status_bar => 设置手势状态栏
- * get_build_model => 获取型号
- * get_build_serial => 获取序列号
- * set_lcd_on_off => 设置屏幕
- * set_power_on_off_time => 设置开关机
- * open_setting_config => 打开设置
- * open_file_manager => 打开文件
- * set_app_brightness => 设置app亮度
- */
 const COMMANDS: &[&str] = &[
     "shutdown",
     "reboot",
@@ -25,7 +12,13 @@ const COMMANDS: &[&str] = &[
     "set_power_on_off_time",
     "open_setting_config",
     "open_file_manager",
-    "set_app_brightness"
+    "set_app_brightness",
+    "get_serial_devices_path",
+    "get_all_devices_path",
+    "set_serials_path_index",
+    "get_build_env",
+    "open_main_activity",
+    "take_screen_shot"
 ];
 
 fn main() {

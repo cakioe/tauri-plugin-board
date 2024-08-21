@@ -1,5 +1,5 @@
 
-### Permission Table 
+## Permission Table 
 
 <table>
 <tr>
@@ -11,25 +11,12 @@
 <tr>
 <td>
 
-`board:allow-execute`
+`board:allow-get-all-devices-path`
 
 </td>
 <td>
 
-Enables the execute command without any pre-configured scope.
-
-</td>
-</tr>
-
-<tr>
-<td>
-
-`board:deny-execute`
-
-</td>
-<td>
-
-Denies the execute command without any pre-configured scope.
+Enables the get_all_devices_path command without any pre-configured scope.
 
 </td>
 </tr>
@@ -37,25 +24,12 @@ Denies the execute command without any pre-configured scope.
 <tr>
 <td>
 
-`board:allow-getBuildModel`
+`board:deny-get-all-devices-path`
 
 </td>
 <td>
 
-Enables the getBuildModel command without any pre-configured scope.
-
-</td>
-</tr>
-
-<tr>
-<td>
-
-`board:deny-getBuildModel`
-
-</td>
-<td>
-
-Denies the getBuildModel command without any pre-configured scope.
+Denies the get_all_devices_path command without any pre-configured scope.
 
 </td>
 </tr>
@@ -63,12 +37,12 @@ Denies the getBuildModel command without any pre-configured scope.
 <tr>
 <td>
 
-`board:allow-getBuildSerial`
+`board:allow-get-build-env`
 
 </td>
 <td>
 
-Enables the getBuildSerial command without any pre-configured scope.
+Enables the get_build_env command without any pre-configured scope.
 
 </td>
 </tr>
@@ -76,12 +50,12 @@ Enables the getBuildSerial command without any pre-configured scope.
 <tr>
 <td>
 
-`board:deny-getBuildSerial`
+`board:deny-get-build-env`
 
 </td>
 <td>
 
-Denies the getBuildSerial command without any pre-configured scope.
+Denies the get_build_env command without any pre-configured scope.
 
 </td>
 </tr>
@@ -141,6 +115,58 @@ Denies the get_build_serial command without any pre-configured scope.
 <tr>
 <td>
 
+`board:allow-get-serial-devices-path`
+
+</td>
+<td>
+
+Enables the get_serial_devices_path command without any pre-configured scope.
+
+</td>
+</tr>
+
+<tr>
+<td>
+
+`board:deny-get-serial-devices-path`
+
+</td>
+<td>
+
+Denies the get_serial_devices_path command without any pre-configured scope.
+
+</td>
+</tr>
+
+<tr>
+<td>
+
+`board:allow-get-serial-paths`
+
+</td>
+<td>
+
+Enables the get_serial_paths command without any pre-configured scope.
+
+</td>
+</tr>
+
+<tr>
+<td>
+
+`board:deny-get-serial-paths`
+
+</td>
+<td>
+
+Denies the get_serial_paths command without any pre-configured scope.
+
+</td>
+</tr>
+
+<tr>
+<td>
+
 `board:allow-open-file-manager`
 
 </td>
@@ -160,6 +186,32 @@ Enables the open_file_manager command without any pre-configured scope.
 <td>
 
 Denies the open_file_manager command without any pre-configured scope.
+
+</td>
+</tr>
+
+<tr>
+<td>
+
+`board:allow-open-main-activity`
+
+</td>
+<td>
+
+Enables the open_main_activity command without any pre-configured scope.
+
+</td>
+</tr>
+
+<tr>
+<td>
+
+`board:deny-open-main-activity`
+
+</td>
+<td>
+
+Denies the open_main_activity command without any pre-configured scope.
 
 </td>
 </tr>
@@ -238,84 +290,6 @@ Enables the reboot command without any pre-configured scope.
 <td>
 
 Denies the reboot command without any pre-configured scope.
-
-</td>
-</tr>
-
-<tr>
-<td>
-
-`board:allow-setGestureStatusBar`
-
-</td>
-<td>
-
-Enables the setGestureStatusBar command without any pre-configured scope.
-
-</td>
-</tr>
-
-<tr>
-<td>
-
-`board:deny-setGestureStatusBar`
-
-</td>
-<td>
-
-Denies the setGestureStatusBar command without any pre-configured scope.
-
-</td>
-</tr>
-
-<tr>
-<td>
-
-`board:allow-setLcdOnOff`
-
-</td>
-<td>
-
-Enables the setLcdOnOff command without any pre-configured scope.
-
-</td>
-</tr>
-
-<tr>
-<td>
-
-`board:deny-setLcdOnOff`
-
-</td>
-<td>
-
-Denies the setLcdOnOff command without any pre-configured scope.
-
-</td>
-</tr>
-
-<tr>
-<td>
-
-`board:allow-setStatusBar`
-
-</td>
-<td>
-
-Enables the setStatusBar command without any pre-configured scope.
-
-</td>
-</tr>
-
-<tr>
-<td>
-
-`board:deny-setStatusBar`
-
-</td>
-<td>
-
-Denies the setStatusBar command without any pre-configured scope.
 
 </td>
 </tr>
@@ -427,6 +401,32 @@ Denies the set_power_on_off_time command without any pre-configured scope.
 <tr>
 <td>
 
+`board:allow-set-serials-path-index`
+
+</td>
+<td>
+
+Enables the set_serials_path_index command without any pre-configured scope.
+
+</td>
+</tr>
+
+<tr>
+<td>
+
+`board:deny-set-serials-path-index`
+
+</td>
+<td>
+
+Denies the set_serials_path_index command without any pre-configured scope.
+
+</td>
+</tr>
+
+<tr>
+<td>
+
 `board:allow-set-status-bar`
 
 </td>
@@ -472,6 +472,32 @@ Enables the shutdown command without any pre-configured scope.
 <td>
 
 Denies the shutdown command without any pre-configured scope.
+
+</td>
+</tr>
+
+<tr>
+<td>
+
+`board:allow-take-screen-shot`
+
+</td>
+<td>
+
+Enables the take_screen_shot command without any pre-configured scope.
+
+</td>
+</tr>
+
+<tr>
+<td>
+
+`board:deny-take-screen-shot`
+
+</td>
+<td>
+
+Denies the take_screen_shot command without any pre-configured scope.
 
 </td>
 </tr>

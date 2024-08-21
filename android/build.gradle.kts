@@ -9,10 +9,20 @@ android {
 
     defaultConfig {
         minSdk = 21
-        targetSdk = 34
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles("consumer-rules.pro")
+
+        ndk {
+            abiFilters.add("armeabi-v7a")
+            abiFilters.add("armeabi-v8a")
+        }
+    }
+
+    sourceSets {
+        getByName("main") {
+            jniLibs.srcDirs("libs")
+        }
     }
 
     buildTypes {
@@ -34,7 +44,8 @@ android {
 }
 
 dependencies {
-    implementation(files("libs/zckjAPI-2.2.jar"))
+    implementation(fileTree(mapOf("dir" to "libs", "include" to listOf("*.jar"))))
+    implementation("com.google.code.gson:gson:2.10.1")
 
     implementation("androidx.core:core-ktx:1.9.0")
     implementation("androidx.appcompat:appcompat:1.6.0")

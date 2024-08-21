@@ -19,3 +19,17 @@
 # If you keep the line number information, uncomment this to
 # hide the original source file name.
 #-renamesourcefileattribute SourceFile
+
+# GSON<https://stackoverflow.com/a/46156695/21185153>
+-keep class com.plugin.board.SerialDevice {
+    *;
+}
+
+-keep class com.plugin.board.BuildEnv {
+    *;
+}
+
+-keep class cc.uling.usdk.** {
+    *;
+}
+-dontoptimize
