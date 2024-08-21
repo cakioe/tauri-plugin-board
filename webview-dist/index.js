@@ -31,22 +31,6 @@ async function setStatusBar(options) {
 async function setGestureStatusBar(options) {
     await invoke('plugin:board|set_gesture_status_bar', { ...options });
 }
-/**
- * @example
- * ```typescript
- * import { getBuildSerial } from '@cakioe/tauri-plugin-board';
- * const no = await getBuildSerial();
- * if (no) {
- *    // use the no string here
- * }
- * ```
- *
- * @since 1.2.0
- * @deprecated 1.5.0, use `getBuildEnv` instead
- */
-async function getBuildSerial() {
-    return await invoke('plugin:board|get_build_serial').then(r => r.value);
-}
 async function setLcdOnOff(options) {
     await invoke('plugin:board|set_lcd_on_off', { ...options });
 }
@@ -133,4 +117,4 @@ async function takeScreenShot() {
     return await invoke('plugin:board|take_screen_shot').then(r => r.value);
 }
 
-export { getAllDevicesPath, getBuildEnv, getBuildSerial, getSerialDevicesPath, getSerialPaths, openFileManager, openMainActivity, openSettingConfig, ping, reboot, setAppBrightness, setGestureStatusBar, setLcdOnOff, setPowerOnOffTime, setStatusBar, shutdown, takeScreenShot };
+export { getAllDevicesPath, getBuildEnv, getSerialDevicesPath, getSerialPaths, openFileManager, openMainActivity, openSettingConfig, ping, reboot, setAppBrightness, setGestureStatusBar, setLcdOnOff, setPowerOnOffTime, setStatusBar, shutdown, takeScreenShot };

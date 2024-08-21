@@ -303,20 +303,6 @@ class BoardPlugin(private val activity: Activity): Plugin(activity) {
     }
 
     /**
-     * command of `getBuildSerial`
-     *
-     * @param invoke to invoke [none] { }
-     * @return json { value: "" }
-     * @deprecated 1.5.0, use `getBuildEnv` instead
-     */
-    @Command
-    fun getBuildSerial(invoke: Invoke) {
-        val ret = JSObject()
-        ret.put("value", this.buildEnv.serialSn)
-        invoke.resolve(ret)
-    }
-
-    /**
      * command of `setLcdOnOff`
      *
      * @param invoke to invoke [LcdOnOff] { enable: true }

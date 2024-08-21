@@ -47,20 +47,6 @@ export declare function setGestureStatusBar(options?: GestureStatusBar): Promise
 /**
  * @example
  * ```typescript
- * import { getBuildSerial } from '@cakioe/tauri-plugin-board';
- * const no = await getBuildSerial();
- * if (no) {
- *    // use the no string here
- * }
- * ```
- *
- * @since 1.2.0
- * @deprecated 1.5.0, use `getBuildEnv` instead
- */
-export declare function getBuildSerial(): Promise<string>;
-/**
- * @example
- * ```typescript
  * import { setLcdOnOff } from '@cakioe/tauri-plugin-board';
  * await setLcdOnOff(enable);
  * ```

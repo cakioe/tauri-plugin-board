@@ -5,7 +5,6 @@ const COMMANDS: &[&str] = &[
     "reboot",
     "set_status_bar",
     "set_gesture_status_bar",
-    "get_build_serial",
     "set_lcd_on_off",
     "ping",
     "set_power_on_off_time",

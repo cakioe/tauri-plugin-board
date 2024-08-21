@@ -64,23 +64,6 @@ export async function setGestureStatusBar(options?: GestureStatusBar): Promise<v
 /**
  * @example
  * ```typescript
- * import { getBuildSerial } from '@cakioe/tauri-plugin-board';
- * const no = await getBuildSerial();
- * if (no) {
- *    // use the no string here
- * }
- * ```
- *
- * @since 1.2.0
- * @deprecated 1.5.0, use `getBuildEnv` instead
- */
-export async function getBuildSerial(): Promise<string> {
-  return await invoke<Record<string, string>>('plugin:board|get_build_serial').then(r => r.value)
-}
-
-/**
- * @example
- * ```typescript
  * import { setLcdOnOff } from '@cakioe/tauri-plugin-board';
  * await setLcdOnOff(enable);
  * ```

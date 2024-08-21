@@ -323,20 +323,6 @@
           ]
         },
         {
-          "description": "allow-get-build-serial -> Enables the get_build_serial command without any pre-configured scope.",
-          "type": "string",
-          "enum": [
-            "allow-get-build-serial"
-          ]
-        },
-        {
-          "description": "deny-get-build-serial -> Denies the get_build_serial command without any pre-configured scope.",
-          "type": "string",
-          "enum": [
-            "deny-get-build-serial"
-          ]
-        },
-        {
           "description": "allow-get-serial-devices-path -> Enables the get_serial_devices_path command without any pre-configured scope.",
           "type": "string",
           "enum": [

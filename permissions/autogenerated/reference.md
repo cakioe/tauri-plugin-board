@@ -63,32 +63,6 @@ Denies the get_build_env command without any pre-configured scope.
 <tr>
 <td>
 
-`board:allow-get-build-serial`
-
-</td>
-<td>
-
-Enables the get_build_serial command without any pre-configured scope.
-
-</td>
-</tr>
-
-<tr>
-<td>
-
-`board:deny-get-build-serial`
-
-</td>
-<td>
-
-Denies the get_build_serial command without any pre-configured scope.
-
-</td>
-</tr>
-
-<tr>
-<td>
-
 `board:allow-get-serial-devices-path`
 
 </td>
