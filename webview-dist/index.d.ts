@@ -47,34 +47,6 @@ export declare function setGestureStatusBar(options?: GestureStatusBar): Promise
 /**
  * @example
  * ```typescript
- * import { getBuildModel } from '@cakioe/tauri-plugin-board';
- * const no = await getBuildModel();
- * if (no) {
- *    // use the no string here
- * }
- * ```
- *
- * @since 1.2.0
- * @deprecated 1.5.0, use `getBuildEnv` instead
- */
-export declare function getBuildModel(): Promise<string>;
-/**
- * @example
- * ```typescript
- * import { getBuildSerial } from '@cakioe/tauri-plugin-board';
- * const no = await getBuildSerial();
- * if (no) {
- *    // use the no string here
- * }
- * ```
- *
- * @since 1.2.0
- * @deprecated 1.5.0, use `getBuildEnv` instead
- */
-export declare function getBuildSerial(): Promise<string>;
-/**
- * @example
- * ```typescript
  * import { setLcdOnOff } from '@cakioe/tauri-plugin-board';
  * await setLcdOnOff(enable);
  * ```
@@ -85,19 +57,6 @@ export interface LcdOnOff {
     enable?: boolean;
 }
 export declare function setLcdOnOff(options?: LcdOnOff): Promise<void>;
-/**
- * @example
- * ```typescript
- * import { ping } from '@cakioe/tauri-plugin-board';
- * const pong = await ping();
- * if (pong) {
- *    // use the pong string here
- * }
- * ```
- *
- * @since 1.2.0
- */
-export declare function ping(): Promise<string>;
 /**
  * @example
  * ```typescript
@@ -190,19 +149,6 @@ export declare function getSerialDevicesPath(): Promise<SerialDevice[]>;
  * @since 1.4.0-beta.2
  */
 export declare function getAllDevicesPath(): Promise<string[]>;
-/**
- * @example
- * ```typescript
- * import { setSerialsPathIndex } from '@cakioe/tauri-plugin-board';
- * await setSerialsPathIndex({...options});
- * ```
- *
- * @since 1.4.0-beta.5
- */
-export interface SerialsPathIndex {
-    path: string;
-}
-export declare function setSerialsPathIndex(options: SerialsPathIndex): Promise<string>;
 /**
  * @example
  * ```typescript

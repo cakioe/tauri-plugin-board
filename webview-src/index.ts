@@ -64,40 +64,6 @@ export async function setGestureStatusBar(options?: GestureStatusBar): Promise<v
 /**
  * @example
  * ```typescript
- * import { getBuildModel } from '@cakioe/tauri-plugin-board';
- * const no = await getBuildModel();
- * if (no) {
- *    // use the no string here
- * }
- * ```
- *
- * @since 1.2.0
- * @deprecated 1.5.0, use `getBuildEnv` instead
- */
-export async function getBuildModel(): Promise<string> {
-  return await invoke<Record<string, string>>('plugin:board|get_build_model').then(r => r.value)
-}
-
-/**
- * @example
- * ```typescript
- * import { getBuildSerial } from '@cakioe/tauri-plugin-board';
- * const no = await getBuildSerial();
- * if (no) {
- *    // use the no string here
- * }
- * ```
- *
- * @since 1.2.0
- * @deprecated 1.5.0, use `getBuildEnv` instead
- */
-export async function getBuildSerial(): Promise<string> {
-  return await invoke<Record<string, string>>('plugin:board|get_build_serial').then(r => r.value)
-}
-
-/**
- * @example
- * ```typescript
  * import { setLcdOnOff } from '@cakioe/tauri-plugin-board';
  * await setLcdOnOff(enable);
  * ```
@@ -109,22 +75,6 @@ export interface LcdOnOff {
 }
 export async function setLcdOnOff(options?: LcdOnOff): Promise<void> {
   await invoke('plugin:board|set_lcd_on_off', { ...options })
-}
-
-/**
- * @example
- * ```typescript
- * import { ping } from '@cakioe/tauri-plugin-board';
- * const pong = await ping();
- * if (pong) {
- *    // use the pong string here
- * }
- * ```
- *
- * @since 1.2.0
- */
-export async function ping(): Promise<string> {
-  return await invoke<Record<string, string>>('plugin:board|ping').then(r => r.value)
 }
 
 /**
@@ -238,22 +188,6 @@ export async function getSerialDevicesPath(): Promise<SerialDevice[]> {
  */
 export async function getAllDevicesPath(): Promise<string[]> {
   return await invoke<Record<string, string>>('plugin:board|get_all_devices_path').then(r => JSON.parse(r.value))
-}
-
-/**
- * @example
- * ```typescript
- * import { setSerialsPathIndex } from '@cakioe/tauri-plugin-board';
- * await setSerialsPathIndex({...options});
- * ```
- *
- * @since 1.4.0-beta.5
- */
-export interface SerialsPathIndex {
-  path: string
-}
-export async function setSerialsPathIndex(options: SerialsPathIndex): Promise<string> {
-  return await invoke<Record<string, string>>('plugin:board|set_serials_path_index', { ...options }).then(r => r.value)
 }
 
 /**

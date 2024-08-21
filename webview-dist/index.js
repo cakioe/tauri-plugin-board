@@ -31,55 +31,8 @@ async function setStatusBar(options) {
 async function setGestureStatusBar(options) {
     await invoke('plugin:board|set_gesture_status_bar', { ...options });
 }
-/**
- * @example
- * ```typescript
- * import { getBuildModel } from '@cakioe/tauri-plugin-board';
- * const no = await getBuildModel();
- * if (no) {
- *    // use the no string here
- * }
- * ```
- *
- * @since 1.2.0
- * @deprecated 1.5.0, use `getBuildEnv` instead
- */
-async function getBuildModel() {
-    return await invoke('plugin:board|get_build_model').then(r => r.value);
-}
-/**
- * @example
- * ```typescript
- * import { getBuildSerial } from '@cakioe/tauri-plugin-board';
- * const no = await getBuildSerial();
- * if (no) {
- *    // use the no string here
- * }
- * ```
- *
- * @since 1.2.0
- * @deprecated 1.5.0, use `getBuildEnv` instead
- */
-async function getBuildSerial() {
-    return await invoke('plugin:board|get_build_serial').then(r => r.value);
-}
 async function setLcdOnOff(options) {
     await invoke('plugin:board|set_lcd_on_off', { ...options });
-}
-/**
- * @example
- * ```typescript
- * import { ping } from '@cakioe/tauri-plugin-board';
- * const pong = await ping();
- * if (pong) {
- *    // use the pong string here
- * }
- * ```
- *
- * @since 1.2.0
- */
-async function ping() {
-    return await invoke('plugin:board|ping').then(r => r.value);
 }
 async function setPowerOnOffTime(options) {
     return await invoke('plugin:board|set_power_on_off_time', { ...options }).then(r => r.value);
@@ -121,9 +74,6 @@ async function getSerialDevicesPath() {
 async function getAllDevicesPath() {
     return await invoke('plugin:board|get_all_devices_path').then(r => JSON.parse(r.value));
 }
-async function setSerialsPathIndex(options) {
-    return await invoke('plugin:board|set_serials_path_index', { ...options }).then(r => r.value);
-}
 async function getBuildEnv() {
     return await invoke('plugin:board|get_build_env').then(r => JSON.parse(r.value));
 }
@@ -152,4 +102,4 @@ async function takeScreenShot() {
     return await invoke('plugin:board|take_screen_shot').then(r => r.value);
 }
 
-export { getAllDevicesPath, getBuildEnv, getBuildModel, getBuildSerial, getSerialDevicesPath, getSerialPaths, openFileManager, openMainActivity, openSettingConfig, ping, reboot, setAppBrightness, setGestureStatusBar, setLcdOnOff, setPowerOnOffTime, setSerialsPathIndex, setStatusBar, shutdown, takeScreenShot };
+export { getAllDevicesPath, getBuildEnv, getSerialDevicesPath, getSerialPaths, openFileManager, openMainActivity, openSettingConfig, reboot, setAppBrightness, setGestureStatusBar, setLcdOnOff, setPowerOnOffTime, setStatusBar, shutdown, takeScreenShot };

@@ -39,11 +39,6 @@ class LcdOnOff {
 }
 
 @InvokeArg
-class PingArgs {
-    var enable: String? = null
-}
-
-@InvokeArg
 class PowerOnOffTime {
      var enable: Boolean = false
      var onTime: Long? = null // 以毫秒为单位
@@ -54,11 +49,6 @@ class PowerOnOffTime {
 class AppBrightness {
     var value: Int = 255 // [5, 255]
     var isScreen: Boolean = true
-}
-
-@InvokeArg
-class SerialsPathIndex{
-    var path: String? = null
 }
 
 @InvokeArg
@@ -241,21 +231,6 @@ class BoardPlugin(private val activity: Activity): Plugin(activity) {
     }
 
     /**
-     * command of `ping`
-     *
-     * @param invoke to invoke [PingArgs] { enable: "" }
-     * @return json
-     * @deprecated 1.5.0
-     */
-    @Command
-    fun ping(invoke: Invoke) {
-        val args = invoke.parseArgs(PingArgs::class.java)
-        val ret = JSObject()
-        ret.put("value", args.enable ?: "default value :(")
-        invoke.resolve(ret)
-    }
-
-    /**
      * command of `reboot`
      *
      * @param invoke to invoke [none] { }
@@ -305,34 +280,6 @@ class BoardPlugin(private val activity: Activity): Plugin(activity) {
         this.displayer.setGestureStatusBar(argv)
         this.buildEnv.gestureStatusBarOn = if (argv) "1"  else "0"
         invoke.resolve()
-    }
-
-    /**
-     * command of `getBuildModel`
-     *
-     * @param invoke to invoke [none] { }
-     * @return json { value: "" }
-     * @deprecated 1.5.0, use `getBuildEnv` instead
-     */
-    @Command
-    fun getBuildModel(invoke: Invoke) {
-        val ret = JSObject()
-        ret.put("value", this.buildEnv.modelNo)
-        invoke.resolve(ret)
-    }
-
-    /**
-     * command of `getBuildSerial`
-     *
-     * @param invoke to invoke [none] { }
-     * @return json { value: "" }
-     * @deprecated 1.5.0, use `getBuildEnv` instead
-     */
-    @Command
-    fun getBuildSerial(invoke: Invoke) {
-        val ret = JSObject()
-        ret.put("value", this.buildEnv.serialSn)
-        invoke.resolve(ret)
     }
 
     /**
@@ -481,18 +428,6 @@ class BoardPlugin(private val activity: Activity): Plugin(activity) {
         val ret = JSObject()
         ret.put("value", gson.toJson(this.finder.allDevicesPath))
         invoke.resolve(ret)
-    }
-
-    /**
-     * command of `setSerialsPathIndex`
-     *
-     * @param invoke to invoke [SerialsPathIndex] { path: "" }
-     * @return void
-     * @since 1.4.0-beta.11
-     */
-    @Command
-    fun setSerialsPathIndex(invoke: Invoke) {
-        invoke.resolve()
     }
 
     /**

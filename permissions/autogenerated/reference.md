@@ -63,58 +63,6 @@ Denies the get_build_env command without any pre-configured scope.
 <tr>
 <td>
 
-`board:allow-get-build-model`
-
-</td>
-<td>
-
-Enables the get_build_model command without any pre-configured scope.
-
-</td>
-</tr>
-
-<tr>
-<td>
-
-`board:deny-get-build-model`
-
-</td>
-<td>
-
-Denies the get_build_model command without any pre-configured scope.
-
-</td>
-</tr>
-
-<tr>
-<td>
-
-`board:allow-get-build-serial`
-
-</td>
-<td>
-
-Enables the get_build_serial command without any pre-configured scope.
-
-</td>
-</tr>
-
-<tr>
-<td>
-
-`board:deny-get-build-serial`
-
-</td>
-<td>
-
-Denies the get_build_serial command without any pre-configured scope.
-
-</td>
-</tr>
-
-<tr>
-<td>
-
 `board:allow-get-serial-devices-path`
 
 </td>
@@ -245,32 +193,6 @@ Denies the open_setting_config command without any pre-configured scope.
 <tr>
 <td>
 
-`board:allow-ping`
-
-</td>
-<td>
-
-Enables the ping command without any pre-configured scope.
-
-</td>
-</tr>
-
-<tr>
-<td>
-
-`board:deny-ping`
-
-</td>
-<td>
-
-Denies the ping command without any pre-configured scope.
-
-</td>
-</tr>
-
-<tr>
-<td>
-
 `board:allow-reboot`
 
 </td>
@@ -394,32 +316,6 @@ Enables the set_power_on_off_time command without any pre-configured scope.
 <td>
 
 Denies the set_power_on_off_time command without any pre-configured scope.
-
-</td>
-</tr>
-
-<tr>
-<td>
-
-`board:allow-set-serials-path-index`
-
-</td>
-<td>
-
-Enables the set_serials_path_index command without any pre-configured scope.
-
-</td>
-</tr>
-
-<tr>
-<td>
-
-`board:deny-set-serials-path-index`
-
-</td>
-<td>
-
-Denies the set_serials_path_index command without any pre-configured scope.
 
 </td>
 </tr>

@@ -323,34 +323,6 @@
           ]
         },
         {
-          "description": "allow-get-build-model -> Enables the get_build_model command without any pre-configured scope.",
-          "type": "string",
-          "enum": [
-            "allow-get-build-model"
-          ]
-        },
-        {
-          "description": "deny-get-build-model -> Denies the get_build_model command without any pre-configured scope.",
-          "type": "string",
-          "enum": [
-            "deny-get-build-model"
-          ]
-        },
-        {
-          "description": "allow-get-build-serial -> Enables the get_build_serial command without any pre-configured scope.",
-          "type": "string",
-          "enum": [
-            "allow-get-build-serial"
-          ]
-        },
-        {
-          "description": "deny-get-build-serial -> Denies the get_build_serial command without any pre-configured scope.",
-          "type": "string",
-          "enum": [
-            "deny-get-build-serial"
-          ]
-        },
-        {
           "description": "allow-get-serial-devices-path -> Enables the get_serial_devices_path command without any pre-configured scope.",
           "type": "string",
           "enum": [
@@ -421,20 +393,6 @@
           ]
         },
         {
-          "description": "allow-ping -> Enables the ping command without any pre-configured scope.",
-          "type": "string",
-          "enum": [
-            "allow-ping"
-          ]
-        },
-        {
-          "description": "deny-ping -> Denies the ping command without any pre-configured scope.",
-          "type": "string",
-          "enum": [
-            "deny-ping"
-          ]
-        },
-        {
           "description": "allow-reboot -> Enables the reboot command without any pre-configured scope.",
           "type": "string",
           "enum": [
@@ -502,20 +460,6 @@
           "type": "string",
           "enum": [
             "deny-set-power-on-off-time"
-          ]
-        },
-        {
-          "description": "allow-set-serials-path-index -> Enables the set_serials_path_index command without any pre-configured scope.",
-          "type": "string",
-          "enum": [
-            "allow-set-serials-path-index"
-          ]
-        },
-        {
-          "description": "deny-set-serials-path-index -> Denies the set_serials_path_index command without any pre-configured scope.",
-          "type": "string",
-          "enum": [
-            "deny-set-serials-path-index"
           ]
         },
         {
