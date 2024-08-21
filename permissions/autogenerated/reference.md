@@ -63,32 +63,6 @@ Denies the get_build_env command without any pre-configured scope.
 <tr>
 <td>
 
-`board:allow-get-build-model`
-
-</td>
-<td>
-
-Enables the get_build_model command without any pre-configured scope.
-
-</td>
-</tr>
-
-<tr>
-<td>
-
-`board:deny-get-build-model`
-
-</td>
-<td>
-
-Denies the get_build_model command without any pre-configured scope.
-
-</td>
-</tr>
-
-<tr>
-<td>
-
 `board:allow-get-build-serial`
 
 </td>

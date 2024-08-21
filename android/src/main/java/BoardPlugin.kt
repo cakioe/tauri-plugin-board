@@ -303,20 +303,6 @@ class BoardPlugin(private val activity: Activity): Plugin(activity) {
     }
 
     /**
-     * command of `getBuildModel`
-     *
-     * @param invoke to invoke [none] { }
-     * @return json { value: "" }
-     * @deprecated 1.5.0, use `getBuildEnv` instead
-     */
-    @Command
-    fun getBuildModel(invoke: Invoke) {
-        val ret = JSObject()
-        ret.put("value", this.buildEnv.modelNo)
-        invoke.resolve(ret)
-    }
-
-    /**
      * command of `getBuildSerial`
      *
      * @param invoke to invoke [none] { }

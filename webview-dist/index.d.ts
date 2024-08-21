@@ -47,20 +47,6 @@ export declare function setGestureStatusBar(options?: GestureStatusBar): Promise
 /**
  * @example
  * ```typescript
- * import { getBuildModel } from '@cakioe/tauri-plugin-board';
- * const no = await getBuildModel();
- * if (no) {
- *    // use the no string here
- * }
- * ```
- *
- * @since 1.2.0
- * @deprecated 1.5.0, use `getBuildEnv` instead
- */
-export declare function getBuildModel(): Promise<string>;
-/**
- * @example
- * ```typescript
  * import { getBuildSerial } from '@cakioe/tauri-plugin-board';
  * const no = await getBuildSerial();
  * if (no) {

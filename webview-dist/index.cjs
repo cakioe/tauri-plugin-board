@@ -36,22 +36,6 @@ async function setGestureStatusBar(options) {
 /**
  * @example
  * ```typescript
- * import { getBuildModel } from '@cakioe/tauri-plugin-board';
- * const no = await getBuildModel();
- * if (no) {
- *    // use the no string here
- * }
- * ```
- *
- * @since 1.2.0
- * @deprecated 1.5.0, use `getBuildEnv` instead
- */
-async function getBuildModel() {
-    return await core.invoke('plugin:board|get_build_model').then(r => r.value);
-}
-/**
- * @example
- * ```typescript
  * import { getBuildSerial } from '@cakioe/tauri-plugin-board';
  * const no = await getBuildSerial();
  * if (no) {
@@ -153,7 +137,6 @@ async function takeScreenShot() {
 
 exports.getAllDevicesPath = getAllDevicesPath;
 exports.getBuildEnv = getBuildEnv;
-exports.getBuildModel = getBuildModel;
 exports.getBuildSerial = getBuildSerial;
 exports.getSerialDevicesPath = getSerialDevicesPath;
 exports.getSerialPaths = getSerialPaths;

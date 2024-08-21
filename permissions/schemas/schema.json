@@ -323,20 +323,6 @@
           ]
         },
         {
-          "description": "allow-get-build-model -> Enables the get_build_model command without any pre-configured scope.",
-          "type": "string",
-          "enum": [
-            "allow-get-build-model"
-          ]
-        },
-        {
-          "description": "deny-get-build-model -> Denies the get_build_model command without any pre-configured scope.",
-          "type": "string",
-          "enum": [
-            "deny-get-build-model"
-          ]
-        },
-        {
           "description": "allow-get-build-serial -> Enables the get_build_serial command without any pre-configured scope.",
           "type": "string",
           "enum": [
