@@ -193,19 +193,6 @@ export declare function getAllDevicesPath(): Promise<string[]>;
 /**
  * @example
  * ```typescript
- * import { setSerialsPathIndex } from '@cakioe/tauri-plugin-board';
- * await setSerialsPathIndex({...options});
- * ```
- *
- * @since 1.4.0-beta.5
- */
-export interface SerialsPathIndex {
-    path: string;
-}
-export declare function setSerialsPathIndex(options: SerialsPathIndex): Promise<string>;
-/**
- * @example
- * ```typescript
  * import { getBuildEnv } from '@cakioe/tauri-plugin-board';
  * await getBuildEnv();
  * ```

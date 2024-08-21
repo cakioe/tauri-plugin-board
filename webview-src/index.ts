@@ -243,22 +243,6 @@ export async function getAllDevicesPath(): Promise<string[]> {
 /**
  * @example
  * ```typescript
- * import { setSerialsPathIndex } from '@cakioe/tauri-plugin-board';
- * await setSerialsPathIndex({...options});
- * ```
- *
- * @since 1.4.0-beta.5
- */
-export interface SerialsPathIndex {
-  path: string
-}
-export async function setSerialsPathIndex(options: SerialsPathIndex): Promise<string> {
-  return await invoke<Record<string, string>>('plugin:board|set_serials_path_index', { ...options }).then(r => r.value)
-}
-
-/**
- * @example
- * ```typescript
  * import { getBuildEnv } from '@cakioe/tauri-plugin-board';
  * await getBuildEnv();
  * ```

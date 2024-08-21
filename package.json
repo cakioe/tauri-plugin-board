@@ -1,6 +1,6 @@
 {
   "name": "@cakioe/tauri-plugin-board",
-  "version": "1.4.0-beta.19",
+  "version": "1.5.0",
   "license": "MIT",
   "authors": [
     "cleveng <cleveng@gmail.com>"

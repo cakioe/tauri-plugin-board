@@ -123,9 +123,6 @@ async function getSerialDevicesPath() {
 async function getAllDevicesPath() {
     return await core.invoke('plugin:board|get_all_devices_path').then(r => JSON.parse(r.value));
 }
-async function setSerialsPathIndex(options) {
-    return await core.invoke('plugin:board|set_serials_path_index', { ...options }).then(r => r.value);
-}
 async function getBuildEnv() {
     return await core.invoke('plugin:board|get_build_env').then(r => JSON.parse(r.value));
 }
@@ -169,7 +166,6 @@ exports.setAppBrightness = setAppBrightness;
 exports.setGestureStatusBar = setGestureStatusBar;
 exports.setLcdOnOff = setLcdOnOff;
 exports.setPowerOnOffTime = setPowerOnOffTime;
-exports.setSerialsPathIndex = setSerialsPathIndex;
 exports.setStatusBar = setStatusBar;
 exports.shutdown = shutdown;
 exports.takeScreenShot = takeScreenShot;

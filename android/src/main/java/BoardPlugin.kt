@@ -57,11 +57,6 @@ class AppBrightness {
 }
 
 @InvokeArg
-class SerialsPathIndex{
-    var path: String? = null
-}
-
-@InvokeArg
 class SettingConfig {
     var enable: Boolean = true
 }
@@ -481,18 +476,6 @@ class BoardPlugin(private val activity: Activity): Plugin(activity) {
         val ret = JSObject()
         ret.put("value", gson.toJson(this.finder.allDevicesPath))
         invoke.resolve(ret)
-    }
-
-    /**
-     * command of `setSerialsPathIndex`
-     *
-     * @param invoke to invoke [SerialsPathIndex] { path: "" }
-     * @return void
-     * @since 1.4.0-beta.11
-     */
-    @Command
-    fun setSerialsPathIndex(invoke: Invoke) {
-        invoke.resolve()
     }
 
     /**
