@@ -134,7 +134,7 @@ class BoardPlugin(private val activity: Activity): Plugin(activity) {
     }
 
     /**
-     * event of the app relaunch
+     * event of the app relaunch <https://v2.tauri.app/develop/plugins/develop-mobile/#onnewintent>
      *
      * @param intent the intent
      * @return void
@@ -142,6 +142,7 @@ class BoardPlugin(private val activity: Activity): Plugin(activity) {
     override fun onNewIntent(intent: Intent) {
         this.initBuildEnv()
         this.initDisplayer(false)
+        Toast.makeText(activity, "welcome back", Toast.LENGTH_SHORT).show()
     }
 
     /**
