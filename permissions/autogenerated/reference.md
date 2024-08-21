@@ -193,32 +193,6 @@ Denies the open_setting_config command without any pre-configured scope.
 <tr>
 <td>
 
-`board:allow-ping`
-
-</td>
-<td>
-
-Enables the ping command without any pre-configured scope.
-
-</td>
-</tr>
-
-<tr>
-<td>
-
-`board:deny-ping`
-
-</td>
-<td>
-
-Denies the ping command without any pre-configured scope.
-
-</td>
-</tr>
-
-<tr>
-<td>
-
 `board:allow-reboot`
 
 </td>

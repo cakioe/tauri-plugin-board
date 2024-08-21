@@ -36,21 +36,6 @@ async function setGestureStatusBar(options) {
 async function setLcdOnOff(options) {
     await core.invoke('plugin:board|set_lcd_on_off', { ...options });
 }
-/**
- * @example
- * ```typescript
- * import { ping } from '@cakioe/tauri-plugin-board';
- * const pong = await ping();
- * if (pong) {
- *    // use the pong string here
- * }
- * ```
- *
- * @since 1.2.0
- */
-async function ping() {
-    return await core.invoke('plugin:board|ping').then(r => r.value);
-}
 async function setPowerOnOffTime(options) {
     return await core.invoke('plugin:board|set_power_on_off_time', { ...options }).then(r => r.value);
 }
@@ -126,7 +111,6 @@ exports.getSerialPaths = getSerialPaths;
 exports.openFileManager = openFileManager;
 exports.openMainActivity = openMainActivity;
 exports.openSettingConfig = openSettingConfig;
-exports.ping = ping;
 exports.reboot = reboot;
 exports.setAppBrightness = setAppBrightness;
 exports.setGestureStatusBar = setGestureStatusBar;

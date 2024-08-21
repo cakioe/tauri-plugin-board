@@ -6,7 +6,6 @@ const COMMANDS: &[&str] = &[
     "set_status_bar",
     "set_gesture_status_bar",
     "set_lcd_on_off",
-    "ping",
     "set_power_on_off_time",
     "open_setting_config",
     "open_file_manager",

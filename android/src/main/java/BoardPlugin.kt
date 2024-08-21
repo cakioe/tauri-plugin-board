@@ -39,11 +39,6 @@ class LcdOnOff {
 }
 
 @InvokeArg
-class PingArgs {
-    var enable: String? = null
-}
-
-@InvokeArg
 class PowerOnOffTime {
      var enable: Boolean = false
      var onTime: Long? = null // 以毫秒为单位
@@ -233,21 +228,6 @@ class BoardPlugin(private val activity: Activity): Plugin(activity) {
                 this.buildEnv.gestureStatusBarOn = if (enable) "1"  else "0"
             }
         }
-    }
-
-    /**
-     * command of `ping`
-     *
-     * @param invoke to invoke [PingArgs] { enable: "" }
-     * @return json
-     * @deprecated 1.5.0
-     */
-    @Command
-    fun ping(invoke: Invoke) {
-        val args = invoke.parseArgs(PingArgs::class.java)
-        val ret = JSObject()
-        ret.put("value", args.enable ?: "default value :(")
-        invoke.resolve(ret)
     }
 
     /**

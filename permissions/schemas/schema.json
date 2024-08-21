@@ -393,20 +393,6 @@
           ]
         },
         {
-          "description": "allow-ping -> Enables the ping command without any pre-configured scope.",
-          "type": "string",
-          "enum": [
-            "allow-ping"
-          ]
-        },
-        {
-          "description": "deny-ping -> Denies the ping command without any pre-configured scope.",
-          "type": "string",
-          "enum": [
-            "deny-ping"
-          ]
-        },
-        {
           "description": "allow-reboot -> Enables the reboot command without any pre-configured scope.",
           "type": "string",
           "enum": [

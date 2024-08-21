@@ -60,19 +60,6 @@ export declare function setLcdOnOff(options?: LcdOnOff): Promise<void>;
 /**
  * @example
  * ```typescript
- * import { ping } from '@cakioe/tauri-plugin-board';
- * const pong = await ping();
- * if (pong) {
- *    // use the pong string here
- * }
- * ```
- *
- * @since 1.2.0
- */
-export declare function ping(): Promise<string>;
-/**
- * @example
- * ```typescript
  * import { setPowerOnOffTime } from '@cakioe/tauri-plugin-board';
  * await setPowerOnOffTime();
  * ```
