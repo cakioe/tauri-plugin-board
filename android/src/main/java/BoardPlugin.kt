@@ -78,10 +78,6 @@ class BoardPlugin(private val activity: Activity): Plugin(activity) {
      */
     private val displayer = zcapi()
 
-    // wish-m2301
-    private val finder = SerialPortFinder()
-    private var serialsPathIndex = 0
-
     /**
      * the driver of the board
      */
@@ -382,24 +378,6 @@ class BoardPlugin(private val activity: Activity): Plugin(activity) {
         }
 
         throw Exception("adjust brightness failed because not support on Android 7.0 and above")
-    }
-
-    /**
-     * command of `getSerialPaths`
-     *
-     * @param invoke to invoke [none] { }
-     * @return json { value: string[] }
-     * @deprecated 1.5.0, use `getSerialDevicesPath` instead
-     */
-    @Command
-    fun getSerialPaths(invoke: Invoke) {
-        val gson = Gson()
-        this.finder.getAvailableSerialDevices().let {
-            val ret = JSObject()
-            ret.put("value", gson.toJson(it))
-            invoke.resolve(ret)
-            return
-        }
     }
 
     /**

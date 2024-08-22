@@ -62,32 +62,6 @@ Denies the get_serial_devices_path command without any pre-configured scope.
 <tr>
 <td>
 
-`board:allow-get-serial-paths`
-
-</td>
-<td>
-
-Enables the get_serial_paths command without any pre-configured scope.
-
-</td>
-</tr>
-
-<tr>
-<td>
-
-`board:deny-get-serial-paths`
-
-</td>
-<td>
-
-Denies the get_serial_paths command without any pre-configured scope.
-
-</td>
-</tr>
-
-<tr>
-<td>
-
 `board:allow-open-file-manager`
 
 </td>

@@ -323,20 +323,6 @@
           ]
         },
         {
-          "description": "allow-get-serial-paths -> Enables the get_serial_paths command without any pre-configured scope.",
-          "type": "string",
-          "enum": [
-            "allow-get-serial-paths"
-          ]
-        },
-        {
-          "description": "deny-get-serial-paths -> Denies the get_serial_paths command without any pre-configured scope.",
-          "type": "string",
-          "enum": [
-            "deny-get-serial-paths"
-          ]
-        },
-        {
           "description": "allow-open-file-manager -> Enables the open_file_manager command without any pre-configured scope.",
           "type": "string",
           "enum": [

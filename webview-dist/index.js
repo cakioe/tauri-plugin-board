@@ -46,33 +46,8 @@ async function openFileManager(options) {
 async function setAppBrightness(options) {
     return await invoke('plugin:board|set_app_brightness', { ...options }).then(r => r.value);
 }
-/**
- * @example
- * ```typescript
- * import { getSerialPaths } from '@cakioe/tauri-plugin-board';
- * await getSerialPaths();
- * ```
- *
- * @since 1.4.0-beta.1
- * @deprecated 1.5.0
- */
-async function getSerialPaths() {
-    return await invoke('plugin:board|get_serial_devices_path').then(r => JSON.parse(r.value));
-}
 async function getSerialDevicesPath() {
     return await invoke('plugin:board|get_serial_devices_path').then(r => JSON.parse(r.value));
-}
-/**
- * @example
- * ```typescript
- * import { getAllDevicesPath } from '@cakioe/tauri-plugin-board';
- * await getAllDevicesPath();
- * ```
- *
- * @since 1.4.0-beta.2
- */
-async function getAllDevicesPath() {
-    return await invoke('plugin:board|get_all_devices_path').then(r => JSON.parse(r.value));
 }
 async function getBuildEnv() {
     return await invoke('plugin:board|get_build_env').then(r => JSON.parse(r.value));
@@ -102,4 +77,4 @@ async function takeScreenShot() {
     return await invoke('plugin:board|take_screen_shot').then(r => r.value);
 }
 
-export { getAllDevicesPath, getBuildEnv, getSerialDevicesPath, getSerialPaths, openFileManager, openMainActivity, openSettingConfig, reboot, setAppBrightness, setGestureStatusBar, setLcdOnOff, setPowerOnOffTime, setStatusBar, shutdown, takeScreenShot };
+export { getBuildEnv, getSerialDevicesPath, openFileManager, openMainActivity, openSettingConfig, reboot, setAppBrightness, setGestureStatusBar, setLcdOnOff, setPowerOnOffTime, setStatusBar, shutdown, takeScreenShot };
