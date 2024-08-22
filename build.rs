@@ -13,7 +13,8 @@ const COMMANDS: &[&str] = &[
     "get_serial_devices_path",
     "get_build_env",
     "open_main_activity",
-    "take_screen_shot"
+    "take_screen_shot",
+    "get_build_board",
 ];
 
 fn main() {

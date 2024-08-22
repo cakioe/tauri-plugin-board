@@ -7,6 +7,33 @@
 <th>Description</th>
 </tr>
 
+
+<tr>
+<td>
+
+`board:allow-get-build-board`
+
+</td>
+<td>
+
+Enables the get_build_board command without any pre-configured scope.
+
+</td>
+</tr>
+
+<tr>
+<td>
+
+`board:deny-get-build-board`
+
+</td>
+<td>
+
+Denies the get_build_board command without any pre-configured scope.
+
+</td>
+</tr>
+
 <tr>
 <td>
 

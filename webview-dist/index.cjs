@@ -78,7 +78,11 @@ async function openMainActivity() {
 async function takeScreenShot() {
     return await core.invoke('plugin:board|take_screen_shot').then(r => r.value);
 }
+async function getBuildBoard(options) {
+    return await core.invoke('plugin:board|get_build_board', { ...options }).then(r => JSON.parse(r.value));
+}
 
+exports.getBuildBoard = getBuildBoard;
 exports.getBuildEnv = getBuildEnv;
 exports.getSerialDevicesPath = getSerialDevicesPath;
 exports.openFileManager = openFileManager;

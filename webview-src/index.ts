@@ -213,3 +213,24 @@ export async function openMainActivity(): Promise<void> {
 export async function takeScreenShot(): Promise<string> {
     return await invoke<Record<string, string>>('plugin:board|take_screen_shot').then(r => r.value)
 }
+
+/**
+ * @example
+ * ```typescript
+ * import { BuildBoard } from '@cakioe/tauri-plugin-board';
+ * await BuildBoard({input: input});
+ * ```
+ *
+ * @since 1.5.1
+ */
+export interface BuildBoard {
+  temperature: number
+  humidity: number
+  hardware_version: string
+  software_version: string
+  board_rows: number
+  board_columns: number
+}
+export async function getBuildBoard(options?: { input: string }): Promise<BuildBoard> {
+  return await invoke<Record<string, string>>('plugin:board|get_build_board', { ...options }).then(r => JSON.parse(r.value) as unknown as BuildBoard)
+}

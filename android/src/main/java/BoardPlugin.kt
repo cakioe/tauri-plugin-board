@@ -61,6 +61,11 @@ class FileManager {
     var enable: Boolean = true
 }
 
+@InvokeArg
+class BuildBoardRequest {
+    var input: String? = null
+}
+
 @SuppressLint("SdCardPath")
 const val SDCARD_DIR = "/sdcard"
 
@@ -90,6 +95,8 @@ class BoardPlugin(private val activity: Activity): Plugin(activity) {
      * the env of the android build
      */
     private lateinit var buildEnv: BuildEnv
+
+    private lateinit var buildBoard: BuildBoard
 
     /**
      * the init method of the plugin
@@ -444,5 +451,23 @@ class BoardPlugin(private val activity: Activity): Plugin(activity) {
         val ret = JSObject()
         ret.put("value", "${SDCARD_DIR}/${filename}")
         invoke.resolve()
+    }
+
+    /**
+     * command of `getBuildBoard`
+     *
+     * @param invoke to invoke [BuildBoardRequest] { input: string }
+     * @return void
+     * @since 1.5.1
+     */
+    @Command
+    fun getBuildBoard(invoke: Invoke) {
+        val args = invoke.parseArgs(BuildBoardRequest::class.java)
+        println(args.input ?: "TODO: input is null")
+
+        val gson = Gson()
+        val ret = JSObject()
+        ret.put("value", gson.toJson(this.buildBoard))
+        invoke.resolve(ret)
     }
 }

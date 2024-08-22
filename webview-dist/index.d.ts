@@ -170,3 +170,23 @@ export declare function openMainActivity(): Promise<void>;
  * @since 1.4.0-beta.19
  */
 export declare function takeScreenShot(): Promise<string>;
+/**
+ * @example
+ * ```typescript
+ * import { BuildBoard } from '@cakioe/tauri-plugin-board';
+ * await BuildBoard({input: input});
+ * ```
+ *
+ * @since 1.5.1
+ */
+export interface BuildBoard {
+    temperature: number;
+    humidity: number;
+    hardware_version: string;
+    software_version: string;
+    board_rows: number;
+    board_columns: number;
+}
+export declare function getBuildBoard(options?: {
+    input: string;
+}): Promise<BuildBoard>;

@@ -76,5 +76,8 @@ async function openMainActivity() {
 async function takeScreenShot() {
     return await invoke('plugin:board|take_screen_shot').then(r => r.value);
 }
+async function getBuildBoard(options) {
+    return await invoke('plugin:board|get_build_board', { ...options }).then(r => JSON.parse(r.value));
+}
 
-export { getBuildEnv, getSerialDevicesPath, openFileManager, openMainActivity, openSettingConfig, reboot, setAppBrightness, setGestureStatusBar, setLcdOnOff, setPowerOnOffTime, setStatusBar, shutdown, takeScreenShot };
+export { getBuildBoard, getBuildEnv, getSerialDevicesPath, openFileManager, openMainActivity, openSettingConfig, reboot, setAppBrightness, setGestureStatusBar, setLcdOnOff, setPowerOnOffTime, setStatusBar, shutdown, takeScreenShot };
