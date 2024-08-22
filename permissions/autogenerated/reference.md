@@ -7,33 +7,6 @@
 <th>Description</th>
 </tr>
 
-
-<tr>
-<td>
-
-`board:allow-get-all-devices-path`
-
-</td>
-<td>
-
-Enables the get_all_devices_path command without any pre-configured scope.
-
-</td>
-</tr>
-
-<tr>
-<td>
-
-`board:deny-get-all-devices-path`
-
-</td>
-<td>
-
-Denies the get_all_devices_path command without any pre-configured scope.
-
-</td>
-</tr>
-
 <tr>
 <td>
 

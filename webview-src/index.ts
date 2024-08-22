@@ -180,19 +180,6 @@ export async function getSerialDevicesPath(): Promise<SerialDevice[]> {
 /**
  * @example
  * ```typescript
- * import { getAllDevicesPath } from '@cakioe/tauri-plugin-board';
- * await getAllDevicesPath();
- * ```
- *
- * @since 1.4.0-beta.2
- */
-export async function getAllDevicesPath(): Promise<string[]> {
-  return await invoke<Record<string, string>>('plugin:board|get_all_devices_path').then(r => JSON.parse(r.value))
-}
-
-/**
- * @example
- * ```typescript
  * import { getBuildEnv } from '@cakioe/tauri-plugin-board';
  * await getBuildEnv();
  * ```

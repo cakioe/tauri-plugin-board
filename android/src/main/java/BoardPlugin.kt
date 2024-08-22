@@ -139,7 +139,7 @@ class BoardPlugin(private val activity: Activity): Plugin(activity) {
      * initialization of the driver
      */
     private fun initSerialDriver() {
-        val paths = SerialPortFinder().getAvailableSerialDevices()
+        val paths = SerialPortFinder().allDevicesPath.sorted()
         val result = mutableListOf<SerialDevice>()
 
         try {
@@ -413,20 +413,6 @@ class BoardPlugin(private val activity: Activity): Plugin(activity) {
         val gson = Gson()
         val ret = JSObject()
         ret.put("value", gson.toJson(this.serialsDevice))
-        invoke.resolve(ret)
-    }
-
-    /**
-     * command of `getAllDevicesPath`
-     *
-     * @param invoke to invoke [none] { }
-     * @return json { value: string[] }
-     */
-    @Command
-    fun getAllDevicesPath(invoke: Invoke) {
-        val gson = Gson()
-        val ret = JSObject()
-        ret.put("value", gson.toJson(this.finder.allDevicesPath))
         invoke.resolve(ret)
     }
 

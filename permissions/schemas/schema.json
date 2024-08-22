@@ -295,20 +295,6 @@
       "type": "string",
       "oneOf": [
         {
-          "description": "allow-get-all-devices-path -> Enables the get_all_devices_path command without any pre-configured scope.",
-          "type": "string",
-          "enum": [
-            "allow-get-all-devices-path"
-          ]
-        },
-        {
-          "description": "deny-get-all-devices-path -> Denies the get_all_devices_path command without any pre-configured scope.",
-          "type": "string",
-          "enum": [
-            "deny-get-all-devices-path"
-          ]
-        },
-        {
           "description": "allow-get-build-env -> Enables the get_build_env command without any pre-configured scope.",
           "type": "string",
           "enum": [

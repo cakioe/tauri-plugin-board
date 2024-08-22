@@ -11,7 +11,6 @@ const COMMANDS: &[&str] = &[
     "open_file_manager",
     "set_app_brightness",
     "get_serial_devices_path",
-    "get_all_devices_path",
     "get_build_env",
     "open_main_activity",
     "take_screen_shot"
