@@ -18,6 +18,7 @@ import app.tauri.plugin.Plugin
 import cc.uling.usdk.USDK
 import cc.uling.usdk.board.UBoard
 import cc.uling.usdk.board.wz.para.HCReplyPara
+import cc.uling.usdk.board.wz.para.SReplyPara
 import cc.uling.usdk.board.wz.para.SVReplyPara
 import cc.uling.usdk.board.wz.para.TempReplyPara
 import cc.uling.usdk.constants.ErrorConst
@@ -50,7 +51,6 @@ class PowerOnOffTime {
 @InvokeArg
 class AppBrightness {
     var value: Int = 255 // [5, 255]
-    var isScreen: Boolean = true
 }
 
 @InvokeArg
@@ -66,6 +66,15 @@ class FileManager {
 @InvokeArg
 class BuildBoardRequest {
     var addr: Int? = 1
+}
+
+@InvokeArg
+class ShipmentRequest {
+    var addr: Int = 1 //
+    var motorId: Int = 0
+    var floorType: Int = 1
+    var isDc: Boolean = false
+    var isLp: Boolean = false
 }
 
 @SuppressLint("SdCardPath")
@@ -466,12 +475,11 @@ class BoardPlugin(private val activity: Activity): Plugin(activity) {
      */
     @Command
     fun getBuildBoard(invoke: Invoke) {
-        val addr = invoke.parseArgs(BuildBoardRequest::class.java).addr ?: 1
-
         if (!this.driver.EF_Opened()) {
             throw Exception("driver not opened")
         }
 
+        val addr = invoke.parseArgs(BuildBoardRequest::class.java).addr ?: 1
         this.buildBoard = BuildBoard(
             temperature = "unknown",
             humidity = "unknown",
@@ -522,6 +530,39 @@ class BoardPlugin(private val activity: Activity): Plugin(activity) {
         val gson = Gson()
         val ret = JSObject()
         ret.put("value", gson.toJson(this.buildBoard))
+        invoke.resolve(ret)
+    }
+
+    /**
+     * command of `execShipment`
+     *
+     * @param invoke to invoke [ShipmentRequest] { ...arguments }
+     * @return void
+     * @since 1.5.3
+     */
+    @Command
+    fun execShipment(invoke: Invoke) {
+        if (!this.driver.EF_Opened()) {
+            throw Exception("driver not opened")
+        }
+
+        val args = invoke.parseArgs(ShipmentRequest::class.java)
+        SReplyPara(
+            args.addr,
+            args.motorId,
+            args.floorType,
+            args.isDc,
+            args.isLp,
+        ).apply {
+            driver.Shipment(this)
+        }.apply {
+            if (!this.isOK) {
+                throw Exception("shipping failed")
+            }
+        }
+
+        val ret = JSObject()
+        ret.put("value", "success")
         invoke.resolve(ret)
     }
 }

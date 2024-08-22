@@ -135,7 +135,20 @@ async function takeScreenShot() {
 async function getBuildBoard(options) {
     return await core.invoke('plugin:board|get_build_board', { ...options }).then(r => JSON.parse(r.value));
 }
+/**
+ * @example
+ * ```typescript
+ * import { execShipment } from '@cakioe/tauri-plugin-board';
+ * await execShipment({...options});
+ * ```
+ *
+ * @since 1.5.4
+ */
+async function execShipment(options) {
+    return await core.invoke('plugin:board|exec_shipment', { ...options }).then(r => r.value);
+}
 
+exports.execShipment = execShipment;
 exports.getBuildBoard = getBuildBoard;
 exports.getBuildEnv = getBuildEnv;
 exports.getSerialDevicesPath = getSerialDevicesPath;

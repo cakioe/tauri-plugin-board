@@ -11,6 +11,32 @@
 <tr>
 <td>
 
+`board:allow-exec-shipment`
+
+</td>
+<td>
+
+Enables the exec_shipment command without any pre-configured scope.
+
+</td>
+</tr>
+
+<tr>
+<td>
+
+`board:deny-exec-shipment`
+
+</td>
+<td>
+
+Denies the exec_shipment command without any pre-configured scope.
+
+</td>
+</tr>
+
+<tr>
+<td>
+
 `board:allow-get-build-board`
 
 </td>

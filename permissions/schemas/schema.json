@@ -295,6 +295,20 @@
       "type": "string",
       "oneOf": [
         {
+          "description": "allow-exec-shipment -> Enables the exec_shipment command without any pre-configured scope.",
+          "type": "string",
+          "enum": [
+            "allow-exec-shipment"
+          ]
+        },
+        {
+          "description": "deny-exec-shipment -> Denies the exec_shipment command without any pre-configured scope.",
+          "type": "string",
+          "enum": [
+            "deny-exec-shipment"
+          ]
+        },
+        {
           "description": "allow-get-build-board -> Enables the get_build_board command without any pre-configured scope.",
           "type": "string",
           "enum": [

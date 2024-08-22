@@ -183,3 +183,19 @@ export interface BuildBoard {
 export declare function getBuildBoard(options?: {
     addr: number;
 }): Promise<BuildBoard>;
+/**
+ * @example
+ * ```typescript
+ * import { execShipment } from '@cakioe/tauri-plugin-board';
+ * await execShipment({...options});
+ * ```
+ *
+ * @since 1.5.4
+ */
+export declare function execShipment(options?: {
+    addr: number;
+    motorId: number;
+    floorType: number;
+    isDc: boolean;
+    isLp: boolean;
+}): Promise<string>;

@@ -133,5 +133,17 @@ async function takeScreenShot() {
 async function getBuildBoard(options) {
     return await invoke('plugin:board|get_build_board', { ...options }).then(r => JSON.parse(r.value));
 }
+/**
+ * @example
+ * ```typescript
+ * import { execShipment } from '@cakioe/tauri-plugin-board';
+ * await execShipment({...options});
+ * ```
+ *
+ * @since 1.5.4
+ */
+async function execShipment(options) {
+    return await invoke('plugin:board|exec_shipment', { ...options }).then(r => r.value);
+}
 
-export { getBuildBoard, getBuildEnv, getSerialDevicesPath, openFileManager, openMainActivity, openSettingConfig, reboot, setAppBrightness, setGestureStatusBar, setLcdOnOff, setPowerOnOffTime, setStatusBar, shutdown, takeScreenShot };
+export { execShipment, getBuildBoard, getBuildEnv, getSerialDevicesPath, openFileManager, openMainActivity, openSettingConfig, reboot, setAppBrightness, setGestureStatusBar, setLcdOnOff, setPowerOnOffTime, setStatusBar, shutdown, takeScreenShot };

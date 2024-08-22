@@ -219,3 +219,22 @@ export async function getBuildBoard(options?: { addr: number }): Promise<BuildBo
     r => JSON.parse(r.value) as unknown as BuildBoard
   )
 }
+
+/**
+ * @example
+ * ```typescript
+ * import { execShipment } from '@cakioe/tauri-plugin-board';
+ * await execShipment({...options});
+ * ```
+ *
+ * @since 1.5.4
+ */
+export async function execShipment(options?: {
+  addr: number,
+  motorId: number,
+  floorType: number,
+  isDc: boolean,
+  isLp: boolean
+}): Promise<string> {
+  return await invoke<Record<string, string>>('plugin:board|exec_shipment', { ...options }).then(r => r.value)
+}

@@ -1,0 +1,13 @@
+# Automatically generated - DO NOT EDIT!
+
+"$schema" = "../../schemas/schema.json"
+
+[[permission]]
+identifier = "allow-exec-shipment"
+description = "Enables the exec_shipment command without any pre-configured scope."
+commands.allow = ["exec_shipment"]
+
+[[permission]]
+identifier = "deny-exec-shipment"
+description = "Denies the exec_shipment command without any pre-configured scope."
+commands.deny = ["exec_shipment"]
