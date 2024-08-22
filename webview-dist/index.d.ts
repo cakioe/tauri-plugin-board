@@ -173,13 +173,13 @@ export declare function takeScreenShot(): Promise<string>;
  * @since 1.5.1
  */
 export interface BuildBoard {
-    temperature: number;
-    humidity: number;
+    temperature: string;
+    humidity: string;
     hardware_version: string;
     software_version: string;
     board_rows: number;
     board_columns: number;
 }
 export declare function getBuildBoard(options?: {
-    input: string;
+    addr: number;
 }): Promise<BuildBoard>;

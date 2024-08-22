@@ -207,14 +207,14 @@ export async function takeScreenShot(): Promise<string> {
  * @since 1.5.1
  */
 export interface BuildBoard {
-  temperature: number
-  humidity: number
+  temperature: string
+  humidity: string
   hardware_version: string
   software_version: string
   board_rows: number
   board_columns: number
 }
-export async function getBuildBoard(options?: { input: string }): Promise<BuildBoard> {
+export async function getBuildBoard(options?: { addr: number }): Promise<BuildBoard> {
   return await invoke<Record<string, string>>('plugin:board|get_build_board', { ...options }).then(
     r => JSON.parse(r.value) as unknown as BuildBoard
   )

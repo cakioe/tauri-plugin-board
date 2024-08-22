@@ -17,7 +17,9 @@ import app.tauri.plugin.JSObject
 import app.tauri.plugin.Plugin
 import cc.uling.usdk.USDK
 import cc.uling.usdk.board.UBoard
+import cc.uling.usdk.board.wz.para.HCReplyPara
 import cc.uling.usdk.board.wz.para.SVReplyPara
+import cc.uling.usdk.board.wz.para.TempReplyPara
 import cc.uling.usdk.constants.ErrorConst
 import com.google.gson.Gson
 import com.zcapi
@@ -63,11 +65,13 @@ class FileManager {
 
 @InvokeArg
 class BuildBoardRequest {
-    var input: String? = null
+    var addr: Int? = 1
 }
 
 @SuppressLint("SdCardPath")
 const val SDCARD_DIR = "/sdcard"
+
+const val UNAVAILABLE_VALUE = 3276.7
 
 /**
  * vending board plugin of tauri for android use kotlin
@@ -456,14 +460,64 @@ class BoardPlugin(private val activity: Activity): Plugin(activity) {
     /**
      * command of `getBuildBoard`
      *
-     * @param invoke to invoke [BuildBoardRequest] { input: string }
+     * @param invoke to invoke [BuildBoardRequest] { input: Int }
      * @return void
      * @since 1.5.1
      */
     @Command
     fun getBuildBoard(invoke: Invoke) {
-        val args = invoke.parseArgs(BuildBoardRequest::class.java)
-        println(args.input ?: "TODO: input is null")
+        val addr = invoke.parseArgs(BuildBoardRequest::class.java).addr ?: 1
+
+        if (!this.driver.EF_Opened()) {
+            throw Exception("driver not opened")
+        }
+
+        this.buildBoard = BuildBoard(
+            temperature = "unknown",
+            humidity = "unknown",
+            hardwareVersion = "0",
+            boardRows = 10,
+            boardColumns = 10,
+            softwareVersion = "0",
+        )
+
+        // read temperature
+        TempReplyPara(addr).apply {
+            driver.ReadTemp(this)
+        }.apply {
+            if (this.isOK) {
+                (this.temp / 10.0).apply {
+                    if (this != UNAVAILABLE_VALUE) {
+                        buildBoard.temperature = this.toString()
+                    }
+                }
+
+                (this.humi / 10.0).apply {
+                    if (this != UNAVAILABLE_VALUE) {
+                        buildBoard.temperature = this.toString()
+                    }
+                }
+            }
+        }
+
+        // read hardware version
+        HCReplyPara(addr).apply {
+            driver.ReadHardwareConfig(this)
+        }.apply {
+            if (this.isOK) {
+                buildBoard.hardwareVersion = this.version
+                buildBoard.boardRows = this.row
+                buildBoard.boardColumns = this.column
+            }
+        }
+
+        SVReplyPara(addr).apply {
+            driver.GetSoftwareVersion(this)
+        }.apply {
+            if (this.isOK) {
+                buildBoard.softwareVersion = this.version
+            }
+        }
 
         val gson = Gson()
         val ret = JSObject()

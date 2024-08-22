@@ -4,12 +4,12 @@ import androidx.annotation.Keep
 import com.google.gson.annotations.SerializedName
 
 @Keep
-data class BuildBoard (
+data class BuildBoard(
     @SerializedName("temperature")
-    var temperature: Int = 0,
+    var temperature: String = "unknown",
 
     @SerializedName("humidity")
-    var humidity: Int = 0,
+    var humidity: String = "unknown",
 
     @SerializedName("hardware_version")
     var hardwareVersion: String = "0",
