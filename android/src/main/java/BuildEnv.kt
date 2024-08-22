@@ -38,3 +38,18 @@ data class BuildEnv (
     @SerializedName("brightness")
     var brightness: Int = 255,
 )
+
+@Keep
+data class SerialDevice(
+    @SerializedName("path")
+    var path: String,
+
+    @SerializedName("active")
+    var active: Boolean,
+
+    @SerializedName("index")
+    var index: Int,
+
+    @SerializedName("disabled")
+    var disabled: Boolean
+)
