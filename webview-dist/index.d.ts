@@ -27,10 +27,9 @@ export declare function reboot(): Promise<void>;
  *
  * @since 1.2.0
  */
-export interface StatusBar {
-    enable?: boolean;
-}
-export declare function setStatusBar(options?: StatusBar): Promise<void>;
+export declare function setStatusBar(options?: {
+    enable: boolean;
+}): Promise<void>;
 /**
  * @example
  * ```typescript
@@ -40,10 +39,9 @@ export declare function setStatusBar(options?: StatusBar): Promise<void>;
  *
  * @since 1.2.0
  */
-export interface GestureStatusBar {
-    enable?: boolean;
-}
-export declare function setGestureStatusBar(options?: GestureStatusBar): Promise<void>;
+export declare function setGestureStatusBar(options?: {
+    enable: boolean;
+}): Promise<void>;
 /**
  * @example
  * ```typescript
@@ -53,10 +51,9 @@ export declare function setGestureStatusBar(options?: GestureStatusBar): Promise
  *
  * @since 1.2.0
  */
-export interface LcdOnOff {
+export declare function setLcdOnOff(options?: {
     enable?: boolean;
-}
-export declare function setLcdOnOff(options?: LcdOnOff): Promise<void>;
+}): Promise<void>;
 /**
  * @example
  * ```typescript
@@ -81,10 +78,9 @@ export declare function setPowerOnOffTime(options?: PowerOnOffTime): Promise<str
  *
  * @since 1.2.6
  */
-export interface SettingConfig {
+export declare function openSettingConfig(options: {
     enable: boolean;
-}
-export declare function openSettingConfig(options: FileManager): Promise<void>;
+}): Promise<void>;
 /**
  * @example
  * ```typescript
@@ -94,10 +90,9 @@ export declare function openSettingConfig(options: FileManager): Promise<void>;
  *
  * @since 1.2.6
  */
-export interface FileManager {
+export declare function openFileManager(options: {
     enable: boolean;
-}
-export declare function openFileManager(options: FileManager): Promise<void>;
+}): Promise<void>;
 /**
  * @example
  * ```typescript
@@ -107,11 +102,9 @@ export declare function openFileManager(options: FileManager): Promise<void>;
  *
  * @since 1.3.2
  */
-export interface AppBrightness {
+export declare function setAppBrightness(options?: {
     value: number;
-    isScreen: boolean;
-}
-export declare function setAppBrightness(options?: AppBrightness): Promise<string>;
+}): Promise<string>;
 /**
  * @example
  * ```typescript

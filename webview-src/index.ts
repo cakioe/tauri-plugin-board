@@ -36,11 +36,7 @@ export async function reboot(): Promise<void> {
  *
  * @since 1.2.0
  */
-
-export interface StatusBar {
-  enable?: boolean
-}
-export async function setStatusBar(options?: StatusBar): Promise<void> {
+export async function setStatusBar(options?: { enable: boolean }): Promise<void> {
   await invoke('plugin:board|set_status_bar', { ...options })
 }
 
@@ -53,11 +49,7 @@ export async function setStatusBar(options?: StatusBar): Promise<void> {
  *
  * @since 1.2.0
  */
-
-export interface GestureStatusBar {
-  enable?: boolean
-}
-export async function setGestureStatusBar(options?: GestureStatusBar): Promise<void> {
+export async function setGestureStatusBar(options?: { enable: boolean }): Promise<void> {
   await invoke('plugin:board|set_gesture_status_bar', { ...options })
 }
 
@@ -70,10 +62,7 @@ export async function setGestureStatusBar(options?: GestureStatusBar): Promise<v
  *
  * @since 1.2.0
  */
-export interface LcdOnOff {
-  enable?: boolean
-}
-export async function setLcdOnOff(options?: LcdOnOff): Promise<void> {
+export async function setLcdOnOff(options?: { enable?: boolean }): Promise<void> {
   await invoke('plugin:board|set_lcd_on_off', { ...options })
 }
 
@@ -104,10 +93,7 @@ export async function setPowerOnOffTime(options?: PowerOnOffTime): Promise<strin
  *
  * @since 1.2.6
  */
-export interface SettingConfig {
-  enable: boolean
-}
-export async function openSettingConfig(options: FileManager): Promise<void> {
+export async function openSettingConfig(options: { enable: boolean }): Promise<void> {
   await invoke('plugin:board|open_setting_config', { ...options })
 }
 
@@ -120,10 +106,7 @@ export async function openSettingConfig(options: FileManager): Promise<void> {
  *
  * @since 1.2.6
  */
-export interface FileManager {
-  enable: boolean
-}
-export async function openFileManager(options: FileManager): Promise<void> {
+export async function openFileManager(options: { enable: boolean }): Promise<void> {
   await invoke('plugin:board|open_file_manager', { ...options })
 }
 
@@ -136,11 +119,7 @@ export async function openFileManager(options: FileManager): Promise<void> {
  *
  * @since 1.3.2
  */
-export interface AppBrightness {
-  value: number
-  isScreen: boolean
-}
-export async function setAppBrightness(options?: AppBrightness): Promise<string> {
+export async function setAppBrightness(options?: { value: number }): Promise<string> {
   return await invoke<Record<string, string>>('plugin:board|set_app_brightness', { ...options }).then(r => r.value)
 }
 
@@ -160,7 +139,9 @@ export interface SerialDevice {
   disabled: boolean
 }
 export async function getSerialDevicesPath(): Promise<SerialDevice[]> {
-  return await invoke<Record<string, string>>('plugin:board|get_serial_devices_path').then(r => JSON.parse(r.value) as unknown as SerialDevice[])
+  return await invoke<Record<string, string>>('plugin:board|get_serial_devices_path').then(
+    r => JSON.parse(r.value) as unknown as SerialDevice[]
+  )
 }
 
 /**
@@ -185,7 +166,9 @@ export interface BuildEnv {
   gesture_status_bar_on: string
 }
 export async function getBuildEnv(): Promise<BuildEnv> {
-  return await invoke<Record<string, string>>('plugin:board|get_build_env').then(r => JSON.parse(r.value) as unknown as BuildEnv)
+  return await invoke<Record<string, string>>('plugin:board|get_build_env').then(
+    r => JSON.parse(r.value) as unknown as BuildEnv
+  )
 }
 
 /**
@@ -211,7 +194,7 @@ export async function openMainActivity(): Promise<void> {
  * @since 1.4.0-beta.19
  */
 export async function takeScreenShot(): Promise<string> {
-    return await invoke<Record<string, string>>('plugin:board|take_screen_shot').then(r => r.value)
+  return await invoke<Record<string, string>>('plugin:board|take_screen_shot').then(r => r.value)
 }
 
 /**
@@ -232,5 +215,7 @@ export interface BuildBoard {
   board_columns: number
 }
 export async function getBuildBoard(options?: { input: string }): Promise<BuildBoard> {
-  return await invoke<Record<string, string>>('plugin:board|get_build_board', { ...options }).then(r => JSON.parse(r.value) as unknown as BuildBoard)
+  return await invoke<Record<string, string>>('plugin:board|get_build_board', { ...options }).then(
+    r => JSON.parse(r.value) as unknown as BuildBoard
+  )
 }
