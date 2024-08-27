@@ -25,6 +25,8 @@ const COMMANDS: &[&str] = &[
     "reset_lift",
     "run_moto",
     "get_shipment_status",
+    "set_x_pos",
+    "set_y_pos",
 ];
 
 fn main() {

@@ -603,6 +603,34 @@
           ]
         },
         {
+          "description": "allow-set-x-pos -> Enables the set_x_pos command without any pre-configured scope.",
+          "type": "string",
+          "enum": [
+            "allow-set-x-pos"
+          ]
+        },
+        {
+          "description": "deny-set-x-pos -> Denies the set_x_pos command without any pre-configured scope.",
+          "type": "string",
+          "enum": [
+            "deny-set-x-pos"
+          ]
+        },
+        {
+          "description": "allow-set-y-pos -> Enables the set_y_pos command without any pre-configured scope.",
+          "type": "string",
+          "enum": [
+            "allow-set-y-pos"
+          ]
+        },
+        {
+          "description": "deny-set-y-pos -> Denies the set_y_pos command without any pre-configured scope.",
+          "type": "string",
+          "enum": [
+            "deny-set-y-pos"
+          ]
+        },
+        {
           "description": "allow-shutdown -> Enables the shutdown command without any pre-configured scope.",
           "type": "string",
           "enum": [

@@ -236,5 +236,35 @@ async function runMoto(options) {
 async function getShipmentStatus(options) {
     return await invoke('plugin:board|get_shipment_status', { ...options }).then(r => JSON.parse(r.value));
 }
+/**
+ * @example
+ * ```typescript
+ * import { setXPos } from '@cakioe/tauri-plugin-board';
+ * await setXPos({ ...options });
+ * ```
+ *
+ * @since 1.6.0
+ */
+async function setXPos(options) {
+    if ((options === null || options === void 0 ? void 0 : options.values.length) !== 10) {
+        throw new Error('x length must be 10');
+    }
+    return await invoke('plugin:board|set_x_pos', { ...options }).then(r => r.value);
+}
+/**
+ * @example
+ * ```typescript
+ * import { setYPos } from '@cakioe/tauri-plugin-board';
+ * await setYPos({ ...options });
+ * ```
+ *
+ * @since 1.6.0
+ */
+async function setYPos(options) {
+    if ((options === null || options === void 0 ? void 0 : options.values.length) !== 10) {
+        throw new Error('y length must be 10');
+    }
+    return await invoke('plugin:board|set_y_pos', { ...options }).then(r => r.value);
+}
 
-export { execShipment, getBoxStatus, getBuildBoard, getBuildEnv, getDropStatus, getSerialDevicesPath, getShipmentStatus, getXPos, getXStatus, getYPos, getYStatus, openFileManager, openMainActivity, openSettingConfig, reboot, resetLift, runMoto, setAppBrightness, setGestureStatusBar, setLcdOnOff, setPowerOnOffTime, setStatusBar, shutdown, takeScreenShot };
+export { execShipment, getBoxStatus, getBuildBoard, getBuildEnv, getDropStatus, getSerialDevicesPath, getShipmentStatus, getXPos, getXStatus, getYPos, getYStatus, openFileManager, openMainActivity, openSettingConfig, reboot, resetLift, runMoto, setAppBrightness, setGestureStatusBar, setLcdOnOff, setPowerOnOffTime, setStatusBar, setXPos, setYPos, shutdown, takeScreenShot };

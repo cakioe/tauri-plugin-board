@@ -583,6 +583,58 @@ Denies the set_status_bar command without any pre-configured scope.
 <tr>
 <td>
 
+`board:allow-set-x-pos`
+
+</td>
+<td>
+
+Enables the set_x_pos command without any pre-configured scope.
+
+</td>
+</tr>
+
+<tr>
+<td>
+
+`board:deny-set-x-pos`
+
+</td>
+<td>
+
+Denies the set_x_pos command without any pre-configured scope.
+
+</td>
+</tr>
+
+<tr>
+<td>
+
+`board:allow-set-y-pos`
+
+</td>
+<td>
+
+Enables the set_y_pos command without any pre-configured scope.
+
+</td>
+</tr>
+
+<tr>
+<td>
+
+`board:deny-set-y-pos`
+
+</td>
+<td>
+
+Denies the set_y_pos command without any pre-configured scope.
+
+</td>
+</tr>
+
+<tr>
+<td>
+
 `board:allow-shutdown`
 
 </td>

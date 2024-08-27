@@ -93,6 +93,12 @@ class RunMotoRequest {
     var status: Short = 0
 }
 
+@InvokeArg
+class XYPosRequest {
+    var addr: Int = 1
+    var values: Array<Int> = Array(10) { 0 }
+}
+
 @SuppressLint("SdCardPath")
 const val SDCARD_DIR = "/sdcard"
 
@@ -890,5 +896,84 @@ class BoardPlugin(private val activity: Activity) : Plugin(activity) {
         )
         ret.put("value", Gson().toJson(result))
         invoke.resolve(ret)
+    }
+
+    /**
+     * command of `setXPos`
+     *
+     * @description: 设置 X 轴移动电机控制板位置 | p23
+     * @param invoke to invoke [XYPosRequest] { ...arguments }
+     * @return void
+     * @since 1.6.0
+     */
+    @Command
+    fun setXPos(invoke: Invoke) {
+        if (!this.driver.EF_Opened()) {
+            throw Exception("driver not opened")
+        }
+        val args = invoke.parseArgs(XYPosRequest::class.java)
+        SXPReplyPara(
+            args.addr,
+            args.values[0],
+            args.values[1],
+            args.values[2],
+            args.values[3],
+            args.values[4],
+            args.values[5],
+            args.values[6],
+            args.values[7],
+            args.values[8],
+            args.values[9],
+        ).apply {
+            driver.SeXPos(this)
+        }.apply {
+            if (!this.isOK) {
+                throw Exception("set x pos failed")
+            }
+        }
+
+        val ret = JSObject()
+        ret.put("value", "success")
+        invoke.resolve()
+    }
+
+    /**
+     * command of `setYPos`
+     *
+     * @description: 设置升降电机 Y 轴寻址位置 | p22
+     * @param invoke to invoke [XYPosRequest] { ...arguments }
+     * @return void
+     * @since 1.6.0
+     */
+    @Command
+    fun setYPos(invoke: Invoke) {
+        if (!this.driver.EF_Opened()) {
+            throw Exception("driver not opened")
+        }
+
+        val args = invoke.parseArgs(XYPosRequest::class.java)
+        SYPReplyPara(
+            args.addr,
+            args.values[0],
+            args.values[1],
+            args.values[2],
+            args.values[3],
+            args.values[4],
+            args.values[5],
+            args.values[6],
+            args.values[7],
+            args.values[8],
+            args.values[9],
+        ).apply {
+            driver.SeYPos(this)
+        }.apply {
+            if (!this.isOK) {
+                throw Exception("set y pos failed")
+            }
+        }
+
+        val ret = JSObject()
+        ret.put("value", "success")
+        invoke.resolve()
     }
 }

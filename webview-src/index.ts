@@ -377,3 +377,37 @@ export async function getShipmentStatus(options?: { addr: number }): Promise<XYS
     r => JSON.parse(r.value) as unknown as XYStatus
   )
 }
+
+/**
+ * @example
+ * ```typescript
+ * import { setXPos } from '@cakioe/tauri-plugin-board';
+ * await setXPos({ ...options });
+ * ```
+ *
+ * @since 1.6.0
+ */
+export async function setXPos(options?: { addr: number; values: number[] }): Promise<string> {
+  if (options?.values.length !== 10) {
+    throw new Error('x length must be 10')
+  }
+
+  return await invoke<Record<string, string>>('plugin:board|set_x_pos', { ...options }).then(r => r.value)
+}
+
+/**
+ * @example
+ * ```typescript
+ * import { setYPos } from '@cakioe/tauri-plugin-board';
+ * await setYPos({ ...options });
+ * ```
+ *
+ * @since 1.6.0
+ */
+export async function setYPos(options?: { addr: number; values: number[] }): Promise<string> {
+  if (options?.values.length !== 10) {
+    throw new Error('y length must be 10')
+  }
+
+  return await invoke<Record<string, string>>('plugin:board|set_y_pos', { ...options }).then(r => r.value)
+}

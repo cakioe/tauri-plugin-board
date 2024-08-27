@@ -324,3 +324,29 @@ export declare function runMoto(options?: {
 export declare function getShipmentStatus(options?: {
     addr: number;
 }): Promise<XYStatus>;
+/**
+ * @example
+ * ```typescript
+ * import { setXPos } from '@cakioe/tauri-plugin-board';
+ * await setXPos({ ...options });
+ * ```
+ *
+ * @since 1.6.0
+ */
+export declare function setXPos(options?: {
+    addr: number;
+    values: number[];
+}): Promise<string>;
+/**
+ * @example
+ * ```typescript
+ * import { setYPos } from '@cakioe/tauri-plugin-board';
+ * await setYPos({ ...options });
+ * ```
+ *
+ * @since 1.6.0
+ */
+export declare function setYPos(options?: {
+    addr: number;
+    values: number[];
+}): Promise<string>;
