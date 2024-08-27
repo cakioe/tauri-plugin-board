@@ -12,6 +12,7 @@ enum class Method(val value: String) {
     GET_ENV("android.env.get"),
     PUT_BRIGHTNESS("android.brightness.put"),
     SET_POWER("android.schedule.power"),
+    DEFAULT("")
 }
 
 /**
@@ -21,9 +22,10 @@ class TaskService: Service() {
     private var displayer = zcapi()
     private var filename: String = "store.bin"
     private var key: String = "MACHINE_SETTING"
+
     private lateinit var no: String
     private lateinit var topic: String
-    private lateinit var method: Method
+    private var method: Method = Method.DEFAULT
 
     override fun onBind(p0: Intent?): IBinder? {
         return null
@@ -73,6 +75,9 @@ class TaskService: Service() {
                 }
                 Method.SET_POWER -> {
                     TODO("Not yet implemented")
+                }
+                Method.DEFAULT -> {
+                    return
                 }
             }
         }
