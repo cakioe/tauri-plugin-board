@@ -163,12 +163,25 @@ async function getBoxStatus(options) {
 async function getYPos(options) {
     return await core.invoke('plugin:board|get_y_pos', { ...options }).then(r => parseInt(r.value));
 }
+/**
+ * @example
+ * ```typescript
+ * import { getXPos } from '@cakioe/tauri-plugin-board';
+ * await getXPos({ ...options });
+ * ```
+ *
+ * @since 1.6.0
+ */
+async function getXPos(options) {
+    return await core.invoke('plugin:board|get_x_pos', { ...options }).then(r => parseInt(r.value));
+}
 
 exports.execShipment = execShipment;
 exports.getBoxStatus = getBoxStatus;
 exports.getBuildBoard = getBuildBoard;
 exports.getBuildEnv = getBuildEnv;
 exports.getSerialDevicesPath = getSerialDevicesPath;
+exports.getXPos = getXPos;
 exports.getYPos = getYPos;
 exports.openFileManager = openFileManager;
 exports.openMainActivity = openMainActivity;

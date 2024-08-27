@@ -141,6 +141,32 @@ Denies the get_serial_devices_path command without any pre-configured scope.
 <tr>
 <td>
 
+`board:allow-get-x-pos`
+
+</td>
+<td>
+
+Enables the get_x_pos command without any pre-configured scope.
+
+</td>
+</tr>
+
+<tr>
+<td>
+
+`board:deny-get-x-pos`
+
+</td>
+<td>
+
+Denies the get_x_pos command without any pre-configured scope.
+
+</td>
+</tr>
+
+<tr>
+<td>
+
 `board:allow-get-y-pos`
 
 </td>

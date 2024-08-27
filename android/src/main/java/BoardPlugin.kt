@@ -82,7 +82,7 @@ class BoxStatusRequest {
 }
 
 @InvokeArg
-class YPosRequest {
+class AddrRequest {
     var addr: Int = 1
 }
 
@@ -636,7 +636,7 @@ class BoardPlugin(private val activity: Activity) : Plugin(activity) {
     /**
      * command of `getYPos`
      * @description: 查询升降电机当前位置 | p12
-     * @param invoke to invoke [YPosRequest] { ...arguments }
+     * @param invoke to invoke [AddrRequest] { ...arguments }
      * @return void
      * @since 1.6.0
      */
@@ -646,7 +646,7 @@ class BoardPlugin(private val activity: Activity) : Plugin(activity) {
             throw Exception("driver not opened")
         }
 
-        val args = invoke.parseArgs(YPosRequest::class.java)
+        val args = invoke.parseArgs(AddrRequest::class.java)
         val para = CYReplyPara(
             args.addr
         ).apply {
@@ -654,6 +654,35 @@ class BoardPlugin(private val activity: Activity) : Plugin(activity) {
         }.apply {
             if (!this.isOK) {
                 throw Exception("get y pos failed")
+            }
+        }
+
+        val ret = JSObject()
+        ret.put("value", para.value)
+        invoke.resolve(ret)
+    }
+
+    /**
+     * command of `getXPos`
+     * @description: 查询水平电机当前位置 | p13
+     * @param invoke to invoke [AddrRequest] { ...arguments }
+     * @return void
+     * @since 1.6.0
+     */
+    @Command
+    fun getXPos(invoke: Invoke) {
+        if (!this.driver.EF_Opened()) {
+            throw Exception("driver not opened")
+        }
+
+        val args = invoke.parseArgs(AddrRequest::class.java)
+        val para = CXReplyPara(
+            args.addr
+        ).apply {
+            driver.GetXPos(this)
+        }.apply {
+            if (!this.isOK) {
+                throw Exception("get x pos failed")
             }
         }
 
