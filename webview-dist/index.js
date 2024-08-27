@@ -185,5 +185,8 @@ async function getXPos(options) {
 async function getDropStatus(options) {
     return await invoke('plugin:board|get_drop_status', { ...options }).then(r => parseInt(r.value));
 }
+async function getYStatus(options) {
+    return await invoke('plugin:board|get_y_status', { ...options }).then(r => JSON.parse(r.value));
+}
 
-export { execShipment, getBoxStatus, getBuildBoard, getBuildEnv, getDropStatus, getSerialDevicesPath, getXPos, getYPos, openFileManager, openMainActivity, openSettingConfig, reboot, setAppBrightness, setGestureStatusBar, setLcdOnOff, setPowerOnOffTime, setStatusBar, shutdown, takeScreenShot };
+export { execShipment, getBoxStatus, getBuildBoard, getBuildEnv, getDropStatus, getSerialDevicesPath, getXPos, getYPos, getYStatus, openFileManager, openMainActivity, openSettingConfig, reboot, setAppBrightness, setGestureStatusBar, setLcdOnOff, setPowerOnOffTime, setStatusBar, shutdown, takeScreenShot };

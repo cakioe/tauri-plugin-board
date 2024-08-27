@@ -232,11 +232,11 @@ export async function getBuildBoard(options?: { addr: number }): Promise<BuildBo
  * @update 1.6.0 `no` replace `motorId` field of options
  */
 export async function execShipment(options?: {
-  addr: number,
-  no: number,
-  motorId?: number,
-  floorType: number,
-  isDc: boolean,
+  addr: number
+  no: number
+  motorId?: number
+  floorType: number
+  isDc: boolean
   isLp: boolean
 }): Promise<string> {
   return await invoke<Record<string, string>>('plugin:board|exec_shipment', { ...options }).then(r => r.value)
@@ -251,17 +251,15 @@ export async function execShipment(options?: {
  *
  * @since 1.6.0
  */
- export interface BoxStatus {
-   no: number
-   status: number
- }
-export async function getBoxStatus(options?: {
-  addr: number,
+export interface BoxStatus {
   no: number
-}): Promise<BoxStatus> {
+  status: number
+}
+export async function getBoxStatus(options?: { addr: number; no: number }): Promise<BoxStatus> {
   return await invoke<Record<string, string>>('plugin:board|get_box_status', { ...options }).then(
-      r => JSON.parse(r.value) as unknown as BoxStatus
-)}
+    r => JSON.parse(r.value) as unknown as BoxStatus
+  )
+}
 
 /**
  * @example
@@ -299,5 +297,28 @@ export async function getXPos(options?: { addr: number }): Promise<number> {
  * @since 1.6.0
  */
 export async function getDropStatus(options?: { addr: number }): Promise<number> {
-  return await invoke<Record<string, string>>('plugin:board|get_drop_status', { ...options }).then(r => parseInt(r.value))
+  return await invoke<Record<string, string>>('plugin:board|get_drop_status', { ...options }).then(r =>
+    parseInt(r.value)
+  )
+}
+
+/**
+ * @example
+ * ```typescript
+ * import { getXStatus } from '@cakioe/tauri-plugin-board';
+ * await getXStatus({ ...options });
+ * ```
+ *
+ * @since 1.6.0
+ */
+export interface YStatus {
+  run_status: number
+  status_message: string
+  fault_code: number
+  fault_message: string
+}
+export async function getYStatus(options?: { addr: number }): Promise<YStatus> {
+  return await invoke<Record<string, string>>('plugin:board|get_y_status', { ...options }).then(
+    r => JSON.parse(r.value) as unknown as YStatus
+  )
 }

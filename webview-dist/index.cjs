@@ -187,6 +187,9 @@ async function getXPos(options) {
 async function getDropStatus(options) {
     return await core.invoke('plugin:board|get_drop_status', { ...options }).then(r => parseInt(r.value));
 }
+async function getYStatus(options) {
+    return await core.invoke('plugin:board|get_y_status', { ...options }).then(r => JSON.parse(r.value));
+}
 
 exports.execShipment = execShipment;
 exports.getBoxStatus = getBoxStatus;
@@ -196,6 +199,7 @@ exports.getDropStatus = getDropStatus;
 exports.getSerialDevicesPath = getSerialDevicesPath;
 exports.getXPos = getXPos;
 exports.getYPos = getYPos;
+exports.getYStatus = getYStatus;
 exports.openFileManager = openFileManager;
 exports.openMainActivity = openMainActivity;
 exports.openSettingConfig = openSettingConfig;

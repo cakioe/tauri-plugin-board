@@ -18,6 +18,7 @@ import app.tauri.plugin.Plugin
 import cc.uling.usdk.USDK
 import cc.uling.usdk.board.UBoard
 import cc.uling.usdk.board.wz.para.*
+import cc.uling.usdk.constants.CodeUtil
 import cc.uling.usdk.constants.ErrorConst
 import com.google.gson.Gson
 import com.zcapi
@@ -721,6 +722,40 @@ class BoardPlugin(private val activity: Activity) : Plugin(activity) {
         // 0- 掉货检测未连接或者被遮挡
         // 1- 掉货检测正常对射无遮挡
         ret.put("value", para.status)
+        invoke.resolve(ret)
+    }
+
+    /**
+     * command of `getYStatus`
+     *
+     * @description: 读取 Y 轴升降电机控制板状态 | p16
+     * @param invoke to invoke [AddrRequest] { ...arguments }
+     * @return void
+     * @since 1.6.0
+     */
+    @Command
+    fun getYStatus(invoke: Invoke) {
+        if (!this.driver.EF_Opened()) {
+            throw Exception("driver not opened")
+        }
+        val args = invoke.parseArgs(AddrRequest::class.java)
+        val para = YSReplyPara(
+            args.addr
+        ).apply {
+            driver.GetYStatus(this)
+        }.apply {
+            if (!this.isOK) {
+                throw Exception("get y status failed")
+            }
+        }
+        val ret = JSObject()
+        val result: Map<String, Any> = mapOf(
+            "run_status" to para.runStatus,
+            "status_message" to CodeUtil.getXYStatusMsg(para.runStatus),
+            "fault_code" to para.faultCode,
+            "fault_message" to CodeUtil.getFaultMsg(para.faultCode),
+        )
+        ret.put("value", Gson().toJson(result))
         invoke.resolve(ret)
     }
 }

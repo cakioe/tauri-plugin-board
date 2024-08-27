@@ -219,6 +219,32 @@ Denies the get_y_pos command without any pre-configured scope.
 <tr>
 <td>
 
+`board:allow-get-y-status`
+
+</td>
+<td>
+
+Enables the get_y_status command without any pre-configured scope.
+
+</td>
+</tr>
+
+<tr>
+<td>
+
+`board:deny-get-y-status`
+
+</td>
+<td>
+
+Denies the get_y_status command without any pre-configured scope.
+
+</td>
+</tr>
+
+<tr>
+<td>
+
 `board:allow-open-file-manager`
 
 </td>

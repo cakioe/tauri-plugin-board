@@ -407,6 +407,20 @@
           ]
         },
         {
+          "description": "allow-get-y-status -> Enables the get_y_status command without any pre-configured scope.",
+          "type": "string",
+          "enum": [
+            "allow-get-y-status"
+          ]
+        },
+        {
+          "description": "deny-get-y-status -> Denies the get_y_status command without any pre-configured scope.",
+          "type": "string",
+          "enum": [
+            "deny-get-y-status"
+          ]
+        },
+        {
           "description": "allow-open-file-manager -> Enables the open_file_manager command without any pre-configured scope.",
           "type": "string",
           "enum": [
