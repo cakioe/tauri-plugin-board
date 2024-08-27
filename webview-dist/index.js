@@ -149,5 +149,17 @@ async function execShipment(options) {
 async function getBoxStatus(options) {
     return await invoke('plugin:board|get_box_status', { ...options }).then(r => JSON.parse(r.value));
 }
+/**
+ * @example
+ * ```typescript
+ * import { getXPos } from '@cakioe/tauri-plugin-board';
+ * await getXPos({ ...options });
+ * ```
+ *
+ * @since 1.6.0
+ */
+async function getYPos(options) {
+    return await invoke('plugin:board|get_y_pos', { ...options }).then(r => parseInt(r.value));
+}
 
-export { execShipment, getBoxStatus, getBuildBoard, getBuildEnv, getSerialDevicesPath, openFileManager, openMainActivity, openSettingConfig, reboot, setAppBrightness, setGestureStatusBar, setLcdOnOff, setPowerOnOffTime, setStatusBar, shutdown, takeScreenShot };
+export { execShipment, getBoxStatus, getBuildBoard, getBuildEnv, getSerialDevicesPath, getYPos, openFileManager, openMainActivity, openSettingConfig, reboot, setAppBrightness, setGestureStatusBar, setLcdOnOff, setPowerOnOffTime, setStatusBar, shutdown, takeScreenShot };

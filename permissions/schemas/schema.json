@@ -365,6 +365,20 @@
           ]
         },
         {
+          "description": "allow-get-y-pos -> Enables the get_y_pos command without any pre-configured scope.",
+          "type": "string",
+          "enum": [
+            "allow-get-y-pos"
+          ]
+        },
+        {
+          "description": "deny-get-y-pos -> Denies the get_y_pos command without any pre-configured scope.",
+          "type": "string",
+          "enum": [
+            "deny-get-y-pos"
+          ]
+        },
+        {
           "description": "allow-open-file-manager -> Enables the open_file_manager command without any pre-configured scope.",
           "type": "string",
           "enum": [

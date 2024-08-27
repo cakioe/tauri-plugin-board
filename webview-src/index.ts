@@ -262,3 +262,16 @@ export async function getBoxStatus(options?: {
   return await invoke<Record<string, string>>('plugin:board|get_box_status', { ...options }).then(
       r => JSON.parse(r.value) as unknown as BoxStatus
 )}
+
+/**
+ * @example
+ * ```typescript
+ * import { getXPos } from '@cakioe/tauri-plugin-board';
+ * await getXPos({ ...options });
+ * ```
+ *
+ * @since 1.6.0
+ */
+export async function getYPos(options?: { addr: number }): Promise<number> {
+  return await invoke<Record<string, string>>('plugin:board|get_y_pos', { ...options }).then(r => parseInt(r.value))
+}

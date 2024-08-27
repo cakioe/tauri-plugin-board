@@ -17,19 +17,11 @@ import app.tauri.plugin.JSObject
 import app.tauri.plugin.Plugin
 import cc.uling.usdk.USDK
 import cc.uling.usdk.board.UBoard
-import cc.uling.usdk.board.wz.para.BSReplyPara
-import cc.uling.usdk.board.wz.para.HCReplyPara
-import cc.uling.usdk.board.wz.para.SReplyPara
-import cc.uling.usdk.board.wz.para.SVReplyPara
-import cc.uling.usdk.board.wz.para.TempReplyPara
+import cc.uling.usdk.board.wz.para.*
 import cc.uling.usdk.constants.ErrorConst
 import com.google.gson.Gson
 import com.zcapi
-import kotlinx.coroutines.DelicateCoroutinesApi
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.async
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.*
 
 @InvokeArg
 class StatusBar {
@@ -48,9 +40,9 @@ class LcdOnOff {
 
 @InvokeArg
 class PowerOnOffTime {
-     var enable: Boolean = false
-     var onTime: Long? = null // 以毫秒为单位
-     var offTime: Long? = null // 以毫秒为单位
+    var enable: Boolean = false
+    var onTime: Long? = null // 以毫秒为单位
+    var offTime: Long? = null // 以毫秒为单位
 }
 
 @InvokeArg
@@ -89,6 +81,11 @@ class BoxStatusRequest {
     var no: Int = 0
 }
 
+@InvokeArg
+class YPosRequest {
+    var addr: Int = 1
+}
+
 @SuppressLint("SdCardPath")
 const val SDCARD_DIR = "/sdcard"
 
@@ -102,7 +99,7 @@ const val UNAVAILABLE_VALUE = 3276.7
  * @property activity of main activity
  */
 @TauriPlugin
-class BoardPlugin(private val activity: Activity): Plugin(activity) {
+class BoardPlugin(private val activity: Activity) : Plugin(activity) {
     /**
      * displayer: the display board of screen, from`zc`
      */
@@ -235,7 +232,7 @@ class BoardPlugin(private val activity: Activity): Plugin(activity) {
             serialSn = this.displayer.buildSerial,
             modelNo = this.displayer.buildModel,
             screenWidth = 0,
-            screenHeight =  0,
+            screenHeight = 0,
             baudrate = this.baudrate,
             commid = this.commid,
             brightness = 255,
@@ -246,7 +243,7 @@ class BoardPlugin(private val activity: Activity): Plugin(activity) {
             this.buildEnv.screenHeight = windowMetrics.bounds.height()
             this.buildEnv.screenWidth = windowMetrics.bounds.width()
         } else {
-            DisplayMetrics().let  { item ->
+            DisplayMetrics().let { item ->
                 @Suppress("DEPRECATION")
                 activity.windowManager.defaultDisplay.getMetrics(item).let {
                     this.buildEnv.screenHeight = item.widthPixels
@@ -268,8 +265,8 @@ class BoardPlugin(private val activity: Activity): Plugin(activity) {
                 displayer.setStatusBar(enable)
                 displayer.setGestureStatusBar(enable)
 
-                buildEnv.statusBarOn = if (enable) "1"  else "0"
-                buildEnv.gestureStatusBarOn = if (enable) "1"  else "0"
+                buildEnv.statusBarOn = if (enable) "1" else "0"
+                buildEnv.gestureStatusBarOn = if (enable) "1" else "0"
             }
         }
     }
@@ -308,7 +305,7 @@ class BoardPlugin(private val activity: Activity): Plugin(activity) {
     fun setStatusBar(invoke: Invoke) {
         val argv = invoke.parseArgs(StatusBar::class.java).enable ?: false
         this.displayer.setStatusBar(argv)
-        this.buildEnv.statusBarOn = if (argv) "1"  else "0"
+        this.buildEnv.statusBarOn = if (argv) "1" else "0"
         invoke.resolve()
     }
 
@@ -322,7 +319,7 @@ class BoardPlugin(private val activity: Activity): Plugin(activity) {
     fun setGestureStatusBar(invoke: Invoke) {
         val argv = invoke.parseArgs(GestureStatusBar::class.java).enable ?: false
         this.displayer.setGestureStatusBar(argv)
-        this.buildEnv.gestureStatusBarOn = if (argv) "1"  else "0"
+        this.buildEnv.gestureStatusBarOn = if (argv) "1" else "0"
         invoke.resolve()
     }
 
@@ -348,7 +345,7 @@ class BoardPlugin(private val activity: Activity): Plugin(activity) {
     @Command
     fun setPowerOnOffTime(invoke: Invoke) {
         val args = invoke.parseArgs(PowerOnOffTime::class.java)
-        
+
         val carbon = Carbon()
         val enable = args.enable
         val onTime = carbon.parseTimestamp(args.onTime)
@@ -414,8 +411,16 @@ class BoardPlugin(private val activity: Activity): Plugin(activity) {
 
         try {
             Settings.System.getUriFor(Settings.System.SCREEN_BRIGHTNESS).let {
-                Settings.System.putInt(activity.contentResolver, Settings.System.SCREEN_BRIGHTNESS_MODE, Settings.System.SCREEN_BRIGHTNESS_MODE_MANUAL)
-                Settings.System.putInt(activity.contentResolver, Settings.System.SCREEN_BRIGHTNESS, this.buildEnv.brightness)
+                Settings.System.putInt(
+                    activity.contentResolver,
+                    Settings.System.SCREEN_BRIGHTNESS_MODE,
+                    Settings.System.SCREEN_BRIGHTNESS_MODE_MANUAL
+                )
+                Settings.System.putInt(
+                    activity.contentResolver,
+                    Settings.System.SCREEN_BRIGHTNESS,
+                    this.buildEnv.brightness
+                )
             }
             activity.window.attributes.let {
                 it.screenBrightness = this.buildEnv.brightness / 255f
@@ -596,7 +601,7 @@ class BoardPlugin(private val activity: Activity): Plugin(activity) {
 
     /**
      * command of `getBoxStatus`
-     * @description: 查询格子柜当前状态
+     * @description: 查询格子柜当前状态 | p12
      * @param invoke to invoke [BoxStatusRequest] { ...arguments }
      * @return void
      * @since 1.6.0
@@ -625,6 +630,35 @@ class BoardPlugin(private val activity: Activity): Plugin(activity) {
             "status" to para.status, // 0 => open, 1 => closed
         )
         ret.put("value", Gson().toJson(result))
+        invoke.resolve(ret)
+    }
+
+    /**
+     * command of `getYPos`
+     * @description: 查询升降电机当前位置 | p12
+     * @param invoke to invoke [YPosRequest] { ...arguments }
+     * @return void
+     * @since 1.6.0
+     */
+    @Command
+    fun getYPos(invoke: Invoke) {
+        if (!this.driver.EF_Opened()) {
+            throw Exception("driver not opened")
+        }
+
+        val args = invoke.parseArgs(YPosRequest::class.java)
+        val para = CYReplyPara(
+            args.addr
+        ).apply {
+            driver.GetYPos(this)
+        }.apply {
+            if (!this.isOK) {
+                throw Exception("get y pos failed")
+            }
+        }
+
+        val ret = JSObject()
+        ret.put("value", para.value)
         invoke.resolve(ret)
     }
 }

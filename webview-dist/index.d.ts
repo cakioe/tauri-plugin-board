@@ -221,3 +221,15 @@ export declare function getBoxStatus(options?: {
     addr: number;
     no: number;
 }): Promise<BoxStatus>;
+/**
+ * @example
+ * ```typescript
+ * import { getXPos } from '@cakioe/tauri-plugin-board';
+ * await getXPos({ ...options });
+ * ```
+ *
+ * @since 1.6.0
+ */
+export declare function getYPos(options?: {
+    addr: number;
+}): Promise<number>;
