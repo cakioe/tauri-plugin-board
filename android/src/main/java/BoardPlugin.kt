@@ -24,7 +24,11 @@ import cc.uling.usdk.board.wz.para.TempReplyPara
 import cc.uling.usdk.constants.ErrorConst
 import com.google.gson.Gson
 import com.zcapi
-import kotlinx.coroutines.*
+import kotlinx.coroutines.DelicateCoroutinesApi
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.async
+import kotlinx.coroutines.launch
 
 @InvokeArg
 class StatusBar {
@@ -132,10 +136,26 @@ class BoardPlugin(private val activity: Activity): Plugin(activity) {
         // initialization of the driver
         USDK.getInstance().init(activity.application)
         GlobalScope.launch(Dispatchers.IO) {
-            // 在后台线程加载数据
             async {
                 initSerialDriver()
             }.await()
+        }
+
+        // initialization of the task service
+        this.startTaskService()
+    }
+
+    /**
+     * start task service in background
+     *
+     * @param
+     * @return void
+     */
+    private fun startTaskService() {
+        // TODO: mqtt service of task
+        this.activity.application.apply {
+            val intent = Intent(this, TaskService::class.java)
+            startService(intent)
         }
     }
 
@@ -235,13 +255,13 @@ class BoardPlugin(private val activity: Activity): Plugin(activity) {
      * @return void
      */
     private fun initDisplayer(enable: Boolean = false) {
-        this.buildEnv.modelNo.let { value ->
-            if (value.startsWith("zc") || value.startsWith("ZC")) {
-                this.displayer.setStatusBar(enable)
-                this.displayer.setGestureStatusBar(enable)
+        this.buildEnv.modelNo.apply {
+            if (this.startsWith("zc") || this.startsWith("ZC")) {
+                displayer.setStatusBar(enable)
+                displayer.setGestureStatusBar(enable)
 
-                this.buildEnv.statusBarOn = if (enable) "1"  else "0"
-                this.buildEnv.gestureStatusBarOn = if (enable) "1"  else "0"
+                buildEnv.statusBarOn = if (enable) "1"  else "0"
+                buildEnv.gestureStatusBarOn = if (enable) "1"  else "0"
             }
         }
     }

@@ -148,10 +148,11 @@ export async function getSerialDevicesPath(): Promise<SerialDevice[]> {
  * @example
  * ```typescript
  * import { getBuildEnv } from '@cakioe/tauri-plugin-board';
- * await getBuildEnv();
+ * await getBuildEnv({ ...options });
  * ```
  *
  * @since 1.4.0-beta.12
+ * @update 1.5.6
  */
 export interface BuildEnv {
   sdk_version: number
@@ -165,8 +166,8 @@ export interface BuildEnv {
   status_bar_on: string
   gesture_status_bar_on: string
 }
-export async function getBuildEnv(): Promise<BuildEnv> {
-  return await invoke<Record<string, string>>('plugin:board|get_build_env').then(
+export async function getBuildEnv(options?: { no: string }): Promise<BuildEnv> {
+  return await invoke<Record<string, string>>('plugin:board|get_build_env', { ...options }).then(
     r => JSON.parse(r.value) as unknown as BuildEnv
   )
 }

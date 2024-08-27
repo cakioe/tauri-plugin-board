@@ -21,15 +21,7 @@
 #-renamesourcefileattribute SourceFile
 
 # GSON<https://stackoverflow.com/a/46156695/21185153>
--keep class com.plugin.board.SerialDevice {
-    *;
-}
+-keep class com.plugin.board.** { *; }
 
--keep class com.plugin.board.BuildEnv {
-    *;
-}
-
--keep class cc.uling.usdk.** {
-    *;
-}
+-keep class cc.uling.usdk.** { *; }
 -dontoptimize
