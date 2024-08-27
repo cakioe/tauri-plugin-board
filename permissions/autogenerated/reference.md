@@ -375,6 +375,32 @@ Denies the reboot command without any pre-configured scope.
 <tr>
 <td>
 
+`board:allow-reset-lift`
+
+</td>
+<td>
+
+Enables the reset_lift command without any pre-configured scope.
+
+</td>
+</tr>
+
+<tr>
+<td>
+
+`board:deny-reset-lift`
+
+</td>
+<td>
+
+Denies the reset_lift command without any pre-configured scope.
+
+</td>
+</tr>
+
+<tr>
+<td>
+
 `board:allow-set-app-brightness`
 
 </td>

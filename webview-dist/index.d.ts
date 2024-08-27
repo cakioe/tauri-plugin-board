@@ -287,3 +287,15 @@ export declare function getYStatus(options?: {
 export declare function getXStatus(options?: {
     addr: number;
 }): Promise<XYStatus>;
+/**
+ * @example
+ * ```typescript
+ * import { resetLift } from '@cakioe/tauri-plugin-board';
+ * await resetLift({ ...options });
+ * ```
+ *
+ * @since 1.6.0
+ */
+export declare function resetLift(options?: {
+    addr: number;
+}): Promise<string>;

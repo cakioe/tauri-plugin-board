@@ -202,6 +202,18 @@ async function getYStatus(options) {
 async function getXStatus(options) {
     return await core.invoke('plugin:board|get_x_status', { ...options }).then(r => JSON.parse(r.value));
 }
+/**
+ * @example
+ * ```typescript
+ * import { resetLift } from '@cakioe/tauri-plugin-board';
+ * await resetLift({ ...options });
+ * ```
+ *
+ * @since 1.6.0
+ */
+async function resetLift(options) {
+    return await core.invoke('plugin:board|reset_lift', { ...options }).then(r => r.value);
+}
 
 exports.execShipment = execShipment;
 exports.getBoxStatus = getBoxStatus;
@@ -217,6 +229,7 @@ exports.openFileManager = openFileManager;
 exports.openMainActivity = openMainActivity;
 exports.openSettingConfig = openSettingConfig;
 exports.reboot = reboot;
+exports.resetLift = resetLift;
 exports.setAppBrightness = setAppBrightness;
 exports.setGestureStatusBar = setGestureStatusBar;
 exports.setLcdOnOff = setLcdOnOff;

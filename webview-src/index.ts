@@ -337,3 +337,16 @@ export async function getXStatus(options?: { addr: number }): Promise<XYStatus> 
     r => JSON.parse(r.value) as unknown as XYStatus
   )
 }
+
+/**
+ * @example
+ * ```typescript
+ * import { resetLift } from '@cakioe/tauri-plugin-board';
+ * await resetLift({ ...options });
+ * ```
+ *
+ * @since 1.6.0
+ */
+export async function resetLift(options?: { addr: number }): Promise<string> {
+  return await invoke<Record<string, string>>('plugin:board|reset_lift', { ...options }).then(r => r.value)
+}

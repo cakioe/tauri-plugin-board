@@ -22,6 +22,7 @@ const COMMANDS: &[&str] = &[
     "get_drop_status",
     "get_y_status",
     "get_x_status",
+    "reset_lift",
 ];
 
 fn main() {

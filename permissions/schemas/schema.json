@@ -491,6 +491,20 @@
           ]
         },
         {
+          "description": "allow-reset-lift -> Enables the reset_lift command without any pre-configured scope.",
+          "type": "string",
+          "enum": [
+            "allow-reset-lift"
+          ]
+        },
+        {
+          "description": "deny-reset-lift -> Denies the reset_lift command without any pre-configured scope.",
+          "type": "string",
+          "enum": [
+            "deny-reset-lift"
+          ]
+        },
+        {
           "description": "allow-set-app-brightness -> Enables the set_app_brightness command without any pre-configured scope.",
           "type": "string",
           "enum": [

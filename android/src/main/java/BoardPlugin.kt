@@ -792,4 +792,33 @@ class BoardPlugin(private val activity: Activity) : Plugin(activity) {
         ret.put("value", Gson().toJson(result))
         invoke.resolve(ret)
     }
+
+    /**
+     * command of `resetLift`
+     *
+     * @description: 升降机复位 | p20
+     * @param invoke to invoke [AddrRequest] { ...arguments }
+     * @return void
+     * @since 1.6.0
+     */
+    @Command
+    fun resetLift(invoke: Invoke) {
+        if (!this.driver.EF_Opened()) {
+            throw Exception("driver not opened")
+        }
+
+        val args = invoke.parseArgs(AddrRequest::class.java)
+        ResetReplyPara(
+            args.addr
+        ).apply {
+            driver.ResetLift(this)
+        }.apply {
+            if (!this.isOK) {
+                throw Exception("reset lift failed")
+            }
+        }
+        val ret = JSObject()
+        ret.put("value", "success")
+        invoke.resolve(ret)
+    }
 }
