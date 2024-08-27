@@ -23,6 +23,7 @@ const COMMANDS: &[&str] = &[
     "get_y_status",
     "get_x_status",
     "reset_lift",
+    "run_moto",
 ];
 
 fn main() {

@@ -212,5 +212,17 @@ async function getXStatus(options) {
 async function resetLift(options) {
     return await invoke('plugin:board|reset_lift', { ...options }).then(r => r.value);
 }
+/**
+ * @example
+ * ```typescript
+ * import { runMoto } from '@cakioe/tauri-plugin-board';
+ * await runMoto({ ...options });
+ * ```
+ *
+ * @since 1.6.0
+ */
+async function runMoto(options) {
+    await invoke('plugin:board|run_moto', { ...options });
+}
 
-export { execShipment, getBoxStatus, getBuildBoard, getBuildEnv, getDropStatus, getSerialDevicesPath, getXPos, getXStatus, getYPos, getYStatus, openFileManager, openMainActivity, openSettingConfig, reboot, resetLift, setAppBrightness, setGestureStatusBar, setLcdOnOff, setPowerOnOffTime, setStatusBar, shutdown, takeScreenShot };
+export { execShipment, getBoxStatus, getBuildBoard, getBuildEnv, getDropStatus, getSerialDevicesPath, getXPos, getXStatus, getYPos, getYStatus, openFileManager, openMainActivity, openSettingConfig, reboot, resetLift, runMoto, setAppBrightness, setGestureStatusBar, setLcdOnOff, setPowerOnOffTime, setStatusBar, shutdown, takeScreenShot };

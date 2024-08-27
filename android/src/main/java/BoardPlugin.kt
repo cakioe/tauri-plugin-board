@@ -87,6 +87,13 @@ class AddrRequest {
     var addr: Int = 1
 }
 
+@InvokeArg
+class RunMotoRequest {
+    var addr: Int = 1
+    var mode: Short = 0
+    var status: Short = 0
+}
+
 @SuppressLint("SdCardPath")
 const val SDCARD_DIR = "/sdcard"
 
@@ -820,5 +827,33 @@ class BoardPlugin(private val activity: Activity) : Plugin(activity) {
         val ret = JSObject()
         ret.put("value", "success")
         invoke.resolve(ret)
+    }
+
+    /**
+     * command of `runMoto`
+     *
+     * @description: 电机手动模式 | p20
+     * @param invoke to invoke [RunMotoRequest] { ...arguments }
+     * @return void
+     * @since 1.6.0
+     */
+    @Command
+    fun runMoto(invoke: Invoke) {
+        if (!this.driver.EF_Opened()) {
+            throw Exception("driver not opened")
+        }
+        val args = invoke.parseArgs(RunMotoRequest::class.java)
+        val para = RMReplyPara(
+            args.addr,
+            args.mode,
+            args.status,
+        ).apply {
+            driver.RunMoto(this)
+        }.apply {
+            if (!this.isOK) {
+                throw Exception("run moto failed")
+            }
+        }
+        invoke.resolve()
     }
 }

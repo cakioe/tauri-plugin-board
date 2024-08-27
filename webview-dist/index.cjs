@@ -214,6 +214,18 @@ async function getXStatus(options) {
 async function resetLift(options) {
     return await core.invoke('plugin:board|reset_lift', { ...options }).then(r => r.value);
 }
+/**
+ * @example
+ * ```typescript
+ * import { runMoto } from '@cakioe/tauri-plugin-board';
+ * await runMoto({ ...options });
+ * ```
+ *
+ * @since 1.6.0
+ */
+async function runMoto(options) {
+    await core.invoke('plugin:board|run_moto', { ...options });
+}
 
 exports.execShipment = execShipment;
 exports.getBoxStatus = getBoxStatus;
@@ -230,6 +242,7 @@ exports.openMainActivity = openMainActivity;
 exports.openSettingConfig = openSettingConfig;
 exports.reboot = reboot;
 exports.resetLift = resetLift;
+exports.runMoto = runMoto;
 exports.setAppBrightness = setAppBrightness;
 exports.setGestureStatusBar = setGestureStatusBar;
 exports.setLcdOnOff = setLcdOnOff;

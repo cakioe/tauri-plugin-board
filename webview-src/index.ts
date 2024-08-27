@@ -350,3 +350,16 @@ export async function getXStatus(options?: { addr: number }): Promise<XYStatus> 
 export async function resetLift(options?: { addr: number }): Promise<string> {
   return await invoke<Record<string, string>>('plugin:board|reset_lift', { ...options }).then(r => r.value)
 }
+
+/**
+ * @example
+ * ```typescript
+ * import { runMoto } from '@cakioe/tauri-plugin-board';
+ * await runMoto({ ...options });
+ * ```
+ *
+ * @since 1.6.0
+ */
+export async function runMoto(options?: { addr: number; mode: number; status: number }): Promise<void> {
+  await invoke<Record<string, string>>('plugin:board|run_moto', { ...options })
+}

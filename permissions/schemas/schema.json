@@ -505,6 +505,20 @@
           ]
         },
         {
+          "description": "allow-run-moto -> Enables the run_moto command without any pre-configured scope.",
+          "type": "string",
+          "enum": [
+            "allow-run-moto"
+          ]
+        },
+        {
+          "description": "deny-run-moto -> Denies the run_moto command without any pre-configured scope.",
+          "type": "string",
+          "enum": [
+            "deny-run-moto"
+          ]
+        },
+        {
           "description": "allow-set-app-brightness -> Enables the set_app_brightness command without any pre-configured scope.",
           "type": "string",
           "enum": [

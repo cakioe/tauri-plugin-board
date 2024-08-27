@@ -299,3 +299,17 @@ export declare function getXStatus(options?: {
 export declare function resetLift(options?: {
     addr: number;
 }): Promise<string>;
+/**
+ * @example
+ * ```typescript
+ * import { runMoto } from '@cakioe/tauri-plugin-board';
+ * await runMoto({ ...options });
+ * ```
+ *
+ * @since 1.6.0
+ */
+export declare function runMoto(options?: {
+    addr: number;
+    mode: number;
+    status: number;
+}): Promise<void>;

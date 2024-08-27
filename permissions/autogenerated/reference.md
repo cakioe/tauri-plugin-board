@@ -401,6 +401,32 @@ Denies the reset_lift command without any pre-configured scope.
 <tr>
 <td>
 
+`board:allow-run-moto`
+
+</td>
+<td>
+
+Enables the run_moto command without any pre-configured scope.
+
+</td>
+</tr>
+
+<tr>
+<td>
+
+`board:deny-run-moto`
+
+</td>
+<td>
+
+Denies the run_moto command without any pre-configured scope.
+
+</td>
+</tr>
+
+<tr>
+<td>
+
 `board:allow-set-app-brightness`
 
 </td>

@@ -1,0 +1,13 @@
+# Automatically generated - DO NOT EDIT!
+
+"$schema" = "../../schemas/schema.json"
+
+[[permission]]
+identifier = "allow-run-moto"
+description = "Enables the run_moto command without any pre-configured scope."
+commands.allow = ["run_moto"]
+
+[[permission]]
+identifier = "deny-run-moto"
+description = "Denies the run_moto command without any pre-configured scope."
+commands.deny = ["run_moto"]
