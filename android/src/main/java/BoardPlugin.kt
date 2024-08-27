@@ -577,6 +577,7 @@ class BoardPlugin(private val activity: Activity) : Plugin(activity) {
     /**
      * command of `execShipment`
      *
+     * @description: 控制驱动板出货 | p23
      * @param invoke to invoke [ShipmentRequest] { ...arguments }
      * @return void
      * @since 1.5.3
@@ -843,7 +844,7 @@ class BoardPlugin(private val activity: Activity) : Plugin(activity) {
             throw Exception("driver not opened")
         }
         val args = invoke.parseArgs(RunMotoRequest::class.java)
-        val para = RMReplyPara(
+        RMReplyPara(
             args.addr,
             args.mode,
             args.status,
