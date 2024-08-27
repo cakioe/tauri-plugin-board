@@ -30,4 +30,16 @@ fn main() {
             std::process::exit(1);
         }
     }
+
+    // TODO: rewrite AndroidManifest.xml for service
+    // <https://github.com/tauri-apps/plugins-workspace/blob/v2/plugins/nfc/build.rs>
+    // tauri_plugin::mobile::update_android_manifest(
+    //     "BOARD PLUGIN",
+    //     "activity",
+    //     r#"<intent-filter>
+    // <service android:name="xxxx.service" />
+    // </intent-filter>"#
+    //         .to_string(),
+    // )
+    // .expect("failed to rewrite AndroidManifest.xml")
 }

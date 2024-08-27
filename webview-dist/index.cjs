@@ -105,8 +105,8 @@ async function setAppBrightness(options) {
 async function getSerialDevicesPath() {
     return await core.invoke('plugin:board|get_serial_devices_path').then(r => JSON.parse(r.value));
 }
-async function getBuildEnv() {
-    return await core.invoke('plugin:board|get_build_env').then(r => JSON.parse(r.value));
+async function getBuildEnv(options) {
+    return await core.invoke('plugin:board|get_build_env', { ...options }).then(r => JSON.parse(r.value));
 }
 /**
  * @example
