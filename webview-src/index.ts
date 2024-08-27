@@ -234,7 +234,6 @@ export async function getBuildBoard(options?: { addr: number }): Promise<BuildBo
 export async function execShipment(options?: {
   addr: number
   no: number
-  motorId?: number
   floorType: number
   isDc: boolean
   isLp: boolean

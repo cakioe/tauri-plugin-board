@@ -199,7 +199,6 @@ export declare function getBuildBoard(options?: {
 export declare function execShipment(options?: {
     addr: number;
     no: number;
-    motorId?: number;
     floorType: number;
     isDc: boolean;
     isLp: boolean;

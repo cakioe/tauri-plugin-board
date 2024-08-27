@@ -70,7 +70,6 @@ class BuildBoardRequest {
 class ShipmentRequest {
     var addr: Int = 1 //
     var no: Int = 0
-    var motorId: Int = 0
     var floorType: Int = 1
     var isDc: Boolean = false
     var isLp: Boolean = false
