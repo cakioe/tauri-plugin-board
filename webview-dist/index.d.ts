@@ -194,11 +194,30 @@ export declare function getBuildBoard(options?: {
  * ```
  *
  * @since 1.5.4
+ * @update 1.6.0 `no` replace `motorId` field of options
  */
 export declare function execShipment(options?: {
     addr: number;
-    motorId: number;
+    no: number;
+    motorId?: number;
     floorType: number;
     isDc: boolean;
     isLp: boolean;
 }): Promise<string>;
+/**
+ * @example
+ * ```typescript
+ * import { getBoxStatus } from '@cakioe/tauri-plugin-board';
+ * await getBoxStatus({...options});
+ * ```
+ *
+ * @since 1.6.0
+ */
+export interface BoxStatus {
+    no: number;
+    status: number;
+}
+export declare function getBoxStatus(options?: {
+    addr: number;
+    no: number;
+}): Promise<BoxStatus>;

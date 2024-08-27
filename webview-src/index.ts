@@ -229,13 +229,36 @@ export async function getBuildBoard(options?: { addr: number }): Promise<BuildBo
  * ```
  *
  * @since 1.5.4
+ * @update 1.6.0 `no` replace `motorId` field of options
  */
 export async function execShipment(options?: {
   addr: number,
-  motorId: number,
+  no: number,
+  motorId?: number,
   floorType: number,
   isDc: boolean,
   isLp: boolean
 }): Promise<string> {
   return await invoke<Record<string, string>>('plugin:board|exec_shipment', { ...options }).then(r => r.value)
 }
+
+/**
+ * @example
+ * ```typescript
+ * import { getBoxStatus } from '@cakioe/tauri-plugin-board';
+ * await getBoxStatus({...options});
+ * ```
+ *
+ * @since 1.6.0
+ */
+ export interface BoxStatus {
+   no: number
+   status: number
+ }
+export async function getBoxStatus(options?: {
+  addr: number,
+  no: number
+}): Promise<BoxStatus> {
+  return await invoke<Record<string, string>>('plugin:board|get_box_status', { ...options }).then(
+      r => JSON.parse(r.value) as unknown as BoxStatus
+)}

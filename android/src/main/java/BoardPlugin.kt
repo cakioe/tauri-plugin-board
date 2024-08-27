@@ -17,6 +17,7 @@ import app.tauri.plugin.JSObject
 import app.tauri.plugin.Plugin
 import cc.uling.usdk.USDK
 import cc.uling.usdk.board.UBoard
+import cc.uling.usdk.board.wz.para.BSReplyPara
 import cc.uling.usdk.board.wz.para.HCReplyPara
 import cc.uling.usdk.board.wz.para.SReplyPara
 import cc.uling.usdk.board.wz.para.SVReplyPara
@@ -75,10 +76,17 @@ class BuildBoardRequest {
 @InvokeArg
 class ShipmentRequest {
     var addr: Int = 1 //
+    var no: Int = 0
     var motorId: Int = 0
     var floorType: Int = 1
     var isDc: Boolean = false
     var isLp: Boolean = false
+}
+
+@InvokeArg
+class BoxStatusRequest {
+    var addr: Int = 1
+    var no: Int = 0
 }
 
 @SuppressLint("SdCardPath")
@@ -569,7 +577,7 @@ class BoardPlugin(private val activity: Activity): Plugin(activity) {
         val args = invoke.parseArgs(ShipmentRequest::class.java)
         SReplyPara(
             args.addr,
-            args.motorId,
+            args.no % 100,
             args.floorType,
             args.isDc,
             args.isLp,
@@ -583,6 +591,40 @@ class BoardPlugin(private val activity: Activity): Plugin(activity) {
 
         val ret = JSObject()
         ret.put("value", "success")
+        invoke.resolve(ret)
+    }
+
+    /**
+     * command of `getBoxStatus`
+     * @description: 查询格子柜当前状态
+     * @param invoke to invoke [BoxStatusRequest] { ...arguments }
+     * @return void
+     * @since 1.6.0
+     */
+    @Command
+    fun getBoxStatus(invoke: Invoke) {
+        if (!this.driver.EF_Opened()) {
+            throw Exception("driver not opened")
+        }
+
+        val args = invoke.parseArgs(BoxStatusRequest::class.java)
+        val para = BSReplyPara(
+            args.addr,
+            args.no % 100
+        ).apply {
+            driver.GetBoxStatus(this)
+        }.apply {
+            if (!this.isOK) {
+                throw Exception("get box status failed")
+            }
+        }
+
+        val ret = JSObject()
+        val result: Map<String, Any> = mapOf(
+            "no" to para.no,
+            "status" to para.status, // 0 => open, 1 => closed
+        )
+        ret.put("value", Gson().toJson(result))
         invoke.resolve(ret)
     }
 }

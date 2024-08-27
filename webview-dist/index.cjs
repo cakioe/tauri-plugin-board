@@ -143,12 +143,17 @@ async function getBuildBoard(options) {
  * ```
  *
  * @since 1.5.4
+ * @update 1.6.0 `no` replace `motorId` field of options
  */
 async function execShipment(options) {
     return await core.invoke('plugin:board|exec_shipment', { ...options }).then(r => r.value);
 }
+async function getBoxStatus(options) {
+    return await core.invoke('plugin:board|get_box_status', { ...options }).then(r => JSON.parse(r.value));
+}
 
 exports.execShipment = execShipment;
+exports.getBoxStatus = getBoxStatus;
 exports.getBuildBoard = getBuildBoard;
 exports.getBuildEnv = getBuildEnv;
 exports.getSerialDevicesPath = getSerialDevicesPath;

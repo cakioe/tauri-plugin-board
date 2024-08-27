@@ -309,6 +309,20 @@
           ]
         },
         {
+          "description": "allow-get-box-status -> Enables the get_box_status command without any pre-configured scope.",
+          "type": "string",
+          "enum": [
+            "allow-get-box-status"
+          ]
+        },
+        {
+          "description": "deny-get-box-status -> Denies the get_box_status command without any pre-configured scope.",
+          "type": "string",
+          "enum": [
+            "deny-get-box-status"
+          ]
+        },
+        {
           "description": "allow-get-build-board -> Enables the get_build_board command without any pre-configured scope.",
           "type": "string",
           "enum": [

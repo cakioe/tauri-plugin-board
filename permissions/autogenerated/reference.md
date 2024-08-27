@@ -37,6 +37,32 @@ Denies the exec_shipment command without any pre-configured scope.
 <tr>
 <td>
 
+`board:allow-get-box-status`
+
+</td>
+<td>
+
+Enables the get_box_status command without any pre-configured scope.
+
+</td>
+</tr>
+
+<tr>
+<td>
+
+`board:deny-get-box-status`
+
+</td>
+<td>
+
+Denies the get_box_status command without any pre-configured scope.
+
+</td>
+</tr>
+
+<tr>
+<td>
+
 `board:allow-get-build-board`
 
 </td>

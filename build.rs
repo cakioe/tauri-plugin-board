@@ -16,6 +16,7 @@ const COMMANDS: &[&str] = &[
     "take_screen_shot",
     "get_build_board",
     "exec_shipment",
+    "get_box_status",
 ];
 
 fn main() {
