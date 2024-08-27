@@ -115,6 +115,32 @@ Denies the get_build_env command without any pre-configured scope.
 <tr>
 <td>
 
+`board:allow-get-drop-status`
+
+</td>
+<td>
+
+Enables the get_drop_status command without any pre-configured scope.
+
+</td>
+</tr>
+
+<tr>
+<td>
+
+`board:deny-get-drop-status`
+
+</td>
+<td>
+
+Denies the get_drop_status command without any pre-configured scope.
+
+</td>
+</tr>
+
+<tr>
+<td>
+
 `board:allow-get-serial-devices-path`
 
 </td>

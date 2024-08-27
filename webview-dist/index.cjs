@@ -175,11 +175,24 @@ async function getYPos(options) {
 async function getXPos(options) {
     return await core.invoke('plugin:board|get_x_pos', { ...options }).then(r => parseInt(r.value));
 }
+/**
+ * @example
+ * ```typescript
+ * import { getDropStatus } from '@cakioe/tauri-plugin-board';
+ * await getDropStatus({ ...options });
+ * ```
+ *
+ * @since 1.6.0
+ */
+async function getDropStatus(options) {
+    return await core.invoke('plugin:board|get_drop_status', { ...options }).then(r => parseInt(r.value));
+}
 
 exports.execShipment = execShipment;
 exports.getBoxStatus = getBoxStatus;
 exports.getBuildBoard = getBuildBoard;
 exports.getBuildEnv = getBuildEnv;
+exports.getDropStatus = getDropStatus;
 exports.getSerialDevicesPath = getSerialDevicesPath;
 exports.getXPos = getXPos;
 exports.getYPos = getYPos;

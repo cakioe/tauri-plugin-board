@@ -288,3 +288,16 @@ export async function getYPos(options?: { addr: number }): Promise<number> {
 export async function getXPos(options?: { addr: number }): Promise<number> {
   return await invoke<Record<string, string>>('plugin:board|get_x_pos', { ...options }).then(r => parseInt(r.value))
 }
+
+/**
+ * @example
+ * ```typescript
+ * import { getDropStatus } from '@cakioe/tauri-plugin-board';
+ * await getDropStatus({ ...options });
+ * ```
+ *
+ * @since 1.6.0
+ */
+export async function getDropStatus(options?: { addr: number }): Promise<number> {
+  return await invoke<Record<string, string>>('plugin:board|get_drop_status', { ...options }).then(r => parseInt(r.value))
+}

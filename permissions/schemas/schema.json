@@ -351,6 +351,20 @@
           ]
         },
         {
+          "description": "allow-get-drop-status -> Enables the get_drop_status command without any pre-configured scope.",
+          "type": "string",
+          "enum": [
+            "allow-get-drop-status"
+          ]
+        },
+        {
+          "description": "deny-get-drop-status -> Denies the get_drop_status command without any pre-configured scope.",
+          "type": "string",
+          "enum": [
+            "deny-get-drop-status"
+          ]
+        },
+        {
           "description": "allow-get-serial-devices-path -> Enables the get_serial_devices_path command without any pre-configured scope.",
           "type": "string",
           "enum": [

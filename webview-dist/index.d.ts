@@ -245,3 +245,15 @@ export declare function getYPos(options?: {
 export declare function getXPos(options?: {
     addr: number;
 }): Promise<number>;
+/**
+ * @example
+ * ```typescript
+ * import { getDropStatus } from '@cakioe/tauri-plugin-board';
+ * await getDropStatus({ ...options });
+ * ```
+ *
+ * @since 1.6.0
+ */
+export declare function getDropStatus(options?: {
+    addr: number;
+}): Promise<number>;

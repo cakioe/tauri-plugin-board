@@ -601,6 +601,7 @@ class BoardPlugin(private val activity: Activity) : Plugin(activity) {
 
     /**
      * command of `getBoxStatus`
+     *
      * @description: 查询格子柜当前状态 | p12
      * @param invoke to invoke [BoxStatusRequest] { ...arguments }
      * @return void
@@ -635,6 +636,7 @@ class BoardPlugin(private val activity: Activity) : Plugin(activity) {
 
     /**
      * command of `getYPos`
+     *
      * @description: 查询升降电机当前位置 | p12
      * @param invoke to invoke [AddrRequest] { ...arguments }
      * @return void
@@ -664,6 +666,7 @@ class BoardPlugin(private val activity: Activity) : Plugin(activity) {
 
     /**
      * command of `getXPos`
+     *
      * @description: 查询水平电机当前位置 | p13
      * @param invoke to invoke [AddrRequest] { ...arguments }
      * @return void
@@ -688,6 +691,36 @@ class BoardPlugin(private val activity: Activity) : Plugin(activity) {
 
         val ret = JSObject()
         ret.put("value", para.value)
+        invoke.resolve(ret)
+    }
+
+    /**
+     * command of `getDropStatus`
+     *
+     * @description: 查询掉货检测状态 | p13
+     * @param invoke to invoke [AddrRequest] { ...arguments }
+     * @return void
+     */
+    @Command
+    fun getDropStatus(invoke: Invoke) {
+        if (!this.driver.EF_Opened()) {
+            throw Exception("driver not opened")
+        }
+        val args = invoke.parseArgs(AddrRequest::class.java)
+        val para = DSReplyPara(
+            args.addr
+        ).apply {
+            driver.GetDropStatus(this)
+        }.apply {
+            if (!this.isOK) {
+                throw Exception("get drop status failed")
+            }
+        }
+
+        val ret = JSObject()
+        // 0- 掉货检测未连接或者被遮挡
+        // 1- 掉货检测正常对射无遮挡
+        ret.put("value", para.status)
         invoke.resolve(ret)
     }
 }

@@ -19,6 +19,7 @@ const COMMANDS: &[&str] = &[
     "get_box_status",
     "get_y_pos",
     "get_x_pos",
+    "get_drop_status",
 ];
 
 fn main() {
