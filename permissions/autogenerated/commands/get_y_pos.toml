@@ -1,0 +1,13 @@
+# Automatically generated - DO NOT EDIT!
+
+"$schema" = "../../schemas/schema.json"
+
+[[permission]]
+identifier = "allow-get-y-pos"
+description = "Enables the get_y_pos command without any pre-configured scope."
+commands.allow = ["get_y_pos"]
+
+[[permission]]
+identifier = "deny-get-y-pos"
+description = "Denies the get_y_pos command without any pre-configured scope."
+commands.deny = ["get_y_pos"]

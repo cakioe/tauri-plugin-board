@@ -309,6 +309,20 @@
           ]
         },
         {
+          "description": "allow-get-box-status -> Enables the get_box_status command without any pre-configured scope.",
+          "type": "string",
+          "enum": [
+            "allow-get-box-status"
+          ]
+        },
+        {
+          "description": "deny-get-box-status -> Denies the get_box_status command without any pre-configured scope.",
+          "type": "string",
+          "enum": [
+            "deny-get-box-status"
+          ]
+        },
+        {
           "description": "allow-get-build-board -> Enables the get_build_board command without any pre-configured scope.",
           "type": "string",
           "enum": [
@@ -337,6 +351,20 @@
           ]
         },
         {
+          "description": "allow-get-drop-status -> Enables the get_drop_status command without any pre-configured scope.",
+          "type": "string",
+          "enum": [
+            "allow-get-drop-status"
+          ]
+        },
+        {
+          "description": "deny-get-drop-status -> Denies the get_drop_status command without any pre-configured scope.",
+          "type": "string",
+          "enum": [
+            "deny-get-drop-status"
+          ]
+        },
+        {
           "description": "allow-get-serial-devices-path -> Enables the get_serial_devices_path command without any pre-configured scope.",
           "type": "string",
           "enum": [
@@ -348,6 +376,76 @@
           "type": "string",
           "enum": [
             "deny-get-serial-devices-path"
+          ]
+        },
+        {
+          "description": "allow-get-shipment-status -> Enables the get_shipment_status command without any pre-configured scope.",
+          "type": "string",
+          "enum": [
+            "allow-get-shipment-status"
+          ]
+        },
+        {
+          "description": "deny-get-shipment-status -> Denies the get_shipment_status command without any pre-configured scope.",
+          "type": "string",
+          "enum": [
+            "deny-get-shipment-status"
+          ]
+        },
+        {
+          "description": "allow-get-x-pos -> Enables the get_x_pos command without any pre-configured scope.",
+          "type": "string",
+          "enum": [
+            "allow-get-x-pos"
+          ]
+        },
+        {
+          "description": "deny-get-x-pos -> Denies the get_x_pos command without any pre-configured scope.",
+          "type": "string",
+          "enum": [
+            "deny-get-x-pos"
+          ]
+        },
+        {
+          "description": "allow-get-x-status -> Enables the get_x_status command without any pre-configured scope.",
+          "type": "string",
+          "enum": [
+            "allow-get-x-status"
+          ]
+        },
+        {
+          "description": "deny-get-x-status -> Denies the get_x_status command without any pre-configured scope.",
+          "type": "string",
+          "enum": [
+            "deny-get-x-status"
+          ]
+        },
+        {
+          "description": "allow-get-y-pos -> Enables the get_y_pos command without any pre-configured scope.",
+          "type": "string",
+          "enum": [
+            "allow-get-y-pos"
+          ]
+        },
+        {
+          "description": "deny-get-y-pos -> Denies the get_y_pos command without any pre-configured scope.",
+          "type": "string",
+          "enum": [
+            "deny-get-y-pos"
+          ]
+        },
+        {
+          "description": "allow-get-y-status -> Enables the get_y_status command without any pre-configured scope.",
+          "type": "string",
+          "enum": [
+            "allow-get-y-status"
+          ]
+        },
+        {
+          "description": "deny-get-y-status -> Denies the get_y_status command without any pre-configured scope.",
+          "type": "string",
+          "enum": [
+            "deny-get-y-status"
           ]
         },
         {
@@ -404,6 +502,34 @@
           "type": "string",
           "enum": [
             "deny-reboot"
+          ]
+        },
+        {
+          "description": "allow-reset-lift -> Enables the reset_lift command without any pre-configured scope.",
+          "type": "string",
+          "enum": [
+            "allow-reset-lift"
+          ]
+        },
+        {
+          "description": "deny-reset-lift -> Denies the reset_lift command without any pre-configured scope.",
+          "type": "string",
+          "enum": [
+            "deny-reset-lift"
+          ]
+        },
+        {
+          "description": "allow-run-moto -> Enables the run_moto command without any pre-configured scope.",
+          "type": "string",
+          "enum": [
+            "allow-run-moto"
+          ]
+        },
+        {
+          "description": "deny-run-moto -> Denies the run_moto command without any pre-configured scope.",
+          "type": "string",
+          "enum": [
+            "deny-run-moto"
           ]
         },
         {
@@ -477,6 +603,34 @@
           ]
         },
         {
+          "description": "allow-set-x-pos -> Enables the set_x_pos command without any pre-configured scope.",
+          "type": "string",
+          "enum": [
+            "allow-set-x-pos"
+          ]
+        },
+        {
+          "description": "deny-set-x-pos -> Denies the set_x_pos command without any pre-configured scope.",
+          "type": "string",
+          "enum": [
+            "deny-set-x-pos"
+          ]
+        },
+        {
+          "description": "allow-set-y-pos -> Enables the set_y_pos command without any pre-configured scope.",
+          "type": "string",
+          "enum": [
+            "allow-set-y-pos"
+          ]
+        },
+        {
+          "description": "deny-set-y-pos -> Denies the set_y_pos command without any pre-configured scope.",
+          "type": "string",
+          "enum": [
+            "deny-set-y-pos"
+          ]
+        },
+        {
           "description": "allow-shutdown -> Enables the shutdown command without any pre-configured scope.",
           "type": "string",
           "enum": [
@@ -502,6 +656,34 @@
           "type": "string",
           "enum": [
             "deny-take-screen-shot"
+          ]
+        },
+        {
+          "description": "allow-to-x -> Enables the to_x command without any pre-configured scope.",
+          "type": "string",
+          "enum": [
+            "allow-to-x"
+          ]
+        },
+        {
+          "description": "deny-to-x -> Denies the to_x command without any pre-configured scope.",
+          "type": "string",
+          "enum": [
+            "deny-to-x"
+          ]
+        },
+        {
+          "description": "allow-to-y -> Enables the to_y command without any pre-configured scope.",
+          "type": "string",
+          "enum": [
+            "allow-to-y"
+          ]
+        },
+        {
+          "description": "deny-to-y -> Denies the to_y command without any pre-configured scope.",
+          "type": "string",
+          "enum": [
+            "deny-to-y"
           ]
         }
       ]

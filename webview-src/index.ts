@@ -229,13 +229,211 @@ export async function getBuildBoard(options?: { addr: number }): Promise<BuildBo
  * ```
  *
  * @since 1.5.4
+ * @update 1.6.0 `no` replace `motorId` field of options
  */
 export async function execShipment(options?: {
-  addr: number,
-  motorId: number,
-  floorType: number,
-  isDc: boolean,
+  addr: number
+  no: number
+  floorType: number
+  isDc: boolean
   isLp: boolean
 }): Promise<string> {
   return await invoke<Record<string, string>>('plugin:board|exec_shipment', { ...options }).then(r => r.value)
+}
+
+/**
+ * @example
+ * ```typescript
+ * import { getBoxStatus } from '@cakioe/tauri-plugin-board';
+ * await getBoxStatus({...options});
+ * ```
+ *
+ * @since 1.6.0
+ */
+export interface BoxStatus {
+  no: number
+  status: number
+}
+export async function getBoxStatus(options?: { addr: number; no: number }): Promise<BoxStatus> {
+  return await invoke<Record<string, string>>('plugin:board|get_box_status', { ...options }).then(
+    r => JSON.parse(r.value) as unknown as BoxStatus
+  )
+}
+
+/**
+ * @example
+ * ```typescript
+ * import { getXPos } from '@cakioe/tauri-plugin-board';
+ * await getXPos({ ...options });
+ * ```
+ *
+ * @since 1.6.0
+ */
+export async function getYPos(options?: { addr: number }): Promise<number> {
+  return await invoke<Record<string, string>>('plugin:board|get_y_pos', { ...options }).then(r => parseInt(r.value))
+}
+
+/**
+ * @example
+ * ```typescript
+ * import { getXPos } from '@cakioe/tauri-plugin-board';
+ * await getXPos({ ...options });
+ * ```
+ *
+ * @since 1.6.0
+ */
+export async function getXPos(options?: { addr: number }): Promise<number> {
+  return await invoke<Record<string, string>>('plugin:board|get_x_pos', { ...options }).then(r => parseInt(r.value))
+}
+
+/**
+ * @example
+ * ```typescript
+ * import { getDropStatus } from '@cakioe/tauri-plugin-board';
+ * await getDropStatus({ ...options });
+ * ```
+ *
+ * @since 1.6.0
+ */
+export async function getDropStatus(options?: { addr: number }): Promise<number> {
+  return await invoke<Record<string, string>>('plugin:board|get_drop_status', { ...options }).then(r =>
+    parseInt(r.value)
+  )
+}
+
+/**
+ * @example
+ * ```typescript
+ * import { getXStatus } from '@cakioe/tauri-plugin-board';
+ * await getXStatus({ ...options });
+ * ```
+ *
+ * @since 1.6.0
+ */
+export interface XYStatus {
+  run_status: number
+  status_message: string
+  fault_code: number
+  fault_message: string
+}
+export async function getYStatus(options?: { addr: number }): Promise<XYStatus> {
+  return await invoke<Record<string, string>>('plugin:board|get_y_status', { ...options }).then(
+    r => JSON.parse(r.value) as unknown as XYStatus
+  )
+}
+
+/**
+ * @example
+ * ```typescript
+ * import { getXStatus } from '@cakioe/tauri-plugin-board';
+ * await getXStatus({ ...options });
+ * ```
+ *
+ * @since 1.6.0
+ */
+export async function getXStatus(options?: { addr: number }): Promise<XYStatus> {
+  return await invoke<Record<string, string>>('plugin:board|get_x_status', { ...options }).then(
+    r => JSON.parse(r.value) as unknown as XYStatus
+  )
+}
+
+/**
+ * @example
+ * ```typescript
+ * import { resetLift } from '@cakioe/tauri-plugin-board';
+ * await resetLift({ ...options });
+ * ```
+ *
+ * @since 1.6.0
+ */
+export async function resetLift(options?: { addr: number }): Promise<string> {
+  return await invoke<Record<string, string>>('plugin:board|reset_lift', { ...options }).then(r => r.value)
+}
+
+/**
+ * @example
+ * ```typescript
+ * import { runMoto } from '@cakioe/tauri-plugin-board';
+ * await runMoto({ ...options });
+ * ```
+ *
+ * @since 1.6.0
+ */
+export async function runMoto(options?: { addr: number; mode: number; status: number }): Promise<void> {
+  await invoke<Record<string, string>>('plugin:board|run_moto', { ...options })
+}
+
+/**
+ * @example
+ * ```typescript
+ * import { getShipmentStatus } from '@cakioe/tauri-plugin-board';
+ * await getShipmentStatus({ ...options });
+ * ```
+ *
+ * @since 1.6.0
+ */
+export async function getShipmentStatus(options?: { addr: number }): Promise<XYStatus> {
+  return await invoke<Record<string, string>>('plugin:board|get_shipment_status', { ...options }).then(
+    r => JSON.parse(r.value) as unknown as XYStatus
+  )
+}
+
+/**
+ * @example
+ * ```typescript
+ * import { setXPos } from '@cakioe/tauri-plugin-board';
+ * await setXPos({ ...options });
+ * ```
+ *
+ * @since 1.6.0
+ */
+export async function setXPos(options?: { addr: number; values: number[] }): Promise<string> {
+  if (options?.values.length !== 10) {
+    throw new Error('x length must be 10')
+  }
+
+  return await invoke<Record<string, string>>('plugin:board|set_x_pos', { ...options }).then(r => r.value)
+}
+
+/**
+ * @example
+ * ```typescript
+ * import { setYPos } from '@cakioe/tauri-plugin-board';
+ * await setYPos({ ...options });
+ * ```
+ *
+ * @since 1.6.0
+ */
+export async function setYPos(options?: { addr: number; values: number[] }): Promise<string> {
+  if (options?.values.length !== 10) {
+    throw new Error('y length must be 10')
+  }
+
+  return await invoke<Record<string, string>>('plugin:board|set_y_pos', { ...options }).then(r => r.value)
+}
+
+/**
+ * @example
+ * ```typescript
+ * import { toX } from '@cakioe/tauri-plugin-board';
+ * await toX({ ...options });
+ * ```
+ *
+ * @since 1.6.0
+ */
+export async function toX(options?: { addr: number; pos: number }): Promise<string> {
+  return await invoke<Record<string, string>>('plugin:board|to_x', { ...options }).then(r => r.value)
+}
+
+/**
+ * @example
+ * ```typescript
+ * import { toX } from '@cakioe/tauri-plugin-board';
+ * await toX({ ...options });
+ * ```
+ *
+ * @since 1.6.0
+ */
+export async function toY(options?: { addr: number; pos: number }): Promise<string> {
+  return await invoke<Record<string, string>>('plugin:board|to_y', { ...options }).then(r => r.value)
 }

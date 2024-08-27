@@ -17,18 +17,12 @@ import app.tauri.plugin.JSObject
 import app.tauri.plugin.Plugin
 import cc.uling.usdk.USDK
 import cc.uling.usdk.board.UBoard
-import cc.uling.usdk.board.wz.para.HCReplyPara
-import cc.uling.usdk.board.wz.para.SReplyPara
-import cc.uling.usdk.board.wz.para.SVReplyPara
-import cc.uling.usdk.board.wz.para.TempReplyPara
+import cc.uling.usdk.board.wz.para.*
+import cc.uling.usdk.constants.CodeUtil
 import cc.uling.usdk.constants.ErrorConst
 import com.google.gson.Gson
 import com.zcapi
-import kotlinx.coroutines.DelicateCoroutinesApi
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.async
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.*
 
 @InvokeArg
 class StatusBar {
@@ -47,9 +41,9 @@ class LcdOnOff {
 
 @InvokeArg
 class PowerOnOffTime {
-     var enable: Boolean = false
-     var onTime: Long? = null // 以毫秒为单位
-     var offTime: Long? = null // 以毫秒为单位
+    var enable: Boolean = false
+    var onTime: Long? = null // 以毫秒为单位
+    var offTime: Long? = null // 以毫秒为单位
 }
 
 @InvokeArg
@@ -75,10 +69,40 @@ class BuildBoardRequest {
 @InvokeArg
 class ShipmentRequest {
     var addr: Int = 1 //
-    var motorId: Int = 0
+    var no: Int = 0
     var floorType: Int = 1
     var isDc: Boolean = false
     var isLp: Boolean = false
+}
+
+@InvokeArg
+class BoxStatusRequest {
+    var addr: Int = 1
+    var no: Int = 0
+}
+
+@InvokeArg
+class AddrRequest {
+    var addr: Int = 1
+}
+
+@InvokeArg
+class RunMotoRequest {
+    var addr: Int = 1
+    var mode: Short = 0
+    var status: Short = 0
+}
+
+@InvokeArg
+class XYPosRequest {
+    var addr: Int = 1
+    var values: Array<Int> = Array(10) { 0 }
+}
+
+@InvokeArg
+class XYRequest {
+    var addr: Int = 1
+    var value: Short = 0
 }
 
 @SuppressLint("SdCardPath")
@@ -94,7 +118,7 @@ const val UNAVAILABLE_VALUE = 3276.7
  * @property activity of main activity
  */
 @TauriPlugin
-class BoardPlugin(private val activity: Activity): Plugin(activity) {
+class BoardPlugin(private val activity: Activity) : Plugin(activity) {
     /**
      * displayer: the display board of screen, from`zc`
      */
@@ -227,7 +251,7 @@ class BoardPlugin(private val activity: Activity): Plugin(activity) {
             serialSn = this.displayer.buildSerial,
             modelNo = this.displayer.buildModel,
             screenWidth = 0,
-            screenHeight =  0,
+            screenHeight = 0,
             baudrate = this.baudrate,
             commid = this.commid,
             brightness = 255,
@@ -238,7 +262,7 @@ class BoardPlugin(private val activity: Activity): Plugin(activity) {
             this.buildEnv.screenHeight = windowMetrics.bounds.height()
             this.buildEnv.screenWidth = windowMetrics.bounds.width()
         } else {
-            DisplayMetrics().let  { item ->
+            DisplayMetrics().let { item ->
                 @Suppress("DEPRECATION")
                 activity.windowManager.defaultDisplay.getMetrics(item).let {
                     this.buildEnv.screenHeight = item.widthPixels
@@ -260,8 +284,8 @@ class BoardPlugin(private val activity: Activity): Plugin(activity) {
                 displayer.setStatusBar(enable)
                 displayer.setGestureStatusBar(enable)
 
-                buildEnv.statusBarOn = if (enable) "1"  else "0"
-                buildEnv.gestureStatusBarOn = if (enable) "1"  else "0"
+                buildEnv.statusBarOn = if (enable) "1" else "0"
+                buildEnv.gestureStatusBarOn = if (enable) "1" else "0"
             }
         }
     }
@@ -300,7 +324,7 @@ class BoardPlugin(private val activity: Activity): Plugin(activity) {
     fun setStatusBar(invoke: Invoke) {
         val argv = invoke.parseArgs(StatusBar::class.java).enable ?: false
         this.displayer.setStatusBar(argv)
-        this.buildEnv.statusBarOn = if (argv) "1"  else "0"
+        this.buildEnv.statusBarOn = if (argv) "1" else "0"
         invoke.resolve()
     }
 
@@ -314,7 +338,7 @@ class BoardPlugin(private val activity: Activity): Plugin(activity) {
     fun setGestureStatusBar(invoke: Invoke) {
         val argv = invoke.parseArgs(GestureStatusBar::class.java).enable ?: false
         this.displayer.setGestureStatusBar(argv)
-        this.buildEnv.gestureStatusBarOn = if (argv) "1"  else "0"
+        this.buildEnv.gestureStatusBarOn = if (argv) "1" else "0"
         invoke.resolve()
     }
 
@@ -340,7 +364,7 @@ class BoardPlugin(private val activity: Activity): Plugin(activity) {
     @Command
     fun setPowerOnOffTime(invoke: Invoke) {
         val args = invoke.parseArgs(PowerOnOffTime::class.java)
-        
+
         val carbon = Carbon()
         val enable = args.enable
         val onTime = carbon.parseTimestamp(args.onTime)
@@ -406,8 +430,16 @@ class BoardPlugin(private val activity: Activity): Plugin(activity) {
 
         try {
             Settings.System.getUriFor(Settings.System.SCREEN_BRIGHTNESS).let {
-                Settings.System.putInt(activity.contentResolver, Settings.System.SCREEN_BRIGHTNESS_MODE, Settings.System.SCREEN_BRIGHTNESS_MODE_MANUAL)
-                Settings.System.putInt(activity.contentResolver, Settings.System.SCREEN_BRIGHTNESS, this.buildEnv.brightness)
+                Settings.System.putInt(
+                    activity.contentResolver,
+                    Settings.System.SCREEN_BRIGHTNESS_MODE,
+                    Settings.System.SCREEN_BRIGHTNESS_MODE_MANUAL
+                )
+                Settings.System.putInt(
+                    activity.contentResolver,
+                    Settings.System.SCREEN_BRIGHTNESS,
+                    this.buildEnv.brightness
+                )
             }
             activity.window.attributes.let {
                 it.screenBrightness = this.buildEnv.brightness / 255f
@@ -556,6 +588,7 @@ class BoardPlugin(private val activity: Activity): Plugin(activity) {
     /**
      * command of `execShipment`
      *
+     * @description: 控制驱动板出货 | p23
      * @param invoke to invoke [ShipmentRequest] { ...arguments }
      * @return void
      * @since 1.5.3
@@ -569,7 +602,7 @@ class BoardPlugin(private val activity: Activity): Plugin(activity) {
         val args = invoke.parseArgs(ShipmentRequest::class.java)
         SReplyPara(
             args.addr,
-            args.motorId,
+            args.no % 100,
             args.floorType,
             args.isDc,
             args.isLp,
@@ -584,5 +617,429 @@ class BoardPlugin(private val activity: Activity): Plugin(activity) {
         val ret = JSObject()
         ret.put("value", "success")
         invoke.resolve(ret)
+    }
+
+    /**
+     * command of `getBoxStatus`
+     *
+     * @description: 查询格子柜当前状态 | p12
+     * @param invoke to invoke [BoxStatusRequest] { ...arguments }
+     * @return void
+     * @since 1.6.0
+     */
+    @Command
+    fun getBoxStatus(invoke: Invoke) {
+        if (!this.driver.EF_Opened()) {
+            throw Exception("driver not opened")
+        }
+
+        val args = invoke.parseArgs(BoxStatusRequest::class.java)
+        val para = BSReplyPara(
+            args.addr,
+            args.no % 100
+        ).apply {
+            driver.GetBoxStatus(this)
+        }.apply {
+            if (!this.isOK) {
+                throw Exception("get box status failed")
+            }
+        }
+
+        val ret = JSObject()
+        val result: Map<String, Any> = mapOf(
+            "no" to para.no,
+            "status" to para.status, // 0 => open, 1 => closed
+        )
+        ret.put("value", Gson().toJson(result))
+        invoke.resolve(ret)
+    }
+
+    /**
+     * command of `getYPos`
+     *
+     * @description: 查询升降电机当前位置 | p12
+     * @param invoke to invoke [AddrRequest] { ...arguments }
+     * @return void
+     * @since 1.6.0
+     */
+    @Command
+    fun getYPos(invoke: Invoke) {
+        if (!this.driver.EF_Opened()) {
+            throw Exception("driver not opened")
+        }
+
+        val args = invoke.parseArgs(AddrRequest::class.java)
+        val para = CYReplyPara(
+            args.addr
+        ).apply {
+            driver.GetYPos(this)
+        }.apply {
+            if (!this.isOK) {
+                throw Exception("get y pos failed")
+            }
+        }
+
+        val ret = JSObject()
+        ret.put("value", para.value)
+        invoke.resolve(ret)
+    }
+
+    /**
+     * command of `getXPos`
+     *
+     * @description: 查询水平电机当前位置 | p13
+     * @param invoke to invoke [AddrRequest] { ...arguments }
+     * @return void
+     * @since 1.6.0
+     */
+    @Command
+    fun getXPos(invoke: Invoke) {
+        if (!this.driver.EF_Opened()) {
+            throw Exception("driver not opened")
+        }
+
+        val args = invoke.parseArgs(AddrRequest::class.java)
+        val para = CXReplyPara(
+            args.addr
+        ).apply {
+            driver.GetXPos(this)
+        }.apply {
+            if (!this.isOK) {
+                throw Exception("get x pos failed")
+            }
+        }
+
+        val ret = JSObject()
+        ret.put("value", para.value)
+        invoke.resolve(ret)
+    }
+
+    /**
+     * command of `getDropStatus`
+     *
+     * @description: 查询掉货检测状态 | p13
+     * @param invoke to invoke [AddrRequest] { ...arguments }
+     * @return void
+     */
+    @Command
+    fun getDropStatus(invoke: Invoke) {
+        if (!this.driver.EF_Opened()) {
+            throw Exception("driver not opened")
+        }
+        val args = invoke.parseArgs(AddrRequest::class.java)
+        val para = DSReplyPara(
+            args.addr
+        ).apply {
+            driver.GetDropStatus(this)
+        }.apply {
+            if (!this.isOK) {
+                throw Exception("get drop status failed")
+            }
+        }
+
+        val ret = JSObject()
+        // 0- 掉货检测未连接或者被遮挡
+        // 1- 掉货检测正常对射无遮挡
+        ret.put("value", para.status)
+        invoke.resolve(ret)
+    }
+
+    /**
+     * command of `getYStatus`
+     *
+     * @description: 读取 Y 轴升降电机控制板状态 | p16
+     * @param invoke to invoke [AddrRequest] { ...arguments }
+     * @return void
+     * @since 1.6.0
+     */
+    @Command
+    fun getYStatus(invoke: Invoke) {
+        if (!this.driver.EF_Opened()) {
+            throw Exception("driver not opened")
+        }
+        val args = invoke.parseArgs(AddrRequest::class.java)
+        val para = YSReplyPara(
+            args.addr
+        ).apply {
+            driver.GetYStatus(this)
+        }.apply {
+            if (!this.isOK) {
+                throw Exception("get y status failed")
+            }
+        }
+        val ret = JSObject()
+        val result: Map<String, Any> = mapOf(
+            "run_status" to para.runStatus,
+            "status_message" to CodeUtil.getXYStatusMsg(para.runStatus),
+            "fault_code" to para.faultCode,
+            "fault_message" to CodeUtil.getFaultMsg(para.faultCode),
+        )
+        ret.put("value", Gson().toJson(result))
+        invoke.resolve(ret)
+    }
+
+    /**
+     * command of `getXStatus`
+     *
+     * @description: 读取 X 轴移动电机控制板状态 | p17
+     * @param invoke to invoke [AddrRequest] { ...arguments }
+     * @return void
+     * @since 1.6.0
+     */
+    @Command
+    fun getXStatus(invoke: Invoke) {
+        if (!this.driver.EF_Opened()) {
+            throw Exception("driver not opened")
+        }
+        val args = invoke.parseArgs(AddrRequest::class.java)
+        val para = XSReplyPara(
+            args.addr
+        ).apply {
+            driver.GetXStatus(this)
+        }.apply {
+            if (!this.isOK) {
+                throw Exception("get x status failed")
+            }
+        }
+        val ret = JSObject()
+        val result: Map<String, Any> = mapOf(
+            "run_status" to para.runStatus,
+            "status_message" to CodeUtil.getXYStatusMsg(para.runStatus),
+            "fault_code" to para.faultCode,
+            "fault_message" to CodeUtil.getFaultMsg(para.faultCode),
+        )
+        ret.put("value", Gson().toJson(result))
+        invoke.resolve(ret)
+    }
+
+    /**
+     * command of `resetLift`
+     *
+     * @description: 升降机复位 | p20
+     * @param invoke to invoke [AddrRequest] { ...arguments }
+     * @return void
+     * @since 1.6.0
+     */
+    @Command
+    fun resetLift(invoke: Invoke) {
+        if (!this.driver.EF_Opened()) {
+            throw Exception("driver not opened")
+        }
+
+        val args = invoke.parseArgs(AddrRequest::class.java)
+        ResetReplyPara(
+            args.addr
+        ).apply {
+            driver.ResetLift(this)
+        }.apply {
+            if (!this.isOK) {
+                throw Exception("reset lift failed")
+            }
+        }
+        val ret = JSObject()
+        ret.put("value", "success")
+        invoke.resolve(ret)
+    }
+
+    /**
+     * command of `runMoto`
+     *
+     * @description: 电机手动模式 | p20
+     * @param invoke to invoke [RunMotoRequest] { ...arguments }
+     * @return void
+     * @since 1.6.0
+     */
+    @Command
+    fun runMoto(invoke: Invoke) {
+        if (!this.driver.EF_Opened()) {
+            throw Exception("driver not opened")
+        }
+        val args = invoke.parseArgs(RunMotoRequest::class.java)
+        RMReplyPara(
+            args.addr,
+            args.mode,
+            args.status,
+        ).apply {
+            driver.RunMoto(this)
+        }.apply {
+            if (!this.isOK) {
+                throw Exception("run moto failed")
+            }
+        }
+        invoke.resolve()
+    }
+
+    /**
+     * command of `getShipmentStatus`
+     *
+     * @description: 获取出货状态 | p24
+     * @param invoke to invoke [AddrRequest] { ...arguments }
+     * @return void
+     * @since 1.6.0
+     */
+    @Command
+    fun getShipmentStatus(invoke: Invoke) {
+        if (!this.driver.EF_Opened()) {
+            throw Exception("driver not opened")
+        }
+        val args = invoke.parseArgs(AddrRequest::class.java)
+        val para = SSReplyPara(
+            args.addr
+        ).apply {
+            driver.GetShipmentStatus(this)
+        }.apply {
+            if (!this.isOK) {
+                throw Exception("get shipment status failed")
+            }
+        }
+
+        val ret = JSObject()
+        val result: Map<String, Any> = mapOf(
+            "run_status" to para.runStatus,
+            "status_message" to CodeUtil.getXYStatusMsg(para.runStatus),
+            "fault_code" to para.faultCode,
+            "fault_message" to CodeUtil.getFaultMsg(para.faultCode),
+        )
+        ret.put("value", Gson().toJson(result))
+        invoke.resolve(ret)
+    }
+
+    /**
+     * command of `setXPos`
+     *
+     * @description: 设置 X 轴移动电机控制板位置 | p23
+     * @param invoke to invoke [XYPosRequest] { ...arguments }
+     * @return void
+     * @since 1.6.0
+     */
+    @Command
+    fun setXPos(invoke: Invoke) {
+        if (!this.driver.EF_Opened()) {
+            throw Exception("driver not opened")
+        }
+        val args = invoke.parseArgs(XYPosRequest::class.java)
+        SXPReplyPara(
+            args.addr,
+            args.values[0],
+            args.values[1],
+            args.values[2],
+            args.values[3],
+            args.values[4],
+            args.values[5],
+            args.values[6],
+            args.values[7],
+            args.values[8],
+            args.values[9],
+        ).apply {
+            driver.SeXPos(this)
+        }.apply {
+            if (!this.isOK) {
+                throw Exception("set x pos failed")
+            }
+        }
+
+        val ret = JSObject()
+        ret.put("value", "success")
+        invoke.resolve()
+    }
+
+    /**
+     * command of `setYPos`
+     *
+     * @description: 设置升降电机 Y 轴寻址位置 | p22
+     * @param invoke to invoke [XYPosRequest] { ...arguments }
+     * @return void
+     * @since 1.6.0
+     */
+    @Command
+    fun setYPos(invoke: Invoke) {
+        if (!this.driver.EF_Opened()) {
+            throw Exception("driver not opened")
+        }
+
+        val args = invoke.parseArgs(XYPosRequest::class.java)
+        SYPReplyPara(
+            args.addr,
+            args.values[0],
+            args.values[1],
+            args.values[2],
+            args.values[3],
+            args.values[4],
+            args.values[5],
+            args.values[6],
+            args.values[7],
+            args.values[8],
+            args.values[9],
+        ).apply {
+            driver.SeYPos(this)
+        }.apply {
+            if (!this.isOK) {
+                throw Exception("set y pos failed")
+            }
+        }
+
+        val ret = JSObject()
+        ret.put("value", "success")
+        invoke.resolve()
+    }
+
+    /**
+     * command of `toX`
+     *
+     * @description: X 轴电机寻址 | p22
+     * @param invoke to invoke [XYRequest] { ...arguments }
+     * @return void
+     * @since 1.6.0
+     */
+    @Command
+    fun toX(invoke: Invoke) {
+        if (!this.driver.EF_Opened()) {
+            throw Exception("driver not opened")
+        }
+        val args = invoke.parseArgs(XYRequest::class.java)
+        TXReplyPara(
+            args.addr,
+            args.value
+        ).apply {
+            driver.ToX(this)
+        }.apply {
+            if (!this.isOK) {
+                throw Exception("to x failed")
+            }
+        }
+
+        val ret = JSObject()
+        ret.put("value", "success")
+        invoke.resolve()
+    }
+
+    /**
+     * command of `toY`
+     *
+     * @description: Y 轴电机寻址 | p22
+     * @param invoke to invoke [XYRequest] { ...arguments }
+     * @return void
+     * @since 1.6.0
+     */
+    @Command
+    fun toY(invoke: Invoke) {
+        if (!this.driver.EF_Opened()) {
+            throw Exception("driver not opened")
+        }
+        val args = invoke.parseArgs(XYRequest::class.java)
+        TYReplyPara(
+            args.addr,
+            args.value
+        ).apply {
+            driver.ToY(this)
+        }.apply {
+            if (!this.isOK) {
+                throw Exception("to y failed")
+            }
+        }
+
+        val ret = JSObject()
+        ret.put("value", "success")
+        invoke.resolve()
     }
 }

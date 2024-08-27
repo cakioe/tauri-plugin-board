@@ -141,9 +141,154 @@ async function getBuildBoard(options) {
  * ```
  *
  * @since 1.5.4
+ * @update 1.6.0 `no` replace `motorId` field of options
  */
 async function execShipment(options) {
     return await invoke('plugin:board|exec_shipment', { ...options }).then(r => r.value);
 }
+async function getBoxStatus(options) {
+    return await invoke('plugin:board|get_box_status', { ...options }).then(r => JSON.parse(r.value));
+}
+/**
+ * @example
+ * ```typescript
+ * import { getXPos } from '@cakioe/tauri-plugin-board';
+ * await getXPos({ ...options });
+ * ```
+ *
+ * @since 1.6.0
+ */
+async function getYPos(options) {
+    return await invoke('plugin:board|get_y_pos', { ...options }).then(r => parseInt(r.value));
+}
+/**
+ * @example
+ * ```typescript
+ * import { getXPos } from '@cakioe/tauri-plugin-board';
+ * await getXPos({ ...options });
+ * ```
+ *
+ * @since 1.6.0
+ */
+async function getXPos(options) {
+    return await invoke('plugin:board|get_x_pos', { ...options }).then(r => parseInt(r.value));
+}
+/**
+ * @example
+ * ```typescript
+ * import { getDropStatus } from '@cakioe/tauri-plugin-board';
+ * await getDropStatus({ ...options });
+ * ```
+ *
+ * @since 1.6.0
+ */
+async function getDropStatus(options) {
+    return await invoke('plugin:board|get_drop_status', { ...options }).then(r => parseInt(r.value));
+}
+async function getYStatus(options) {
+    return await invoke('plugin:board|get_y_status', { ...options }).then(r => JSON.parse(r.value));
+}
+/**
+ * @example
+ * ```typescript
+ * import { getXStatus } from '@cakioe/tauri-plugin-board';
+ * await getXStatus({ ...options });
+ * ```
+ *
+ * @since 1.6.0
+ */
+async function getXStatus(options) {
+    return await invoke('plugin:board|get_x_status', { ...options }).then(r => JSON.parse(r.value));
+}
+/**
+ * @example
+ * ```typescript
+ * import { resetLift } from '@cakioe/tauri-plugin-board';
+ * await resetLift({ ...options });
+ * ```
+ *
+ * @since 1.6.0
+ */
+async function resetLift(options) {
+    return await invoke('plugin:board|reset_lift', { ...options }).then(r => r.value);
+}
+/**
+ * @example
+ * ```typescript
+ * import { runMoto } from '@cakioe/tauri-plugin-board';
+ * await runMoto({ ...options });
+ * ```
+ *
+ * @since 1.6.0
+ */
+async function runMoto(options) {
+    await invoke('plugin:board|run_moto', { ...options });
+}
+/**
+ * @example
+ * ```typescript
+ * import { getShipmentStatus } from '@cakioe/tauri-plugin-board';
+ * await getShipmentStatus({ ...options });
+ * ```
+ *
+ * @since 1.6.0
+ */
+async function getShipmentStatus(options) {
+    return await invoke('plugin:board|get_shipment_status', { ...options }).then(r => JSON.parse(r.value));
+}
+/**
+ * @example
+ * ```typescript
+ * import { setXPos } from '@cakioe/tauri-plugin-board';
+ * await setXPos({ ...options });
+ * ```
+ *
+ * @since 1.6.0
+ */
+async function setXPos(options) {
+    if ((options === null || options === void 0 ? void 0 : options.values.length) !== 10) {
+        throw new Error('x length must be 10');
+    }
+    return await invoke('plugin:board|set_x_pos', { ...options }).then(r => r.value);
+}
+/**
+ * @example
+ * ```typescript
+ * import { setYPos } from '@cakioe/tauri-plugin-board';
+ * await setYPos({ ...options });
+ * ```
+ *
+ * @since 1.6.0
+ */
+async function setYPos(options) {
+    if ((options === null || options === void 0 ? void 0 : options.values.length) !== 10) {
+        throw new Error('y length must be 10');
+    }
+    return await invoke('plugin:board|set_y_pos', { ...options }).then(r => r.value);
+}
+/**
+ * @example
+ * ```typescript
+ * import { toX } from '@cakioe/tauri-plugin-board';
+ * await toX({ ...options });
+ * ```
+ *
+ * @since 1.6.0
+ */
+async function toX(options) {
+    return await invoke('plugin:board|to_x', { ...options }).then(r => r.value);
+}
+/**
+ * @example
+ * ```typescript
+ * import { toX } from '@cakioe/tauri-plugin-board';
+ * await toX({ ...options });
+ * ```
+ *
+ * @since 1.6.0
+ */
+async function toY(options) {
+    return await invoke('plugin:board|to_y', { ...options }).then(r => r.value);
+}
 
-export { execShipment, getBuildBoard, getBuildEnv, getSerialDevicesPath, openFileManager, openMainActivity, openSettingConfig, reboot, setAppBrightness, setGestureStatusBar, setLcdOnOff, setPowerOnOffTime, setStatusBar, shutdown, takeScreenShot };
+export { execShipment, getBoxStatus, getBuildBoard, getBuildEnv, getDropStatus, getSerialDevicesPath, getShipmentStatus, getXPos, getXStatus, getYPos, getYStatus, openFileManager, openMainActivity, openSettingConfig, reboot, resetLift, runMoto, setAppBrightness, setGestureStatusBar, setLcdOnOff, setPowerOnOffTime, setStatusBar, setXPos, setYPos, shutdown, takeScreenShot, toX, toY };

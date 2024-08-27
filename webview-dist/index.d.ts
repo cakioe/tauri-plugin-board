@@ -194,11 +194,185 @@ export declare function getBuildBoard(options?: {
  * ```
  *
  * @since 1.5.4
+ * @update 1.6.0 `no` replace `motorId` field of options
  */
 export declare function execShipment(options?: {
     addr: number;
-    motorId: number;
+    no: number;
     floorType: number;
     isDc: boolean;
     isLp: boolean;
+}): Promise<string>;
+/**
+ * @example
+ * ```typescript
+ * import { getBoxStatus } from '@cakioe/tauri-plugin-board';
+ * await getBoxStatus({...options});
+ * ```
+ *
+ * @since 1.6.0
+ */
+export interface BoxStatus {
+    no: number;
+    status: number;
+}
+export declare function getBoxStatus(options?: {
+    addr: number;
+    no: number;
+}): Promise<BoxStatus>;
+/**
+ * @example
+ * ```typescript
+ * import { getXPos } from '@cakioe/tauri-plugin-board';
+ * await getXPos({ ...options });
+ * ```
+ *
+ * @since 1.6.0
+ */
+export declare function getYPos(options?: {
+    addr: number;
+}): Promise<number>;
+/**
+ * @example
+ * ```typescript
+ * import { getXPos } from '@cakioe/tauri-plugin-board';
+ * await getXPos({ ...options });
+ * ```
+ *
+ * @since 1.6.0
+ */
+export declare function getXPos(options?: {
+    addr: number;
+}): Promise<number>;
+/**
+ * @example
+ * ```typescript
+ * import { getDropStatus } from '@cakioe/tauri-plugin-board';
+ * await getDropStatus({ ...options });
+ * ```
+ *
+ * @since 1.6.0
+ */
+export declare function getDropStatus(options?: {
+    addr: number;
+}): Promise<number>;
+/**
+ * @example
+ * ```typescript
+ * import { getXStatus } from '@cakioe/tauri-plugin-board';
+ * await getXStatus({ ...options });
+ * ```
+ *
+ * @since 1.6.0
+ */
+export interface XYStatus {
+    run_status: number;
+    status_message: string;
+    fault_code: number;
+    fault_message: string;
+}
+export declare function getYStatus(options?: {
+    addr: number;
+}): Promise<XYStatus>;
+/**
+ * @example
+ * ```typescript
+ * import { getXStatus } from '@cakioe/tauri-plugin-board';
+ * await getXStatus({ ...options });
+ * ```
+ *
+ * @since 1.6.0
+ */
+export declare function getXStatus(options?: {
+    addr: number;
+}): Promise<XYStatus>;
+/**
+ * @example
+ * ```typescript
+ * import { resetLift } from '@cakioe/tauri-plugin-board';
+ * await resetLift({ ...options });
+ * ```
+ *
+ * @since 1.6.0
+ */
+export declare function resetLift(options?: {
+    addr: number;
+}): Promise<string>;
+/**
+ * @example
+ * ```typescript
+ * import { runMoto } from '@cakioe/tauri-plugin-board';
+ * await runMoto({ ...options });
+ * ```
+ *
+ * @since 1.6.0
+ */
+export declare function runMoto(options?: {
+    addr: number;
+    mode: number;
+    status: number;
+}): Promise<void>;
+/**
+ * @example
+ * ```typescript
+ * import { getShipmentStatus } from '@cakioe/tauri-plugin-board';
+ * await getShipmentStatus({ ...options });
+ * ```
+ *
+ * @since 1.6.0
+ */
+export declare function getShipmentStatus(options?: {
+    addr: number;
+}): Promise<XYStatus>;
+/**
+ * @example
+ * ```typescript
+ * import { setXPos } from '@cakioe/tauri-plugin-board';
+ * await setXPos({ ...options });
+ * ```
+ *
+ * @since 1.6.0
+ */
+export declare function setXPos(options?: {
+    addr: number;
+    values: number[];
+}): Promise<string>;
+/**
+ * @example
+ * ```typescript
+ * import { setYPos } from '@cakioe/tauri-plugin-board';
+ * await setYPos({ ...options });
+ * ```
+ *
+ * @since 1.6.0
+ */
+export declare function setYPos(options?: {
+    addr: number;
+    values: number[];
+}): Promise<string>;
+/**
+ * @example
+ * ```typescript
+ * import { toX } from '@cakioe/tauri-plugin-board';
+ * await toX({ ...options });
+ * ```
+ *
+ * @since 1.6.0
+ */
+export declare function toX(options?: {
+    addr: number;
+    pos: number;
+}): Promise<string>;
+/**
+ * @example
+ * ```typescript
+ * import { toX } from '@cakioe/tauri-plugin-board';
+ * await toX({ ...options });
+ * ```
+ *
+ * @since 1.6.0
+ */
+export declare function toY(options?: {
+    addr: number;
+    pos: number;
 }): Promise<string>;

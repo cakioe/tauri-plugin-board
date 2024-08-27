@@ -1,0 +1,13 @@
+# Automatically generated - DO NOT EDIT!
+
+"$schema" = "../../schemas/schema.json"
+
+[[permission]]
+identifier = "allow-set-x-pos"
+description = "Enables the set_x_pos command without any pre-configured scope."
+commands.allow = ["set_x_pos"]
+
+[[permission]]
+identifier = "deny-set-x-pos"
+description = "Denies the set_x_pos command without any pre-configured scope."
+commands.deny = ["set_x_pos"]
