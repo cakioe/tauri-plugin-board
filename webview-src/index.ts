@@ -311,14 +311,29 @@ export async function getDropStatus(options?: { addr: number }): Promise<number>
  *
  * @since 1.6.0
  */
-export interface YStatus {
+export interface XYStatus {
   run_status: number
   status_message: string
   fault_code: number
   fault_message: string
 }
-export async function getYStatus(options?: { addr: number }): Promise<YStatus> {
+export async function getYStatus(options?: { addr: number }): Promise<XYStatus> {
   return await invoke<Record<string, string>>('plugin:board|get_y_status', { ...options }).then(
-    r => JSON.parse(r.value) as unknown as YStatus
+    r => JSON.parse(r.value) as unknown as XYStatus
+  )
+}
+
+/**
+ * @example
+ * ```typescript
+ * import { getXStatus } from '@cakioe/tauri-plugin-board';
+ * await getXStatus({ ...options });
+ * ```
+ *
+ * @since 1.6.0
+ */
+export async function getXStatus(options?: { addr: number }): Promise<XYStatus> {
+  return await invoke<Record<string, string>>('plugin:board|get_x_status', { ...options }).then(
+    r => JSON.parse(r.value) as unknown as XYStatus
   )
 }

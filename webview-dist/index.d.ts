@@ -266,7 +266,7 @@ export declare function getDropStatus(options?: {
  *
  * @since 1.6.0
  */
-export interface YStatus {
+export interface XYStatus {
     run_status: number;
     status_message: string;
     fault_code: number;
@@ -274,4 +274,16 @@ export interface YStatus {
 }
 export declare function getYStatus(options?: {
     addr: number;
-}): Promise<YStatus>;
+}): Promise<XYStatus>;
+/**
+ * @example
+ * ```typescript
+ * import { getXStatus } from '@cakioe/tauri-plugin-board';
+ * await getXStatus({ ...options });
+ * ```
+ *
+ * @since 1.6.0
+ */
+export declare function getXStatus(options?: {
+    addr: number;
+}): Promise<XYStatus>;

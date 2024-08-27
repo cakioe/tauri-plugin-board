@@ -190,6 +190,18 @@ async function getDropStatus(options) {
 async function getYStatus(options) {
     return await core.invoke('plugin:board|get_y_status', { ...options }).then(r => JSON.parse(r.value));
 }
+/**
+ * @example
+ * ```typescript
+ * import { getXStatus } from '@cakioe/tauri-plugin-board';
+ * await getXStatus({ ...options });
+ * ```
+ *
+ * @since 1.6.0
+ */
+async function getXStatus(options) {
+    return await core.invoke('plugin:board|get_x_status', { ...options }).then(r => JSON.parse(r.value));
+}
 
 exports.execShipment = execShipment;
 exports.getBoxStatus = getBoxStatus;
@@ -198,6 +210,7 @@ exports.getBuildEnv = getBuildEnv;
 exports.getDropStatus = getDropStatus;
 exports.getSerialDevicesPath = getSerialDevicesPath;
 exports.getXPos = getXPos;
+exports.getXStatus = getXStatus;
 exports.getYPos = getYPos;
 exports.getYStatus = getYStatus;
 exports.openFileManager = openFileManager;

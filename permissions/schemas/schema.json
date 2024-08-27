@@ -393,6 +393,20 @@
           ]
         },
         {
+          "description": "allow-get-x-status -> Enables the get_x_status command without any pre-configured scope.",
+          "type": "string",
+          "enum": [
+            "allow-get-x-status"
+          ]
+        },
+        {
+          "description": "deny-get-x-status -> Denies the get_x_status command without any pre-configured scope.",
+          "type": "string",
+          "enum": [
+            "deny-get-x-status"
+          ]
+        },
+        {
           "description": "allow-get-y-pos -> Enables the get_y_pos command without any pre-configured scope.",
           "type": "string",
           "enum": [

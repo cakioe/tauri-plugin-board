@@ -758,4 +758,38 @@ class BoardPlugin(private val activity: Activity) : Plugin(activity) {
         ret.put("value", Gson().toJson(result))
         invoke.resolve(ret)
     }
+
+    /**
+     * command of `getXStatus`
+     *
+     * @description: 读取 X 轴移动电机控制板状态 | p17
+     * @param invoke to invoke [AddrRequest] { ...arguments }
+     * @return void
+     * @since 1.6.0
+     */
+    @Command
+    fun getXStatus(invoke: Invoke) {
+        if (!this.driver.EF_Opened()) {
+            throw Exception("driver not opened")
+        }
+        val args = invoke.parseArgs(AddrRequest::class.java)
+        val para = XSReplyPara(
+            args.addr
+        ).apply {
+            driver.GetXStatus(this)
+        }.apply {
+            if (!this.isOK) {
+                throw Exception("get x status failed")
+            }
+        }
+        val ret = JSObject()
+        val result: Map<String, Any> = mapOf(
+            "run_status" to para.runStatus,
+            "status_message" to CodeUtil.getXYStatusMsg(para.runStatus),
+            "fault_code" to para.faultCode,
+            "fault_message" to CodeUtil.getFaultMsg(para.faultCode),
+        )
+        ret.put("value", Gson().toJson(result))
+        invoke.resolve(ret)
+    }
 }
