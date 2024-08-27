@@ -856,4 +856,39 @@ class BoardPlugin(private val activity: Activity) : Plugin(activity) {
         }
         invoke.resolve()
     }
+
+    /**
+     * command of `getShipmentStatus`
+     *
+     * @description: 获取出货状态 | p24
+     * @param invoke to invoke [AddrRequest] { ...arguments }
+     * @return void
+     * @since 1.6.0
+     */
+    @Command
+    fun getShipmentStatus(invoke: Invoke) {
+        if (!this.driver.EF_Opened()) {
+            throw Exception("driver not opened")
+        }
+        val args = invoke.parseArgs(AddrRequest::class.java)
+        val para = SSReplyPara(
+            args.addr
+        ).apply {
+            driver.GetShipmentStatus(this)
+        }.apply {
+            if (!this.isOK) {
+                throw Exception("get shipment status failed")
+            }
+        }
+
+        val ret = JSObject()
+        val result: Map<String, Any> = mapOf(
+            "run_status" to para.runStatus,
+            "status_message" to CodeUtil.getXYStatusMsg(para.runStatus),
+            "fault_code" to para.faultCode,
+            "fault_message" to CodeUtil.getFaultMsg(para.faultCode),
+        )
+        ret.put("value", Gson().toJson(result))
+        invoke.resolve(ret)
+    }
 }

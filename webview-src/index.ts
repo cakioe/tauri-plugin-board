@@ -362,3 +362,18 @@ export async function resetLift(options?: { addr: number }): Promise<string> {
 export async function runMoto(options?: { addr: number; mode: number; status: number }): Promise<void> {
   await invoke<Record<string, string>>('plugin:board|run_moto', { ...options })
 }
+
+/**
+ * @example
+ * ```typescript
+ * import { getShipmentStatus } from '@cakioe/tauri-plugin-board';
+ * await getShipmentStatus({ ...options });
+ * ```
+ *
+ * @since 1.6.0
+ */
+export async function getShipmentStatus(options?: { addr: number }): Promise<XYStatus> {
+  return await invoke<Record<string, string>>('plugin:board|get_shipment_status', { ...options }).then(
+    r => JSON.parse(r.value) as unknown as XYStatus
+  )
+}

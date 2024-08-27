@@ -226,6 +226,18 @@ async function resetLift(options) {
 async function runMoto(options) {
     await core.invoke('plugin:board|run_moto', { ...options });
 }
+/**
+ * @example
+ * ```typescript
+ * import { getShipmentStatus } from '@cakioe/tauri-plugin-board';
+ * await getShipmentStatus({ ...options });
+ * ```
+ *
+ * @since 1.6.0
+ */
+async function getShipmentStatus(options) {
+    return await core.invoke('plugin:board|get_shipment_status', { ...options }).then(r => JSON.parse(r.value));
+}
 
 exports.execShipment = execShipment;
 exports.getBoxStatus = getBoxStatus;
@@ -233,6 +245,7 @@ exports.getBuildBoard = getBuildBoard;
 exports.getBuildEnv = getBuildEnv;
 exports.getDropStatus = getDropStatus;
 exports.getSerialDevicesPath = getSerialDevicesPath;
+exports.getShipmentStatus = getShipmentStatus;
 exports.getXPos = getXPos;
 exports.getXStatus = getXStatus;
 exports.getYPos = getYPos;

@@ -312,3 +312,15 @@ export declare function runMoto(options?: {
     mode: number;
     status: number;
 }): Promise<void>;
+/**
+ * @example
+ * ```typescript
+ * import { getShipmentStatus } from '@cakioe/tauri-plugin-board';
+ * await getShipmentStatus({ ...options });
+ * ```
+ *
+ * @since 1.6.0
+ */
+export declare function getShipmentStatus(options?: {
+    addr: number;
+}): Promise<XYStatus>;

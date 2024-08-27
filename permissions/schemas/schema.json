@@ -379,6 +379,20 @@
           ]
         },
         {
+          "description": "allow-get-shipment-status -> Enables the get_shipment_status command without any pre-configured scope.",
+          "type": "string",
+          "enum": [
+            "allow-get-shipment-status"
+          ]
+        },
+        {
+          "description": "deny-get-shipment-status -> Denies the get_shipment_status command without any pre-configured scope.",
+          "type": "string",
+          "enum": [
+            "deny-get-shipment-status"
+          ]
+        },
+        {
           "description": "allow-get-x-pos -> Enables the get_x_pos command without any pre-configured scope.",
           "type": "string",
           "enum": [
