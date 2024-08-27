@@ -268,6 +268,30 @@ async function setYPos(options) {
     }
     return await core.invoke('plugin:board|set_y_pos', { ...options }).then(r => r.value);
 }
+/**
+ * @example
+ * ```typescript
+ * import { toX } from '@cakioe/tauri-plugin-board';
+ * await toX({ ...options });
+ * ```
+ *
+ * @since 1.6.0
+ */
+async function toX(options) {
+    return await core.invoke('plugin:board|to_x', { ...options }).then(r => r.value);
+}
+/**
+ * @example
+ * ```typescript
+ * import { toX } from '@cakioe/tauri-plugin-board';
+ * await toX({ ...options });
+ * ```
+ *
+ * @since 1.6.0
+ */
+async function toY(options) {
+    return await core.invoke('plugin:board|to_y', { ...options }).then(r => r.value);
+}
 
 exports.execShipment = execShipment;
 exports.getBoxStatus = getBoxStatus;
@@ -295,3 +319,5 @@ exports.setXPos = setXPos;
 exports.setYPos = setYPos;
 exports.shutdown = shutdown;
 exports.takeScreenShot = takeScreenShot;
+exports.toX = toX;
+exports.toY = toY;

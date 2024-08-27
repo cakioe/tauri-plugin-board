@@ -657,6 +657,34 @@
           "enum": [
             "deny-take-screen-shot"
           ]
+        },
+        {
+          "description": "allow-to-x -> Enables the to_x command without any pre-configured scope.",
+          "type": "string",
+          "enum": [
+            "allow-to-x"
+          ]
+        },
+        {
+          "description": "deny-to-x -> Denies the to_x command without any pre-configured scope.",
+          "type": "string",
+          "enum": [
+            "deny-to-x"
+          ]
+        },
+        {
+          "description": "allow-to-y -> Enables the to_y command without any pre-configured scope.",
+          "type": "string",
+          "enum": [
+            "allow-to-y"
+          ]
+        },
+        {
+          "description": "deny-to-y -> Denies the to_y command without any pre-configured scope.",
+          "type": "string",
+          "enum": [
+            "deny-to-y"
+          ]
         }
       ]
     }

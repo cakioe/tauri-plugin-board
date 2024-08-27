@@ -411,3 +411,29 @@ export async function setYPos(options?: { addr: number; values: number[] }): Pro
 
   return await invoke<Record<string, string>>('plugin:board|set_y_pos', { ...options }).then(r => r.value)
 }
+
+/**
+ * @example
+ * ```typescript
+ * import { toX } from '@cakioe/tauri-plugin-board';
+ * await toX({ ...options });
+ * ```
+ *
+ * @since 1.6.0
+ */
+export async function toX(options?: { addr: number; pos: number }): Promise<string> {
+  return await invoke<Record<string, string>>('plugin:board|to_x', { ...options }).then(r => r.value)
+}
+
+/**
+ * @example
+ * ```typescript
+ * import { toX } from '@cakioe/tauri-plugin-board';
+ * await toX({ ...options });
+ * ```
+ *
+ * @since 1.6.0
+ */
+export async function toY(options?: { addr: number; pos: number }): Promise<string> {
+  return await invoke<Record<string, string>>('plugin:board|to_y', { ...options }).then(r => r.value)
+}

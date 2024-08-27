@@ -350,3 +350,29 @@ export declare function setYPos(options?: {
     addr: number;
     values: number[];
 }): Promise<string>;
+/**
+ * @example
+ * ```typescript
+ * import { toX } from '@cakioe/tauri-plugin-board';
+ * await toX({ ...options });
+ * ```
+ *
+ * @since 1.6.0
+ */
+export declare function toX(options?: {
+    addr: number;
+    pos: number;
+}): Promise<string>;
+/**
+ * @example
+ * ```typescript
+ * import { toX } from '@cakioe/tauri-plugin-board';
+ * await toX({ ...options });
+ * ```
+ *
+ * @since 1.6.0
+ */
+export declare function toY(options?: {
+    addr: number;
+    pos: number;
+}): Promise<string>;

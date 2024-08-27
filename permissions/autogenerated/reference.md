@@ -683,4 +683,56 @@ Denies the take_screen_shot command without any pre-configured scope.
 
 </td>
 </tr>
+
+<tr>
+<td>
+
+`board:allow-to-x`
+
+</td>
+<td>
+
+Enables the to_x command without any pre-configured scope.
+
+</td>
+</tr>
+
+<tr>
+<td>
+
+`board:deny-to-x`
+
+</td>
+<td>
+
+Denies the to_x command without any pre-configured scope.
+
+</td>
+</tr>
+
+<tr>
+<td>
+
+`board:allow-to-y`
+
+</td>
+<td>
+
+Enables the to_y command without any pre-configured scope.
+
+</td>
+</tr>
+
+<tr>
+<td>
+
+`board:deny-to-y`
+
+</td>
+<td>
+
+Denies the to_y command without any pre-configured scope.
+
+</td>
+</tr>
 </table>

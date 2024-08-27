@@ -266,5 +266,29 @@ async function setYPos(options) {
     }
     return await invoke('plugin:board|set_y_pos', { ...options }).then(r => r.value);
 }
+/**
+ * @example
+ * ```typescript
+ * import { toX } from '@cakioe/tauri-plugin-board';
+ * await toX({ ...options });
+ * ```
+ *
+ * @since 1.6.0
+ */
+async function toX(options) {
+    return await invoke('plugin:board|to_x', { ...options }).then(r => r.value);
+}
+/**
+ * @example
+ * ```typescript
+ * import { toX } from '@cakioe/tauri-plugin-board';
+ * await toX({ ...options });
+ * ```
+ *
+ * @since 1.6.0
+ */
+async function toY(options) {
+    return await invoke('plugin:board|to_y', { ...options }).then(r => r.value);
+}
 
-export { execShipment, getBoxStatus, getBuildBoard, getBuildEnv, getDropStatus, getSerialDevicesPath, getShipmentStatus, getXPos, getXStatus, getYPos, getYStatus, openFileManager, openMainActivity, openSettingConfig, reboot, resetLift, runMoto, setAppBrightness, setGestureStatusBar, setLcdOnOff, setPowerOnOffTime, setStatusBar, setXPos, setYPos, shutdown, takeScreenShot };
+export { execShipment, getBoxStatus, getBuildBoard, getBuildEnv, getDropStatus, getSerialDevicesPath, getShipmentStatus, getXPos, getXStatus, getYPos, getYStatus, openFileManager, openMainActivity, openSettingConfig, reboot, resetLift, runMoto, setAppBrightness, setGestureStatusBar, setLcdOnOff, setPowerOnOffTime, setStatusBar, setXPos, setYPos, shutdown, takeScreenShot, toX, toY };

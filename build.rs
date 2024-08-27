@@ -27,6 +27,8 @@ const COMMANDS: &[&str] = &[
     "get_shipment_status",
     "set_x_pos",
     "set_y_pos",
+    "to_x",
+    "to_y",
 ];
 
 fn main() {

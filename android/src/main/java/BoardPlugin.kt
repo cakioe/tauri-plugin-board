@@ -99,6 +99,12 @@ class XYPosRequest {
     var values: Array<Int> = Array(10) { 0 }
 }
 
+@InvokeArg
+class XYRequest {
+    var addr: Int = 1
+    var value: Short = 0
+}
+
 @SuppressLint("SdCardPath")
 const val SDCARD_DIR = "/sdcard"
 
@@ -969,6 +975,66 @@ class BoardPlugin(private val activity: Activity) : Plugin(activity) {
         }.apply {
             if (!this.isOK) {
                 throw Exception("set y pos failed")
+            }
+        }
+
+        val ret = JSObject()
+        ret.put("value", "success")
+        invoke.resolve()
+    }
+
+    /**
+     * command of `toX`
+     *
+     * @description: X 轴电机寻址 | p22
+     * @param invoke to invoke [XYRequest] { ...arguments }
+     * @return void
+     * @since 1.6.0
+     */
+    @Command
+    fun toX(invoke: Invoke) {
+        if (!this.driver.EF_Opened()) {
+            throw Exception("driver not opened")
+        }
+        val args = invoke.parseArgs(XYRequest::class.java)
+        TXReplyPara(
+            args.addr,
+            args.value
+        ).apply {
+            driver.ToX(this)
+        }.apply {
+            if (!this.isOK) {
+                throw Exception("to x failed")
+            }
+        }
+
+        val ret = JSObject()
+        ret.put("value", "success")
+        invoke.resolve()
+    }
+
+    /**
+     * command of `toY`
+     *
+     * @description: Y 轴电机寻址 | p22
+     * @param invoke to invoke [XYRequest] { ...arguments }
+     * @return void
+     * @since 1.6.0
+     */
+    @Command
+    fun toY(invoke: Invoke) {
+        if (!this.driver.EF_Opened()) {
+            throw Exception("driver not opened")
+        }
+        val args = invoke.parseArgs(XYRequest::class.java)
+        TYReplyPara(
+            args.addr,
+            args.value
+        ).apply {
+            driver.ToY(this)
+        }.apply {
+            if (!this.isOK) {
+                throw Exception("to y failed")
             }
         }
 
