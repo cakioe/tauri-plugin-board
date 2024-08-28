@@ -263,8 +263,8 @@ export async function getBoxStatus(options?: { addr: number; no: number }): Prom
 /**
  * @example
  * ```typescript
- * import { getXPos } from '@cakioe/tauri-plugin-board';
- * await getXPos({ ...options });
+ * import { getYPos } from '@cakioe/tauri-plugin-board';
+ * await getYPos({ ...options });
  * ```
  *
  * @since 1.6.0
