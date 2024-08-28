@@ -519,6 +519,20 @@
           ]
         },
         {
+          "description": "allow-notify-result -> Enables the notify_result command without any pre-configured scope.",
+          "type": "string",
+          "enum": [
+            "allow-notify-result"
+          ]
+        },
+        {
+          "description": "deny-notify-result -> Denies the notify_result command without any pre-configured scope.",
+          "type": "string",
+          "enum": [
+            "deny-notify-result"
+          ]
+        },
+        {
           "description": "allow-open-file-manager -> Enables the open_file_manager command without any pre-configured scope.",
           "type": "string",
           "enum": [

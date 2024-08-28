@@ -1236,4 +1236,32 @@ class BoardPlugin(private val activity: Activity) : Plugin(activity) {
         ret.put("value", "success")
         invoke.resolve(ret)
     }
+
+    /**
+     * command of `notifyResult`
+     *
+     * @description: 通知机器售卖结果 | p6
+     * @param invoke to invoke [none] { }
+     * @return void
+     * @since 1.6.1
+     */
+    @Command
+    fun notifyResult(invoke: Invoke) {
+        if (!this.driver.EF_Opened()) {
+            throw Exception("driver not opened")
+        }
+        val args = invoke.parseArgs(FlagRequest::class.java)
+        cc.uling.usdk.board.mdb.para.ResultReplyPara(
+            args.flag
+        ).apply {
+            driver.notifyResult(this)
+        }.apply {
+            if (!this.isOK) {
+                throw Exception("notify result failed")
+            }
+        }
+        val ret = JSObject()
+        ret.put("value", "success")
+        invoke.resolve(ret)
+    }
 }

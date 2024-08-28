@@ -427,6 +427,32 @@ Denies the notify_payment command without any pre-configured scope.
 <tr>
 <td>
 
+`board:allow-notify-result`
+
+</td>
+<td>
+
+Enables the notify_result command without any pre-configured scope.
+
+</td>
+</tr>
+
+<tr>
+<td>
+
+`board:deny-notify-result`
+
+</td>
+<td>
+
+Denies the notify_result command without any pre-configured scope.
+
+</td>
+</tr>
+
+<tr>
+<td>
+
 `board:allow-open-file-manager`
 
 </td>
