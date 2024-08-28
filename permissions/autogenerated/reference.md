@@ -635,6 +635,32 @@ Denies the open_setting_config command without any pre-configured scope.
 <tr>
 <td>
 
+`board:allow-pulse-balance`
+
+</td>
+<td>
+
+Enables the pulse_balance command without any pre-configured scope.
+
+</td>
+</tr>
+
+<tr>
+<td>
+
+`board:deny-pulse-balance`
+
+</td>
+<td>
+
+Denies the pulse_balance command without any pre-configured scope.
+
+</td>
+</tr>
+
+<tr>
+<td>
+
 `board:allow-read-hardware-config`
 
 </td>

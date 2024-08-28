@@ -631,6 +631,20 @@
           ]
         },
         {
+          "description": "allow-pulse-balance -> Enables the pulse_balance command without any pre-configured scope.",
+          "type": "string",
+          "enum": [
+            "allow-pulse-balance"
+          ]
+        },
+        {
+          "description": "deny-pulse-balance -> Denies the pulse_balance command without any pre-configured scope.",
+          "type": "string",
+          "enum": [
+            "deny-pulse-balance"
+          ]
+        },
+        {
           "description": "allow-read-hardware-config -> Enables the read_hardware_config command without any pre-configured scope.",
           "type": "string",
           "enum": [

@@ -138,6 +138,12 @@ class ModeRequest {
     var mode: Int = 0
 }
 
+@InvokeArg
+class PulseBalanceRequest {
+    var type: Int = 0
+    var value: Int = 0
+}
+
 @SuppressLint("SdCardPath")
 const val SDCARD_DIR = "/sdcard"
 
@@ -1539,6 +1545,35 @@ class BoardPlugin(private val activity: Activity) : Plugin(activity) {
             args.mode
         ).apply {
             driver.setPayChannel(this)
+        }.apply {
+            if (!this.isOK) {
+                throw Exception("set pay channel failed")
+            }
+        }
+        val ret = JSObject()
+        ret.put("value", "success")
+        invoke.resolve(ret)
+    }
+
+    /**
+     * command of `pulseBalance`
+     *
+     * @description: 脉冲找零 | p10
+     * @param
+     * @return void
+     * @since 1.6.1
+     */
+    @Command
+    fun pulseBalance(invoke: Invoke) {
+        if (!this.driver.EF_Opened()) {
+            throw Exception("driver not opened")
+        }
+        val args = invoke.parseArgs(PulseBalanceRequest::class.java)
+        cc.uling.usdk.board.mdb.para.PBReplyPara(
+            args.type,
+            args.value
+        ).apply {
+            driver.pulseBalance(this)
         }.apply {
             if (!this.isOK) {
                 throw Exception("set pay channel failed")

@@ -721,3 +721,18 @@ export async function setPayChannel(options?: { mode: number }): Promise<string>
 
   return await invoke<Record<string, string>>('plugin:board|set_pay_channel', { ...options }).then(r => r.value)
 }
+
+/**
+ * @example
+ * ```typescript
+ * import { pulseBalance } from '@cakioe/tauri-plugin-board';
+ * await pulseBalance();
+ * ```
+ *
+ * @since 1.6.1
+ * @param options {type: number; value: number}
+ * @returns {string}
+ */
+export async function pulseBalance(options?: { type: number; value: number }): Promise<string> {
+  return await invoke<Record<string, string>>('plugin:board|pulse_balance', { ...options }).then(r => r.value)
+}
