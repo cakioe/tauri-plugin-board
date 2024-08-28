@@ -128,6 +128,11 @@ class AcceptMoneyRequest {
     var channels: IntArray = IntArray(16)
 }
 
+@InvokeArg
+class AgeRequest {
+    var age: Int = 12
+}
+
 @SuppressLint("SdCardPath")
 const val SDCARD_DIR = "/sdcard"
 
@@ -1413,6 +1418,36 @@ class BoardPlugin(private val activity: Activity) : Plugin(activity) {
 
         cc.uling.usdk.board.mdb.para.STReplyPara().apply {
             driver.syncSystemTime(this)
+        }.apply {
+            if (!this.isOK) {
+                throw Exception("sync system time failed")
+            }
+        }
+
+        val ret = JSObject()
+        ret.put("value", "success")
+        invoke.resolve(ret)
+    }
+
+    /**
+     * command of `setAgeScope`
+     *
+     * @description: 设置年龄限制 | p9
+     * @param
+     * @return void
+     * @since 1.6.1
+     */
+    @Command
+    fun setAgeScope(invoke: Invoke) {
+        if (!this.driver.EF_Opened()) {
+            throw Exception("driver not opened")
+        }
+
+        val args = invoke.parseArgs(AgeRequest::class.java)
+        cc.uling.usdk.board.mdb.para.ASReplyPara(
+            args.age
+        ).apply {
+            driver.setAgeScope(this)
         }.apply {
             if (!this.isOK) {
                 throw Exception("sync system time failed")

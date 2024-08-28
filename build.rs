@@ -41,6 +41,7 @@ const COMMANDS: &[&str] = &[
     "find_change_result",
     "set_accept_money",
     "sync_system_time",
+    "set_age_scope",
 ];
 
 fn main() {

@@ -739,6 +739,32 @@ Denies the set_accept_money command without any pre-configured scope.
 <tr>
 <td>
 
+`board:allow-set-age-scope`
+
+</td>
+<td>
+
+Enables the set_age_scope command without any pre-configured scope.
+
+</td>
+</tr>
+
+<tr>
+<td>
+
+`board:deny-set-age-scope`
+
+</td>
+<td>
+
+Denies the set_age_scope command without any pre-configured scope.
+
+</td>
+</tr>
+
+<tr>
+<td>
+
 `board:allow-set-app-brightness`
 
 </td>

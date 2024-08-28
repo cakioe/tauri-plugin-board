@@ -654,3 +654,18 @@ export async function setAcceptMoney(options?: { type: number; channels: number[
 export async function syncSystemTime(): Promise<string> {
   return await invoke<Record<string, string>>('plugin:board|sync_system_time').then(r => r.value)
 }
+
+/**
+ * @example
+ * ```typescript
+ * import { setAgeScope } from '@cakioe/tauri-plugin-board';
+ * await setAgeScope();
+ * ```
+ *
+ * @since 1.6.1
+ * @param options {age: number}
+ * @returns {string}
+ */
+export async function setAgeScope(options?: { age: number }): Promise<string> {
+  return await invoke<Record<string, string>>('plugin:board|set_age_scope', { ...options }).then(r => r.value)
+}

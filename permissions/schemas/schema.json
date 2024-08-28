@@ -687,6 +687,20 @@
           ]
         },
         {
+          "description": "allow-set-age-scope -> Enables the set_age_scope command without any pre-configured scope.",
+          "type": "string",
+          "enum": [
+            "allow-set-age-scope"
+          ]
+        },
+        {
+          "description": "deny-set-age-scope -> Denies the set_age_scope command without any pre-configured scope.",
+          "type": "string",
+          "enum": [
+            "deny-set-age-scope"
+          ]
+        },
+        {
           "description": "allow-set-app-brightness -> Enables the set_app_brightness command without any pre-configured scope.",
           "type": "string",
           "enum": [
