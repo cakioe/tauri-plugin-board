@@ -31,6 +31,7 @@ const COMMANDS: &[&str] = &[
     "to_y",
     "read_hardware_config",
     "get_software_version",
+    "get_min_payout_amount",
 ];
 
 fn main() {

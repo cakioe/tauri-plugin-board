@@ -365,6 +365,20 @@
           ]
         },
         {
+          "description": "allow-get-min-payout-amount -> Enables the get_min_payout_amount command without any pre-configured scope.",
+          "type": "string",
+          "enum": [
+            "allow-get-min-payout-amount"
+          ]
+        },
+        {
+          "description": "deny-get-min-payout-amount -> Denies the get_min_payout_amount command without any pre-configured scope.",
+          "type": "string",
+          "enum": [
+            "deny-get-min-payout-amount"
+          ]
+        },
+        {
           "description": "allow-get-serial-devices-path -> Enables the get_serial_devices_path command without any pre-configured scope.",
           "type": "string",
           "enum": [

@@ -1,0 +1,13 @@
+# Automatically generated - DO NOT EDIT!
+
+"$schema" = "../../schemas/schema.json"
+
+[[permission]]
+identifier = "allow-get-min-payout-amount"
+description = "Enables the get_min_payout_amount command without any pre-configured scope."
+commands.allow = ["get_min_payout_amount"]
+
+[[permission]]
+identifier = "deny-get-min-payout-amount"
+description = "Denies the get_min_payout_amount command without any pre-configured scope."
+commands.deny = ["get_min_payout_amount"]
