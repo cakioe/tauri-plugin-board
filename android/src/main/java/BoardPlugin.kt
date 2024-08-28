@@ -122,6 +122,12 @@ class BalanceRequest {
     var multiple: Int = 1
 }
 
+@InvokeArg
+class AcceptMoneyRequest {
+    var type: Int = 0 // 0- 硬币, 1- 纸币
+    var channels: IntArray = IntArray(16)
+}
+
 @SuppressLint("SdCardPath")
 const val SDCARD_DIR = "/sdcard"
 
@@ -1199,7 +1205,7 @@ class BoardPlugin(private val activity: Activity) : Plugin(activity) {
             throw Exception("driver not opened")
         }
         val args = invoke.parseArgs(PaymentRequest::class.java)
-        val para = cc.uling.usdk.board.mdb.para.IPReplyPara(
+        cc.uling.usdk.board.mdb.para.IPReplyPara(
             (args.no % 100).toShort(),
             args.multiple
         ).apply {
@@ -1357,6 +1363,37 @@ class BoardPlugin(private val activity: Activity) : Plugin(activity) {
             result[i] = para.getCount(i + 1)
         }
         ret.put("value", Gson().toJson(result))
+        invoke.resolve(ret)
+    }
+
+    /**
+     * command of `setAcceptMoney`
+     *
+     * @description: 设置硬（纸）币器允许币种 | p7
+     * @param invoke to invoke [AcceptMoneyRequest] { }
+     * @return void
+     * @since 1.6.1
+     */
+    @Command
+    fun setAcceptMoney(invoke: Invoke) {
+        if (!this.driver.EF_Opened()) {
+            throw Exception("driver not opened")
+        }
+
+        val args = invoke.parseArgs(AcceptMoneyRequest::class.java)
+        cc.uling.usdk.board.mdb.para.ACReplyPara(
+            args.type,
+            args.channels
+        ).apply {
+            driver.setAcceptMoney(this)
+        }.apply {
+            if (!this.isOK) {
+                throw Exception("get change status failed")
+            }
+        }
+
+        val ret = JSObject()
+        ret.put("value", "success")
         invoke.resolve(ret)
     }
 }

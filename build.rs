@@ -39,6 +39,7 @@ const COMMANDS: &[&str] = &[
     "change_balance",
     "get_change_status",
     "find_change_result",
+    "set_accept_money",
 ];
 
 fn main() {

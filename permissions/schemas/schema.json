@@ -673,6 +673,20 @@
           ]
         },
         {
+          "description": "allow-set-accept-money -> Enables the set_accept_money command without any pre-configured scope.",
+          "type": "string",
+          "enum": [
+            "allow-set-accept-money"
+          ]
+        },
+        {
+          "description": "deny-set-accept-money -> Denies the set_accept_money command without any pre-configured scope.",
+          "type": "string",
+          "enum": [
+            "deny-set-accept-money"
+          ]
+        },
+        {
           "description": "allow-set-app-brightness -> Enables the set_app_brightness command without any pre-configured scope.",
           "type": "string",
           "enum": [

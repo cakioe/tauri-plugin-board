@@ -713,6 +713,32 @@ Denies the run_moto command without any pre-configured scope.
 <tr>
 <td>
 
+`board:allow-set-accept-money`
+
+</td>
+<td>
+
+Enables the set_accept_money command without any pre-configured scope.
+
+</td>
+</tr>
+
+<tr>
+<td>
+
+`board:deny-set-accept-money`
+
+</td>
+<td>
+
+Denies the set_accept_money command without any pre-configured scope.
+
+</td>
+</tr>
+
+<tr>
+<td>
+
 `board:allow-set-app-brightness`
 
 </td>

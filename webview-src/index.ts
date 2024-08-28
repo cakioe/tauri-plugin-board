@@ -617,3 +617,26 @@ export async function findChangeResult(): Promise<number[]> {
     r => JSON.parse(r.value) as unknown as number[]
   )
 }
+
+/**
+ * @example
+ * ```typescript
+ * import { setAcceptMoney } from '@cakioe/tauri-plugin-board';
+ * await setAcceptMoney();
+ * ```
+ *
+ * @since 1.6.1
+ * @param options {type: number; channels: number[]}
+ * @returns {string}
+ */
+export async function setAcceptMoney(options?: { type: number; channels: number[] }): Promise<string> {
+  if (options?.type !== 0 && options?.type !== 1) {
+    throw new Error('type must be 0 or 1')
+  }
+
+  if (options?.channels.length !== 16) {
+    throw new Error('channels length must be 16')
+  }
+
+  return await invoke<Record<string, string>>('plugin:board|set_accept_money', { ...options }).then(r => r.value)
+}
