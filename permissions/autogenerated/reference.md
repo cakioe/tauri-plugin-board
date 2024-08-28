@@ -63,6 +63,32 @@ Denies the exec_shipment command without any pre-configured scope.
 <tr>
 <td>
 
+`board:allow-find-change-result`
+
+</td>
+<td>
+
+Enables the find_change_result command without any pre-configured scope.
+
+</td>
+</tr>
+
+<tr>
+<td>
+
+`board:deny-find-change-result`
+
+</td>
+<td>
+
+Denies the find_change_result command without any pre-configured scope.
+
+</td>
+</tr>
+
+<tr>
+<td>
+
 `board:allow-get-box-status`
 
 </td>

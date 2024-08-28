@@ -1298,7 +1298,6 @@ class BoardPlugin(private val activity: Activity) : Plugin(activity) {
         invoke.resolve(ret)
     }
 
-
     /**
      * command of `getChangeStatus`
      *
@@ -1326,6 +1325,37 @@ class BoardPlugin(private val activity: Activity) : Plugin(activity) {
             "status" to para.status,
             "multiple" to para.multiple,
         )
+        ret.put("value", Gson().toJson(result))
+        invoke.resolve(ret)
+    }
+
+    /**
+     * command of `findChangeResult`
+     *
+     * @description: 查询硬币器找零结果 | p6
+     * @param invoke to invoke [none] { }
+     * @return void
+     * @since 1.6.1
+     */
+    @Command
+    fun findChangeResult(invoke: Invoke) {
+        if (!this.driver.EF_Opened()) {
+            throw Exception("driver not opened")
+        }
+
+        val para = cc.uling.usdk.board.mdb.para.BRReplyPara().apply {
+            driver.findChangeResult(this)
+        }.apply {
+            if (!this.isOK) {
+                throw Exception("get change status failed")
+            }
+        }
+
+        val ret = JSObject()
+        val result: Array<Int> = Array(16) { 0 }
+        for (i in 0 until 16) {
+            result[i] = para.getCount(i + 1)
+        }
         ret.put("value", Gson().toJson(result))
         invoke.resolve(ret)
     }

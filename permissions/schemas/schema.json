@@ -323,6 +323,20 @@
           ]
         },
         {
+          "description": "allow-find-change-result -> Enables the find_change_result command without any pre-configured scope.",
+          "type": "string",
+          "enum": [
+            "allow-find-change-result"
+          ]
+        },
+        {
+          "description": "deny-find-change-result -> Denies the find_change_result command without any pre-configured scope.",
+          "type": "string",
+          "enum": [
+            "deny-find-change-result"
+          ]
+        },
+        {
           "description": "allow-get-box-status -> Enables the get_box_status command without any pre-configured scope.",
           "type": "string",
           "enum": [

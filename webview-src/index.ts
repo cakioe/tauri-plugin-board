@@ -495,7 +495,7 @@ export interface MinPayoutAmount {
  */
 export async function getMinPayoutAmount(): Promise<MinPayoutAmount> {
   return await invoke<Record<string, string>>('plugin:board|get_min_payout_amount').then(
-    r => r.value as unknown as MinPayoutAmount
+    r => JSON.parse(r.value) as unknown as MinPayoutAmount
   )
 }
 
@@ -518,7 +518,9 @@ export interface PayAmount {
  * @returns {PayAmount}
  */
 export async function getPayAmount(): Promise<PayAmount> {
-  return await invoke<Record<string, string>>('plugin:board|get_pay_amount').then(r => r.value as unknown as PayAmount)
+  return await invoke<Record<string, string>>('plugin:board|get_pay_amount').then(
+    r => JSON.parse(r.value) as unknown as PayAmount
+  )
 }
 
 /**
@@ -596,6 +598,22 @@ export interface ChangeStatus {
  */
 export async function getChangeStatus(): Promise<ChangeStatus> {
   return await invoke<Record<string, string>>('plugin:board|get_change_status').then(
-    r => r.value as unknown as ChangeStatus
+    r => JSON.parse(r.value) as unknown as ChangeStatus
+  )
+}
+
+/**
+ * @example
+ * ```typescript
+ * import { findChangeResult } from '@cakioe/tauri-plugin-board';
+ * await findChangeResult();
+ * ```
+ *
+ * @since 1.6.1
+ * @returns {string}
+ */
+export async function findChangeResult(): Promise<number[]> {
+  return await invoke<Record<string, string>>('plugin:board|find_change_result').then(
+    r => JSON.parse(r.value) as unknown as number[]
   )
 }
