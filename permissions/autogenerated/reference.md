@@ -11,6 +11,32 @@
 <tr>
 <td>
 
+`board:allow-change-balance`
+
+</td>
+<td>
+
+Enables the change_balance command without any pre-configured scope.
+
+</td>
+</tr>
+
+<tr>
+<td>
+
+`board:deny-change-balance`
+
+</td>
+<td>
+
+Denies the change_balance command without any pre-configured scope.
+
+</td>
+</tr>
+
+<tr>
+<td>
+
 `board:allow-exec-shipment`
 
 </td>

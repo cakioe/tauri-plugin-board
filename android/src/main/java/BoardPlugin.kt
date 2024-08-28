@@ -117,6 +117,11 @@ class FlagRequest {
     var flag: Boolean = false
 }
 
+@InvokeArg
+class BalanceRequest {
+    var multiple: Int = 1
+}
+
 @SuppressLint("SdCardPath")
 const val SDCARD_DIR = "/sdcard"
 
@@ -1255,6 +1260,34 @@ class BoardPlugin(private val activity: Activity) : Plugin(activity) {
             args.flag
         ).apply {
             driver.notifyResult(this)
+        }.apply {
+            if (!this.isOK) {
+                throw Exception("notify result failed")
+            }
+        }
+        val ret = JSObject()
+        ret.put("value", "success")
+        invoke.resolve(ret)
+    }
+
+    /**
+     * command of `changeBalance`
+     *
+     * @description: 发起找零 | p6
+     * @param invoke to invoke [none] { }
+     * @return void
+     * @since 1.6.1
+     */
+    @Command
+    fun changeBalance(invoke: Invoke) {
+        if (!this.driver.EF_Opened()) {
+            throw Exception("driver not opened")
+        }
+        val args = invoke.parseArgs(BalanceRequest::class.java)
+        cc.uling.usdk.board.mdb.para.CBReplyPara(
+            args.multiple
+        ).apply {
+            driver.changeBalance(this)
         }.apply {
             if (!this.isOK) {
                 throw Exception("notify result failed")

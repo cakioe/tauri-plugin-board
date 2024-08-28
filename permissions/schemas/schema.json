@@ -295,6 +295,20 @@
       "type": "string",
       "oneOf": [
         {
+          "description": "allow-change-balance -> Enables the change_balance command without any pre-configured scope.",
+          "type": "string",
+          "enum": [
+            "allow-change-balance"
+          ]
+        },
+        {
+          "description": "deny-change-balance -> Denies the change_balance command without any pre-configured scope.",
+          "type": "string",
+          "enum": [
+            "deny-change-balance"
+          ]
+        },
+        {
           "description": "allow-exec-shipment -> Enables the exec_shipment command without any pre-configured scope.",
           "type": "string",
           "enum": [

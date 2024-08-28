@@ -564,3 +564,18 @@ export async function notifyPayment(options?: { flag: boolean }): Promise<string
 export async function notifyResult(options?: { flag: boolean }): Promise<string> {
   return await invoke<Record<string, string>>('plugin:board|notify_result', { ...options }).then(r => r.value)
 }
+
+/**
+ * @example
+ * ```typescript
+ * import { changeBalance } from '@cakioe/tauri-plugin-board';
+ * await changeBalance();
+ * ```
+ *
+ * @since 1.6.1
+ * @param options {multiple: number}
+ * @returns {string}
+ */
+export async function changeBalance(options?: { multiple: number }): Promise<string> {
+  return await invoke<Record<string, string>>('plugin:board|change_balance', { ...options }).then(r => r.value)
+}
