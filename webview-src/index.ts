@@ -437,3 +437,29 @@ export async function toX(options?: { addr: number; pos: number }): Promise<stri
 export async function toY(options?: { addr: number; pos: number }): Promise<string> {
   return await invoke<Record<string, string>>('plugin:board|to_y', { ...options }).then(r => r.value)
 }
+
+export interface HardwareConfig {
+  version: number
+  with_coin: boolean
+  with_cash: boolean
+  with_pos: boolean
+  with_pulse: boolean
+  with_identify: boolean
+  code: string
+}
+
+/**
+ * @example
+ * ```typescript
+ * import { readHardwareConfig } from '@cakioe/tauri-plugin-board';
+ * await readHardwareConfig();
+ * ```
+ *
+ * @since 1.6.0
+ * @returns {HardwareConfig}
+ */
+export async function readHardwareConfig(): Promise<HardwareConfig> {
+  return await invoke<Record<string, string>>('plugin:board|read_hardware_config').then(
+    r => JSON.parse(r.value) as unknown as HardwareConfig
+  )
+}

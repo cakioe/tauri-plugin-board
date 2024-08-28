@@ -29,6 +29,7 @@ const COMMANDS: &[&str] = &[
     "set_y_pos",
     "to_x",
     "to_y",
+    "read_hardware_config",
 ];
 
 fn main() {

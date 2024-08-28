@@ -491,6 +491,20 @@
           ]
         },
         {
+          "description": "allow-read-hardware-config -> Enables the read_hardware_config command without any pre-configured scope.",
+          "type": "string",
+          "enum": [
+            "allow-read-hardware-config"
+          ]
+        },
+        {
+          "description": "deny-read-hardware-config -> Denies the read_hardware_config command without any pre-configured scope.",
+          "type": "string",
+          "enum": [
+            "deny-read-hardware-config"
+          ]
+        },
+        {
           "description": "allow-reboot -> Enables the reboot command without any pre-configured scope.",
           "type": "string",
           "enum": [

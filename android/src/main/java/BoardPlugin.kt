@@ -1042,4 +1042,40 @@ class BoardPlugin(private val activity: Activity) : Plugin(activity) {
         ret.put("value", "success")
         invoke.resolve()
     }
+
+    /**
+     * command of `readHardwareConfig`
+     *
+     * @description: 读取硬件配置 | p3
+     * @param invoke to invoke [none] { }
+     * @return void
+     * @since 1.6.0
+     */
+    @Command
+    fun readHardwareConfig(invoke: Invoke) {
+        if (!this.driver.EF_Opened()) {
+            throw Exception("driver not opened")
+        }
+
+        val para = cc.uling.usdk.board.mdb.para.HCReplyPara().apply {
+            driver.readHardwareConfig(this)
+        }.apply {
+            if (!this.isOK) {
+                throw Exception("read hardware config failed")
+            }
+        }
+
+        val ret = JSObject()
+        val result: Map<String, Any> = mapOf(
+            "version" to para.version,
+            "with_coin" to para.isWithCoin,
+            "with_cash" to para.isWithCash,
+            "with_pos" to para.isWithPOS,
+            "with_pulse" to para.isWithPulse,
+            "with_identify" to para.isWithIdentify,
+            "code" to para.code,
+        )
+        ret.put("value", Gson().toJson(result))
+        invoke.resolve(ret)
+    }
 }
