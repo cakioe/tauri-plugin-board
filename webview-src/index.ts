@@ -683,3 +683,22 @@ export async function setAgeScope(options?: { age: number }): Promise<string> {
 export async function getAuthResult(): Promise<number> {
   return await invoke<Record<string, string>>('plugin:board|get_auth_result').then(r => parseInt(r.value))
 }
+
+/**
+ * @example
+ * ```typescript
+ * import { setWorkMode } from '@cakioe/tauri-plugin-board';
+ * await setWorkMode();
+ * ```
+ *
+ * @since 1.6.1
+ * @param options {mode: number}
+ * @returns {string}
+ */
+export async function setWorkMode(options?: { mode: number }): Promise<string> {
+  if (options?.mode !== 0 && options?.mode !== 1) {
+    throw new Error('mode must be 0 or 1')
+  }
+
+  return await invoke<Record<string, string>>('plugin:board|set_work_mode', { ...options }).then(r => r.value)
+}

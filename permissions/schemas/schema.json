@@ -785,6 +785,20 @@
           ]
         },
         {
+          "description": "allow-set-work-mode -> Enables the set_work_mode command without any pre-configured scope.",
+          "type": "string",
+          "enum": [
+            "allow-set-work-mode"
+          ]
+        },
+        {
+          "description": "deny-set-work-mode -> Denies the set_work_mode command without any pre-configured scope.",
+          "type": "string",
+          "enum": [
+            "deny-set-work-mode"
+          ]
+        },
+        {
           "description": "allow-set-x-pos -> Enables the set_x_pos command without any pre-configured scope.",
           "type": "string",
           "enum": [

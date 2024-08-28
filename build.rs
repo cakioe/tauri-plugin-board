@@ -43,6 +43,7 @@ const COMMANDS: &[&str] = &[
     "sync_system_time",
     "set_age_scope",
     "get_auth_result",
+    "set_work_mode",
 ];
 
 fn main() {

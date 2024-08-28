@@ -133,6 +133,11 @@ class AgeRequest {
     var age: Int = 12
 }
 
+@InvokeArg
+class WorkModeRequest {
+    var mode: Int = 0
+}
+
 @SuppressLint("SdCardPath")
 const val SDCARD_DIR = "/sdcard"
 
@@ -1473,7 +1478,6 @@ class BoardPlugin(private val activity: Activity) : Plugin(activity) {
             throw Exception("driver not opened")
         }
 
-        val args = invoke.parseArgs(AgeRequest::class.java)
         val para = cc.uling.usdk.board.mdb.para.ARReplyPara().apply {
             driver.getAuthResult(this)
         }.apply {
@@ -1484,6 +1488,36 @@ class BoardPlugin(private val activity: Activity) : Plugin(activity) {
 
         val ret = JSObject()
         ret.put("value", para.status)
+        invoke.resolve(ret)
+    }
+
+    /**
+     * command of `setWorkMode`
+     *
+     * @description: 设置进入（退出）补币模式 | p9
+     * @param
+     * @return void
+     * @since 1.6.1
+     */
+    @Command
+    fun setWorkMode(invoke: Invoke) {
+        if (!this.driver.EF_Opened()) {
+            throw Exception("driver not opened")
+        }
+
+        val args = invoke.parseArgs(WorkModeRequest::class.java)
+        cc.uling.usdk.board.mdb.para.WMReplyPara(
+            args.mode
+        ).apply {
+            driver.setWorkMode(this)
+        }.apply {
+            if (!this.isOK) {
+                throw Exception("set work mode failed")
+            }
+        }
+
+        val ret = JSObject()
+        ret.put("value", "success")
         invoke.resolve(ret)
     }
 }
