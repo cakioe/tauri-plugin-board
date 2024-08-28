@@ -1134,4 +1134,37 @@ class BoardPlugin(private val activity: Activity) : Plugin(activity) {
         ret.put("value", Gson().toJson(result))
         invoke.resolve(ret)
     }
+
+    /**
+     * command of `getPayAmount`
+     *
+     * @description: 查询 MDB 收款金额 | p4
+     * @param invoke to invoke [none] { }
+     * @return void
+     * @since 1.6.1
+     */
+    @Command
+    fun getPayAmount(invoke: Invoke) {
+        if (!this.driver.EF_Opened()) {
+            throw Exception("driver not opened")
+        }
+        val para = cc.uling.usdk.board.mdb.para.PMReplyPara().apply {
+            driver.getPayAmount(this)
+        }.apply {
+            if (!this.isOK) {
+                throw Exception("get pay amount failed")
+            }
+        }
+
+        val ret = JSObject()
+        val result: Map<String, Any> = mapOf(
+            "pay_type" to para.payType,
+            "status" to para.status,
+            "multiple" to para.multiple,
+            "cancel" to para.cancel,
+            "fault" to if (para.status == 1) 0 else para.fault,
+        )
+        ret.put("value", Gson().toJson(result))
+        invoke.resolve(ret)
+    }
 }

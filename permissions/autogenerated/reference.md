@@ -167,6 +167,32 @@ Denies the get_min_payout_amount command without any pre-configured scope.
 <tr>
 <td>
 
+`board:allow-get-pay-amount`
+
+</td>
+<td>
+
+Enables the get_pay_amount command without any pre-configured scope.
+
+</td>
+</tr>
+
+<tr>
+<td>
+
+`board:deny-get-pay-amount`
+
+</td>
+<td>
+
+Denies the get_pay_amount command without any pre-configured scope.
+
+</td>
+</tr>
+
+<tr>
+<td>
+
 `board:allow-get-serial-devices-path`
 
 </td>

@@ -379,6 +379,20 @@
           ]
         },
         {
+          "description": "allow-get-pay-amount -> Enables the get_pay_amount command without any pre-configured scope.",
+          "type": "string",
+          "enum": [
+            "allow-get-pay-amount"
+          ]
+        },
+        {
+          "description": "deny-get-pay-amount -> Denies the get_pay_amount command without any pre-configured scope.",
+          "type": "string",
+          "enum": [
+            "deny-get-pay-amount"
+          ]
+        },
+        {
           "description": "allow-get-serial-devices-path -> Enables the get_serial_devices_path command without any pre-configured scope.",
           "type": "string",
           "enum": [

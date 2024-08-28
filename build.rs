@@ -32,6 +32,7 @@ const COMMANDS: &[&str] = &[
     "read_hardware_config",
     "get_software_version",
     "get_min_payout_amount",
+    "get_pay_amount",
 ];
 
 fn main() {

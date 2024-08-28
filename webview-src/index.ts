@@ -498,3 +498,25 @@ export async function getMinPayoutAmount(): Promise<MinPayoutAmount> {
     r => r.value as unknown as MinPayoutAmount
   )
 }
+
+export interface PayAmount {
+  pay_type: number
+  status: number
+  multiple: number
+  cancel: number
+  fault?: number
+}
+
+/**
+ * @example
+ * ```typescript
+ * import { getPayAmount } from '@cakioe/tauri-plugin-board';
+ * await getPayAmount();
+ * ```
+ *
+ * @since 1.6.1
+ * @returns {PayAmount}
+ */
+export async function getPayAmount(): Promise<PayAmount> {
+  return await invoke<Record<string, string>>('plugin:board|get_pay_amount').then(r => r.value as unknown as PayAmount)
+}
