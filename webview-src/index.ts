@@ -702,3 +702,22 @@ export async function setWorkMode(options?: { mode: number }): Promise<string> {
 
   return await invoke<Record<string, string>>('plugin:board|set_work_mode', { ...options }).then(r => r.value)
 }
+
+/**
+ * @example
+ * ```typescript
+ * import { setPayChannel } from '@cakioe/tauri-plugin-board';
+ * await setPayChannel();
+ * ```
+ *
+ * @since 1.6.1
+ * @param options {mode: number}
+ * @returns {string}
+ */
+export async function setPayChannel(options?: { mode: number }): Promise<string> {
+  if (options?.mode !== 0 && options?.mode !== 1 && options?.mode !== 2) {
+    throw new Error('mode must be 0 or 1 or 2')
+  }
+
+  return await invoke<Record<string, string>>('plugin:board|set_pay_channel', { ...options }).then(r => r.value)
+}

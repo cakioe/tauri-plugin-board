@@ -44,6 +44,7 @@ const COMMANDS: &[&str] = &[
     "set_age_scope",
     "get_auth_result",
     "set_work_mode",
+    "set_pay_channel",
 ];
 
 fn main() {

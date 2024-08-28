@@ -869,6 +869,32 @@ Denies the set_lcd_on_off command without any pre-configured scope.
 <tr>
 <td>
 
+`board:allow-set-pay-channel`
+
+</td>
+<td>
+
+Enables the set_pay_channel command without any pre-configured scope.
+
+</td>
+</tr>
+
+<tr>
+<td>
+
+`board:deny-set-pay-channel`
+
+</td>
+<td>
+
+Denies the set_pay_channel command without any pre-configured scope.
+
+</td>
+</tr>
+
+<tr>
+<td>
+
 `board:allow-set-power-on-off-time`
 
 </td>

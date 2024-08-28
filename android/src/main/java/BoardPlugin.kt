@@ -134,7 +134,7 @@ class AgeRequest {
 }
 
 @InvokeArg
-class WorkModeRequest {
+class ModeRequest {
     var mode: Int = 0
 }
 
@@ -1505,7 +1505,7 @@ class BoardPlugin(private val activity: Activity) : Plugin(activity) {
             throw Exception("driver not opened")
         }
 
-        val args = invoke.parseArgs(WorkModeRequest::class.java)
+        val args = invoke.parseArgs(ModeRequest::class.java)
         cc.uling.usdk.board.mdb.para.WMReplyPara(
             args.mode
         ).apply {
@@ -1516,6 +1516,34 @@ class BoardPlugin(private val activity: Activity) : Plugin(activity) {
             }
         }
 
+        val ret = JSObject()
+        ret.put("value", "success")
+        invoke.resolve(ret)
+    }
+
+    /**
+     * command of `setPayChannel`
+     *
+     * @description: 设置收款方式 | p10
+     * @param
+     * @return void
+     * @since 1.6.1
+     */
+    @Command
+    fun setPayChannel(invoke: Invoke) {
+        if (!this.driver.EF_Opened()) {
+            throw Exception("driver not opened")
+        }
+        val args = invoke.parseArgs(ModeRequest::class.java)
+        cc.uling.usdk.board.mdb.para.PCReplyPara(
+            args.mode
+        ).apply {
+            driver.setPayChannel(this)
+        }.apply {
+            if (!this.isOK) {
+                throw Exception("set pay channel failed")
+            }
+        }
         val ret = JSObject()
         ret.put("value", "success")
         invoke.resolve(ret)
