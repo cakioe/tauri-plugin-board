@@ -947,10 +947,6 @@ Denies the set_pay_channel command without any pre-configured scope.
 <tr>
 <td>
 
-
-<tr>
-<td>
-
 `board:allow-set-pick-xy`
 
 </td>
@@ -973,6 +969,10 @@ Denies the set_pick_xy command without any pre-configured scope.
 
 </td>
 </tr>
+
+<tr>
+<td>
+
 `board:allow-set-power-on-off-time`
 
 </td>

@@ -223,8 +223,8 @@ export declare function getBoxStatus(options?: {
 /**
  * @example
  * ```typescript
- * import { getXPos } from '@cakioe/tauri-plugin-board';
- * await getXPos({ ...options });
+ * import { getYPos } from '@cakioe/tauri-plugin-board';
+ * await getYPos({ ...options });
  * ```
  *
  * @since 1.6.0
@@ -375,4 +375,276 @@ export declare function toX(options?: {
 export declare function toY(options?: {
     addr: number;
     pos: number;
+}): Promise<string>;
+export interface HardwareConfig {
+    version: number;
+    with_coin: boolean;
+    with_cash: boolean;
+    with_pos: boolean;
+    with_pulse: boolean;
+    with_identify: boolean;
+    code: string;
+}
+/**
+ * @example
+ * ```typescript
+ * import { readHardwareConfig } from '@cakioe/tauri-plugin-board';
+ * await readHardwareConfig();
+ * ```
+ *
+ * @since 1.6.1
+ * @returns {HardwareConfig}
+ */
+export declare function readHardwareConfig(): Promise<HardwareConfig>;
+/**
+ * @example
+ * ```typescript
+ * import { getSoftwareVersion } from '@cakioe/tauri-plugin-board';
+ * await getSoftwareVersion();
+ * ```
+ *
+ * @since 1.6.1
+ * @returns {string}
+ */
+export declare function getSoftwareVersion(): Promise<string>;
+export interface MinPayoutAmount {
+    value: number;
+    decimal: number;
+}
+/**
+ * @example
+ * ```typescript
+ * import { getMinPayoutAmount } from '@cakioe/tauri-plugin-board';
+ * await getMinPayoutAmount();
+ * ```
+ *
+ * @since 1.6.1
+ * @returns {MinPayoutAmount}
+ */
+export declare function getMinPayoutAmount(): Promise<MinPayoutAmount>;
+export interface PayAmount {
+    pay_type: number;
+    status: number;
+    multiple: number;
+    cancel: number;
+    fault?: number;
+}
+/**
+ * @example
+ * ```typescript
+ * import { getPayAmount } from '@cakioe/tauri-plugin-board';
+ * await getPayAmount();
+ * ```
+ *
+ * @since 1.6.1
+ * @returns {PayAmount}
+ */
+export declare function getPayAmount(): Promise<PayAmount>;
+/**
+ * @example
+ * ```typescript
+ * import { initPayment } from '@cakioe/tauri-plugin-board';
+ * await initPayment();
+ * ```
+ *
+ * @since 1.6.1
+ * @returns {string}
+ */
+export declare function initPayment(options?: {
+    no: number;
+    multiple: number;
+    addr?: number;
+}): Promise<string>;
+/**
+ * @example
+ * ```typescript
+ * import { notifyPayment } from '@cakioe/tauri-plugin-board';
+ * await notifyPayment();
+ * ```
+ *
+ * @since 1.6.1
+ * @param options {flag: boolean}
+ * @returns {string}
+ */
+export declare function notifyPayment(options?: {
+    flag: boolean;
+}): Promise<string>;
+/**
+ * @example
+ * ```typescript
+ * import { notifyResult } from '@cakioe/tauri-plugin-board';
+ * await notifyResult();
+ * ```
+ *
+ * @since 1.6.1
+ * @param options {flag: boolean}
+ * @returns {string}
+ */
+export declare function notifyResult(options?: {
+    flag: boolean;
+}): Promise<string>;
+/**
+ * @example
+ * ```typescript
+ * import { changeBalance } from '@cakioe/tauri-plugin-board';
+ * await changeBalance();
+ * ```
+ *
+ * @since 1.6.1
+ * @param options {multiple: number}
+ * @returns {string}
+ */
+export declare function changeBalance(options?: {
+    multiple: number;
+}): Promise<string>;
+export interface ChangeStatus {
+    status: number;
+    multiple: number;
+}
+/**
+ * @example
+ * ```typescript
+ * import { getChangeStatus } from '@cakioe/tauri-plugin-board';
+ * await getChangeStatus();
+ * ```
+ *
+ * @since 1.6.1
+ * @returns {ChangeStatus}
+ */
+export declare function getChangeStatus(): Promise<ChangeStatus>;
+/**
+ * @example
+ * ```typescript
+ * import { findChangeResult } from '@cakioe/tauri-plugin-board';
+ * await findChangeResult();
+ * ```
+ *
+ * @since 1.6.1
+ * @returns {string}
+ */
+export declare function findChangeResult(): Promise<number[]>;
+/**
+ * @example
+ * ```typescript
+ * import { setAcceptMoney } from '@cakioe/tauri-plugin-board';
+ * await setAcceptMoney();
+ * ```
+ *
+ * @since 1.6.1
+ * @param options {type: number; channels: number[]}
+ * @returns {string}
+ */
+export declare function setAcceptMoney(options?: {
+    type: number;
+    channels: number[];
+}): Promise<string>;
+/**
+ * @example
+ * ```typescript
+ * import { syncSystemTime } from '@cakioe/tauri-plugin-board';
+ * await syncSystemTime();
+ * ```
+ *
+ * @since 1.6.1
+ * @returns {string}
+ */
+export declare function syncSystemTime(): Promise<string>;
+/**
+ * @example
+ * ```typescript
+ * import { setAgeScope } from '@cakioe/tauri-plugin-board';
+ * await setAgeScope();
+ * ```
+ *
+ * @since 1.6.1
+ * @param options {age: number}
+ * @returns {string}
+ */
+export declare function setAgeScope(options?: {
+    age: number;
+}): Promise<string>;
+/**
+ * @example
+ * ```typescript
+ * import { getAuthResult } from '@cakioe/tauri-plugin-board';
+ * await getAuthResult();
+ * ```
+ *
+ * @since 1.6.1
+ * @returns {number}
+ */
+export declare function getAuthResult(): Promise<number>;
+/**
+ * @example
+ * ```typescript
+ * import { setWorkMode } from '@cakioe/tauri-plugin-board';
+ * await setWorkMode();
+ * ```
+ *
+ * @since 1.6.1
+ * @param options {mode: number}
+ * @returns {string}
+ */
+export declare function setWorkMode(options?: {
+    mode: number;
+}): Promise<string>;
+/**
+ * @example
+ * ```typescript
+ * import { setPayChannel } from '@cakioe/tauri-plugin-board';
+ * await setPayChannel();
+ * ```
+ *
+ * @since 1.6.1
+ * @param options {mode: number}
+ * @returns {string}
+ */
+export declare function setPayChannel(options?: {
+    mode: number;
+}): Promise<string>;
+/**
+ * @example
+ * ```typescript
+ * import { pulseBalance } from '@cakioe/tauri-plugin-board';
+ * await pulseBalance();
+ * ```
+ *
+ * @since 1.6.1
+ * @param options {type: number; value: number}
+ * @returns {string}
+ */
+export declare function pulseBalance(options?: {
+    type: number;
+    value: number;
+}): Promise<string>;
+/**
+ * @example
+ * ```typescript
+ * import { motoTimeout } from '@cakioe/tauri-plugin-board';
+ * await motoTimeout();
+ * ```
+ *
+ * @since 1.6.1
+ * @param options {addr: number; time: number}
+ * @returns {string}
+ */
+export declare function motoTimeout(options?: {
+    addr: number;
+    time: number;
+}): Promise<string>;
+/**
+ * @example
+ * ```typescript
+ * import { setPickY } from '@cakioe/tauri-plugin-board';
+ * await setPickY();
+ * ```
+ *
+ * @since 1.6.1
+ * @param options {addr: number; pos: number; mode: number}
+ * @returns {string}
+ */
+export declare function setPickXY(options?: {
+    addr: number;
+    pos: number;
+    mode: number;
 }): Promise<string>;

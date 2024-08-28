@@ -799,7 +799,6 @@
           ]
         },
         {
-        {
           "description": "allow-set-pick-xy -> Enables the set_pick_xy command without any pre-configured scope.",
           "type": "string",
           "enum": [
@@ -813,6 +812,7 @@
             "deny-set-pick-xy"
           ]
         },
+        {
           "description": "allow-set-power-on-off-time -> Enables the set_power_on_off_time command without any pre-configured scope.",
           "type": "string",
           "enum": [

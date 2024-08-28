@@ -152,8 +152,8 @@ async function getBoxStatus(options) {
 /**
  * @example
  * ```typescript
- * import { getXPos } from '@cakioe/tauri-plugin-board';
- * await getXPos({ ...options });
+ * import { getYPos } from '@cakioe/tauri-plugin-board';
+ * await getYPos({ ...options });
  * ```
  *
  * @since 1.6.0
@@ -290,5 +290,277 @@ async function toX(options) {
 async function toY(options) {
     return await invoke('plugin:board|to_y', { ...options }).then(r => r.value);
 }
+/**
+ * @example
+ * ```typescript
+ * import { readHardwareConfig } from '@cakioe/tauri-plugin-board';
+ * await readHardwareConfig();
+ * ```
+ *
+ * @since 1.6.1
+ * @returns {HardwareConfig}
+ */
+async function readHardwareConfig() {
+    return await invoke('plugin:board|read_hardware_config').then(r => JSON.parse(r.value));
+}
+/**
+ * @example
+ * ```typescript
+ * import { getSoftwareVersion } from '@cakioe/tauri-plugin-board';
+ * await getSoftwareVersion();
+ * ```
+ *
+ * @since 1.6.1
+ * @returns {string}
+ */
+async function getSoftwareVersion() {
+    return await invoke('plugin:board|get_software_version').then(r => r.value);
+}
+/**
+ * @example
+ * ```typescript
+ * import { getMinPayoutAmount } from '@cakioe/tauri-plugin-board';
+ * await getMinPayoutAmount();
+ * ```
+ *
+ * @since 1.6.1
+ * @returns {MinPayoutAmount}
+ */
+async function getMinPayoutAmount() {
+    return await invoke('plugin:board|get_min_payout_amount').then(r => JSON.parse(r.value));
+}
+/**
+ * @example
+ * ```typescript
+ * import { getPayAmount } from '@cakioe/tauri-plugin-board';
+ * await getPayAmount();
+ * ```
+ *
+ * @since 1.6.1
+ * @returns {PayAmount}
+ */
+async function getPayAmount() {
+    return await invoke('plugin:board|get_pay_amount').then(r => JSON.parse(r.value));
+}
+/**
+ * @example
+ * ```typescript
+ * import { initPayment } from '@cakioe/tauri-plugin-board';
+ * await initPayment();
+ * ```
+ *
+ * @since 1.6.1
+ * @returns {string}
+ */
+async function initPayment(options) {
+    return await invoke('plugin:board|init_payment', { ...options }).then(r => r.value);
+}
+/**
+ * @example
+ * ```typescript
+ * import { notifyPayment } from '@cakioe/tauri-plugin-board';
+ * await notifyPayment();
+ * ```
+ *
+ * @since 1.6.1
+ * @param options {flag: boolean}
+ * @returns {string}
+ */
+async function notifyPayment(options) {
+    return await invoke('plugin:board|notify_payment', { ...options }).then(r => r.value);
+}
+/**
+ * @example
+ * ```typescript
+ * import { notifyResult } from '@cakioe/tauri-plugin-board';
+ * await notifyResult();
+ * ```
+ *
+ * @since 1.6.1
+ * @param options {flag: boolean}
+ * @returns {string}
+ */
+async function notifyResult(options) {
+    return await invoke('plugin:board|notify_result', { ...options }).then(r => r.value);
+}
+/**
+ * @example
+ * ```typescript
+ * import { changeBalance } from '@cakioe/tauri-plugin-board';
+ * await changeBalance();
+ * ```
+ *
+ * @since 1.6.1
+ * @param options {multiple: number}
+ * @returns {string}
+ */
+async function changeBalance(options) {
+    return await invoke('plugin:board|change_balance', { ...options }).then(r => r.value);
+}
+/**
+ * @example
+ * ```typescript
+ * import { getChangeStatus } from '@cakioe/tauri-plugin-board';
+ * await getChangeStatus();
+ * ```
+ *
+ * @since 1.6.1
+ * @returns {ChangeStatus}
+ */
+async function getChangeStatus() {
+    return await invoke('plugin:board|get_change_status').then(r => JSON.parse(r.value));
+}
+/**
+ * @example
+ * ```typescript
+ * import { findChangeResult } from '@cakioe/tauri-plugin-board';
+ * await findChangeResult();
+ * ```
+ *
+ * @since 1.6.1
+ * @returns {string}
+ */
+async function findChangeResult() {
+    return await invoke('plugin:board|find_change_result').then(r => JSON.parse(r.value));
+}
+/**
+ * @example
+ * ```typescript
+ * import { setAcceptMoney } from '@cakioe/tauri-plugin-board';
+ * await setAcceptMoney();
+ * ```
+ *
+ * @since 1.6.1
+ * @param options {type: number; channels: number[]}
+ * @returns {string}
+ */
+async function setAcceptMoney(options) {
+    if ((options === null || options === void 0 ? void 0 : options.type) !== 0 && (options === null || options === void 0 ? void 0 : options.type) !== 1) {
+        throw new Error('type must be 0 or 1');
+    }
+    if ((options === null || options === void 0 ? void 0 : options.channels.length) !== 16) {
+        throw new Error('channels length must be 16');
+    }
+    return await invoke('plugin:board|set_accept_money', { ...options }).then(r => r.value);
+}
+/**
+ * @example
+ * ```typescript
+ * import { syncSystemTime } from '@cakioe/tauri-plugin-board';
+ * await syncSystemTime();
+ * ```
+ *
+ * @since 1.6.1
+ * @returns {string}
+ */
+async function syncSystemTime() {
+    return await invoke('plugin:board|sync_system_time').then(r => r.value);
+}
+/**
+ * @example
+ * ```typescript
+ * import { setAgeScope } from '@cakioe/tauri-plugin-board';
+ * await setAgeScope();
+ * ```
+ *
+ * @since 1.6.1
+ * @param options {age: number}
+ * @returns {string}
+ */
+async function setAgeScope(options) {
+    return await invoke('plugin:board|set_age_scope', { ...options }).then(r => r.value);
+}
+/**
+ * @example
+ * ```typescript
+ * import { getAuthResult } from '@cakioe/tauri-plugin-board';
+ * await getAuthResult();
+ * ```
+ *
+ * @since 1.6.1
+ * @returns {number}
+ */
+async function getAuthResult() {
+    return await invoke('plugin:board|get_auth_result').then(r => parseInt(r.value));
+}
+/**
+ * @example
+ * ```typescript
+ * import { setWorkMode } from '@cakioe/tauri-plugin-board';
+ * await setWorkMode();
+ * ```
+ *
+ * @since 1.6.1
+ * @param options {mode: number}
+ * @returns {string}
+ */
+async function setWorkMode(options) {
+    if ((options === null || options === void 0 ? void 0 : options.mode) !== 0 && (options === null || options === void 0 ? void 0 : options.mode) !== 1) {
+        throw new Error('mode must be 0 or 1');
+    }
+    return await invoke('plugin:board|set_work_mode', { ...options }).then(r => r.value);
+}
+/**
+ * @example
+ * ```typescript
+ * import { setPayChannel } from '@cakioe/tauri-plugin-board';
+ * await setPayChannel();
+ * ```
+ *
+ * @since 1.6.1
+ * @param options {mode: number}
+ * @returns {string}
+ */
+async function setPayChannel(options) {
+    if ((options === null || options === void 0 ? void 0 : options.mode) !== 0 && (options === null || options === void 0 ? void 0 : options.mode) !== 1 && (options === null || options === void 0 ? void 0 : options.mode) !== 2) {
+        throw new Error('mode must be 0 or 1 or 2');
+    }
+    return await invoke('plugin:board|set_pay_channel', { ...options }).then(r => r.value);
+}
+/**
+ * @example
+ * ```typescript
+ * import { pulseBalance } from '@cakioe/tauri-plugin-board';
+ * await pulseBalance();
+ * ```
+ *
+ * @since 1.6.1
+ * @param options {type: number; value: number}
+ * @returns {string}
+ */
+async function pulseBalance(options) {
+    return await invoke('plugin:board|pulse_balance', { ...options }).then(r => r.value);
+}
+/**
+ * @example
+ * ```typescript
+ * import { motoTimeout } from '@cakioe/tauri-plugin-board';
+ * await motoTimeout();
+ * ```
+ *
+ * @since 1.6.1
+ * @param options {addr: number; time: number}
+ * @returns {string}
+ */
+async function motoTimeout(options) {
+    return await invoke('plugin:board|moto_timeout', { ...options }).then(r => r.value);
+}
+/**
+ * @example
+ * ```typescript
+ * import { setPickY } from '@cakioe/tauri-plugin-board';
+ * await setPickY();
+ * ```
+ *
+ * @since 1.6.1
+ * @param options {addr: number; pos: number; mode: number}
+ * @returns {string}
+ */
+async function setPickXY(options) {
+    if ((options === null || options === void 0 ? void 0 : options.mode) !== 0 && (options === null || options === void 0 ? void 0 : options.mode) !== 1) {
+        throw new Error('mode must be 0 or 1');
+    }
+    return await invoke('plugin:board|set_pick_xy', { ...options }).then(r => r.value);
+}
 
-export { execShipment, getBoxStatus, getBuildBoard, getBuildEnv, getDropStatus, getSerialDevicesPath, getShipmentStatus, getXPos, getXStatus, getYPos, getYStatus, openFileManager, openMainActivity, openSettingConfig, reboot, resetLift, runMoto, setAppBrightness, setGestureStatusBar, setLcdOnOff, setPowerOnOffTime, setStatusBar, setXPos, setYPos, shutdown, takeScreenShot, toX, toY };
+export { changeBalance, execShipment, findChangeResult, getAuthResult, getBoxStatus, getBuildBoard, getBuildEnv, getChangeStatus, getDropStatus, getMinPayoutAmount, getPayAmount, getSerialDevicesPath, getShipmentStatus, getSoftwareVersion, getXPos, getXStatus, getYPos, getYStatus, initPayment, motoTimeout, notifyPayment, notifyResult, openFileManager, openMainActivity, openSettingConfig, pulseBalance, readHardwareConfig, reboot, resetLift, runMoto, setAcceptMoney, setAgeScope, setAppBrightness, setGestureStatusBar, setLcdOnOff, setPayChannel, setPickXY, setPowerOnOffTime, setStatusBar, setWorkMode, setXPos, setYPos, shutdown, syncSystemTime, takeScreenShot, toX, toY };
