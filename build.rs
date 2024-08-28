@@ -37,6 +37,7 @@ const COMMANDS: &[&str] = &[
     "notify_payment",
     "notify_result",
     "change_balance",
+    "get_change_status",
 ];
 
 fn main() {

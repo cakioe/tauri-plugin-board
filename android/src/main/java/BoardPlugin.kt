@@ -1297,4 +1297,36 @@ class BoardPlugin(private val activity: Activity) : Plugin(activity) {
         ret.put("value", "success")
         invoke.resolve(ret)
     }
+
+
+    /**
+     * command of `getChangeStatus`
+     *
+     * @description: 查询找零状态 | p6
+     * @param invoke to invoke [none] { }
+     * @return void
+     * @since 1.6.1
+     */
+    @Command
+    fun getChangeStatus(invoke: Invoke) {
+        if (!this.driver.EF_Opened()) {
+            throw Exception("driver not opened")
+        }
+
+        val para = cc.uling.usdk.board.mdb.para.CSReplyPara().apply {
+            driver.getChangeStatus(this)
+        }.apply {
+            if (!this.isOK) {
+                throw Exception("get change status failed")
+            }
+        }
+
+        val ret = JSObject()
+        val result: Map<String, Any> = mapOf(
+            "status" to para.status,
+            "multiple" to para.multiple,
+        )
+        ret.put("value", Gson().toJson(result))
+        invoke.resolve(ret)
+    }
 }

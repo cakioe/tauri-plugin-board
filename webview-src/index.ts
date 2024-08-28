@@ -579,3 +579,23 @@ export async function notifyResult(options?: { flag: boolean }): Promise<string>
 export async function changeBalance(options?: { multiple: number }): Promise<string> {
   return await invoke<Record<string, string>>('plugin:board|change_balance', { ...options }).then(r => r.value)
 }
+
+export interface ChangeStatus {
+  status: number
+  multiple: number
+}
+/**
+ * @example
+ * ```typescript
+ * import { getChangeStatus } from '@cakioe/tauri-plugin-board';
+ * await getChangeStatus();
+ * ```
+ *
+ * @since 1.6.1
+ * @returns {ChangeStatus}
+ */
+export async function getChangeStatus(): Promise<ChangeStatus> {
+  return await invoke<Record<string, string>>('plugin:board|get_change_status').then(
+    r => r.value as unknown as ChangeStatus
+  )
+}

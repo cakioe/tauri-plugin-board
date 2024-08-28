@@ -365,6 +365,20 @@
           ]
         },
         {
+          "description": "allow-get-change-status -> Enables the get_change_status command without any pre-configured scope.",
+          "type": "string",
+          "enum": [
+            "allow-get-change-status"
+          ]
+        },
+        {
+          "description": "deny-get-change-status -> Denies the get_change_status command without any pre-configured scope.",
+          "type": "string",
+          "enum": [
+            "deny-get-change-status"
+          ]
+        },
+        {
           "description": "allow-get-drop-status -> Enables the get_drop_status command without any pre-configured scope.",
           "type": "string",
           "enum": [

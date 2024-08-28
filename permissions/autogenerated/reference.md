@@ -141,6 +141,32 @@ Denies the get_build_env command without any pre-configured scope.
 <tr>
 <td>
 
+`board:allow-get-change-status`
+
+</td>
+<td>
+
+Enables the get_change_status command without any pre-configured scope.
+
+</td>
+</tr>
+
+<tr>
+<td>
+
+`board:deny-get-change-status`
+
+</td>
+<td>
+
+Denies the get_change_status command without any pre-configured scope.
+
+</td>
+</tr>
+
+<tr>
+<td>
+
 `board:allow-get-drop-status`
 
 </td>
