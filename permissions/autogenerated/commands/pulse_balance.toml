@@ -1,0 +1,13 @@
+# Automatically generated - DO NOT EDIT!
+
+"$schema" = "../../schemas/schema.json"
+
+[[permission]]
+identifier = "allow-pulse-balance"
+description = "Enables the pulse_balance command without any pre-configured scope."
+commands.allow = ["pulse_balance"]
+
+[[permission]]
+identifier = "deny-pulse-balance"
+description = "Denies the pulse_balance command without any pre-configured scope."
+commands.deny = ["pulse_balance"]

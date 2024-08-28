@@ -105,6 +105,58 @@ class XYRequest {
     var value: Short = 0
 }
 
+@InvokeArg
+class PaymentRequest {
+    var addr: Int? = null
+    val no: Int = 0
+    val multiple: Int = 0
+}
+
+@InvokeArg
+class FlagRequest {
+    var flag: Boolean = false
+}
+
+@InvokeArg
+class BalanceRequest {
+    var multiple: Int = 1
+}
+
+@InvokeArg
+class AcceptMoneyRequest {
+    var type: Int = 0 // 0- 硬币, 1- 纸币
+    var channels: IntArray = IntArray(16)
+}
+
+@InvokeArg
+class AgeRequest {
+    var age: Int = 12
+}
+
+@InvokeArg
+class ModeRequest {
+    var mode: Int = 0
+}
+
+@InvokeArg
+class PulseBalanceRequest {
+    var type: Int = 0
+    var value: Int = 0
+}
+
+@InvokeArg
+class MotoTimeoutRequest {
+    var addr: Int = 1
+    var time: Short = 1
+}
+
+@InvokeArg
+class PickXYRequest {
+    var addr: Int = 1
+    var pos: Short = 1
+    var mode: Int = 0
+}
+
 @SuppressLint("SdCardPath")
 const val SDCARD_DIR = "/sdcard"
 
@@ -1041,5 +1093,579 @@ class BoardPlugin(private val activity: Activity) : Plugin(activity) {
         val ret = JSObject()
         ret.put("value", "success")
         invoke.resolve()
+    }
+
+    /**
+     * command of `readHardwareConfig`
+     *
+     * @description: 读取硬件配置 | p3
+     * @param invoke to invoke [none] { }
+     * @return void
+     * @since 1.6.1
+     */
+    @Command
+    fun readHardwareConfig(invoke: Invoke) {
+        if (!this.driver.EF_Opened()) {
+            throw Exception("driver not opened")
+        }
+
+        val para = cc.uling.usdk.board.mdb.para.HCReplyPara().apply {
+            driver.readHardwareConfig(this)
+        }.apply {
+            if (!this.isOK) {
+                throw Exception("read hardware config failed")
+            }
+        }
+
+        val ret = JSObject()
+        val result: Map<String, Any> = mapOf(
+            "version" to para.version,
+            "with_coin" to para.isWithCoin,
+            "with_cash" to para.isWithCash,
+            "with_pos" to para.isWithPOS,
+            "with_pulse" to para.isWithPulse,
+            "with_identify" to para.isWithIdentify,
+            "code" to para.code,
+        )
+        ret.put("value", Gson().toJson(result))
+        invoke.resolve(ret)
+    }
+
+    /**
+     * command of `getSoftwareVersion`
+     *
+     * @description: 获取软件版本 | p3
+     * @param invoke to invoke [none] { }
+     * @return void
+     * @since 1.6.1
+     */
+    @Command
+    fun getSoftwareVersion(invoke: Invoke) {
+        if (!this.driver.EF_Opened()) {
+            throw Exception("driver not opened")
+        }
+
+        val para = cc.uling.usdk.board.mdb.para.SVReplyPara().apply {
+            driver.getSoftwareVersion(this)
+        }.apply {
+            if (!this.isOK) {
+                throw Exception("get software version failed")
+            }
+        }
+
+        val ret = JSObject()
+        ret.put("value", para.version)
+        invoke.resolve(ret)
+    }
+
+    /**
+     * command of `getMinPayoutAmount`
+     *
+     * @description: 读取外设支持最小面额 | p4
+     * @param invoke to invoke [none] { }
+     * @return void
+     * @since 1.6.1
+     */
+    @Command
+    fun getMinPayoutAmount(invoke: Invoke) {
+        if (!this.driver.EF_Opened()) {
+            throw Exception("driver not opened")
+        }
+        val para = cc.uling.usdk.board.mdb.para.MPReplyPara().apply {
+            driver.getMinPayoutAmount(this)
+        }.apply {
+            if (!this.isOK) {
+                throw Exception("get min payout amount failed")
+            }
+        }
+        val ret = JSObject()
+        val result: Map<String, Any> = mapOf(
+            "value" to para.value,
+            "decimal" to para.decimal,
+        )
+        ret.put("value", Gson().toJson(result))
+        invoke.resolve(ret)
+    }
+
+    /**
+     * command of `getPayAmount`
+     *
+     * @description: 查询 MDB 收款金额 | p4
+     * @param invoke to invoke [none] { }
+     * @return void
+     * @since 1.6.1
+     */
+    @Command
+    fun getPayAmount(invoke: Invoke) {
+        if (!this.driver.EF_Opened()) {
+            throw Exception("driver not opened")
+        }
+        val para = cc.uling.usdk.board.mdb.para.PMReplyPara().apply {
+            driver.getPayAmount(this)
+        }.apply {
+            if (!this.isOK) {
+                throw Exception("get pay amount failed")
+            }
+        }
+
+        val ret = JSObject()
+        val result: Map<String, Any> = mapOf(
+            "pay_type" to para.payType,
+            "status" to para.status,
+            "multiple" to para.multiple,
+            "cancel" to para.cancel,
+            "fault" to if (para.status == 1) 0 else para.fault,
+        )
+        ret.put("value", Gson().toJson(result))
+        invoke.resolve(ret)
+    }
+
+    /**
+     * command of `initPayment`
+     *
+     * @description: 发起收款 | p5
+     * @param invoke to invoke [none] { }
+     * @return void
+     * @since 1.6.1
+     */
+    @Command
+    fun initPayment(invoke: Invoke) {
+        if (!this.driver.EF_Opened()) {
+            throw Exception("driver not opened")
+        }
+        val args = invoke.parseArgs(PaymentRequest::class.java)
+        cc.uling.usdk.board.mdb.para.IPReplyPara(
+            (args.no % 100).toShort(),
+            args.multiple
+        ).apply {
+            driver.initPayment(this)
+        }.apply {
+            if (!this.isOK) {
+                throw Exception("init payment failed")
+            }
+        }
+        val ret = JSObject()
+        ret.put("value", "success")
+        invoke.resolve(ret)
+    }
+
+    /**
+     * command of `notifyPayment`
+     *
+     * @description: 收款通知 | p6
+     * @param invoke to invoke [none] { }
+     * @return void
+     * @since 1.6.1
+     */
+    @Command
+    fun notifyPayment(invoke: Invoke) {
+        if (!this.driver.EF_Opened()) {
+            throw Exception("driver not opened")
+        }
+        val args = invoke.parseArgs(FlagRequest::class.java)
+        cc.uling.usdk.board.mdb.para.PayReplyPara(
+            args.flag
+        ).apply {
+            driver.notifyPayment(this)
+        }.apply {
+            if (!this.isOK) {
+                throw Exception("notify payment failed")
+            }
+        }
+        val ret = JSObject()
+        ret.put("value", "success")
+        invoke.resolve(ret)
+    }
+
+    /**
+     * command of `notifyResult`
+     *
+     * @description: 通知机器售卖结果 | p6
+     * @param invoke to invoke [none] { }
+     * @return void
+     * @since 1.6.1
+     */
+    @Command
+    fun notifyResult(invoke: Invoke) {
+        if (!this.driver.EF_Opened()) {
+            throw Exception("driver not opened")
+        }
+        val args = invoke.parseArgs(FlagRequest::class.java)
+        cc.uling.usdk.board.mdb.para.ResultReplyPara(
+            args.flag
+        ).apply {
+            driver.notifyResult(this)
+        }.apply {
+            if (!this.isOK) {
+                throw Exception("notify result failed")
+            }
+        }
+        val ret = JSObject()
+        ret.put("value", "success")
+        invoke.resolve(ret)
+    }
+
+    /**
+     * command of `changeBalance`
+     *
+     * @description: 发起找零 | p6
+     * @param invoke to invoke [none] { }
+     * @return void
+     * @since 1.6.1
+     */
+    @Command
+    fun changeBalance(invoke: Invoke) {
+        if (!this.driver.EF_Opened()) {
+            throw Exception("driver not opened")
+        }
+        val args = invoke.parseArgs(BalanceRequest::class.java)
+        cc.uling.usdk.board.mdb.para.CBReplyPara(
+            args.multiple
+        ).apply {
+            driver.changeBalance(this)
+        }.apply {
+            if (!this.isOK) {
+                throw Exception("notify result failed")
+            }
+        }
+        val ret = JSObject()
+        ret.put("value", "success")
+        invoke.resolve(ret)
+    }
+
+    /**
+     * command of `getChangeStatus`
+     *
+     * @description: 查询找零状态 | p6
+     * @param invoke to invoke [none] { }
+     * @return void
+     * @since 1.6.1
+     */
+    @Command
+    fun getChangeStatus(invoke: Invoke) {
+        if (!this.driver.EF_Opened()) {
+            throw Exception("driver not opened")
+        }
+
+        val para = cc.uling.usdk.board.mdb.para.CSReplyPara().apply {
+            driver.getChangeStatus(this)
+        }.apply {
+            if (!this.isOK) {
+                throw Exception("get change status failed")
+            }
+        }
+
+        val ret = JSObject()
+        val result: Map<String, Any> = mapOf(
+            "status" to para.status,
+            "multiple" to para.multiple,
+        )
+        ret.put("value", Gson().toJson(result))
+        invoke.resolve(ret)
+    }
+
+    /**
+     * command of `findChangeResult`
+     *
+     * @description: 查询硬币器找零结果 | p6
+     * @param invoke to invoke [none] { }
+     * @return void
+     * @since 1.6.1
+     */
+    @Command
+    fun findChangeResult(invoke: Invoke) {
+        if (!this.driver.EF_Opened()) {
+            throw Exception("driver not opened")
+        }
+
+        val para = cc.uling.usdk.board.mdb.para.BRReplyPara().apply {
+            driver.findChangeResult(this)
+        }.apply {
+            if (!this.isOK) {
+                throw Exception("get change status failed")
+            }
+        }
+
+        val ret = JSObject()
+        val result: Array<Int> = Array(16) { 0 }
+        for (i in 0 until 16) {
+            result[i] = para.getCount(i + 1)
+        }
+        ret.put("value", Gson().toJson(result))
+        invoke.resolve(ret)
+    }
+
+    /**
+     * command of `setAcceptMoney`
+     *
+     * @description: 设置硬（纸）币器允许币种 | p7
+     * @param invoke to invoke [AcceptMoneyRequest] { }
+     * @return void
+     * @since 1.6.1
+     */
+    @Command
+    fun setAcceptMoney(invoke: Invoke) {
+        if (!this.driver.EF_Opened()) {
+            throw Exception("driver not opened")
+        }
+
+        val args = invoke.parseArgs(AcceptMoneyRequest::class.java)
+        cc.uling.usdk.board.mdb.para.ACReplyPara(
+            args.type,
+            args.channels
+        ).apply {
+            driver.setAcceptMoney(this)
+        }.apply {
+            if (!this.isOK) {
+                throw Exception("get change status failed")
+            }
+        }
+
+        val ret = JSObject()
+        ret.put("value", "success")
+        invoke.resolve(ret)
+    }
+
+    /**
+     * command of `syncSystemTime`
+     *
+     * @description: 同步系统时间 | p9
+     * @param
+     * @return void
+     * @since 1.6.1
+     */
+    @Command
+    fun syncSystemTime(invoke: Invoke) {
+        if (!this.driver.EF_Opened()) {
+            throw Exception("driver not opened")
+        }
+
+        cc.uling.usdk.board.mdb.para.STReplyPara().apply {
+            driver.syncSystemTime(this)
+        }.apply {
+            if (!this.isOK) {
+                throw Exception("sync system time failed")
+            }
+        }
+
+        val ret = JSObject()
+        ret.put("value", "success")
+        invoke.resolve(ret)
+    }
+
+    /**
+     * command of `setAgeScope`
+     *
+     * @description: 设置年龄限制 | p9
+     * @param
+     * @return void
+     * @since 1.6.1
+     */
+    @Command
+    fun setAgeScope(invoke: Invoke) {
+        if (!this.driver.EF_Opened()) {
+            throw Exception("driver not opened")
+        }
+
+        val args = invoke.parseArgs(AgeRequest::class.java)
+        cc.uling.usdk.board.mdb.para.ASReplyPara(
+            args.age
+        ).apply {
+            driver.setAgeScope(this)
+        }.apply {
+            if (!this.isOK) {
+                throw Exception("sync system time failed")
+            }
+        }
+
+        val ret = JSObject()
+        ret.put("value", "success")
+        invoke.resolve(ret)
+    }
+
+    /**
+     * command of `getAuthResult`
+     *
+     * @description: 查询身份认证是否成功 | p9
+     * @param
+     * @return void
+     * @since 1.6.1
+     */
+    @Command
+    fun getAuthResult(invoke: Invoke) {
+        if (!this.driver.EF_Opened()) {
+            throw Exception("driver not opened")
+        }
+
+        val para = cc.uling.usdk.board.mdb.para.ARReplyPara().apply {
+            driver.getAuthResult(this)
+        }.apply {
+            if (!this.isOK) {
+                throw Exception("get auth result failed")
+            }
+        }
+
+        val ret = JSObject()
+        ret.put("value", para.status)
+        invoke.resolve(ret)
+    }
+
+    /**
+     * command of `setWorkMode`
+     *
+     * @description: 设置进入（退出）补币模式 | p9
+     * @param
+     * @return void
+     * @since 1.6.1
+     */
+    @Command
+    fun setWorkMode(invoke: Invoke) {
+        if (!this.driver.EF_Opened()) {
+            throw Exception("driver not opened")
+        }
+
+        val args = invoke.parseArgs(ModeRequest::class.java)
+        cc.uling.usdk.board.mdb.para.WMReplyPara(
+            args.mode
+        ).apply {
+            driver.setWorkMode(this)
+        }.apply {
+            if (!this.isOK) {
+                throw Exception("set work mode failed")
+            }
+        }
+
+        val ret = JSObject()
+        ret.put("value", "success")
+        invoke.resolve(ret)
+    }
+
+    /**
+     * command of `setPayChannel`
+     *
+     * @description: 设置收款方式 | p10
+     * @param
+     * @return void
+     * @since 1.6.1
+     */
+    @Command
+    fun setPayChannel(invoke: Invoke) {
+        if (!this.driver.EF_Opened()) {
+            throw Exception("driver not opened")
+        }
+        val args = invoke.parseArgs(ModeRequest::class.java)
+        cc.uling.usdk.board.mdb.para.PCReplyPara(
+            args.mode
+        ).apply {
+            driver.setPayChannel(this)
+        }.apply {
+            if (!this.isOK) {
+                throw Exception("set pay channel failed")
+            }
+        }
+        val ret = JSObject()
+        ret.put("value", "success")
+        invoke.resolve(ret)
+    }
+
+    /**
+     * command of `pulseBalance`
+     *
+     * @description: 脉冲找零 | p10
+     * @param
+     * @return void
+     * @since 1.6.1
+     */
+    @Command
+    fun pulseBalance(invoke: Invoke) {
+        if (!this.driver.EF_Opened()) {
+            throw Exception("driver not opened")
+        }
+        val args = invoke.parseArgs(PulseBalanceRequest::class.java)
+        cc.uling.usdk.board.mdb.para.PBReplyPara(
+            args.type,
+            args.value
+        ).apply {
+            driver.pulseBalance(this)
+        }.apply {
+            if (!this.isOK) {
+                throw Exception("set pay channel failed")
+            }
+        }
+        val ret = JSObject()
+        ret.put("value", "success")
+        invoke.resolve(ret)
+    }
+
+    /**
+     * command of `motoTimeout`
+     *
+     * @description: 设置电机超时时间 | p20
+     * @param
+     * @return void
+     * @since 1.6.1
+     */
+    @Command
+    fun motoTimeout(invoke: Invoke) {
+        if (!this.driver.EF_Opened()) {
+            throw Exception("driver not opened")
+        }
+        val args = invoke.parseArgs(MotoTimeoutRequest::class.java)
+        MTReplyPara(
+            args.addr,
+            args.time
+        ).apply {
+            driver.MotoTimeout(this)
+        }.apply {
+            if (!this.isOK) {
+                throw Exception("set moto timeout failed")
+            }
+        }
+        val ret = JSObject()
+        ret.put("value", "success")
+        invoke.resolve(ret)
+    }
+
+    /**
+     * command of `setPickXY`
+     *
+     * @description: 设置取货口 X/Y 轴位置 | p21
+     * @param
+     * @return void
+     * @since 1.6.1
+     */
+    @Command
+    fun setPickXY(invoke: Invoke) {
+        if (!this.driver.EF_Opened()) {
+            throw Exception("driver not opened")
+        }
+        val args = invoke.parseArgs(PickXYRequest::class.java)
+        if (args.mode == 0) {
+            PXReplyPara(
+                args.addr,
+                args.pos
+            ).apply {
+                driver.SetPickX(this)
+            }.apply {
+                if (!this.isOK) {
+                    throw Exception()
+                }
+            }
+        } else {
+            PYReplyPara(
+                args.addr,
+                args.pos
+            ).apply {
+                driver.SetPickY(this)
+            }.apply {
+                if (!this.isOK) {
+                    throw Exception()
+                }
+            }
+        }
+
+        val ret = JSObject()
+        ret.put("value", "success")
+        invoke.resolve(ret)
     }
 }

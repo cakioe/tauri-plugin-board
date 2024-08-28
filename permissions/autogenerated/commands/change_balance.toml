@@ -1,0 +1,13 @@
+# Automatically generated - DO NOT EDIT!
+
+"$schema" = "../../schemas/schema.json"
+
+[[permission]]
+identifier = "allow-change-balance"
+description = "Enables the change_balance command without any pre-configured scope."
+commands.allow = ["change_balance"]
+
+[[permission]]
+identifier = "deny-change-balance"
+description = "Denies the change_balance command without any pre-configured scope."
+commands.deny = ["change_balance"]

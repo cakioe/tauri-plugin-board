@@ -1,0 +1,13 @@
+# Automatically generated - DO NOT EDIT!
+
+"$schema" = "../../schemas/schema.json"
+
+[[permission]]
+identifier = "allow-set-pay-channel"
+description = "Enables the set_pay_channel command without any pre-configured scope."
+commands.allow = ["set_pay_channel"]
+
+[[permission]]
+identifier = "deny-set-pay-channel"
+description = "Denies the set_pay_channel command without any pre-configured scope."
+commands.deny = ["set_pay_channel"]

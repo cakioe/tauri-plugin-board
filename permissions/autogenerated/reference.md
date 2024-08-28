@@ -11,6 +11,32 @@
 <tr>
 <td>
 
+`board:allow-change-balance`
+
+</td>
+<td>
+
+Enables the change_balance command without any pre-configured scope.
+
+</td>
+</tr>
+
+<tr>
+<td>
+
+`board:deny-change-balance`
+
+</td>
+<td>
+
+Denies the change_balance command without any pre-configured scope.
+
+</td>
+</tr>
+
+<tr>
+<td>
+
 `board:allow-exec-shipment`
 
 </td>
@@ -30,6 +56,58 @@ Enables the exec_shipment command without any pre-configured scope.
 <td>
 
 Denies the exec_shipment command without any pre-configured scope.
+
+</td>
+</tr>
+
+<tr>
+<td>
+
+`board:allow-find-change-result`
+
+</td>
+<td>
+
+Enables the find_change_result command without any pre-configured scope.
+
+</td>
+</tr>
+
+<tr>
+<td>
+
+`board:deny-find-change-result`
+
+</td>
+<td>
+
+Denies the find_change_result command without any pre-configured scope.
+
+</td>
+</tr>
+
+<tr>
+<td>
+
+`board:allow-get-auth-result`
+
+</td>
+<td>
+
+Enables the get_auth_result command without any pre-configured scope.
+
+</td>
+</tr>
+
+<tr>
+<td>
+
+`board:deny-get-auth-result`
+
+</td>
+<td>
+
+Denies the get_auth_result command without any pre-configured scope.
 
 </td>
 </tr>
@@ -115,6 +193,32 @@ Denies the get_build_env command without any pre-configured scope.
 <tr>
 <td>
 
+`board:allow-get-change-status`
+
+</td>
+<td>
+
+Enables the get_change_status command without any pre-configured scope.
+
+</td>
+</tr>
+
+<tr>
+<td>
+
+`board:deny-get-change-status`
+
+</td>
+<td>
+
+Denies the get_change_status command without any pre-configured scope.
+
+</td>
+</tr>
+
+<tr>
+<td>
+
 `board:allow-get-drop-status`
 
 </td>
@@ -134,6 +238,58 @@ Enables the get_drop_status command without any pre-configured scope.
 <td>
 
 Denies the get_drop_status command without any pre-configured scope.
+
+</td>
+</tr>
+
+<tr>
+<td>
+
+`board:allow-get-min-payout-amount`
+
+</td>
+<td>
+
+Enables the get_min_payout_amount command without any pre-configured scope.
+
+</td>
+</tr>
+
+<tr>
+<td>
+
+`board:deny-get-min-payout-amount`
+
+</td>
+<td>
+
+Denies the get_min_payout_amount command without any pre-configured scope.
+
+</td>
+</tr>
+
+<tr>
+<td>
+
+`board:allow-get-pay-amount`
+
+</td>
+<td>
+
+Enables the get_pay_amount command without any pre-configured scope.
+
+</td>
+</tr>
+
+<tr>
+<td>
+
+`board:deny-get-pay-amount`
+
+</td>
+<td>
+
+Denies the get_pay_amount command without any pre-configured scope.
 
 </td>
 </tr>
@@ -186,6 +342,32 @@ Enables the get_shipment_status command without any pre-configured scope.
 <td>
 
 Denies the get_shipment_status command without any pre-configured scope.
+
+</td>
+</tr>
+
+<tr>
+<td>
+
+`board:allow-get-software-version`
+
+</td>
+<td>
+
+Enables the get_software_version command without any pre-configured scope.
+
+</td>
+</tr>
+
+<tr>
+<td>
+
+`board:deny-get-software-version`
+
+</td>
+<td>
+
+Denies the get_software_version command without any pre-configured scope.
 
 </td>
 </tr>
@@ -297,6 +479,110 @@ Denies the get_y_status command without any pre-configured scope.
 <tr>
 <td>
 
+`board:allow-init-payment`
+
+</td>
+<td>
+
+Enables the init_payment command without any pre-configured scope.
+
+</td>
+</tr>
+
+<tr>
+<td>
+
+`board:deny-init-payment`
+
+</td>
+<td>
+
+Denies the init_payment command without any pre-configured scope.
+
+</td>
+</tr>
+
+<tr>
+<td>
+
+`board:allow-moto-timeout`
+
+</td>
+<td>
+
+Enables the moto_timeout command without any pre-configured scope.
+
+</td>
+</tr>
+
+<tr>
+<td>
+
+`board:deny-moto-timeout`
+
+</td>
+<td>
+
+Denies the moto_timeout command without any pre-configured scope.
+
+</td>
+</tr>
+
+<tr>
+<td>
+
+`board:allow-notify-payment`
+
+</td>
+<td>
+
+Enables the notify_payment command without any pre-configured scope.
+
+</td>
+</tr>
+
+<tr>
+<td>
+
+`board:deny-notify-payment`
+
+</td>
+<td>
+
+Denies the notify_payment command without any pre-configured scope.
+
+</td>
+</tr>
+
+<tr>
+<td>
+
+`board:allow-notify-result`
+
+</td>
+<td>
+
+Enables the notify_result command without any pre-configured scope.
+
+</td>
+</tr>
+
+<tr>
+<td>
+
+`board:deny-notify-result`
+
+</td>
+<td>
+
+Denies the notify_result command without any pre-configured scope.
+
+</td>
+</tr>
+
+<tr>
+<td>
+
 `board:allow-open-file-manager`
 
 </td>
@@ -368,6 +654,58 @@ Enables the open_setting_config command without any pre-configured scope.
 <td>
 
 Denies the open_setting_config command without any pre-configured scope.
+
+</td>
+</tr>
+
+<tr>
+<td>
+
+`board:allow-pulse-balance`
+
+</td>
+<td>
+
+Enables the pulse_balance command without any pre-configured scope.
+
+</td>
+</tr>
+
+<tr>
+<td>
+
+`board:deny-pulse-balance`
+
+</td>
+<td>
+
+Denies the pulse_balance command without any pre-configured scope.
+
+</td>
+</tr>
+
+<tr>
+<td>
+
+`board:allow-read-hardware-config`
+
+</td>
+<td>
+
+Enables the read_hardware_config command without any pre-configured scope.
+
+</td>
+</tr>
+
+<tr>
+<td>
+
+`board:deny-read-hardware-config`
+
+</td>
+<td>
+
+Denies the read_hardware_config command without any pre-configured scope.
 
 </td>
 </tr>
@@ -453,6 +791,58 @@ Denies the run_moto command without any pre-configured scope.
 <tr>
 <td>
 
+`board:allow-set-accept-money`
+
+</td>
+<td>
+
+Enables the set_accept_money command without any pre-configured scope.
+
+</td>
+</tr>
+
+<tr>
+<td>
+
+`board:deny-set-accept-money`
+
+</td>
+<td>
+
+Denies the set_accept_money command without any pre-configured scope.
+
+</td>
+</tr>
+
+<tr>
+<td>
+
+`board:allow-set-age-scope`
+
+</td>
+<td>
+
+Enables the set_age_scope command without any pre-configured scope.
+
+</td>
+</tr>
+
+<tr>
+<td>
+
+`board:deny-set-age-scope`
+
+</td>
+<td>
+
+Denies the set_age_scope command without any pre-configured scope.
+
+</td>
+</tr>
+
+<tr>
+<td>
+
 `board:allow-set-app-brightness`
 
 </td>
@@ -531,6 +921,58 @@ Denies the set_lcd_on_off command without any pre-configured scope.
 <tr>
 <td>
 
+`board:allow-set-pay-channel`
+
+</td>
+<td>
+
+Enables the set_pay_channel command without any pre-configured scope.
+
+</td>
+</tr>
+
+<tr>
+<td>
+
+`board:deny-set-pay-channel`
+
+</td>
+<td>
+
+Denies the set_pay_channel command without any pre-configured scope.
+
+</td>
+</tr>
+
+<tr>
+<td>
+
+
+<tr>
+<td>
+
+`board:allow-set-pick-xy`
+
+</td>
+<td>
+
+Enables the set_pick_xy command without any pre-configured scope.
+
+</td>
+</tr>
+
+<tr>
+<td>
+
+`board:deny-set-pick-xy`
+
+</td>
+<td>
+
+Denies the set_pick_xy command without any pre-configured scope.
+
+</td>
+</tr>
 `board:allow-set-power-on-off-time`
 
 </td>
@@ -576,6 +1018,32 @@ Enables the set_status_bar command without any pre-configured scope.
 <td>
 
 Denies the set_status_bar command without any pre-configured scope.
+
+</td>
+</tr>
+
+<tr>
+<td>
+
+`board:allow-set-work-mode`
+
+</td>
+<td>
+
+Enables the set_work_mode command without any pre-configured scope.
+
+</td>
+</tr>
+
+<tr>
+<td>
+
+`board:deny-set-work-mode`
+
+</td>
+<td>
+
+Denies the set_work_mode command without any pre-configured scope.
 
 </td>
 </tr>
@@ -654,6 +1122,32 @@ Enables the shutdown command without any pre-configured scope.
 <td>
 
 Denies the shutdown command without any pre-configured scope.
+
+</td>
+</tr>
+
+<tr>
+<td>
+
+`board:allow-sync-system-time`
+
+</td>
+<td>
+
+Enables the sync_system_time command without any pre-configured scope.
+
+</td>
+</tr>
+
+<tr>
+<td>
+
+`board:deny-sync-system-time`
+
+</td>
+<td>
+
+Denies the sync_system_time command without any pre-configured scope.
 
 </td>
 </tr>

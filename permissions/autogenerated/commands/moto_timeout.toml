@@ -1,0 +1,13 @@
+# Automatically generated - DO NOT EDIT!
+
+"$schema" = "../../schemas/schema.json"
+
+[[permission]]
+identifier = "allow-moto-timeout"
+description = "Enables the moto_timeout command without any pre-configured scope."
+commands.allow = ["moto_timeout"]
+
+[[permission]]
+identifier = "deny-moto-timeout"
+description = "Denies the moto_timeout command without any pre-configured scope."
+commands.deny = ["moto_timeout"]

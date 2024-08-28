@@ -1,0 +1,13 @@
+# Automatically generated - DO NOT EDIT!
+
+"$schema" = "../../schemas/schema.json"
+
+[[permission]]
+identifier = "allow-set-work-mode"
+description = "Enables the set_work_mode command without any pre-configured scope."
+commands.allow = ["set_work_mode"]
+
+[[permission]]
+identifier = "deny-set-work-mode"
+description = "Denies the set_work_mode command without any pre-configured scope."
+commands.deny = ["set_work_mode"]

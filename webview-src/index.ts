@@ -263,8 +263,8 @@ export async function getBoxStatus(options?: { addr: number; no: number }): Prom
 /**
  * @example
  * ```typescript
- * import { getXPos } from '@cakioe/tauri-plugin-board';
- * await getXPos({ ...options });
+ * import { getYPos } from '@cakioe/tauri-plugin-board';
+ * await getYPos({ ...options });
  * ```
  *
  * @since 1.6.0
@@ -436,4 +436,337 @@ export async function toX(options?: { addr: number; pos: number }): Promise<stri
  */
 export async function toY(options?: { addr: number; pos: number }): Promise<string> {
   return await invoke<Record<string, string>>('plugin:board|to_y', { ...options }).then(r => r.value)
+}
+
+export interface HardwareConfig {
+  version: number
+  with_coin: boolean
+  with_cash: boolean
+  with_pos: boolean
+  with_pulse: boolean
+  with_identify: boolean
+  code: string
+}
+
+/**
+ * @example
+ * ```typescript
+ * import { readHardwareConfig } from '@cakioe/tauri-plugin-board';
+ * await readHardwareConfig();
+ * ```
+ *
+ * @since 1.6.1
+ * @returns {HardwareConfig}
+ */
+export async function readHardwareConfig(): Promise<HardwareConfig> {
+  return await invoke<Record<string, string>>('plugin:board|read_hardware_config').then(
+    r => JSON.parse(r.value) as unknown as HardwareConfig
+  )
+}
+
+/**
+ * @example
+ * ```typescript
+ * import { getSoftwareVersion } from '@cakioe/tauri-plugin-board';
+ * await getSoftwareVersion();
+ * ```
+ *
+ * @since 1.6.1
+ * @returns {string}
+ */
+export async function getSoftwareVersion(): Promise<string> {
+  return await invoke<Record<string, string>>('plugin:board|get_software_version').then(r => r.value)
+}
+
+export interface MinPayoutAmount {
+  value: number
+  decimal: number
+}
+
+/**
+ * @example
+ * ```typescript
+ * import { getMinPayoutAmount } from '@cakioe/tauri-plugin-board';
+ * await getMinPayoutAmount();
+ * ```
+ *
+ * @since 1.6.1
+ * @returns {MinPayoutAmount}
+ */
+export async function getMinPayoutAmount(): Promise<MinPayoutAmount> {
+  return await invoke<Record<string, string>>('plugin:board|get_min_payout_amount').then(
+    r => JSON.parse(r.value) as unknown as MinPayoutAmount
+  )
+}
+
+export interface PayAmount {
+  pay_type: number
+  status: number
+  multiple: number
+  cancel: number
+  fault?: number
+}
+
+/**
+ * @example
+ * ```typescript
+ * import { getPayAmount } from '@cakioe/tauri-plugin-board';
+ * await getPayAmount();
+ * ```
+ *
+ * @since 1.6.1
+ * @returns {PayAmount}
+ */
+export async function getPayAmount(): Promise<PayAmount> {
+  return await invoke<Record<string, string>>('plugin:board|get_pay_amount').then(
+    r => JSON.parse(r.value) as unknown as PayAmount
+  )
+}
+
+/**
+ * @example
+ * ```typescript
+ * import { initPayment } from '@cakioe/tauri-plugin-board';
+ * await initPayment();
+ * ```
+ *
+ * @since 1.6.1
+ * @returns {string}
+ */
+export async function initPayment(options?: { no: number; multiple: number; addr?: number }): Promise<string> {
+  return await invoke<Record<string, string>>('plugin:board|init_payment', { ...options }).then(r => r.value)
+}
+
+/**
+ * @example
+ * ```typescript
+ * import { notifyPayment } from '@cakioe/tauri-plugin-board';
+ * await notifyPayment();
+ * ```
+ *
+ * @since 1.6.1
+ * @param options {flag: boolean}
+ * @returns {string}
+ */
+export async function notifyPayment(options?: { flag: boolean }): Promise<string> {
+  return await invoke<Record<string, string>>('plugin:board|notify_payment', { ...options }).then(r => r.value)
+}
+
+/**
+ * @example
+ * ```typescript
+ * import { notifyResult } from '@cakioe/tauri-plugin-board';
+ * await notifyResult();
+ * ```
+ *
+ * @since 1.6.1
+ * @param options {flag: boolean}
+ * @returns {string}
+ */
+export async function notifyResult(options?: { flag: boolean }): Promise<string> {
+  return await invoke<Record<string, string>>('plugin:board|notify_result', { ...options }).then(r => r.value)
+}
+
+/**
+ * @example
+ * ```typescript
+ * import { changeBalance } from '@cakioe/tauri-plugin-board';
+ * await changeBalance();
+ * ```
+ *
+ * @since 1.6.1
+ * @param options {multiple: number}
+ * @returns {string}
+ */
+export async function changeBalance(options?: { multiple: number }): Promise<string> {
+  return await invoke<Record<string, string>>('plugin:board|change_balance', { ...options }).then(r => r.value)
+}
+
+export interface ChangeStatus {
+  status: number
+  multiple: number
+}
+/**
+ * @example
+ * ```typescript
+ * import { getChangeStatus } from '@cakioe/tauri-plugin-board';
+ * await getChangeStatus();
+ * ```
+ *
+ * @since 1.6.1
+ * @returns {ChangeStatus}
+ */
+export async function getChangeStatus(): Promise<ChangeStatus> {
+  return await invoke<Record<string, string>>('plugin:board|get_change_status').then(
+    r => JSON.parse(r.value) as unknown as ChangeStatus
+  )
+}
+
+/**
+ * @example
+ * ```typescript
+ * import { findChangeResult } from '@cakioe/tauri-plugin-board';
+ * await findChangeResult();
+ * ```
+ *
+ * @since 1.6.1
+ * @returns {string}
+ */
+export async function findChangeResult(): Promise<number[]> {
+  return await invoke<Record<string, string>>('plugin:board|find_change_result').then(
+    r => JSON.parse(r.value) as unknown as number[]
+  )
+}
+
+/**
+ * @example
+ * ```typescript
+ * import { setAcceptMoney } from '@cakioe/tauri-plugin-board';
+ * await setAcceptMoney();
+ * ```
+ *
+ * @since 1.6.1
+ * @param options {type: number; channels: number[]}
+ * @returns {string}
+ */
+export async function setAcceptMoney(options?: { type: number; channels: number[] }): Promise<string> {
+  if (options?.type !== 0 && options?.type !== 1) {
+    throw new Error('type must be 0 or 1')
+  }
+
+  if (options?.channels.length !== 16) {
+    throw new Error('channels length must be 16')
+  }
+
+  return await invoke<Record<string, string>>('plugin:board|set_accept_money', { ...options }).then(r => r.value)
+}
+
+/**
+ * @example
+ * ```typescript
+ * import { syncSystemTime } from '@cakioe/tauri-plugin-board';
+ * await syncSystemTime();
+ * ```
+ *
+ * @since 1.6.1
+ * @returns {string}
+ */
+export async function syncSystemTime(): Promise<string> {
+  return await invoke<Record<string, string>>('plugin:board|sync_system_time').then(r => r.value)
+}
+
+/**
+ * @example
+ * ```typescript
+ * import { setAgeScope } from '@cakioe/tauri-plugin-board';
+ * await setAgeScope();
+ * ```
+ *
+ * @since 1.6.1
+ * @param options {age: number}
+ * @returns {string}
+ */
+export async function setAgeScope(options?: { age: number }): Promise<string> {
+  return await invoke<Record<string, string>>('plugin:board|set_age_scope', { ...options }).then(r => r.value)
+}
+
+/**
+ * @example
+ * ```typescript
+ * import { getAuthResult } from '@cakioe/tauri-plugin-board';
+ * await getAuthResult();
+ * ```
+ *
+ * @since 1.6.1
+ * @returns {number}
+ */
+export async function getAuthResult(): Promise<number> {
+  return await invoke<Record<string, string>>('plugin:board|get_auth_result').then(r => parseInt(r.value))
+}
+
+/**
+ * @example
+ * ```typescript
+ * import { setWorkMode } from '@cakioe/tauri-plugin-board';
+ * await setWorkMode();
+ * ```
+ *
+ * @since 1.6.1
+ * @param options {mode: number}
+ * @returns {string}
+ */
+export async function setWorkMode(options?: { mode: number }): Promise<string> {
+  if (options?.mode !== 0 && options?.mode !== 1) {
+    throw new Error('mode must be 0 or 1')
+  }
+
+  return await invoke<Record<string, string>>('plugin:board|set_work_mode', { ...options }).then(r => r.value)
+}
+
+/**
+ * @example
+ * ```typescript
+ * import { setPayChannel } from '@cakioe/tauri-plugin-board';
+ * await setPayChannel();
+ * ```
+ *
+ * @since 1.6.1
+ * @param options {mode: number}
+ * @returns {string}
+ */
+export async function setPayChannel(options?: { mode: number }): Promise<string> {
+  if (options?.mode !== 0 && options?.mode !== 1 && options?.mode !== 2) {
+    throw new Error('mode must be 0 or 1 or 2')
+  }
+
+  return await invoke<Record<string, string>>('plugin:board|set_pay_channel', { ...options }).then(r => r.value)
+}
+
+/**
+ * @example
+ * ```typescript
+ * import { pulseBalance } from '@cakioe/tauri-plugin-board';
+ * await pulseBalance();
+ * ```
+ *
+ * @since 1.6.1
+ * @param options {type: number; value: number}
+ * @returns {string}
+ */
+export async function pulseBalance(options?: { type: number; value: number }): Promise<string> {
+  return await invoke<Record<string, string>>('plugin:board|pulse_balance', { ...options }).then(r => r.value)
+}
+
+/**
+ * @example
+ * ```typescript
+ * import { motoTimeout } from '@cakioe/tauri-plugin-board';
+ * await motoTimeout();
+ * ```
+ *
+ * @since 1.6.1
+ * @param options {addr: number; time: number}
+ * @returns {string}
+ */
+export async function motoTimeout(options?: { addr: number; time: number }): Promise<string> {
+  return await invoke<Record<string, string>>('plugin:board|moto_timeout', { ...options }).then(r => r.value)
+}
+
+/**
+ * @example
+ * ```typescript
+ * import { setPickY } from '@cakioe/tauri-plugin-board';
+ * await setPickY();
+ * ```
+ *
+ * @since 1.6.1
+ * @param options {addr: number; pos: number; mode: number}
+ * @returns {string}
+ */
+export async function setPickXY(options?: { addr: number; pos: number; mode: number }): Promise<string> {
+  if (options?.mode !== 0 && options?.mode !== 1) {
+    throw new Error('mode must be 0 or 1')
+  }
+
+  return await invoke<Record<string, string>>('plugin:board|set_pick_xy', { ...options }).then(r => r.value)
 }

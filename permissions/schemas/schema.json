@@ -295,6 +295,20 @@
       "type": "string",
       "oneOf": [
         {
+          "description": "allow-change-balance -> Enables the change_balance command without any pre-configured scope.",
+          "type": "string",
+          "enum": [
+            "allow-change-balance"
+          ]
+        },
+        {
+          "description": "deny-change-balance -> Denies the change_balance command without any pre-configured scope.",
+          "type": "string",
+          "enum": [
+            "deny-change-balance"
+          ]
+        },
+        {
           "description": "allow-exec-shipment -> Enables the exec_shipment command without any pre-configured scope.",
           "type": "string",
           "enum": [
@@ -306,6 +320,34 @@
           "type": "string",
           "enum": [
             "deny-exec-shipment"
+          ]
+        },
+        {
+          "description": "allow-find-change-result -> Enables the find_change_result command without any pre-configured scope.",
+          "type": "string",
+          "enum": [
+            "allow-find-change-result"
+          ]
+        },
+        {
+          "description": "deny-find-change-result -> Denies the find_change_result command without any pre-configured scope.",
+          "type": "string",
+          "enum": [
+            "deny-find-change-result"
+          ]
+        },
+        {
+          "description": "allow-get-auth-result -> Enables the get_auth_result command without any pre-configured scope.",
+          "type": "string",
+          "enum": [
+            "allow-get-auth-result"
+          ]
+        },
+        {
+          "description": "deny-get-auth-result -> Denies the get_auth_result command without any pre-configured scope.",
+          "type": "string",
+          "enum": [
+            "deny-get-auth-result"
           ]
         },
         {
@@ -351,6 +393,20 @@
           ]
         },
         {
+          "description": "allow-get-change-status -> Enables the get_change_status command without any pre-configured scope.",
+          "type": "string",
+          "enum": [
+            "allow-get-change-status"
+          ]
+        },
+        {
+          "description": "deny-get-change-status -> Denies the get_change_status command without any pre-configured scope.",
+          "type": "string",
+          "enum": [
+            "deny-get-change-status"
+          ]
+        },
+        {
           "description": "allow-get-drop-status -> Enables the get_drop_status command without any pre-configured scope.",
           "type": "string",
           "enum": [
@@ -362,6 +418,34 @@
           "type": "string",
           "enum": [
             "deny-get-drop-status"
+          ]
+        },
+        {
+          "description": "allow-get-min-payout-amount -> Enables the get_min_payout_amount command without any pre-configured scope.",
+          "type": "string",
+          "enum": [
+            "allow-get-min-payout-amount"
+          ]
+        },
+        {
+          "description": "deny-get-min-payout-amount -> Denies the get_min_payout_amount command without any pre-configured scope.",
+          "type": "string",
+          "enum": [
+            "deny-get-min-payout-amount"
+          ]
+        },
+        {
+          "description": "allow-get-pay-amount -> Enables the get_pay_amount command without any pre-configured scope.",
+          "type": "string",
+          "enum": [
+            "allow-get-pay-amount"
+          ]
+        },
+        {
+          "description": "deny-get-pay-amount -> Denies the get_pay_amount command without any pre-configured scope.",
+          "type": "string",
+          "enum": [
+            "deny-get-pay-amount"
           ]
         },
         {
@@ -390,6 +474,20 @@
           "type": "string",
           "enum": [
             "deny-get-shipment-status"
+          ]
+        },
+        {
+          "description": "allow-get-software-version -> Enables the get_software_version command without any pre-configured scope.",
+          "type": "string",
+          "enum": [
+            "allow-get-software-version"
+          ]
+        },
+        {
+          "description": "deny-get-software-version -> Denies the get_software_version command without any pre-configured scope.",
+          "type": "string",
+          "enum": [
+            "deny-get-software-version"
           ]
         },
         {
@@ -449,6 +547,62 @@
           ]
         },
         {
+          "description": "allow-init-payment -> Enables the init_payment command without any pre-configured scope.",
+          "type": "string",
+          "enum": [
+            "allow-init-payment"
+          ]
+        },
+        {
+          "description": "deny-init-payment -> Denies the init_payment command without any pre-configured scope.",
+          "type": "string",
+          "enum": [
+            "deny-init-payment"
+          ]
+        },
+        {
+          "description": "allow-moto-timeout -> Enables the moto_timeout command without any pre-configured scope.",
+          "type": "string",
+          "enum": [
+            "allow-moto-timeout"
+          ]
+        },
+        {
+          "description": "deny-moto-timeout -> Denies the moto_timeout command without any pre-configured scope.",
+          "type": "string",
+          "enum": [
+            "deny-moto-timeout"
+          ]
+        },
+        {
+          "description": "allow-notify-payment -> Enables the notify_payment command without any pre-configured scope.",
+          "type": "string",
+          "enum": [
+            "allow-notify-payment"
+          ]
+        },
+        {
+          "description": "deny-notify-payment -> Denies the notify_payment command without any pre-configured scope.",
+          "type": "string",
+          "enum": [
+            "deny-notify-payment"
+          ]
+        },
+        {
+          "description": "allow-notify-result -> Enables the notify_result command without any pre-configured scope.",
+          "type": "string",
+          "enum": [
+            "allow-notify-result"
+          ]
+        },
+        {
+          "description": "deny-notify-result -> Denies the notify_result command without any pre-configured scope.",
+          "type": "string",
+          "enum": [
+            "deny-notify-result"
+          ]
+        },
+        {
           "description": "allow-open-file-manager -> Enables the open_file_manager command without any pre-configured scope.",
           "type": "string",
           "enum": [
@@ -488,6 +642,34 @@
           "type": "string",
           "enum": [
             "deny-open-setting-config"
+          ]
+        },
+        {
+          "description": "allow-pulse-balance -> Enables the pulse_balance command without any pre-configured scope.",
+          "type": "string",
+          "enum": [
+            "allow-pulse-balance"
+          ]
+        },
+        {
+          "description": "deny-pulse-balance -> Denies the pulse_balance command without any pre-configured scope.",
+          "type": "string",
+          "enum": [
+            "deny-pulse-balance"
+          ]
+        },
+        {
+          "description": "allow-read-hardware-config -> Enables the read_hardware_config command without any pre-configured scope.",
+          "type": "string",
+          "enum": [
+            "allow-read-hardware-config"
+          ]
+        },
+        {
+          "description": "deny-read-hardware-config -> Denies the read_hardware_config command without any pre-configured scope.",
+          "type": "string",
+          "enum": [
+            "deny-read-hardware-config"
           ]
         },
         {
@@ -533,6 +715,34 @@
           ]
         },
         {
+          "description": "allow-set-accept-money -> Enables the set_accept_money command without any pre-configured scope.",
+          "type": "string",
+          "enum": [
+            "allow-set-accept-money"
+          ]
+        },
+        {
+          "description": "deny-set-accept-money -> Denies the set_accept_money command without any pre-configured scope.",
+          "type": "string",
+          "enum": [
+            "deny-set-accept-money"
+          ]
+        },
+        {
+          "description": "allow-set-age-scope -> Enables the set_age_scope command without any pre-configured scope.",
+          "type": "string",
+          "enum": [
+            "allow-set-age-scope"
+          ]
+        },
+        {
+          "description": "deny-set-age-scope -> Denies the set_age_scope command without any pre-configured scope.",
+          "type": "string",
+          "enum": [
+            "deny-set-age-scope"
+          ]
+        },
+        {
           "description": "allow-set-app-brightness -> Enables the set_app_brightness command without any pre-configured scope.",
           "type": "string",
           "enum": [
@@ -575,6 +785,34 @@
           ]
         },
         {
+          "description": "allow-set-pay-channel -> Enables the set_pay_channel command without any pre-configured scope.",
+          "type": "string",
+          "enum": [
+            "allow-set-pay-channel"
+          ]
+        },
+        {
+          "description": "deny-set-pay-channel -> Denies the set_pay_channel command without any pre-configured scope.",
+          "type": "string",
+          "enum": [
+            "deny-set-pay-channel"
+          ]
+        },
+        {
+        {
+          "description": "allow-set-pick-xy -> Enables the set_pick_xy command without any pre-configured scope.",
+          "type": "string",
+          "enum": [
+            "allow-set-pick-xy"
+          ]
+        },
+        {
+          "description": "deny-set-pick-xy -> Denies the set_pick_xy command without any pre-configured scope.",
+          "type": "string",
+          "enum": [
+            "deny-set-pick-xy"
+          ]
+        },
           "description": "allow-set-power-on-off-time -> Enables the set_power_on_off_time command without any pre-configured scope.",
           "type": "string",
           "enum": [
@@ -600,6 +838,20 @@
           "type": "string",
           "enum": [
             "deny-set-status-bar"
+          ]
+        },
+        {
+          "description": "allow-set-work-mode -> Enables the set_work_mode command without any pre-configured scope.",
+          "type": "string",
+          "enum": [
+            "allow-set-work-mode"
+          ]
+        },
+        {
+          "description": "deny-set-work-mode -> Denies the set_work_mode command without any pre-configured scope.",
+          "type": "string",
+          "enum": [
+            "deny-set-work-mode"
           ]
         },
         {
@@ -642,6 +894,20 @@
           "type": "string",
           "enum": [
             "deny-shutdown"
+          ]
+        },
+        {
+          "description": "allow-sync-system-time -> Enables the sync_system_time command without any pre-configured scope.",
+          "type": "string",
+          "enum": [
+            "allow-sync-system-time"
+          ]
+        },
+        {
+          "description": "deny-sync-system-time -> Denies the sync_system_time command without any pre-configured scope.",
+          "type": "string",
+          "enum": [
+            "deny-sync-system-time"
           ]
         },
         {

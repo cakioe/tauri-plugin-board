@@ -1,0 +1,13 @@
+# Automatically generated - DO NOT EDIT!
+
+"$schema" = "../../schemas/schema.json"
+
+[[permission]]
+identifier = "allow-sync-system-time"
+description = "Enables the sync_system_time command without any pre-configured scope."
+commands.allow = ["sync_system_time"]
+
+[[permission]]
+identifier = "deny-sync-system-time"
+description = "Denies the sync_system_time command without any pre-configured scope."
+commands.deny = ["sync_system_time"]
