@@ -455,11 +455,25 @@ export interface HardwareConfig {
  * await readHardwareConfig();
  * ```
  *
- * @since 1.6.0
+ * @since 1.6.1
  * @returns {HardwareConfig}
  */
 export async function readHardwareConfig(): Promise<HardwareConfig> {
   return await invoke<Record<string, string>>('plugin:board|read_hardware_config').then(
     r => JSON.parse(r.value) as unknown as HardwareConfig
   )
+}
+
+/**
+ * @example
+ * ```typescript
+ * import { getSoftwareVersion } from '@cakioe/tauri-plugin-board';
+ * await getSoftwareVersion();
+ * ```
+ *
+ * @since 1.6.1
+ * @returns {string}
+ */
+export async function getSoftwareVersion(): Promise<string> {
+  return await invoke<Record<string, string>>('plugin:board|get_software_version').then(r => r.value)
 }

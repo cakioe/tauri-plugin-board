@@ -30,6 +30,7 @@ const COMMANDS: &[&str] = &[
     "to_x",
     "to_y",
     "read_hardware_config",
+    "get_software_version",
 ];
 
 fn main() {

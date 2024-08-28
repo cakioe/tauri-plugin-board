@@ -393,6 +393,20 @@
           ]
         },
         {
+          "description": "allow-get-software-version -> Enables the get_software_version command without any pre-configured scope.",
+          "type": "string",
+          "enum": [
+            "allow-get-software-version"
+          ]
+        },
+        {
+          "description": "deny-get-software-version -> Denies the get_software_version command without any pre-configured scope.",
+          "type": "string",
+          "enum": [
+            "deny-get-software-version"
+          ]
+        },
+        {
           "description": "allow-get-x-pos -> Enables the get_x_pos command without any pre-configured scope.",
           "type": "string",
           "enum": [

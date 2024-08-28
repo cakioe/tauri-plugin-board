@@ -1049,7 +1049,7 @@ class BoardPlugin(private val activity: Activity) : Plugin(activity) {
      * @description: 读取硬件配置 | p3
      * @param invoke to invoke [none] { }
      * @return void
-     * @since 1.6.0
+     * @since 1.6.1
      */
     @Command
     fun readHardwareConfig(invoke: Invoke) {
@@ -1076,6 +1076,33 @@ class BoardPlugin(private val activity: Activity) : Plugin(activity) {
             "code" to para.code,
         )
         ret.put("value", Gson().toJson(result))
+        invoke.resolve(ret)
+    }
+
+    /**
+     * command of `getSoftwareVersion`
+     *
+     * @description: 获取软件版本 | p3
+     * @param invoke to invoke [none] { }
+     * @return void
+     * @since 1.6.1
+     */
+    @Command
+    fun getSoftwareVersion(invoke: Invoke) {
+        if (!this.driver.EF_Opened()) {
+            throw Exception("driver not opened")
+        }
+
+        val para = cc.uling.usdk.board.mdb.para.SVReplyPara().apply {
+            driver.getSoftwareVersion(this)
+        }.apply {
+            if (!this.isOK) {
+                throw Exception("get software version failed")
+            }
+        }
+
+        val ret = JSObject()
+        ret.put("value", para.version)
         invoke.resolve(ret)
     }
 }
