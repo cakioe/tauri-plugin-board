@@ -947,6 +947,32 @@ Denies the shutdown command without any pre-configured scope.
 <tr>
 <td>
 
+`board:allow-sync-system-time`
+
+</td>
+<td>
+
+Enables the sync_system_time command without any pre-configured scope.
+
+</td>
+</tr>
+
+<tr>
+<td>
+
+`board:deny-sync-system-time`
+
+</td>
+<td>
+
+Denies the sync_system_time command without any pre-configured scope.
+
+</td>
+</tr>
+
+<tr>
+<td>
+
 `board:allow-take-screen-shot`
 
 </td>

@@ -1396,4 +1396,31 @@ class BoardPlugin(private val activity: Activity) : Plugin(activity) {
         ret.put("value", "success")
         invoke.resolve(ret)
     }
+
+    /**
+     * command of `syncSystemTime`
+     *
+     * @description: 同步系统时间 | p9
+     * @param
+     * @return void
+     * @since 1.6.1
+     */
+    @Command
+    fun syncSystemTime(invoke: Invoke) {
+        if (!this.driver.EF_Opened()) {
+            throw Exception("driver not opened")
+        }
+
+        cc.uling.usdk.board.mdb.para.STReplyPara().apply {
+            driver.syncSystemTime(this)
+        }.apply {
+            if (!this.isOK) {
+                throw Exception("sync system time failed")
+            }
+        }
+
+        val ret = JSObject()
+        ret.put("value", "success")
+        invoke.resolve(ret)
+    }
 }

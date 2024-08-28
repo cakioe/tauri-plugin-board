@@ -640,3 +640,17 @@ export async function setAcceptMoney(options?: { type: number; channels: number[
 
   return await invoke<Record<string, string>>('plugin:board|set_accept_money', { ...options }).then(r => r.value)
 }
+
+/**
+ * @example
+ * ```typescript
+ * import { syncSystemTime } from '@cakioe/tauri-plugin-board';
+ * await syncSystemTime();
+ * ```
+ *
+ * @since 1.6.1
+ * @returns {string}
+ */
+export async function syncSystemTime(): Promise<string> {
+  return await invoke<Record<string, string>>('plugin:board|sync_system_time').then(r => r.value)
+}

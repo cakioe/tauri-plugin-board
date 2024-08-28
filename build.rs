@@ -40,6 +40,7 @@ const COMMANDS: &[&str] = &[
     "get_change_status",
     "find_change_result",
     "set_accept_money",
+    "sync_system_time",
 ];
 
 fn main() {
