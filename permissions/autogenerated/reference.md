@@ -505,6 +505,32 @@ Denies the init_payment command without any pre-configured scope.
 <tr>
 <td>
 
+`board:allow-moto-timeout`
+
+</td>
+<td>
+
+Enables the moto_timeout command without any pre-configured scope.
+
+</td>
+</tr>
+
+<tr>
+<td>
+
+`board:deny-moto-timeout`
+
+</td>
+<td>
+
+Denies the moto_timeout command without any pre-configured scope.
+
+</td>
+</tr>
+
+<tr>
+<td>
+
 `board:allow-notify-payment`
 
 </td>

@@ -561,6 +561,20 @@
           ]
         },
         {
+          "description": "allow-moto-timeout -> Enables the moto_timeout command without any pre-configured scope.",
+          "type": "string",
+          "enum": [
+            "allow-moto-timeout"
+          ]
+        },
+        {
+          "description": "deny-moto-timeout -> Denies the moto_timeout command without any pre-configured scope.",
+          "type": "string",
+          "enum": [
+            "deny-moto-timeout"
+          ]
+        },
+        {
           "description": "allow-notify-payment -> Enables the notify_payment command without any pre-configured scope.",
           "type": "string",
           "enum": [

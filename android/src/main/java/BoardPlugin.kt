@@ -144,6 +144,12 @@ class PulseBalanceRequest {
     var value: Int = 0
 }
 
+@InvokeArg
+class MotoTimeoutRequest {
+    var addr: Int = 1
+    var time: Short = 1
+}
+
 @SuppressLint("SdCardPath")
 const val SDCARD_DIR = "/sdcard"
 
@@ -1577,6 +1583,35 @@ class BoardPlugin(private val activity: Activity) : Plugin(activity) {
         }.apply {
             if (!this.isOK) {
                 throw Exception("set pay channel failed")
+            }
+        }
+        val ret = JSObject()
+        ret.put("value", "success")
+        invoke.resolve(ret)
+    }
+
+    /**
+     * command of `motoTimeout`
+     *
+     * @description: 设置电机超时时间 | p20
+     * @param
+     * @return void
+     * @since 1.6.1
+     */
+    @Command
+    fun motoTimeout(invoke: Invoke) {
+        if (!this.driver.EF_Opened()) {
+            throw Exception("driver not opened")
+        }
+        val args = invoke.parseArgs(MotoTimeoutRequest::class.java)
+        MTReplyPara(
+            args.addr,
+            args.time
+        ).apply {
+            driver.MotoTimeout(this)
+        }.apply {
+            if (!this.isOK) {
+                throw Exception("set moto timeout failed")
             }
         }
         val ret = JSObject()
