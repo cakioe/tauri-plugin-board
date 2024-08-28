@@ -375,6 +375,32 @@ Denies the get_y_status command without any pre-configured scope.
 <tr>
 <td>
 
+`board:allow-init-payment`
+
+</td>
+<td>
+
+Enables the init_payment command without any pre-configured scope.
+
+</td>
+</tr>
+
+<tr>
+<td>
+
+`board:deny-init-payment`
+
+</td>
+<td>
+
+Denies the init_payment command without any pre-configured scope.
+
+</td>
+</tr>
+
+<tr>
+<td>
+
 `board:allow-open-file-manager`
 
 </td>

@@ -33,6 +33,7 @@ const COMMANDS: &[&str] = &[
     "get_software_version",
     "get_min_payout_amount",
     "get_pay_amount",
+    "init_payment",
 ];
 
 fn main() {

@@ -105,6 +105,13 @@ class XYRequest {
     var value: Short = 0
 }
 
+@InvokeArg
+class PaymentRequest {
+    var addr: Int? = null
+    val no: Int = 0
+    val multiple: Int = 0
+}
+
 @SuppressLint("SdCardPath")
 const val SDCARD_DIR = "/sdcard"
 
@@ -1165,6 +1172,35 @@ class BoardPlugin(private val activity: Activity) : Plugin(activity) {
             "fault" to if (para.status == 1) 0 else para.fault,
         )
         ret.put("value", Gson().toJson(result))
+        invoke.resolve(ret)
+    }
+
+    /**
+     * command of `initPayment`
+     *
+     * @description: 发起收款 | p5
+     * @param invoke to invoke [none] { }
+     * @return void
+     * @since 1.6.1
+     */
+    @Command
+    fun initPayment(invoke: Invoke) {
+        if (!this.driver.EF_Opened()) {
+            throw Exception("driver not opened")
+        }
+        val args = invoke.parseArgs(PaymentRequest::class.java)
+        val para = cc.uling.usdk.board.mdb.para.IPReplyPara(
+            (args.no % 100).toShort(),
+            args.multiple
+        ).apply {
+            driver.initPayment(this)
+        }.apply {
+            if (!this.isOK) {
+                throw Exception("init payment failed")
+            }
+        }
+        val ret = JSObject()
+        ret.put("value", "success")
         invoke.resolve(ret)
     }
 }

@@ -491,6 +491,20 @@
           ]
         },
         {
+          "description": "allow-init-payment -> Enables the init_payment command without any pre-configured scope.",
+          "type": "string",
+          "enum": [
+            "allow-init-payment"
+          ]
+        },
+        {
+          "description": "deny-init-payment -> Denies the init_payment command without any pre-configured scope.",
+          "type": "string",
+          "enum": [
+            "deny-init-payment"
+          ]
+        },
+        {
           "description": "allow-open-file-manager -> Enables the open_file_manager command without any pre-configured scope.",
           "type": "string",
           "enum": [

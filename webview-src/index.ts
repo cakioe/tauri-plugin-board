@@ -520,3 +520,17 @@ export interface PayAmount {
 export async function getPayAmount(): Promise<PayAmount> {
   return await invoke<Record<string, string>>('plugin:board|get_pay_amount').then(r => r.value as unknown as PayAmount)
 }
+
+/**
+ * @example
+ * ```typescript
+ * import { initPayment } from '@cakioe/tauri-plugin-board';
+ * await initPayment();
+ * ```
+ *
+ * @since 1.6.1
+ * @returns {string}
+ */
+export async function initPayment(options?: { no: number; multiple: number; addr?: number }): Promise<string> {
+  return await invoke<Record<string, string>>('plugin:board|init_payment', { ...options }).then(r => r.value)
+}
