@@ -150,6 +150,13 @@ class MotoTimeoutRequest {
     var time: Short = 1
 }
 
+@InvokeArg
+class PickXYRequest {
+    var addr: Int = 1
+    var pos: Short = 1
+    var mode: Int = 0
+}
+
 @SuppressLint("SdCardPath")
 const val SDCARD_DIR = "/sdcard"
 
@@ -1614,6 +1621,49 @@ class BoardPlugin(private val activity: Activity) : Plugin(activity) {
                 throw Exception("set moto timeout failed")
             }
         }
+        val ret = JSObject()
+        ret.put("value", "success")
+        invoke.resolve(ret)
+    }
+
+    /**
+     * command of `setPickXY`
+     *
+     * @description: 设置取货口 X/Y 轴位置 | p21
+     * @param
+     * @return void
+     * @since 1.6.1
+     */
+    @Command
+    fun setPickXY(invoke: Invoke) {
+        if (!this.driver.EF_Opened()) {
+            throw Exception("driver not opened")
+        }
+        val args = invoke.parseArgs(PickXYRequest::class.java)
+        if (args.mode == 0) {
+            PXReplyPara(
+                args.addr,
+                args.pos
+            ).apply {
+                driver.SetPickX(this)
+            }.apply {
+                if (!this.isOK) {
+                    throw Exception()
+                }
+            }
+        } else {
+            PYReplyPara(
+                args.addr,
+                args.pos
+            ).apply {
+                driver.SetPickY(this)
+            }.apply {
+                if (!this.isOK) {
+                    throw Exception()
+                }
+            }
+        }
+
         val ret = JSObject()
         ret.put("value", "success")
         invoke.resolve(ret)

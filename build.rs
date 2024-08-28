@@ -47,6 +47,7 @@ const COMMANDS: &[&str] = &[
     "set_pay_channel",
     "pulse_balance",
     "moto_timeout",
+    "set_pick_xy",
 ];
 
 fn main() {

@@ -743,11 +743,30 @@ export async function pulseBalance(options?: { type: number; value: number }): P
  * import { motoTimeout } from '@cakioe/tauri-plugin-board';
  * await motoTimeout();
  * ```
- * 
+ *
  * @since 1.6.1
  * @param options {addr: number; time: number}
  * @returns {string}
  */
 export async function motoTimeout(options?: { addr: number; time: number }): Promise<string> {
   return await invoke<Record<string, string>>('plugin:board|moto_timeout', { ...options }).then(r => r.value)
+}
+
+/**
+ * @example
+ * ```typescript
+ * import { setPickY } from '@cakioe/tauri-plugin-board';
+ * await setPickY();
+ * ```
+ *
+ * @since 1.6.1
+ * @param options {addr: number; pos: number; mode: number}
+ * @returns {string}
+ */
+export async function setPickXY(options?: { addr: number; pos: number; mode: number }): Promise<string> {
+  if (options?.mode !== 0 && options?.mode !== 1) {
+    throw new Error('mode must be 0 or 1')
+  }
+
+  return await invoke<Record<string, string>>('plugin:board|set_pick_xy', { ...options }).then(r => r.value)
 }
