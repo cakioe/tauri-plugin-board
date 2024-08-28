@@ -534,3 +534,18 @@ export async function getPayAmount(): Promise<PayAmount> {
 export async function initPayment(options?: { no: number; multiple: number; addr?: number }): Promise<string> {
   return await invoke<Record<string, string>>('plugin:board|init_payment', { ...options }).then(r => r.value)
 }
+
+/**
+ * @example
+ * ```typescript
+ * import { notifyPayment } from '@cakioe/tauri-plugin-board';
+ * await notifyPayment();
+ * ```
+ *
+ * @since 1.6.1
+ * @param options {flag: boolean}
+ * @returns {string}
+ */
+export async function notifyPayment(options?: { flag: boolean }): Promise<string> {
+  return await invoke<Record<string, string>>('plugin:board|notify_payment', { ...options }).then(r => r.value)
+}

@@ -112,6 +112,11 @@ class PaymentRequest {
     val multiple: Int = 0
 }
 
+@InvokeArg
+class FlagRequest {
+    var flag: Boolean = false
+}
+
 @SuppressLint("SdCardPath")
 const val SDCARD_DIR = "/sdcard"
 
@@ -1197,6 +1202,34 @@ class BoardPlugin(private val activity: Activity) : Plugin(activity) {
         }.apply {
             if (!this.isOK) {
                 throw Exception("init payment failed")
+            }
+        }
+        val ret = JSObject()
+        ret.put("value", "success")
+        invoke.resolve(ret)
+    }
+
+    /**
+     * command of `notifyPayment`
+     *
+     * @description: 收款通知 | p6
+     * @param invoke to invoke [none] { }
+     * @return void
+     * @since 1.6.1
+     */
+    @Command
+    fun notifyPayment(invoke: Invoke) {
+        if (!this.driver.EF_Opened()) {
+            throw Exception("driver not opened")
+        }
+        val args = invoke.parseArgs(FlagRequest::class.java)
+        cc.uling.usdk.board.mdb.para.PayReplyPara(
+            args.flag
+        ).apply {
+            driver.notifyPayment(this)
+        }.apply {
+            if (!this.isOK) {
+                throw Exception("notify payment failed")
             }
         }
         val ret = JSObject()

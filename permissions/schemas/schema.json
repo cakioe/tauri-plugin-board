@@ -505,6 +505,20 @@
           ]
         },
         {
+          "description": "allow-notify-payment -> Enables the notify_payment command without any pre-configured scope.",
+          "type": "string",
+          "enum": [
+            "allow-notify-payment"
+          ]
+        },
+        {
+          "description": "deny-notify-payment -> Denies the notify_payment command without any pre-configured scope.",
+          "type": "string",
+          "enum": [
+            "deny-notify-payment"
+          ]
+        },
+        {
           "description": "allow-open-file-manager -> Enables the open_file_manager command without any pre-configured scope.",
           "type": "string",
           "enum": [

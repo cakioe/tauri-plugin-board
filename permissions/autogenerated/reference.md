@@ -401,6 +401,32 @@ Denies the init_payment command without any pre-configured scope.
 <tr>
 <td>
 
+`board:allow-notify-payment`
+
+</td>
+<td>
+
+Enables the notify_payment command without any pre-configured scope.
+
+</td>
+</tr>
+
+<tr>
+<td>
+
+`board:deny-notify-payment`
+
+</td>
+<td>
+
+Denies the notify_payment command without any pre-configured scope.
+
+</td>
+</tr>
+
+<tr>
+<td>
+
 `board:allow-open-file-manager`
 
 </td>
