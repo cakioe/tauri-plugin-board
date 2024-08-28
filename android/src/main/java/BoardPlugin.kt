@@ -1458,4 +1458,32 @@ class BoardPlugin(private val activity: Activity) : Plugin(activity) {
         ret.put("value", "success")
         invoke.resolve(ret)
     }
+
+    /**
+     * command of `getAuthResult`
+     *
+     * @description: 查询身份认证是否成功 | p9
+     * @param
+     * @return void
+     * @since 1.6.1
+     */
+    @Command
+    fun getAuthResult(invoke: Invoke) {
+        if (!this.driver.EF_Opened()) {
+            throw Exception("driver not opened")
+        }
+
+        val args = invoke.parseArgs(AgeRequest::class.java)
+        val para = cc.uling.usdk.board.mdb.para.ARReplyPara().apply {
+            driver.getAuthResult(this)
+        }.apply {
+            if (!this.isOK) {
+                throw Exception("get auth result failed")
+            }
+        }
+
+        val ret = JSObject()
+        ret.put("value", para.status)
+        invoke.resolve(ret)
+    }
 }

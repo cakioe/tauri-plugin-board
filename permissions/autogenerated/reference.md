@@ -89,6 +89,32 @@ Denies the find_change_result command without any pre-configured scope.
 <tr>
 <td>
 
+`board:allow-get-auth-result`
+
+</td>
+<td>
+
+Enables the get_auth_result command without any pre-configured scope.
+
+</td>
+</tr>
+
+<tr>
+<td>
+
+`board:deny-get-auth-result`
+
+</td>
+<td>
+
+Denies the get_auth_result command without any pre-configured scope.
+
+</td>
+</tr>
+
+<tr>
+<td>
+
 `board:allow-get-box-status`
 
 </td>

@@ -669,3 +669,17 @@ export async function syncSystemTime(): Promise<string> {
 export async function setAgeScope(options?: { age: number }): Promise<string> {
   return await invoke<Record<string, string>>('plugin:board|set_age_scope', { ...options }).then(r => r.value)
 }
+
+/**
+ * @example
+ * ```typescript
+ * import { getAuthResult } from '@cakioe/tauri-plugin-board';
+ * await getAuthResult();
+ * ```
+ *
+ * @since 1.6.1
+ * @returns {number}
+ */
+export async function getAuthResult(): Promise<number> {
+  return await invoke<Record<string, string>>('plugin:board|get_auth_result').then(r => parseInt(r.value))
+}

@@ -337,6 +337,20 @@
           ]
         },
         {
+          "description": "allow-get-auth-result -> Enables the get_auth_result command without any pre-configured scope.",
+          "type": "string",
+          "enum": [
+            "allow-get-auth-result"
+          ]
+        },
+        {
+          "description": "deny-get-auth-result -> Denies the get_auth_result command without any pre-configured scope.",
+          "type": "string",
+          "enum": [
+            "deny-get-auth-result"
+          ]
+        },
+        {
           "description": "allow-get-box-status -> Enables the get_box_status command without any pre-configured scope.",
           "type": "string",
           "enum": [

@@ -42,6 +42,7 @@ const COMMANDS: &[&str] = &[
     "set_accept_money",
     "sync_system_time",
     "set_age_scope",
+    "get_auth_result",
 ];
 
 fn main() {
