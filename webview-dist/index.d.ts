@@ -176,8 +176,8 @@ export declare function takeScreenShot(): Promise<string>;
 /**
  * @example
  * ```typescript
- * import { BuildBoard } from '@cakioe/tauri-plugin-board';
- * await BuildBoard({input: input});
+ * import { getBuildBoard } from '@cakioe/tauri-plugin-board';
+ * await getBuildBoard({input: input});
  * ```
  *
  * @since 1.5.1
