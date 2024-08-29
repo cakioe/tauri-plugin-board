@@ -185,7 +185,7 @@ class BoardPlugin(private val activity: Activity) : Plugin(activity) {
     private lateinit var serialsDevice: MutableList<SerialDevice>
 
     /**
-     * the env of the android build
+     * the env of the android
      */
     private lateinit var env: Env
 
@@ -212,7 +212,11 @@ class BoardPlugin(private val activity: Activity) : Plugin(activity) {
         GlobalScope.launch(Dispatchers.IO) {
             async {
                 initSerialDriver()
-                initBuildBoard()
+                if (driver.EF_Opened()) {
+                    initEnvMdb()
+                    initEnvPayout()
+                    initEnvDriver()
+                }
             }.await()
         }
 
@@ -227,7 +231,6 @@ class BoardPlugin(private val activity: Activity) : Plugin(activity) {
      * @return void
      */
     private fun startTaskService() {
-        // TODO: mqtt service of task
         this.activity.application.apply {
             val intent = Intent(this, TaskService::class.java)
             startService(intent)
@@ -244,48 +247,6 @@ class BoardPlugin(private val activity: Activity) : Plugin(activity) {
         this.initEnvOS()
         this.initDisplayer(false)
         Toast.makeText(activity, "welcome back", Toast.LENGTH_SHORT).show()
-    }
-
-    private fun initBuildBoard() {
-        if (!this.driver.EF_Opened()) {
-            return
-        }
-
-        // 读取驱动板硬件信息
-        cc.uling.usdk.board.mdb.para.HCReplyPara().apply {
-            driver.readHardwareConfig(this)
-        }.apply {
-            if (this.isOK) {
-                env.mdb = Mdb(
-                    hardwareVersion = this.version,
-                    isWithPOS = this.isWithPOS,
-                    isWithCash = this.isWithCash,
-                    isWithPulse = this.isWithPulse,
-                    isWithCoin = this.isWithCoin,
-                    isWithIdentify = this.isWithIdentify,
-                    code = this.code
-                )
-            }
-        }
-
-        // 读取驱动板软件版本
-        cc.uling.usdk.board.mdb.para.SVReplyPara().apply {
-            driver.getSoftwareVersion(this)
-        }.apply {
-            if (this.isOK) {
-                env.mdb.softwareVersion = this.version
-            }
-        }
-
-        // 读取最小金额
-        cc.uling.usdk.board.mdb.para.MPReplyPara().apply {
-            driver.getMinPayoutAmount(this)
-        }.apply {
-            if (this.isOK) {
-                env.payout.amount = this.value
-                env.payout.decimal = this.decimal
-            }
-        }
     }
 
     /**
@@ -332,7 +293,7 @@ class BoardPlugin(private val activity: Activity) : Plugin(activity) {
     }
 
     /**
-     * initialization of env
+     * initialization os of env
      *
      * @param
      * @return void
@@ -361,6 +322,112 @@ class BoardPlugin(private val activity: Activity) : Plugin(activity) {
                     this.env.os.screenHeight = item.widthPixels
                     this.env.os.screenWidth = item.heightPixels
                 }
+            }
+        }
+    }
+
+    /**
+     * initialization mdb of env
+     *
+     * @param
+     * @return void
+     */
+    private fun initEnvMdb() {
+        // 读取驱动板硬件信息
+        cc.uling.usdk.board.mdb.para.HCReplyPara().apply {
+            driver.readHardwareConfig(this)
+        }.apply {
+            if (this.isOK) {
+                env.mdb = Mdb(
+                    hardwareVersion = this.version,
+                    isWithPOS = this.isWithPOS,
+                    isWithCash = this.isWithCash,
+                    isWithPulse = this.isWithPulse,
+                    isWithCoin = this.isWithCoin,
+                    isWithIdentify = this.isWithIdentify,
+                    code = this.code
+                )
+            }
+        }
+
+        // 读取驱动板软件版本
+        cc.uling.usdk.board.mdb.para.SVReplyPara().apply {
+            driver.getSoftwareVersion(this)
+        }.apply {
+            if (this.isOK) {
+                env.mdb.softwareVersion = this.version
+            }
+        }
+    }
+
+    /**
+     * initialization payout of env
+     */
+    private fun initEnvPayout() {
+        // 读取最小金额
+        cc.uling.usdk.board.mdb.para.MPReplyPara().apply {
+            driver.getMinPayoutAmount(this)
+        }.apply {
+            if (this.isOK) {
+                env.payout.amount = this.value
+                env.payout.decimal = this.decimal
+            }
+        }
+    }
+
+    /**
+     * initialization driver of env
+     *
+     * @param
+     * @return void
+     */
+    private fun initEnvDriver() {
+        this.env.driver = Driver(
+            temperature = "unknown",
+            humidity = "unknown",
+            hardwareVersion = "unknown",
+            rows = 10,
+            columns = 10,
+            softwareVersion = "0",
+            addr = 1,
+        )
+
+        // read temperature
+        TempReplyPara(this.env.driver.addr).apply {
+            driver.ReadTemp(this)
+        }.apply {
+            if (this.isOK) {
+                (this.temp / 10.0).apply {
+                    if (this != UNAVAILABLE_VALUE) {
+                        env.driver.temperature = this.toString()
+                    }
+                }
+
+                (this.humi / 10.0).apply {
+                    if (this != UNAVAILABLE_VALUE) {
+                        env.driver.temperature = this.toString()
+                    }
+                }
+            }
+        }
+
+        // read hardware version
+        HCReplyPara(this.env.driver.addr).apply {
+            driver.ReadHardwareConfig(this)
+        }.apply {
+            if (this.isOK) {
+                env.driver.hardwareVersion = this.version
+                env.driver.rows = this.row
+                env.driver.columns = this.column
+            }
+        }
+
+        // read software version
+        SVReplyPara(this.env.driver.addr).apply {
+            driver.GetSoftwareVersion(this)
+        }.apply {
+            if (this.isOK) {
+                env.driver.softwareVersion = this.version
             }
         }
     }
@@ -632,6 +699,7 @@ class BoardPlugin(private val activity: Activity) : Plugin(activity) {
             rows = 10,
             columns = 10,
             softwareVersion = "0",
+            addr = addr,
         )
 
         // read temperature
@@ -1146,29 +1214,8 @@ class BoardPlugin(private val activity: Activity) : Plugin(activity) {
      */
     @Command
     fun readHardwareConfig(invoke: Invoke) {
-        if (!this.driver.EF_Opened()) {
-            throw Exception("driver not opened")
-        }
-
-        val para = cc.uling.usdk.board.mdb.para.HCReplyPara().apply {
-            driver.readHardwareConfig(this)
-        }.apply {
-            if (!this.isOK) {
-                throw Exception("read hardware config failed")
-            }
-        }
-
         val ret = JSObject()
-        val result: Map<String, Any> = mapOf(
-            "version" to para.version,
-            "with_coin" to para.isWithCoin,
-            "with_cash" to para.isWithCash,
-            "with_pos" to para.isWithPOS,
-            "with_pulse" to para.isWithPulse,
-            "with_identify" to para.isWithIdentify,
-            "code" to para.code,
-        )
-        ret.put("value", Gson().toJson(result))
+        ret.put("value", Gson().toJson(this.env.mdb))
         invoke.resolve(ret)
     }
 
@@ -1197,22 +1244,8 @@ class BoardPlugin(private val activity: Activity) : Plugin(activity) {
      */
     @Command
     fun getMinPayoutAmount(invoke: Invoke) {
-        if (!this.driver.EF_Opened()) {
-            throw Exception("driver not opened")
-        }
-        val para = cc.uling.usdk.board.mdb.para.MPReplyPara().apply {
-            driver.getMinPayoutAmount(this)
-        }.apply {
-            if (!this.isOK) {
-                throw Exception("get min payout amount failed")
-            }
-        }
         val ret = JSObject()
-        val result: Map<String, Any> = mapOf(
-            "value" to para.value,
-            "decimal" to para.decimal,
-        )
-        ret.put("value", Gson().toJson(result))
+        ret.put("value", Gson().toJson(this.env.payout))
         invoke.resolve(ret)
     }
 

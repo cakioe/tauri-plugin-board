@@ -300,7 +300,7 @@ async function toY(options) {
  * ```
  *
  * @since 1.6.1
- * @returns {HardwareConfig}
+ * @returns {Mdb}
  */
 async function readHardwareConfig() {
     return await core.invoke('plugin:board|read_hardware_config').then(r => JSON.parse(r.value));
@@ -326,7 +326,7 @@ async function getSoftwareVersion() {
  * ```
  *
  * @since 1.6.1
- * @returns {MinPayoutAmount}
+ * @returns {Payout}
  */
 async function getMinPayoutAmount() {
     return await core.invoke('plugin:board|get_min_payout_amount').then(r => JSON.parse(r.value));

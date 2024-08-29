@@ -131,21 +131,28 @@ export declare function getSerialDevicesPath(): Promise<SerialDevice[]>;
  * @since 1.4.0-beta.12
  * @update 1.5.6
  */
-export interface BuildEnv {
+export interface OS {
     sdk_version: number;
     android_version: string;
-    serial_sn: string;
-    model_no: string;
+    id: string;
+    name: string;
     screen_width: number;
     screen_height: number;
     commid: string;
     baudrate: number;
     status_bar_on: string;
     gesture_status_bar_on: string;
+    brightness: number;
+}
+export interface Env {
+    os: OS;
+    payout: Payout;
+    driver: Driver;
+    mdb: Mdb;
 }
 export declare function getBuildEnv(options?: {
     no: string;
-}): Promise<BuildEnv>;
+}): Promise<Env>;
 /**
  * @example
  * ```typescript
@@ -175,17 +182,17 @@ export declare function takeScreenShot(): Promise<string>;
  *
  * @since 1.5.1
  */
-export interface BuildBoard {
+export interface Driver {
+    software_version: string;
+    hardware_version: string;
+    rows: number;
+    columns: number;
     temperature: string;
     humidity: string;
-    hardware_version: string;
-    software_version: string;
-    board_rows: number;
-    board_columns: number;
 }
 export declare function getBuildBoard(options?: {
     addr: number;
-}): Promise<BuildBoard>;
+}): Promise<Driver>;
 /**
  * @example
  * ```typescript
@@ -376,13 +383,14 @@ export declare function toY(options?: {
     addr: number;
     pos: number;
 }): Promise<string>;
-export interface HardwareConfig {
-    version: number;
-    with_coin: boolean;
-    with_cash: boolean;
-    with_pos: boolean;
-    with_pulse: boolean;
-    with_identify: boolean;
+export interface Mdb {
+    software_version: string;
+    hardware_version: number;
+    is_with_coin: boolean;
+    is_with_cash: boolean;
+    is_with_pos: boolean;
+    is_with_pulse: boolean;
+    is_with_identify: boolean;
     code: string;
 }
 /**
@@ -393,9 +401,9 @@ export interface HardwareConfig {
  * ```
  *
  * @since 1.6.1
- * @returns {HardwareConfig}
+ * @returns {Mdb}
  */
-export declare function readHardwareConfig(): Promise<HardwareConfig>;
+export declare function readHardwareConfig(): Promise<Mdb>;
 /**
  * @example
  * ```typescript
@@ -407,9 +415,9 @@ export declare function readHardwareConfig(): Promise<HardwareConfig>;
  * @returns {string}
  */
 export declare function getSoftwareVersion(): Promise<string>;
-export interface MinPayoutAmount {
-    value: number;
-    decimal: number;
+export interface Payout {
+    amount: number;
+    channel: number;
 }
 /**
  * @example
@@ -419,9 +427,9 @@ export interface MinPayoutAmount {
  * ```
  *
  * @since 1.6.1
- * @returns {MinPayoutAmount}
+ * @returns {Payout}
  */
-export declare function getMinPayoutAmount(): Promise<MinPayoutAmount>;
+export declare function getMinPayoutAmount(): Promise<Payout>;
 export interface PayAmount {
     pay_type: number;
     status: number;

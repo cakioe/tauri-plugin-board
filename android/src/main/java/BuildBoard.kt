@@ -59,6 +59,9 @@ data class Driver(
     @SerializedName("hardware_version")
     var hardwareVersion: String = "unknown",
 
+    @SerializedName("addr")
+    var addr: Int = 1,
+
     @SerializedName("rows")
     var rows: Int = 0,
 
