@@ -187,9 +187,7 @@ class BoardPlugin(private val activity: Activity) : Plugin(activity) {
     /**
      * the env of the android build
      */
-    private lateinit var buildEnv: BuildEnv
-
-    private lateinit var buildBoard: BuildBoard
+    private lateinit var env: Env
 
     /**
      * the init method of the plugin
@@ -203,7 +201,7 @@ class BoardPlugin(private val activity: Activity) : Plugin(activity) {
         super.load(webView)
 
         // initialization of the env
-        this.initBuildEnv()
+        this.initEnvOS()
 
         // initialization of the displayer
         this.displayer.getContext(webView.context)
@@ -214,6 +212,7 @@ class BoardPlugin(private val activity: Activity) : Plugin(activity) {
         GlobalScope.launch(Dispatchers.IO) {
             async {
                 initSerialDriver()
+                initBuildBoard()
             }.await()
         }
 
@@ -242,9 +241,51 @@ class BoardPlugin(private val activity: Activity) : Plugin(activity) {
      * @return void
      */
     override fun onNewIntent(intent: Intent) {
-        this.initBuildEnv()
+        this.initEnvOS()
         this.initDisplayer(false)
         Toast.makeText(activity, "welcome back", Toast.LENGTH_SHORT).show()
+    }
+
+    private fun initBuildBoard() {
+        if (!this.driver.EF_Opened()) {
+            return
+        }
+
+        // 读取驱动板硬件信息
+        cc.uling.usdk.board.mdb.para.HCReplyPara().apply {
+            driver.readHardwareConfig(this)
+        }.apply {
+            if (this.isOK) {
+                env.mdb = Mdb(
+                    hardwareVersion = this.version,
+                    isWithPOS = this.isWithPOS,
+                    isWithCash = this.isWithCash,
+                    isWithPulse = this.isWithPulse,
+                    isWithCoin = this.isWithCoin,
+                    isWithIdentify = this.isWithIdentify,
+                    code = this.code
+                )
+            }
+        }
+
+        // 读取驱动板软件版本
+        cc.uling.usdk.board.mdb.para.SVReplyPara().apply {
+            driver.getSoftwareVersion(this)
+        }.apply {
+            if (this.isOK) {
+                env.mdb.softwareVersion = this.version
+            }
+        }
+
+        // 读取最小金额
+        cc.uling.usdk.board.mdb.para.MPReplyPara().apply {
+            driver.getMinPayoutAmount(this)
+        }.apply {
+            if (this.isOK) {
+                env.payout.amount = this.value
+                env.payout.decimal = this.decimal
+            }
+        }
     }
 
     /**
@@ -296,12 +337,12 @@ class BoardPlugin(private val activity: Activity) : Plugin(activity) {
      * @param
      * @return void
      */
-    private fun initBuildEnv() {
-        this.buildEnv = BuildEnv(
+    private fun initEnvOS() {
+        this.env.os = OS(
             sdkVersion = Build.VERSION.SDK_INT,
             androidVersion = Build.VERSION.RELEASE,
-            serialSn = this.displayer.buildSerial,
-            modelNo = this.displayer.buildModel,
+            id = this.displayer.buildSerial,
+            name = this.displayer.buildModel,
             screenWidth = 0,
             screenHeight = 0,
             baudrate = this.baudrate,
@@ -311,14 +352,14 @@ class BoardPlugin(private val activity: Activity) : Plugin(activity) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
             // [system bars]<https://stackoverflow.com/a/63409619/21185153>
             val windowMetrics = activity.windowManager.currentWindowMetrics
-            this.buildEnv.screenHeight = windowMetrics.bounds.height()
-            this.buildEnv.screenWidth = windowMetrics.bounds.width()
+            this.env.os.screenHeight = windowMetrics.bounds.height()
+            this.env.os.screenWidth = windowMetrics.bounds.width()
         } else {
             DisplayMetrics().let { item ->
                 @Suppress("DEPRECATION")
                 activity.windowManager.defaultDisplay.getMetrics(item).let {
-                    this.buildEnv.screenHeight = item.widthPixels
-                    this.buildEnv.screenWidth = item.heightPixels
+                    this.env.os.screenHeight = item.widthPixels
+                    this.env.os.screenWidth = item.heightPixels
                 }
             }
         }
@@ -331,13 +372,13 @@ class BoardPlugin(private val activity: Activity) : Plugin(activity) {
      * @return void
      */
     private fun initDisplayer(enable: Boolean = false) {
-        this.buildEnv.modelNo.apply {
+        this.env.os.name.apply {
             if (this.startsWith("zc") || this.startsWith("ZC")) {
                 displayer.setStatusBar(enable)
                 displayer.setGestureStatusBar(enable)
 
-                buildEnv.statusBarOn = if (enable) "1" else "0"
-                buildEnv.gestureStatusBarOn = if (enable) "1" else "0"
+                env.os.statusBarOn = if (enable) "1" else "0"
+                env.os.gestureStatusBarOn = if (enable) "1" else "0"
             }
         }
     }
@@ -376,7 +417,7 @@ class BoardPlugin(private val activity: Activity) : Plugin(activity) {
     fun setStatusBar(invoke: Invoke) {
         val argv = invoke.parseArgs(StatusBar::class.java).enable ?: false
         this.displayer.setStatusBar(argv)
-        this.buildEnv.statusBarOn = if (argv) "1" else "0"
+        this.env.os.statusBarOn = if (argv) "1" else "0"
         invoke.resolve()
     }
 
@@ -390,7 +431,7 @@ class BoardPlugin(private val activity: Activity) : Plugin(activity) {
     fun setGestureStatusBar(invoke: Invoke) {
         val argv = invoke.parseArgs(GestureStatusBar::class.java).enable ?: false
         this.displayer.setGestureStatusBar(argv)
-        this.buildEnv.gestureStatusBarOn = if (argv) "1" else "0"
+        this.env.os.gestureStatusBarOn = if (argv) "1" else "0"
         invoke.resolve()
     }
 
@@ -472,7 +513,7 @@ class BoardPlugin(private val activity: Activity) : Plugin(activity) {
     @Command
     fun setAppBrightness(invoke: Invoke) {
         val args = invoke.parseArgs(AppBrightness::class.java)
-        this.buildEnv.brightness = args.value.coerceIn(5, 255)
+        this.env.os.brightness = args.value.coerceIn(5, 255)
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && !Settings.System.canWrite(activity)) {
             val intent = Intent(Settings.ACTION_MANAGE_WRITE_SETTINGS)
@@ -490,11 +531,11 @@ class BoardPlugin(private val activity: Activity) : Plugin(activity) {
                 Settings.System.putInt(
                     activity.contentResolver,
                     Settings.System.SCREEN_BRIGHTNESS,
-                    this.buildEnv.brightness
+                    this.env.os.brightness
                 )
             }
             activity.window.attributes.let {
-                it.screenBrightness = this.buildEnv.brightness / 255f
+                it.screenBrightness = this.env.os.brightness / 255f
                 activity.window.attributes = it
             }
         } catch (e: Exception) {
@@ -529,7 +570,7 @@ class BoardPlugin(private val activity: Activity) : Plugin(activity) {
     fun getBuildEnv(invoke: Invoke) {
         val gson = Gson()
         val ret = JSObject()
-        ret.put("value", gson.toJson(this.buildEnv))
+        ret.put("value", gson.toJson(this.env))
         invoke.resolve(ret)
     }
 
@@ -584,12 +625,12 @@ class BoardPlugin(private val activity: Activity) : Plugin(activity) {
         }
 
         val addr = invoke.parseArgs(BuildBoardRequest::class.java).addr ?: 1
-        this.buildBoard = BuildBoard(
+        this.env.driver = Driver(
             temperature = "unknown",
             humidity = "unknown",
-            hardwareVersion = "0",
-            boardRows = 10,
-            boardColumns = 10,
+            hardwareVersion = "unknown",
+            rows = 10,
+            columns = 10,
             softwareVersion = "0",
         )
 
@@ -600,13 +641,13 @@ class BoardPlugin(private val activity: Activity) : Plugin(activity) {
             if (this.isOK) {
                 (this.temp / 10.0).apply {
                     if (this != UNAVAILABLE_VALUE) {
-                        buildBoard.temperature = this.toString()
+                        env.driver.temperature = this.toString()
                     }
                 }
 
                 (this.humi / 10.0).apply {
                     if (this != UNAVAILABLE_VALUE) {
-                        buildBoard.temperature = this.toString()
+                        env.driver.temperature = this.toString()
                     }
                 }
             }
@@ -617,9 +658,9 @@ class BoardPlugin(private val activity: Activity) : Plugin(activity) {
             driver.ReadHardwareConfig(this)
         }.apply {
             if (this.isOK) {
-                buildBoard.hardwareVersion = this.version
-                buildBoard.boardRows = this.row
-                buildBoard.boardColumns = this.column
+                env.driver.hardwareVersion = this.version
+                env.driver.rows = this.row
+                env.driver.columns = this.column
             }
         }
 
@@ -627,13 +668,13 @@ class BoardPlugin(private val activity: Activity) : Plugin(activity) {
             driver.GetSoftwareVersion(this)
         }.apply {
             if (this.isOK) {
-                buildBoard.softwareVersion = this.version
+                env.driver.softwareVersion = this.version
             }
         }
 
         val gson = Gson()
         val ret = JSObject()
-        ret.put("value", gson.toJson(this.buildBoard))
+        ret.put("value", gson.toJson(this.env.driver))
         invoke.resolve(ret)
     }
 
@@ -1141,20 +1182,8 @@ class BoardPlugin(private val activity: Activity) : Plugin(activity) {
      */
     @Command
     fun getSoftwareVersion(invoke: Invoke) {
-        if (!this.driver.EF_Opened()) {
-            throw Exception("driver not opened")
-        }
-
-        val para = cc.uling.usdk.board.mdb.para.SVReplyPara().apply {
-            driver.getSoftwareVersion(this)
-        }.apply {
-            if (!this.isOK) {
-                throw Exception("get software version failed")
-            }
-        }
-
         val ret = JSObject()
-        ret.put("value", para.version)
+        ret.put("value", this.env.mdb.softwareVersion)
         invoke.resolve(ret)
     }
 
