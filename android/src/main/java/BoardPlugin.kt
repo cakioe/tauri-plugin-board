@@ -23,6 +23,7 @@ import cc.uling.usdk.constants.ErrorConst
 import com.google.gson.Gson
 import com.zcapi
 import kotlinx.coroutines.*
+import java.util.*
 
 @InvokeArg
 class StatusBar {
@@ -523,15 +524,33 @@ class BoardPlugin(private val activity: Activity) : Plugin(activity) {
      */
     @Command
     fun setPowerOnOffTime(invoke: Invoke) {
+        val parseTimestamp:(LongArray) -> Array<IntArray> = { arr ->
+            require(arr.size == 2) { "arr size should be 2" }
+
+            Array(2) { index ->
+                val date = Date(arr[index])
+                val calendar = Calendar.getInstance()
+                calendar.time = date
+
+                val year = calendar.get(Calendar.YEAR)
+                val month = calendar.get(Calendar.MONTH) + 1 // 月份从0开始，所以需要加1
+                val day = calendar.get(Calendar.DAY_OF_MONTH)
+                val hour = calendar.get(Calendar.HOUR_OF_DAY) // 24小时制
+                val minute = calendar.get(Calendar.MINUTE)
+
+                intArrayOf(year, month, day, hour, minute)
+            }
+        }
+
         val args = invoke.parseArgs(PowerOnOffTime::class.java)
+        if (args.onTime == null || args.offTime == null) {
+            invoke.reject("onTime and offTime should not be null")
+            return
+        }
 
-        val carbon = Carbon()
-        val enable = args.enable
-        val onTime = carbon.parseTimestamp(args.onTime)
-        val offTime = carbon.parseTimestamp(args.offTime)
-
-        this.displayer.setPowetOnOffTime(enable, onTime, offTime)
-
+        parseTimestamp(longArrayOf(args.onTime!!, args.offTime!!)).apply {
+            displayer.setPowetOnOffTime(args.enable, this[0], this[1])
+        }
         val ret = JSObject()
         ret.put("value", "success")
         invoke.resolve(ret)
