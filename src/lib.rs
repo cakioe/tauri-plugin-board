@@ -30,6 +30,13 @@ impl<R: Runtime> Board<R> {
             .run_mobile_plugin("set_gesture_status_bar", options)
             .map_err(Into::into)
     }
+
+    // 设置关机
+    pub fn shutdown(&self) -> crate::Result<()> {
+        self.0
+            .run_mobile_plugin("shutdown", ())
+            .map_err(Into::into)
+    }
 }
 
 pub struct Board<R: Runtime>(PluginHandle<R>);
