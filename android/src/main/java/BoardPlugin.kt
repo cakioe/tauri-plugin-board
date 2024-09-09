@@ -17,12 +17,35 @@ import app.tauri.plugin.JSObject
 import app.tauri.plugin.Plugin
 import cc.uling.usdk.USDK
 import cc.uling.usdk.board.UBoard
-import cc.uling.usdk.board.wz.para.*
+import cc.uling.usdk.board.wz.para.BSReplyPara
+import cc.uling.usdk.board.wz.para.CXReplyPara
+import cc.uling.usdk.board.wz.para.CYReplyPara
+import cc.uling.usdk.board.wz.para.DSReplyPara
+import cc.uling.usdk.board.wz.para.HCReplyPara
+import cc.uling.usdk.board.wz.para.MTReplyPara
+import cc.uling.usdk.board.wz.para.PXReplyPara
+import cc.uling.usdk.board.wz.para.PYReplyPara
+import cc.uling.usdk.board.wz.para.RMReplyPara
+import cc.uling.usdk.board.wz.para.ResetReplyPara
+import cc.uling.usdk.board.wz.para.SReplyPara
+import cc.uling.usdk.board.wz.para.SSReplyPara
+import cc.uling.usdk.board.wz.para.SVReplyPara
+import cc.uling.usdk.board.wz.para.SXPReplyPara
+import cc.uling.usdk.board.wz.para.SYPReplyPara
+import cc.uling.usdk.board.wz.para.TXReplyPara
+import cc.uling.usdk.board.wz.para.TYReplyPara
+import cc.uling.usdk.board.wz.para.TempReplyPara
+import cc.uling.usdk.board.wz.para.XSReplyPara
+import cc.uling.usdk.board.wz.para.YSReplyPara
 import cc.uling.usdk.constants.CodeUtil
 import cc.uling.usdk.constants.ErrorConst
 import com.google.gson.Gson
 import com.zcapi
-import kotlinx.coroutines.*
+import kotlinx.coroutines.DelicateCoroutinesApi
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.async
+import kotlinx.coroutines.launch
 
 @InvokeArg
 class StatusBar {
@@ -244,6 +267,7 @@ class BoardPlugin(private val activity: Activity) : Plugin(activity) {
     override fun onNewIntent(intent: Intent) {
         this.initBuildEnv()
         this.initDisplayer(false)
+
         Toast.makeText(activity, "welcome back", Toast.LENGTH_SHORT).show()
     }
 

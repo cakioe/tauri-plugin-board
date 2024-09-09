@@ -26,7 +26,7 @@ class TaskService: Service() {
      * service of `mqtt`
      */
     private fun performLongTask() {
-        Toast.makeText(this.applicationContext, "onStartCommand", Toast.LENGTH_SHORT).show()
+        TODO()
     }
 
     override fun onDestroy() {
