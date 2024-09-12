@@ -41,6 +41,7 @@ import cc.uling.usdk.constants.CodeUtil
 import cc.uling.usdk.constants.ErrorConst
 import com.google.gson.Gson
 import com.zcapi
+import io.github.cakioe.Carbon
 import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
@@ -441,10 +442,9 @@ class BoardPlugin(private val activity: Activity) : Plugin(activity) {
     fun setPowerOnOffTime(invoke: Invoke) {
         val args = invoke.parseArgs(PowerOnOffTime::class.java)
 
-        val carbon = Carbon()
         val enable = args.enable
-        val onTime = carbon.parseTimestamp(args.onTime)
-        val offTime = carbon.parseTimestamp(args.offTime)
+        val onTime = Carbon(args.onTime as Long).toIntArray()
+        val offTime = Carbon(args.offTime as Long).toIntArray()
 
         this.displayer.setPowetOnOffTime(enable, onTime, offTime)
 

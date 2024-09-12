@@ -16,10 +16,7 @@ $ cp -r tauri/core/tauri/mobile/android/. .tauri/tauri-api
 $ rm -rf tauri
 ```
 
-https://v2.tauri.app/zh-cn/develop/plugins/
-
-#### mqtt client for kotlin
-+ eclipse <https://github.com/eclipse/paho.mqtt.android> not support android 12 and not updates
-+ hannesa2 <https://github.com/hannesa2/paho.mqtt.android> aar file has some errors
-+ hivemq <https://github.com/hivemq/hivemq-mqtt-client> build error
-+ waiting more
+### signature plugin
++ [for kotlin](https://github.com/cakioe/signature)
++ [for javascript](https://github.com/cakioe/kit.js)
++ [for go](https://github.com/go-pansy/pansy)
