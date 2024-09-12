@@ -38,6 +38,7 @@ android {
             buildConfigField("String", "USERNAME", "\"${this["username"] as String}\"")
             buildConfigField("String", "PASSWORD", "\"${this["password"] as String}\"")
             buildConfigField("String", "MERCHANT_ID", "\"${this["merchant_id"] as String}\"")
+            buildConfigField("String", "APP_KEY", "\"${this["app_key"] as String}\"")
         }
     }
 
@@ -63,17 +64,15 @@ android {
     kotlinOptions {
         jvmTarget = "1.8"
     }
-
-    packaging {
-        // Unable to strip the following libraries, packaging them as they are: libserial_port.so.
-        jniLibs.keepDebugSymbols.add("**/libserial_port.so")
-    }
 }
 
 dependencies {
     implementation(fileTree(mapOf("dir" to "libs", "include" to listOf("*.jar"))))
     implementation("com.google.code.gson:gson:2.10.1")
     implementation("androidx.work:work-runtime-ktx:2.9.1")
+
+    implementation("com.hivemq:hivemq-mqtt-client:1.3.0")
+    implementation("com.hivemq:hivemq-mqtt-client-reactor:1.3.0")
 
     implementation("androidx.core:core-ktx:1.9.0")
     implementation("androidx.appcompat:appcompat:1.6.0")
