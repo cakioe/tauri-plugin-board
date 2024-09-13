@@ -20,3 +20,8 @@ $ rm -rf tauri
 + [for kotlin](https://github.com/cakioe/signature)
 + [for javascript](https://github.com/cakioe/kit.js)
 + [for go](https://github.com/go-pansy/pansy)
+
+### storage config
+```kotlin
+File(this.applicationContext.getExternalFilesDir(null), "xxx.json").writeText(Gson().toJson(payload))
+```
