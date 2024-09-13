@@ -40,6 +40,7 @@ import cc.uling.usdk.board.wz.para.YSReplyPara
 import cc.uling.usdk.constants.CodeUtil
 import cc.uling.usdk.constants.ErrorConst
 import com.google.gson.Gson
+import com.google.gson.JsonObject
 import com.zcapi
 import io.github.cakioe.Carbon
 import kotlinx.coroutines.DelicateCoroutinesApi
@@ -47,6 +48,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
+import java.io.File
 
 @InvokeArg
 class StatusBar {
@@ -215,6 +217,10 @@ class BoardPlugin(private val activity: Activity) : Plugin(activity) {
 
     private lateinit var buildBoard: BuildBoard
 
+    private val storeName: String = "store.bin"
+    private val keyName: String = "MACHINE_SETTING"
+    private var taskRunning: Boolean = false
+
     /**
      * the init method of the plugin
      *
@@ -242,7 +248,9 @@ class BoardPlugin(private val activity: Activity) : Plugin(activity) {
         }
 
         // initialization of the task service
-        this.startTaskService()
+        if (!this.taskRunning) {
+            this.startTaskService()
+        }
     }
 
     /**
@@ -252,10 +260,21 @@ class BoardPlugin(private val activity: Activity) : Plugin(activity) {
      * @return void
      */
     private fun startTaskService() {
-        // TODO: mqtt service of task
-        this.activity.application.apply {
-            val intent = Intent(this, TaskService::class.java)
-            startService(intent)
+        val buf = File(this.activity.getExternalFilesDir(null), this.storeName)
+        if (!buf.exists()) {
+            return
+        }
+
+        val result = Gson().fromJson(buf.readText(Charsets.UTF_8), JsonObject::class.java)
+        result.getAsJsonObject(keyName).let {
+            val no = it.get("machine_no")?.asString
+
+            this.activity.application.apply {
+                val intent = Intent(this, TaskService::class.java)
+                intent.putExtra("no", no)
+                startService(intent)
+                taskRunning = true
+            }
         }
     }
 

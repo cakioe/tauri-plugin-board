@@ -24,4 +24,8 @@
 -keep class com.plugin.board.** { *; }
 
 -keep class cc.uling.usdk.** { *; }
+
+-keepattributes io.github.cakioe.Signature
+-keep class com.google.gson.reflect.TypeToken { *; }
+
 -dontoptimize
