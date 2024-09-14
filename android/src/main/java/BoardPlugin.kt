@@ -9,6 +9,7 @@ import android.serialport.SerialPortFinder
 import android.util.DisplayMetrics
 import android.webkit.WebView
 import android.widget.Toast
+import app.cash.sqldelight.driver.android.AndroidSqliteDriver
 import app.tauri.annotation.Command
 import app.tauri.annotation.InvokeArg
 import app.tauri.annotation.TauriPlugin
@@ -40,7 +41,7 @@ import cc.uling.usdk.board.wz.para.YSReplyPara
 import cc.uling.usdk.constants.CodeUtil
 import cc.uling.usdk.constants.ErrorConst
 import com.google.gson.Gson
-import com.google.gson.JsonObject
+import com.plugin.board.database.Database
 import com.zcapi
 import io.github.cakioe.Carbon
 import kotlinx.coroutines.DelicateCoroutinesApi
@@ -214,12 +215,10 @@ class BoardPlugin(private val activity: Activity) : Plugin(activity) {
      * the env of the android build
      */
     private lateinit var buildEnv: BuildEnv
-
     private lateinit var buildBoard: BuildBoard
 
-    private val storeName: String = "store.bin"
-    private val keyName: String = "MACHINE_SETTING"
     private var taskRunning: Boolean = false
+    private lateinit var database: Database
 
     /**
      * the init method of the plugin
@@ -248,7 +247,14 @@ class BoardPlugin(private val activity: Activity) : Plugin(activity) {
         }
 
         // initialization of the task service
-        this.startTaskService()
+        AndroidSqliteDriver(
+            Database.Schema,
+            activity.application,
+            File(this.activity.getExternalFilesDir(null), "default.db").absolutePath,
+        ).let {
+            this.database = Database(it)
+            this.startTaskService()
+        }
     }
 
     /**
@@ -260,18 +266,10 @@ class BoardPlugin(private val activity: Activity) : Plugin(activity) {
     private fun startTaskService() {
         if (this.taskRunning) return
 
-        val buf = File(this.activity.getExternalFilesDir(null), this.storeName)
-        if (!buf.exists()) {
-            return
-        }
-
-        val result = Gson().fromJson(buf.readText(Charsets.UTF_8), JsonObject::class.java)
-        result.getAsJsonObject(keyName).let {
-            val no = it.get("machine_no")?.asString
-
+        this.database.machineQueries.find().executeAsOneOrNull()?.let {
             this.activity.application.apply {
                 val intent = Intent(this, TaskService::class.java)
-                intent.putExtra("no", no)
+                intent.putExtra("no", it.machine_no)
                 startService(intent)
                 taskRunning = true
             }

@@ -3,6 +3,7 @@ import java.util.Properties
 plugins {
     id("com.android.library")
     id("org.jetbrains.kotlin.android")
+    id("app.cash.sqldelight") version "2.0.2"
 }
 
 var localProperties = Properties().apply {
@@ -70,9 +71,10 @@ dependencies {
     implementation(fileTree(mapOf("dir" to "libs", "include" to listOf("*.jar"))))
     implementation("com.google.code.gson:gson:2.10.1")
     implementation("androidx.work:work-runtime-ktx:2.9.1")
-
     implementation("com.hivemq:hivemq-mqtt-client:1.3.0")
     implementation("com.hivemq:hivemq-mqtt-client-reactor:1.3.0")
+
+    implementation("app.cash.sqldelight:android-driver:2.0.2")
 
     implementation("androidx.core:core-ktx:1.9.0")
     implementation("androidx.appcompat:appcompat:1.6.0")
@@ -81,4 +83,16 @@ dependencies {
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
     implementation(project(":tauri-android"))
+}
+
+sqldelight {
+    databases {
+        create("Database") {
+            packageName.set("com.plugin.board.database")
+        }
+    }
+}
+
+tasks.named("build") {
+    dependsOn("generateSqlDelightInterface")
 }

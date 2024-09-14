@@ -1,0 +1,14 @@
+/**
+ * Floor Types
+ */
+CREATE TABLE `floor_types` (
+  `id` INTEGER PRIMARY KEY NOT NULL,
+  `display_name` TEXT NOT NULL
+);
+
+INSERT INTO `floor_types` (`id`, `display_name`) VALUES (1, "履带");
+INSERT INTO `floor_types` (`id`, `display_name`) VALUES (2, "电机");
+INSERT INTO `floor_types` (`id`, `display_name`) VALUES (3, "电磁锁");
+
+select:
+SELECT * FROM `floor_types` ORDER BY `id` ASC;

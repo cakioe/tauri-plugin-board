@@ -1,0 +1,21 @@
+CREATE TABLE `machines` (
+  `id` INTEGER PRIMARY KEY NOT NULL,
+  `name` TEXT NOT NULL,
+  `client_id` TEXT DEFAULT NULL,
+  `imei` TEXT DEFAULT NULL,
+  `contact` TEXT DEFAULT NULL,
+  `tel` TEXT DEFAULT NULL,
+  `machine_no` TEXT NOT NULL
+);
+
+insert:
+INSERT INTO `machines` (`name`, `client_id`, `imei`, `contact`, `tel`, `machine_no`) VALUES (?, ?, ?, ?, ?, ?);
+
+find:
+SELECT * FROM `machines` ORDER BY `id` DESC LIMIT 1;
+
+update:
+UPDATE `machines` SET `name` = ? WHERE `id` = (SELECT id FROM `machines` ORDER BY `id` DESC LIMIT 1);
+
+delete:
+DELETE FROM `machines` WHERE `id` = (SELECT id FROM `machines` ORDER BY `id` DESC LIMIT 1);
