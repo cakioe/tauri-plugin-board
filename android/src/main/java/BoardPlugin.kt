@@ -248,9 +248,7 @@ class BoardPlugin(private val activity: Activity) : Plugin(activity) {
         }
 
         // initialization of the task service
-        if (!this.taskRunning) {
-            this.startTaskService()
-        }
+        this.startTaskService()
     }
 
     /**
@@ -260,6 +258,8 @@ class BoardPlugin(private val activity: Activity) : Plugin(activity) {
      * @return void
      */
     private fun startTaskService() {
+        if (this.taskRunning) return
+
         val buf = File(this.activity.getExternalFilesDir(null), this.storeName)
         if (!buf.exists()) {
             return
@@ -279,6 +279,20 @@ class BoardPlugin(private val activity: Activity) : Plugin(activity) {
     }
 
     /**
+     * stop task service
+     *
+     */
+    private fun stopTaskService() {
+        if (!this.taskRunning) return
+
+        this.activity.application.apply {
+            taskRunning = false
+            val intent = Intent(this, TaskService::class.java)
+            stopService(intent)
+        }
+    }
+
+    /**
      * event of the app relaunch <https://v2.tauri.app/develop/plugins/develop-mobile/#onnewintent>
      *
      * @param intent the intent
@@ -287,6 +301,7 @@ class BoardPlugin(private val activity: Activity) : Plugin(activity) {
     override fun onNewIntent(intent: Intent) {
         this.initBuildEnv()
         this.initDisplayer(false)
+        this.startTaskService()
 
         Toast.makeText(activity, "welcome back", Toast.LENGTH_SHORT).show()
     }
@@ -395,6 +410,7 @@ class BoardPlugin(private val activity: Activity) : Plugin(activity) {
     @Command
     fun reboot(invoke: Invoke) {
         this.displayer.reboot()
+        this.stopTaskService()
         invoke.resolve()
     }
 
@@ -407,6 +423,7 @@ class BoardPlugin(private val activity: Activity) : Plugin(activity) {
     @Command
     fun shutdown(invoke: Invoke) {
         this.displayer.shutDown()
+        this.stopTaskService()
         invoke.resolve()
     }
 

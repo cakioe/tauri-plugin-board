@@ -29,6 +29,7 @@ enum class Method(val value: String) {
     PUT_BRIGHTNESS("android.brightness.put"),
     SET_POWER("android.schedule.power"),
     DEFAULT("android.heartbeat"),
+    OFFLINE("android.offline"),
 }
 
 /**
@@ -163,6 +164,10 @@ class TaskService: Service() {
         }
     }
 
+    /**
+     * heartbeat for android online status
+     *
+     */
     @RequiresApi(Build.VERSION_CODES.O)
     private fun heartbeat() {
         val payload: Map<String, Any> = mapOf(
@@ -178,6 +183,30 @@ class TaskService: Service() {
             .send()
     }
 
+    /**
+     * 设备下线通知（遗嘱消息）
+     *
+     */
+    private fun offline() {
+        val payload: Map<String, Any> = mapOf(
+            "client_id" to this.no,
+            "method" to Method.OFFLINE.value,
+        )
+        this.logger("offline.log", payload)
+
+        val code = this.signer.toBase64String(payload)
+        this.client.publishWith().topic(this.publishTopic)
+            .payload(code.toByteArray(StandardCharsets.UTF_8))
+            .contentType(MqttUtf8String.of("application/base64"))
+            .qos(MqttQos.EXACTLY_ONCE)
+            .retain(false)
+            .send()
+    }
+
+    /**
+     * record log for android
+     *
+     */
     private fun logger(filename: String, payload: Map<String, Any>) {
         val now = SimpleDateFormat("yyyy-MM-dd HH:mm:ss:SSS", Locale.getDefault()).format(Date())
         val tmpl = "$now | ${Gson().toJson(payload)}\n"
@@ -188,6 +217,9 @@ class TaskService: Service() {
 
     override fun onDestroy() {
         super.onDestroy()
+
+        // 设备下线
+        this.offline()
 
         // 停止定时器
         this.timer.apply {
