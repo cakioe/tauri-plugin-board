@@ -295,662 +295,474 @@
       "type": "string",
       "oneOf": [
         {
-          "description": "allow-change-balance -> Enables the change_balance command without any pre-configured scope.",
+          "description": "Enables the change_balance command without any pre-configured scope.",
           "type": "string",
-          "enum": [
-            "allow-change-balance"
-          ]
+          "const": "allow-change-balance"
         },
         {
-          "description": "deny-change-balance -> Denies the change_balance command without any pre-configured scope.",
+          "description": "Denies the change_balance command without any pre-configured scope.",
           "type": "string",
-          "enum": [
-            "deny-change-balance"
-          ]
+          "const": "deny-change-balance"
         },
         {
-          "description": "allow-exec-shipment -> Enables the exec_shipment command without any pre-configured scope.",
+          "description": "Enables the exec_shipment command without any pre-configured scope.",
           "type": "string",
-          "enum": [
-            "allow-exec-shipment"
-          ]
+          "const": "allow-exec-shipment"
         },
         {
-          "description": "deny-exec-shipment -> Denies the exec_shipment command without any pre-configured scope.",
+          "description": "Denies the exec_shipment command without any pre-configured scope.",
           "type": "string",
-          "enum": [
-            "deny-exec-shipment"
-          ]
+          "const": "deny-exec-shipment"
         },
         {
-          "description": "allow-find-change-result -> Enables the find_change_result command without any pre-configured scope.",
+          "description": "Enables the find_change_result command without any pre-configured scope.",
           "type": "string",
-          "enum": [
-            "allow-find-change-result"
-          ]
+          "const": "allow-find-change-result"
         },
         {
-          "description": "deny-find-change-result -> Denies the find_change_result command without any pre-configured scope.",
+          "description": "Denies the find_change_result command without any pre-configured scope.",
           "type": "string",
-          "enum": [
-            "deny-find-change-result"
-          ]
+          "const": "deny-find-change-result"
         },
         {
-          "description": "allow-get-auth-result -> Enables the get_auth_result command without any pre-configured scope.",
+          "description": "Enables the get_auth_result command without any pre-configured scope.",
           "type": "string",
-          "enum": [
-            "allow-get-auth-result"
-          ]
+          "const": "allow-get-auth-result"
         },
         {
-          "description": "deny-get-auth-result -> Denies the get_auth_result command without any pre-configured scope.",
+          "description": "Denies the get_auth_result command without any pre-configured scope.",
           "type": "string",
-          "enum": [
-            "deny-get-auth-result"
-          ]
+          "const": "deny-get-auth-result"
         },
         {
-          "description": "allow-get-box-status -> Enables the get_box_status command without any pre-configured scope.",
+          "description": "Enables the get_box_status command without any pre-configured scope.",
           "type": "string",
-          "enum": [
-            "allow-get-box-status"
-          ]
+          "const": "allow-get-box-status"
         },
         {
-          "description": "deny-get-box-status -> Denies the get_box_status command without any pre-configured scope.",
+          "description": "Denies the get_box_status command without any pre-configured scope.",
           "type": "string",
-          "enum": [
-            "deny-get-box-status"
-          ]
+          "const": "deny-get-box-status"
         },
         {
-          "description": "allow-get-build-board -> Enables the get_build_board command without any pre-configured scope.",
+          "description": "Enables the get_build_board command without any pre-configured scope.",
           "type": "string",
-          "enum": [
-            "allow-get-build-board"
-          ]
+          "const": "allow-get-build-board"
         },
         {
-          "description": "deny-get-build-board -> Denies the get_build_board command without any pre-configured scope.",
+          "description": "Denies the get_build_board command without any pre-configured scope.",
           "type": "string",
-          "enum": [
-            "deny-get-build-board"
-          ]
+          "const": "deny-get-build-board"
         },
         {
-          "description": "allow-get-build-env -> Enables the get_build_env command without any pre-configured scope.",
+          "description": "Enables the get_build_env command without any pre-configured scope.",
           "type": "string",
-          "enum": [
-            "allow-get-build-env"
-          ]
+          "const": "allow-get-build-env"
         },
         {
-          "description": "deny-get-build-env -> Denies the get_build_env command without any pre-configured scope.",
+          "description": "Denies the get_build_env command without any pre-configured scope.",
           "type": "string",
-          "enum": [
-            "deny-get-build-env"
-          ]
+          "const": "deny-get-build-env"
         },
         {
-          "description": "allow-get-change-status -> Enables the get_change_status command without any pre-configured scope.",
+          "description": "Enables the get_change_status command without any pre-configured scope.",
           "type": "string",
-          "enum": [
-            "allow-get-change-status"
-          ]
+          "const": "allow-get-change-status"
         },
         {
-          "description": "deny-get-change-status -> Denies the get_change_status command without any pre-configured scope.",
+          "description": "Denies the get_change_status command without any pre-configured scope.",
           "type": "string",
-          "enum": [
-            "deny-get-change-status"
-          ]
+          "const": "deny-get-change-status"
         },
         {
-          "description": "allow-get-drop-status -> Enables the get_drop_status command without any pre-configured scope.",
+          "description": "Enables the get_drop_status command without any pre-configured scope.",
           "type": "string",
-          "enum": [
-            "allow-get-drop-status"
-          ]
+          "const": "allow-get-drop-status"
         },
         {
-          "description": "deny-get-drop-status -> Denies the get_drop_status command without any pre-configured scope.",
+          "description": "Denies the get_drop_status command without any pre-configured scope.",
           "type": "string",
-          "enum": [
-            "deny-get-drop-status"
-          ]
+          "const": "deny-get-drop-status"
         },
         {
-          "description": "allow-get-min-payout-amount -> Enables the get_min_payout_amount command without any pre-configured scope.",
+          "description": "Enables the get_min_payout_amount command without any pre-configured scope.",
           "type": "string",
-          "enum": [
-            "allow-get-min-payout-amount"
-          ]
+          "const": "allow-get-min-payout-amount"
         },
         {
-          "description": "deny-get-min-payout-amount -> Denies the get_min_payout_amount command without any pre-configured scope.",
+          "description": "Denies the get_min_payout_amount command without any pre-configured scope.",
           "type": "string",
-          "enum": [
-            "deny-get-min-payout-amount"
-          ]
+          "const": "deny-get-min-payout-amount"
         },
         {
-          "description": "allow-get-pay-amount -> Enables the get_pay_amount command without any pre-configured scope.",
+          "description": "Enables the get_pay_amount command without any pre-configured scope.",
           "type": "string",
-          "enum": [
-            "allow-get-pay-amount"
-          ]
+          "const": "allow-get-pay-amount"
         },
         {
-          "description": "deny-get-pay-amount -> Denies the get_pay_amount command without any pre-configured scope.",
+          "description": "Denies the get_pay_amount command without any pre-configured scope.",
           "type": "string",
-          "enum": [
-            "deny-get-pay-amount"
-          ]
+          "const": "deny-get-pay-amount"
         },
         {
-          "description": "allow-get-serial-devices-path -> Enables the get_serial_devices_path command without any pre-configured scope.",
+          "description": "Enables the get_serial_devices_path command without any pre-configured scope.",
           "type": "string",
-          "enum": [
-            "allow-get-serial-devices-path"
-          ]
+          "const": "allow-get-serial-devices-path"
         },
         {
-          "description": "deny-get-serial-devices-path -> Denies the get_serial_devices_path command without any pre-configured scope.",
+          "description": "Denies the get_serial_devices_path command without any pre-configured scope.",
           "type": "string",
-          "enum": [
-            "deny-get-serial-devices-path"
-          ]
+          "const": "deny-get-serial-devices-path"
         },
         {
-          "description": "allow-get-shipment-status -> Enables the get_shipment_status command without any pre-configured scope.",
+          "description": "Enables the get_shipment_status command without any pre-configured scope.",
           "type": "string",
-          "enum": [
-            "allow-get-shipment-status"
-          ]
+          "const": "allow-get-shipment-status"
         },
         {
-          "description": "deny-get-shipment-status -> Denies the get_shipment_status command without any pre-configured scope.",
+          "description": "Denies the get_shipment_status command without any pre-configured scope.",
           "type": "string",
-          "enum": [
-            "deny-get-shipment-status"
-          ]
+          "const": "deny-get-shipment-status"
         },
         {
-          "description": "allow-get-software-version -> Enables the get_software_version command without any pre-configured scope.",
+          "description": "Enables the get_software_version command without any pre-configured scope.",
           "type": "string",
-          "enum": [
-            "allow-get-software-version"
-          ]
+          "const": "allow-get-software-version"
         },
         {
-          "description": "deny-get-software-version -> Denies the get_software_version command without any pre-configured scope.",
+          "description": "Denies the get_software_version command without any pre-configured scope.",
           "type": "string",
-          "enum": [
-            "deny-get-software-version"
-          ]
+          "const": "deny-get-software-version"
         },
         {
-          "description": "allow-get-x-pos -> Enables the get_x_pos command without any pre-configured scope.",
+          "description": "Enables the get_x_pos command without any pre-configured scope.",
           "type": "string",
-          "enum": [
-            "allow-get-x-pos"
-          ]
+          "const": "allow-get-x-pos"
         },
         {
-          "description": "deny-get-x-pos -> Denies the get_x_pos command without any pre-configured scope.",
+          "description": "Denies the get_x_pos command without any pre-configured scope.",
           "type": "string",
-          "enum": [
-            "deny-get-x-pos"
-          ]
+          "const": "deny-get-x-pos"
         },
         {
-          "description": "allow-get-x-status -> Enables the get_x_status command without any pre-configured scope.",
+          "description": "Enables the get_x_status command without any pre-configured scope.",
           "type": "string",
-          "enum": [
-            "allow-get-x-status"
-          ]
+          "const": "allow-get-x-status"
         },
         {
-          "description": "deny-get-x-status -> Denies the get_x_status command without any pre-configured scope.",
+          "description": "Denies the get_x_status command without any pre-configured scope.",
           "type": "string",
-          "enum": [
-            "deny-get-x-status"
-          ]
+          "const": "deny-get-x-status"
         },
         {
-          "description": "allow-get-y-pos -> Enables the get_y_pos command without any pre-configured scope.",
+          "description": "Enables the get_y_pos command without any pre-configured scope.",
           "type": "string",
-          "enum": [
-            "allow-get-y-pos"
-          ]
+          "const": "allow-get-y-pos"
         },
         {
-          "description": "deny-get-y-pos -> Denies the get_y_pos command without any pre-configured scope.",
+          "description": "Denies the get_y_pos command without any pre-configured scope.",
           "type": "string",
-          "enum": [
-            "deny-get-y-pos"
-          ]
+          "const": "deny-get-y-pos"
         },
         {
-          "description": "allow-get-y-status -> Enables the get_y_status command without any pre-configured scope.",
+          "description": "Enables the get_y_status command without any pre-configured scope.",
           "type": "string",
-          "enum": [
-            "allow-get-y-status"
-          ]
+          "const": "allow-get-y-status"
         },
         {
-          "description": "deny-get-y-status -> Denies the get_y_status command without any pre-configured scope.",
+          "description": "Denies the get_y_status command without any pre-configured scope.",
           "type": "string",
-          "enum": [
-            "deny-get-y-status"
-          ]
+          "const": "deny-get-y-status"
         },
         {
-          "description": "allow-init-payment -> Enables the init_payment command without any pre-configured scope.",
+          "description": "Enables the init_payment command without any pre-configured scope.",
           "type": "string",
-          "enum": [
-            "allow-init-payment"
-          ]
+          "const": "allow-init-payment"
         },
         {
-          "description": "deny-init-payment -> Denies the init_payment command without any pre-configured scope.",
+          "description": "Denies the init_payment command without any pre-configured scope.",
           "type": "string",
-          "enum": [
-            "deny-init-payment"
-          ]
+          "const": "deny-init-payment"
         },
         {
-          "description": "allow-moto-timeout -> Enables the moto_timeout command without any pre-configured scope.",
+          "description": "Enables the moto_timeout command without any pre-configured scope.",
           "type": "string",
-          "enum": [
-            "allow-moto-timeout"
-          ]
+          "const": "allow-moto-timeout"
         },
         {
-          "description": "deny-moto-timeout -> Denies the moto_timeout command without any pre-configured scope.",
+          "description": "Denies the moto_timeout command without any pre-configured scope.",
           "type": "string",
-          "enum": [
-            "deny-moto-timeout"
-          ]
+          "const": "deny-moto-timeout"
         },
         {
-          "description": "allow-notify-payment -> Enables the notify_payment command without any pre-configured scope.",
+          "description": "Enables the notify_payment command without any pre-configured scope.",
           "type": "string",
-          "enum": [
-            "allow-notify-payment"
-          ]
+          "const": "allow-notify-payment"
         },
         {
-          "description": "deny-notify-payment -> Denies the notify_payment command without any pre-configured scope.",
+          "description": "Denies the notify_payment command without any pre-configured scope.",
           "type": "string",
-          "enum": [
-            "deny-notify-payment"
-          ]
+          "const": "deny-notify-payment"
         },
         {
-          "description": "allow-notify-result -> Enables the notify_result command without any pre-configured scope.",
+          "description": "Enables the notify_result command without any pre-configured scope.",
           "type": "string",
-          "enum": [
-            "allow-notify-result"
-          ]
+          "const": "allow-notify-result"
         },
         {
-          "description": "deny-notify-result -> Denies the notify_result command without any pre-configured scope.",
+          "description": "Denies the notify_result command without any pre-configured scope.",
           "type": "string",
-          "enum": [
-            "deny-notify-result"
-          ]
+          "const": "deny-notify-result"
         },
         {
-          "description": "allow-open-file-manager -> Enables the open_file_manager command without any pre-configured scope.",
+          "description": "Enables the open_file_manager command without any pre-configured scope.",
           "type": "string",
-          "enum": [
-            "allow-open-file-manager"
-          ]
+          "const": "allow-open-file-manager"
         },
         {
-          "description": "deny-open-file-manager -> Denies the open_file_manager command without any pre-configured scope.",
+          "description": "Denies the open_file_manager command without any pre-configured scope.",
           "type": "string",
-          "enum": [
-            "deny-open-file-manager"
-          ]
+          "const": "deny-open-file-manager"
         },
         {
-          "description": "allow-open-main-activity -> Enables the open_main_activity command without any pre-configured scope.",
+          "description": "Enables the open_main_activity command without any pre-configured scope.",
           "type": "string",
-          "enum": [
-            "allow-open-main-activity"
-          ]
+          "const": "allow-open-main-activity"
         },
         {
-          "description": "deny-open-main-activity -> Denies the open_main_activity command without any pre-configured scope.",
+          "description": "Denies the open_main_activity command without any pre-configured scope.",
           "type": "string",
-          "enum": [
-            "deny-open-main-activity"
-          ]
+          "const": "deny-open-main-activity"
         },
         {
-          "description": "allow-open-setting-config -> Enables the open_setting_config command without any pre-configured scope.",
+          "description": "Enables the open_setting_config command without any pre-configured scope.",
           "type": "string",
-          "enum": [
-            "allow-open-setting-config"
-          ]
+          "const": "allow-open-setting-config"
         },
         {
-          "description": "deny-open-setting-config -> Denies the open_setting_config command without any pre-configured scope.",
+          "description": "Denies the open_setting_config command without any pre-configured scope.",
           "type": "string",
-          "enum": [
-            "deny-open-setting-config"
-          ]
+          "const": "deny-open-setting-config"
         },
         {
-          "description": "allow-pulse-balance -> Enables the pulse_balance command without any pre-configured scope.",
+          "description": "Enables the pulse_balance command without any pre-configured scope.",
           "type": "string",
-          "enum": [
-            "allow-pulse-balance"
-          ]
+          "const": "allow-pulse-balance"
         },
         {
-          "description": "deny-pulse-balance -> Denies the pulse_balance command without any pre-configured scope.",
+          "description": "Denies the pulse_balance command without any pre-configured scope.",
           "type": "string",
-          "enum": [
-            "deny-pulse-balance"
-          ]
+          "const": "deny-pulse-balance"
         },
         {
-          "description": "allow-read-hardware-config -> Enables the read_hardware_config command without any pre-configured scope.",
+          "description": "Enables the read_hardware_config command without any pre-configured scope.",
           "type": "string",
-          "enum": [
-            "allow-read-hardware-config"
-          ]
+          "const": "allow-read-hardware-config"
         },
         {
-          "description": "deny-read-hardware-config -> Denies the read_hardware_config command without any pre-configured scope.",
+          "description": "Denies the read_hardware_config command without any pre-configured scope.",
           "type": "string",
-          "enum": [
-            "deny-read-hardware-config"
-          ]
+          "const": "deny-read-hardware-config"
         },
         {
-          "description": "allow-reboot -> Enables the reboot command without any pre-configured scope.",
+          "description": "Enables the reboot command without any pre-configured scope.",
           "type": "string",
-          "enum": [
-            "allow-reboot"
-          ]
+          "const": "allow-reboot"
         },
         {
-          "description": "deny-reboot -> Denies the reboot command without any pre-configured scope.",
+          "description": "Denies the reboot command without any pre-configured scope.",
           "type": "string",
-          "enum": [
-            "deny-reboot"
-          ]
+          "const": "deny-reboot"
         },
         {
-          "description": "allow-reset-lift -> Enables the reset_lift command without any pre-configured scope.",
+          "description": "Enables the reset_lift command without any pre-configured scope.",
           "type": "string",
-          "enum": [
-            "allow-reset-lift"
-          ]
+          "const": "allow-reset-lift"
         },
         {
-          "description": "deny-reset-lift -> Denies the reset_lift command without any pre-configured scope.",
+          "description": "Denies the reset_lift command without any pre-configured scope.",
           "type": "string",
-          "enum": [
-            "deny-reset-lift"
-          ]
+          "const": "deny-reset-lift"
         },
         {
-          "description": "allow-run-moto -> Enables the run_moto command without any pre-configured scope.",
+          "description": "Enables the run_moto command without any pre-configured scope.",
           "type": "string",
-          "enum": [
-            "allow-run-moto"
-          ]
+          "const": "allow-run-moto"
         },
         {
-          "description": "deny-run-moto -> Denies the run_moto command without any pre-configured scope.",
+          "description": "Denies the run_moto command without any pre-configured scope.",
           "type": "string",
-          "enum": [
-            "deny-run-moto"
-          ]
+          "const": "deny-run-moto"
         },
         {
-          "description": "allow-set-accept-money -> Enables the set_accept_money command without any pre-configured scope.",
+          "description": "Enables the set_accept_money command without any pre-configured scope.",
           "type": "string",
-          "enum": [
-            "allow-set-accept-money"
-          ]
+          "const": "allow-set-accept-money"
         },
         {
-          "description": "deny-set-accept-money -> Denies the set_accept_money command without any pre-configured scope.",
+          "description": "Denies the set_accept_money command without any pre-configured scope.",
           "type": "string",
-          "enum": [
-            "deny-set-accept-money"
-          ]
+          "const": "deny-set-accept-money"
         },
         {
-          "description": "allow-set-age-scope -> Enables the set_age_scope command without any pre-configured scope.",
+          "description": "Enables the set_age_scope command without any pre-configured scope.",
           "type": "string",
-          "enum": [
-            "allow-set-age-scope"
-          ]
+          "const": "allow-set-age-scope"
         },
         {
-          "description": "deny-set-age-scope -> Denies the set_age_scope command without any pre-configured scope.",
+          "description": "Denies the set_age_scope command without any pre-configured scope.",
           "type": "string",
-          "enum": [
-            "deny-set-age-scope"
-          ]
+          "const": "deny-set-age-scope"
         },
         {
-          "description": "allow-set-app-brightness -> Enables the set_app_brightness command without any pre-configured scope.",
+          "description": "Enables the set_app_brightness command without any pre-configured scope.",
           "type": "string",
-          "enum": [
-            "allow-set-app-brightness"
-          ]
+          "const": "allow-set-app-brightness"
         },
         {
-          "description": "deny-set-app-brightness -> Denies the set_app_brightness command without any pre-configured scope.",
+          "description": "Denies the set_app_brightness command without any pre-configured scope.",
           "type": "string",
-          "enum": [
-            "deny-set-app-brightness"
-          ]
+          "const": "deny-set-app-brightness"
         },
         {
-          "description": "allow-set-gesture-status-bar -> Enables the set_gesture_status_bar command without any pre-configured scope.",
+          "description": "Enables the set_gesture_status_bar command without any pre-configured scope.",
           "type": "string",
-          "enum": [
-            "allow-set-gesture-status-bar"
-          ]
+          "const": "allow-set-gesture-status-bar"
         },
         {
-          "description": "deny-set-gesture-status-bar -> Denies the set_gesture_status_bar command without any pre-configured scope.",
+          "description": "Denies the set_gesture_status_bar command without any pre-configured scope.",
           "type": "string",
-          "enum": [
-            "deny-set-gesture-status-bar"
-          ]
+          "const": "deny-set-gesture-status-bar"
         },
         {
-          "description": "allow-set-lcd-on-off -> Enables the set_lcd_on_off command without any pre-configured scope.",
+          "description": "Enables the set_lcd_on_off command without any pre-configured scope.",
           "type": "string",
-          "enum": [
-            "allow-set-lcd-on-off"
-          ]
+          "const": "allow-set-lcd-on-off"
         },
         {
-          "description": "deny-set-lcd-on-off -> Denies the set_lcd_on_off command without any pre-configured scope.",
+          "description": "Denies the set_lcd_on_off command without any pre-configured scope.",
           "type": "string",
-          "enum": [
-            "deny-set-lcd-on-off"
-          ]
+          "const": "deny-set-lcd-on-off"
         },
         {
-          "description": "allow-set-pay-channel -> Enables the set_pay_channel command without any pre-configured scope.",
+          "description": "Enables the set_pay_channel command without any pre-configured scope.",
           "type": "string",
-          "enum": [
-            "allow-set-pay-channel"
-          ]
+          "const": "allow-set-pay-channel"
         },
         {
-          "description": "deny-set-pay-channel -> Denies the set_pay_channel command without any pre-configured scope.",
+          "description": "Denies the set_pay_channel command without any pre-configured scope.",
           "type": "string",
-          "enum": [
-            "deny-set-pay-channel"
-          ]
+          "const": "deny-set-pay-channel"
         },
         {
-          "description": "allow-set-pick-xy -> Enables the set_pick_xy command without any pre-configured scope.",
+          "description": "Enables the set_pick_xy command without any pre-configured scope.",
           "type": "string",
-          "enum": [
-            "allow-set-pick-xy"
-          ]
+          "const": "allow-set-pick-xy"
         },
         {
-          "description": "deny-set-pick-xy -> Denies the set_pick_xy command without any pre-configured scope.",
+          "description": "Denies the set_pick_xy command without any pre-configured scope.",
           "type": "string",
-          "enum": [
-            "deny-set-pick-xy"
-          ]
+          "const": "deny-set-pick-xy"
         },
         {
-          "description": "allow-set-power-on-off-time -> Enables the set_power_on_off_time command without any pre-configured scope.",
+          "description": "Enables the set_power_on_off_time command without any pre-configured scope.",
           "type": "string",
-          "enum": [
-            "allow-set-power-on-off-time"
-          ]
+          "const": "allow-set-power-on-off-time"
         },
         {
-          "description": "deny-set-power-on-off-time -> Denies the set_power_on_off_time command without any pre-configured scope.",
+          "description": "Denies the set_power_on_off_time command without any pre-configured scope.",
           "type": "string",
-          "enum": [
-            "deny-set-power-on-off-time"
-          ]
+          "const": "deny-set-power-on-off-time"
         },
         {
-          "description": "allow-set-status-bar -> Enables the set_status_bar command without any pre-configured scope.",
+          "description": "Enables the set_status_bar command without any pre-configured scope.",
           "type": "string",
-          "enum": [
-            "allow-set-status-bar"
-          ]
+          "const": "allow-set-status-bar"
         },
         {
-          "description": "deny-set-status-bar -> Denies the set_status_bar command without any pre-configured scope.",
+          "description": "Denies the set_status_bar command without any pre-configured scope.",
           "type": "string",
-          "enum": [
-            "deny-set-status-bar"
-          ]
+          "const": "deny-set-status-bar"
         },
         {
-          "description": "allow-set-work-mode -> Enables the set_work_mode command without any pre-configured scope.",
+          "description": "Enables the set_work_mode command without any pre-configured scope.",
           "type": "string",
-          "enum": [
-            "allow-set-work-mode"
-          ]
+          "const": "allow-set-work-mode"
         },
         {
-          "description": "deny-set-work-mode -> Denies the set_work_mode command without any pre-configured scope.",
+          "description": "Denies the set_work_mode command without any pre-configured scope.",
           "type": "string",
-          "enum": [
-            "deny-set-work-mode"
-          ]
+          "const": "deny-set-work-mode"
         },
         {
-          "description": "allow-set-x-pos -> Enables the set_x_pos command without any pre-configured scope.",
+          "description": "Enables the set_x_pos command without any pre-configured scope.",
           "type": "string",
-          "enum": [
-            "allow-set-x-pos"
-          ]
+          "const": "allow-set-x-pos"
         },
         {
-          "description": "deny-set-x-pos -> Denies the set_x_pos command without any pre-configured scope.",
+          "description": "Denies the set_x_pos command without any pre-configured scope.",
           "type": "string",
-          "enum": [
-            "deny-set-x-pos"
-          ]
+          "const": "deny-set-x-pos"
         },
         {
-          "description": "allow-set-y-pos -> Enables the set_y_pos command without any pre-configured scope.",
+          "description": "Enables the set_y_pos command without any pre-configured scope.",
           "type": "string",
-          "enum": [
-            "allow-set-y-pos"
-          ]
+          "const": "allow-set-y-pos"
         },
         {
-          "description": "deny-set-y-pos -> Denies the set_y_pos command without any pre-configured scope.",
+          "description": "Denies the set_y_pos command without any pre-configured scope.",
           "type": "string",
-          "enum": [
-            "deny-set-y-pos"
-          ]
+          "const": "deny-set-y-pos"
         },
         {
-          "description": "allow-shutdown -> Enables the shutdown command without any pre-configured scope.",
+          "description": "Enables the shutdown command without any pre-configured scope.",
           "type": "string",
-          "enum": [
-            "allow-shutdown"
-          ]
+          "const": "allow-shutdown"
         },
         {
-          "description": "deny-shutdown -> Denies the shutdown command without any pre-configured scope.",
+          "description": "Denies the shutdown command without any pre-configured scope.",
           "type": "string",
-          "enum": [
-            "deny-shutdown"
-          ]
+          "const": "deny-shutdown"
         },
         {
-          "description": "allow-sync-system-time -> Enables the sync_system_time command without any pre-configured scope.",
+          "description": "Enables the sync_system_time command without any pre-configured scope.",
           "type": "string",
-          "enum": [
-            "allow-sync-system-time"
-          ]
+          "const": "allow-sync-system-time"
         },
         {
-          "description": "deny-sync-system-time -> Denies the sync_system_time command without any pre-configured scope.",
+          "description": "Denies the sync_system_time command without any pre-configured scope.",
           "type": "string",
-          "enum": [
-            "deny-sync-system-time"
-          ]
+          "const": "deny-sync-system-time"
         },
         {
-          "description": "allow-take-screen-shot -> Enables the take_screen_shot command without any pre-configured scope.",
+          "description": "Enables the take_screen_shot command without any pre-configured scope.",
           "type": "string",
-          "enum": [
-            "allow-take-screen-shot"
-          ]
+          "const": "allow-take-screen-shot"
         },
         {
-          "description": "deny-take-screen-shot -> Denies the take_screen_shot command without any pre-configured scope.",
+          "description": "Denies the take_screen_shot command without any pre-configured scope.",
           "type": "string",
-          "enum": [
-            "deny-take-screen-shot"
-          ]
+          "const": "deny-take-screen-shot"
         },
         {
-          "description": "allow-to-x -> Enables the to_x command without any pre-configured scope.",
+          "description": "Enables the to_x command without any pre-configured scope.",
           "type": "string",
-          "enum": [
-            "allow-to-x"
-          ]
+          "const": "allow-to-x"
         },
         {
-          "description": "deny-to-x -> Denies the to_x command without any pre-configured scope.",
+          "description": "Denies the to_x command without any pre-configured scope.",
           "type": "string",
-          "enum": [
-            "deny-to-x"
-          ]
+          "const": "deny-to-x"
         },
         {
-          "description": "allow-to-y -> Enables the to_y command without any pre-configured scope.",
+          "description": "Enables the to_y command without any pre-configured scope.",
           "type": "string",
-          "enum": [
-            "allow-to-y"
-          ]
+          "const": "allow-to-y"
         },
         {
-          "description": "deny-to-y -> Denies the to_y command without any pre-configured scope.",
+          "description": "Denies the to_y command without any pre-configured scope.",
           "type": "string",
-          "enum": [
-            "deny-to-y"
-          ]
+          "const": "deny-to-y"
         }
       ]
     }

@@ -25,3 +25,8 @@ $ rm -rf tauri
 ```kotlin
 File(this.applicationContext.getExternalFilesDir(null), "xxx.json").writeText(Gson().toJson(payload))
 ```
+
+### generate SqlDelight Interface
+```shell
+sudo ./gradlew generateSqlDelightInterface
+```
