@@ -8,6 +8,8 @@ CREATE TABLE `machines` (
   `machine_no` TEXT NOT NULL
 );
 
+CREATE INDEX index_machine_no ON machines(machine_no);
+
 insert:
 INSERT INTO `machines` (`name`, `client_id`, `imei`, `contact`, `tel`, `machine_no`) VALUES (?, ?, ?, ?, ?, ?);
 

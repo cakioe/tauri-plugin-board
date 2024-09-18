@@ -42,6 +42,7 @@ import cc.uling.usdk.constants.CodeUtil
 import cc.uling.usdk.constants.ErrorConst
 import com.google.gson.Gson
 import com.plugin.board.database.Database
+import com.plugin.board.database.Serial_devices
 import com.zcapi
 import io.github.cakioe.Carbon
 import kotlinx.coroutines.DelicateCoroutinesApi
@@ -231,11 +232,20 @@ class BoardPlugin(private val activity: Activity) : Plugin(activity) {
     override fun load(webView: WebView) {
         super.load(webView)
 
-        // initialization of the env
-        this.initBuildEnv()
-
         // initialization of the displayer
         this.displayer.getContext(webView.context)
+
+        // initialization of the task service
+        AndroidSqliteDriver(
+            Database.Schema,
+            activity.application,
+            File(this.activity.getExternalFilesDir(null), "default.db").absolutePath,
+        ).let {
+            this.database = Database(it)
+        }
+
+        // initialization of the env
+        this.initBuildEnv()
         this.initDisplayer(false)
 
         // initialization of the driver
@@ -246,13 +256,8 @@ class BoardPlugin(private val activity: Activity) : Plugin(activity) {
             }.await()
         }
 
-        // initialization of the task service
-        AndroidSqliteDriver(
-            Database.Schema,
-            activity.application,
-            File(this.activity.getExternalFilesDir(null), "default.db").absolutePath,
-        ).let {
-            this.database = Database(it)
+        // [check the initialization state]<https://stackoverflow.com/a/46584412>
+        if (this::database.isInitialized) {
             this.startTaskService()
         }
     }
@@ -308,39 +313,55 @@ class BoardPlugin(private val activity: Activity) : Plugin(activity) {
      * initialization of the driver
      */
     private fun initSerialDriver() {
-        val paths = SerialPortFinder().allDevicesPath.sorted()
         val result = mutableListOf<SerialDevice>()
+        val records: List<Serial_devices> = this.database.serialDeviceQueries.select().executeAsList()
+        if (records.isNotEmpty()) {
+            records.forEach {
+                result.add(SerialDevice(
+                    path = it.path,
+                    active = it.active == 1.toLong(),
+                    disabled = it.disabled == 1.toLong(),
+                    index = it.index?.toInt() ?: 0
+                ))
+            }
+            this.serialsDevice = result
+            return
+        }
 
+        val paths = SerialPortFinder().allDevicesPath.sorted()
         try {
             paths.forEachIndexed { index, path ->
-                val item: SerialDevice = SerialDevice(
-                    path = path,
-                    index = index + 1,
-                    active = false,
-                    disabled = true
-                )
-
                 val board = USDK.getInstance().create(path)
                 board.let { it ->
                     val resp = it.EF_OpenDev(path, this.baudrate)
                     if (resp != ErrorConst.MDB_ERR_NO_ERR) {
-                        result.add(item)
+                        this.database.serialDeviceQueries.insert(
+                            path = path,
+                            index = index.toLong() + 1,
+                            active = 0,
+                            disabled = 1
+                        )
                         return@forEachIndexed
                     }
 
                     val para = SVReplyPara(1)
+                    var active: Long = 0
+                    var disabled: Long = 1
                     it.GetSoftwareVersion(para)
-                    if (para.isOK && this.commid == "/dev/ttyS0") {
-                        item.active = para.isOK
-                        item.disabled = false
+                    if (para.isOK && !this::driver.isInitialized) {
+                        active = 1
+                        disabled = 0
                         this.commid = path
                         this.driver = it
                     }
-                    result.add(item)
+                    this.database.serialDeviceQueries.insert(
+                        path = path,
+                        index = index.toLong() + 1,
+                        active = active,
+                        disabled = disabled
+                    )
                 }
             }
-
-            this.serialsDevice = result
         } catch (e: Exception) {
             Toast.makeText(activity, e.message, Toast.LENGTH_SHORT).show()
             throw e
@@ -572,7 +593,31 @@ class BoardPlugin(private val activity: Activity) : Plugin(activity) {
     fun getSerialDevicesPath(invoke: Invoke) {
         val gson = Gson()
         val ret = JSObject()
-        ret.put("value", gson.toJson(this.serialsDevice))
+        if (this::serialsDevice.isInitialized) {
+            ret.put("value", gson.toJson(this.serialsDevice))
+            invoke.resolve(ret)
+            return
+        }
+
+        val result = mutableListOf<SerialDevice>()
+        val records: List<Serial_devices> = this.database.serialDeviceQueries.select().executeAsList()
+        if (records.isEmpty()) {
+            ret.put("value", gson.toJson(result))
+            invoke.resolve(ret)
+            return
+        }
+
+        records.forEach {
+            result.add(SerialDevice(
+                path = it.path,
+                active = it.active == 1.toLong(),
+                disabled = it.disabled == 1.toLong(),
+                index = it.index?.toInt() ?: 0
+            ))
+        }
+
+        this.serialsDevice = result
+        ret.put("value", gson.toJson(result))
         invoke.resolve(ret)
     }
 

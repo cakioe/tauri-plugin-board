@@ -1,0 +1,27 @@
+CREATE TABLE `drivers` (
+    `id` INTEGER PRIMARY KEY NOT NULL,
+    `software_version` TEXT DEFAULT "unknown",
+    `hardware_version` TEXT DEFAULT "unknown",
+    `rows` INTEGER DEFAULT 0,
+    `columns` INTEGER DEFAULT 0,
+    `temperature` INTEGER DEFAULT 0,
+    `humidity` INTEGER DEFAULT 0
+);
+
+insert:
+INSERT INTO `drivers` (`software_version`, `hardware_version`, `rows`, `columns`, `temperature`, `humidity`) VALUES (?, ?, ?, ?, ?, ?);
+
+find:
+SELECT * FROM `drivers` ORDER BY `id` DESC LIMIT 1;
+
+update:
+UPDATE `drivers` SET `software_version` = ?,
+    `hardware_version` = ?,
+    `rows` = ?,
+    `columns` = ?,
+    `temperature` = ?,
+    `humidity` = ?
+WHERE `id` = (SELECT id FROM `drivers` ORDER BY `id` DESC LIMIT 1);
+
+delete:
+DELETE FROM `drivers` WHERE `id` = (SELECT id FROM `drivers` ORDER BY `id` DESC LIMIT 1);

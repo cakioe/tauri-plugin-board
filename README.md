@@ -30,3 +30,5 @@ File(this.applicationContext.getExternalFilesDir(null), "xxx.json").writeText(Gs
 ```shell
 sudo ./gradlew generateSqlDelightInterface
 ```
+
+adb pull /sdcard/xxx/files/xxx.db ./

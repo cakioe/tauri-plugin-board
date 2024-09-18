@@ -6,9 +6,9 @@ CREATE TABLE `floor_types` (
   `display_name` TEXT NOT NULL
 );
 
-INSERT INTO `floor_types` (`id`, `display_name`) VALUES (1, "履带");
-INSERT INTO `floor_types` (`id`, `display_name`) VALUES (2, "电机");
-INSERT INTO `floor_types` (`id`, `display_name`) VALUES (3, "电磁锁");
+INSERT INTO `floor_types` (`id`, `display_name`) VALUES (1, "__TYPE__CATERPILLAR");
+INSERT INTO `floor_types` (`id`, `display_name`) VALUES (2, "__TYPE__MOTOR");
+INSERT INTO `floor_types` (`id`, `display_name`) VALUES (3, "__TYPE__ELECTROMAGNETIC");
 
 select:
 SELECT * FROM `floor_types` ORDER BY `id` ASC;

@@ -1,0 +1,24 @@
+CREATE TABLE `serial_devices` (
+  `id` INTEGER PRIMARY KEY NOT NULL,
+  `path` TEXT NOT NULL,
+  `active` INTEGER DEFAULT 0,
+  `index` INTEGER DEFAULT 0,
+  `disabled` INTEGER DEFAULT 0
+);
+
+CREATE INDEX index_serial_devices ON serial_devices(path);
+
+insert:
+INSERT INTO `serial_devices` (`path`, `active`, `index`, `disabled`) VALUES (?,?,?,?);
+
+select:
+SELECT * FROM `serial_devices` ORDER BY `index` ASC;
+
+update:
+UPDATE `serial_devices` SET `active` = ?, `index` = ?, `disabled` = ? WHERE `id` = ?;
+
+delete:
+DELETE FROM `serial_devices` WHERE `id` = ?;
+
+destory:
+DELETE FROM `serial_devices`;

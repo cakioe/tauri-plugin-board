@@ -75,6 +75,7 @@ dependencies {
     implementation("com.hivemq:hivemq-mqtt-client-reactor:1.3.0")
 
     implementation("app.cash.sqldelight:android-driver:2.0.2")
+    implementation("app.cash.sqldelight:coroutines-extensions-jvm:2.0.0")
 
     implementation("androidx.core:core-ktx:1.9.0")
     implementation("androidx.appcompat:appcompat:1.6.0")
