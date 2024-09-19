@@ -48,6 +48,7 @@ const COMMANDS: &[&str] = &[
     "pulse_balance",
     "moto_timeout",
     "set_pick_xy",
+    "get_config",
 ];
 
 fn main() {

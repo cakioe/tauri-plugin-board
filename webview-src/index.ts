@@ -155,6 +155,7 @@ export async function getSerialDevicesPath(): Promise<SerialDevice[]> {
  *
  * @since 1.4.0-beta.12
  * @update 1.5.6
+ * @deprecated 1.7.0
  */
 export interface BuildEnv {
   sdk_version: number
@@ -171,6 +172,44 @@ export interface BuildEnv {
 export async function getBuildEnv(options?: { no: string }): Promise<BuildEnv> {
   return await invoke<Record<string, string>>('plugin:board|get_build_env', { ...options }).then(
     r => JSON.parse(r.value) as unknown as BuildEnv
+  )
+}
+
+export interface Config {
+    id: number
+    sdk_version: string
+    android_version: string
+    serial_sn: string
+    model_no: string
+    screen_width: number
+    screen_height: number
+    commid: string
+    baudrate: number
+    status_bar_on: string | number
+    gesture_status_bar_on: string | number
+    brightness: number
+    rows?: number
+    columns?: number
+    is_with_coin?: boolean
+    is_with_cash?: boolean
+    is_with_pos?: boolean
+    is_with_pulse?: boolean
+    is_with_identify?: boolean
+    code?: string
+}
+
+/**
+ * @example
+ * ```typescript
+ * import { getConfig } from '@cakioe/tauri-plugin-board';
+ * await getConfig();
+ * ```
+ *
+ * @since 1.7.0-beta.3
+ */
+export async function getConfig(options?: { no: string }): Promise<Config> {
+  return await invoke<Record<string, string>>('plugin:board|get_config', { ...options }).then(
+    r => JSON.parse(r.value) as unknown as Config
   )
 }
 
