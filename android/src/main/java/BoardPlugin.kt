@@ -210,7 +210,7 @@ class BoardPlugin(private val activity: Activity) : Plugin(activity) {
     private var commid: String = "/dev/ttyS0"
     private var baudrate: Int = 9600
     private lateinit var driver: UBoard
-    private lateinit var serialsDevice: MutableList<SerialDevice>
+    private lateinit var serialsDevice: MutableList<Serial_devices>
 
     /**
      * the env of the android build
@@ -302,6 +302,7 @@ class BoardPlugin(private val activity: Activity) : Plugin(activity) {
      * @return void
      */
     override fun onNewIntent(intent: Intent) {
+        // 退出界面重新进入程序后 isInitialized的数据仍然保持
         this.initBuildEnv()
         this.initDisplayer(false)
         this.startTaskService()
@@ -313,18 +314,25 @@ class BoardPlugin(private val activity: Activity) : Plugin(activity) {
      * initialization of the driver
      */
     private fun initSerialDriver() {
-        val result = mutableListOf<SerialDevice>()
-        val records: List<Serial_devices> = this.database.serialDeviceQueries.select().executeAsList()
+        val records: List<Serial_devices> =
+            this.database.serialDeviceQueries.select().executeAsList()
         if (records.isNotEmpty()) {
-            records.forEach {
-                result.add(SerialDevice(
-                    path = it.path,
-                    active = it.active == 1.toLong(),
-                    disabled = it.disabled == 1.toLong(),
-                    index = it.index?.toInt() ?: 0
-                ))
+            this.serialsDevice = records.toMutableList()
+            if (this::driver.isInitialized) return
+
+            this.database.serialDeviceQueries.find(1).executeAsOneOrNull()?.let {
+                val path = it.path
+                USDK.getInstance().create(path).let { self ->
+                    val resp = self.EF_OpenDev(path, baudrate)
+                    if (resp != ErrorConst.MDB_ERR_NO_ERR) return
+
+                    val para = SVReplyPara(1)
+                    self.GetSoftwareVersion(para)
+                    if (para.isOK) {
+                        this.driver = self
+                    }
+                }
             }
-            this.serialsDevice = result
             return
         }
 
@@ -344,9 +352,9 @@ class BoardPlugin(private val activity: Activity) : Plugin(activity) {
                         return@forEachIndexed
                     }
 
-                    val para = SVReplyPara(1)
                     var active: Long = 0
                     var disabled: Long = 1
+                    val para = SVReplyPara(1)
                     it.GetSoftwareVersion(para)
                     if (para.isOK && !this::driver.isInitialized) {
                         active = 1
@@ -587,37 +595,17 @@ class BoardPlugin(private val activity: Activity) : Plugin(activity) {
      * command of `getSerialDevicesPath`
      *
      * @param invoke to invoke [none] { }
-     * @return json { value: SerialDevice[] }
+     * @return json { value: Serial_devices[] }
      */
     @Command
     fun getSerialDevicesPath(invoke: Invoke) {
         val gson = Gson()
         val ret = JSObject()
-        if (this::serialsDevice.isInitialized) {
-            ret.put("value", gson.toJson(this.serialsDevice))
-            invoke.resolve(ret)
-            return
+        if (!this::serialsDevice.isInitialized) {
+            this.initSerialDriver()
         }
 
-        val result = mutableListOf<SerialDevice>()
-        val records: List<Serial_devices> = this.database.serialDeviceQueries.select().executeAsList()
-        if (records.isEmpty()) {
-            ret.put("value", gson.toJson(result))
-            invoke.resolve(ret)
-            return
-        }
-
-        records.forEach {
-            result.add(SerialDevice(
-                path = it.path,
-                active = it.active == 1.toLong(),
-                disabled = it.disabled == 1.toLong(),
-                index = it.index?.toInt() ?: 0
-            ))
-        }
-
-        this.serialsDevice = result
-        ret.put("value", gson.toJson(result))
+        ret.put("value", gson.toJson(this.serialsDevice))
         invoke.resolve(ret)
     }
 

@@ -11,6 +11,9 @@ CREATE INDEX index_serial_devices ON serial_devices(path);
 insert:
 INSERT INTO `serial_devices` (`path`, `active`, `index`, `disabled`) VALUES (?,?,?,?);
 
+find:
+SELECT * FROM `serial_devices` WHERE `active` = ? ORDER BY `id` DESC LIMIT 1;
+
 select:
 SELECT * FROM `serial_devices` ORDER BY `index` ASC;
 

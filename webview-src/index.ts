@@ -131,8 +131,10 @@ export async function setAppBrightness(options?: { value: number }): Promise<str
  * ```
  *
  * @since 1.4.0-beta.5
+ * @update 1.7.0-beta.1
  */
 export interface SerialDevice {
+  id?: number
   path: string
   active: boolean
   index: number

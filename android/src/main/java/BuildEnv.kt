@@ -4,7 +4,7 @@ import androidx.annotation.Keep
 import com.google.gson.annotations.SerializedName
 
 @Keep
-data class BuildEnv (
+data class BuildEnv(
     @SerializedName("sdk_version")
     var sdkVersion: Int,
 
@@ -37,19 +37,4 @@ data class BuildEnv (
 
     @SerializedName("brightness")
     var brightness: Int = 255,
-)
-
-@Keep
-data class SerialDevice(
-    @SerializedName("path")
-    var path: String,
-
-    @SerializedName("active")
-    var active: Boolean,
-
-    @SerializedName("index")
-    var index: Int,
-
-    @SerializedName("disabled")
-    var disabled: Boolean
 )

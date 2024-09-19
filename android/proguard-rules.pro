@@ -22,10 +22,14 @@
 
 # GSON<https://stackoverflow.com/a/46156695/21185153>
 -keep class com.plugin.board.** { *; }
-
 -keep class cc.uling.usdk.** { *; }
-
 -keepattributes io.github.cakioe.Signature
 -keep class com.google.gson.reflect.TypeToken { *; }
+
+-keep class com.plugin.board.database.** { *; }
+-keepattributes com.plugin.board.database.**
+-keepclassmembers class com.plugin.board.database.** {
+    public *;
+}
 
 -dontoptimize
