@@ -375,6 +375,16 @@
           "const": "deny-get-change-status"
         },
         {
+          "description": "Enables the get_config command without any pre-configured scope.",
+          "type": "string",
+          "const": "allow-get-config"
+        },
+        {
+          "description": "Denies the get_config command without any pre-configured scope.",
+          "type": "string",
+          "const": "deny-get-config"
+        },
+        {
           "description": "Enables the get_drop_status command without any pre-configured scope.",
           "type": "string",
           "const": "allow-get-drop-status"
