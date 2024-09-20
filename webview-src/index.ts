@@ -154,8 +154,8 @@ export async function getSerialDevicesPath(): Promise<SerialDevice[]> {
  * ```
  *
  * @since 1.4.0-beta.12
- * @update 1.5.6
  * @deprecated 1.7.0
+ * @see {@link getConfig}
  */
 export interface BuildEnv {
   sdk_version: number
@@ -247,6 +247,8 @@ export async function takeScreenShot(): Promise<string> {
  * ```
  *
  * @since 1.5.1
+ * @deprecated 1.7.0
+ * @see {@link getConfig}
  */
 export interface BuildBoard {
   temperature: string

@@ -219,6 +219,32 @@ Denies the get_change_status command without any pre-configured scope.
 <tr>
 <td>
 
+`board:allow-get-config`
+
+</td>
+<td>
+
+Enables the get_config command without any pre-configured scope.
+
+</td>
+</tr>
+
+<tr>
+<td>
+
+`board:deny-get-config`
+
+</td>
+<td>
+
+Denies the get_config command without any pre-configured scope.
+
+</td>
+</tr>
+
+<tr>
+<td>
+
 `board:allow-get-drop-status`
 
 </td>

@@ -41,6 +41,7 @@ import cc.uling.usdk.board.wz.para.YSReplyPara
 import cc.uling.usdk.constants.CodeUtil
 import cc.uling.usdk.constants.ErrorConst
 import com.google.gson.Gson
+import com.plugin.board.database.Configs
 import com.plugin.board.database.Database
 import com.plugin.board.database.Serial_devices
 import com.zcapi
@@ -207,7 +208,6 @@ class BoardPlugin(private val activity: Activity) : Plugin(activity) {
     /**
      * the driver of the board
      */
-    private var commid: String = "/dev/ttyS0"
     private var baudrate: Int = 9600
     private lateinit var driver: UBoard
     private lateinit var serialsDevice: MutableList<Serial_devices>
@@ -215,8 +215,8 @@ class BoardPlugin(private val activity: Activity) : Plugin(activity) {
     /**
      * the env of the android build
      */
-    private lateinit var buildEnv: BuildEnv
     private lateinit var buildBoard: BuildBoard
+    private lateinit var configs: Configs
 
     private var taskRunning: Boolean = false
     private lateinit var database: Database
@@ -244,8 +244,8 @@ class BoardPlugin(private val activity: Activity) : Plugin(activity) {
             this.database = Database(it)
         }
 
-        // initialization of the env
-        this.initBuildEnv()
+        // initialization of the config
+        this.initConfig()
         this.initDisplayer(false)
 
         // initialization of the driver
@@ -303,7 +303,7 @@ class BoardPlugin(private val activity: Activity) : Plugin(activity) {
      */
     override fun onNewIntent(intent: Intent) {
         // 退出界面重新进入程序后 isInitialized的数据仍然保持
-        this.initBuildEnv()
+        this.initConfig()
         this.initDisplayer(false)
         this.startTaskService()
 
@@ -314,60 +314,65 @@ class BoardPlugin(private val activity: Activity) : Plugin(activity) {
      * initialization of the driver
      */
     private fun initSerialDriver() {
-        val records: List<Serial_devices> =
-            this.database.serialDeviceQueries.select().executeAsList()
-        if (records.isNotEmpty()) {
-            this.serialsDevice = records.toMutableList()
-            if (this::driver.isInitialized) return
-
-            this.database.serialDeviceQueries.find(1).executeAsOneOrNull()?.let {
-                val path = it.path
-                USDK.getInstance().create(path).let { self ->
-                    val resp = self.EF_OpenDev(path, baudrate)
-                    if (resp != ErrorConst.MDB_ERR_NO_ERR) return
-
-                    val para = SVReplyPara(1)
-                    self.GetSoftwareVersion(para)
-                    if (para.isOK) {
-                        this.driver = self
-                    }
-                }
-            }
-            return
-        }
-
+        val records = mutableListOf<Serial_devices>()
         val paths = SerialPortFinder().allDevicesPath.sorted()
         try {
             paths.forEachIndexed { index, path ->
                 val board = USDK.getInstance().create(path)
                 board.let { it ->
+                    var device = Serial_devices(
+                        id = index.toLong() + 1,
+                        path = path,
+                        index = index.toLong() + 1,
+                        active = 0,
+                        disabled = 1,
+                    )
                     val resp = it.EF_OpenDev(path, this.baudrate)
                     if (resp != ErrorConst.MDB_ERR_NO_ERR) {
-                        this.database.serialDeviceQueries.insert(
-                            path = path,
-                            index = index.toLong() + 1,
-                            active = 0,
-                            disabled = 1
-                        )
+                        records.add(device)
                         return@forEachIndexed
                     }
 
-                    var active: Long = 0
-                    var disabled: Long = 1
                     val para = SVReplyPara(1)
                     it.GetSoftwareVersion(para)
                     if (para.isOK && !this::driver.isInitialized) {
-                        active = 1
-                        disabled = 0
-                        this.commid = path
+                        device = device.copy(active = 1, disabled = 0)
                         this.driver = it
+                        this.configs = this.configs.copy(commid = path)
                     }
-                    this.database.serialDeviceQueries.insert(
-                        path = path,
-                        index = index.toLong() + 1,
-                        active = active,
-                        disabled = disabled
-                    )
+                    records.add(device)
+                }
+            }
+
+            this.serialsDevice = records
+
+            // 读取驱动版 xy轴数量
+            if (this::driver.isInitialized) {
+                HCReplyPara(1).apply {
+                    driver.ReadHardwareConfig(this)
+                }.apply {
+                    if (this.isOK) {
+                        configs = configs.copy(
+                            rows = this.row.toLong(),
+                            columns = this.column.toLong()
+                        )
+                    }
+                }
+
+                // 获取mdb配置
+                cc.uling.usdk.board.mdb.para.HCReplyPara().apply {
+                    driver.readHardwareConfig(this)
+                }.let {
+                    if (it.isOK) {
+                        this.configs = this.configs.copy(
+                            is_with_coin = if (it.isWithCoin) 1 else 0,
+                            is_with_cash = if (it.isWithCash) 1 else 0,
+                            is_with_pos = if (it.isWithPOS) 1 else 0,
+                            is_with_pulse = if (it.isWithPulse) 1 else 0,
+                            is_with_identify = if (it.isWithIdentify) 1 else 0,
+                            code = it.code,
+                        )
+                    }
                 }
             }
         } catch (e: Exception) {
@@ -382,32 +387,48 @@ class BoardPlugin(private val activity: Activity) : Plugin(activity) {
      * @param
      * @return void
      */
-    private fun initBuildEnv() {
-        this.buildEnv = BuildEnv(
-            sdkVersion = Build.VERSION.SDK_INT,
-            androidVersion = Build.VERSION.RELEASE,
-            serialSn = this.displayer.buildSerial,
-            modelNo = this.displayer.buildModel,
-            screenWidth = 0,
-            screenHeight = 0,
-            baudrate = this.baudrate,
-            commid = this.commid,
-            brightness = 255,
-        )
+    private fun initConfig() {
+        if (this::configs.isInitialized) return
+
+        var screenHeight: Int
+        var screenWidth: Int
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
             // [system bars]<https://stackoverflow.com/a/63409619/21185153>
             val windowMetrics = activity.windowManager.currentWindowMetrics
-            this.buildEnv.screenHeight = windowMetrics.bounds.height()
-            this.buildEnv.screenWidth = windowMetrics.bounds.width()
+            screenHeight = windowMetrics.bounds.height()
+            screenWidth = windowMetrics.bounds.width()
         } else {
             DisplayMetrics().let { item ->
                 @Suppress("DEPRECATION")
                 activity.windowManager.defaultDisplay.getMetrics(item).let {
-                    this.buildEnv.screenHeight = item.widthPixels
-                    this.buildEnv.screenWidth = item.heightPixels
+                    screenHeight = item.widthPixels
+                    screenWidth = item.heightPixels
                 }
             }
         }
+
+        this.configs = Configs(
+            id = 1,
+            sdk_version = Build.VERSION.SDK_INT.toString(),
+            android_version = Build.VERSION.RELEASE,
+            serial_sn = this.displayer.buildSerial,
+            model_no = this.displayer.buildModel,
+            screen_width = screenWidth.toLong(),
+            screen_height = screenHeight.toLong(),
+            baudrate = this.baudrate.toLong(),
+            commid = "/dev/ttyS0",
+            status_bar_on = 0,
+            gesture_status_bar_on = 0,
+            brightness = 255,
+            rows = 0,
+            columns = 0,
+            is_with_identify = 0,
+            is_with_cash = 0,
+            is_with_coin = 0,
+            is_with_pulse = 0,
+            is_with_pos = 0,
+            code = "unknown"
+        )
     }
 
     /**
@@ -417,13 +438,15 @@ class BoardPlugin(private val activity: Activity) : Plugin(activity) {
      * @return void
      */
     private fun initDisplayer(enable: Boolean = false) {
-        this.buildEnv.modelNo.apply {
+        this.configs.model_no.apply {
             if (this.startsWith("zc") || this.startsWith("ZC")) {
                 displayer.setStatusBar(enable)
                 displayer.setGestureStatusBar(enable)
 
-                buildEnv.statusBarOn = if (enable) "1" else "0"
-                buildEnv.gestureStatusBarOn = if (enable) "1" else "0"
+                configs = configs.copy(
+                    status_bar_on = if (enable) 1 else 0,
+                    gesture_status_bar_on = if (enable) 1 else 0
+                )
             }
         }
     }
@@ -464,7 +487,7 @@ class BoardPlugin(private val activity: Activity) : Plugin(activity) {
     fun setStatusBar(invoke: Invoke) {
         val argv = invoke.parseArgs(StatusBar::class.java).enable ?: false
         this.displayer.setStatusBar(argv)
-        this.buildEnv.statusBarOn = if (argv) "1" else "0"
+        this.configs = this.configs.copy(status_bar_on = if (argv) 1 else 0)
         invoke.resolve()
     }
 
@@ -478,7 +501,7 @@ class BoardPlugin(private val activity: Activity) : Plugin(activity) {
     fun setGestureStatusBar(invoke: Invoke) {
         val argv = invoke.parseArgs(GestureStatusBar::class.java).enable ?: false
         this.displayer.setGestureStatusBar(argv)
-        this.buildEnv.gestureStatusBarOn = if (argv) "1" else "0"
+        this.configs = this.configs.copy(gesture_status_bar_on = if (argv) 1 else 0)
         invoke.resolve()
     }
 
@@ -559,7 +582,7 @@ class BoardPlugin(private val activity: Activity) : Plugin(activity) {
     @Command
     fun setAppBrightness(invoke: Invoke) {
         val args = invoke.parseArgs(AppBrightness::class.java)
-        this.buildEnv.brightness = args.value.coerceIn(5, 255)
+        this.configs = this.configs.copy(brightness = args.value.coerceIn(5, 255).toLong())
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && !Settings.System.canWrite(activity)) {
             val intent = Intent(Settings.ACTION_MANAGE_WRITE_SETTINGS)
@@ -577,11 +600,11 @@ class BoardPlugin(private val activity: Activity) : Plugin(activity) {
                 Settings.System.putInt(
                     activity.contentResolver,
                     Settings.System.SCREEN_BRIGHTNESS,
-                    this.buildEnv.brightness
+                    this.configs.brightness!!.toInt()
                 )
             }
             activity.window.attributes.let {
-                it.screenBrightness = this.buildEnv.brightness / 255f
+                it.screenBrightness = this.configs.brightness!! / 255f
                 activity.window.attributes = it
             }
         } catch (e: Exception) {
@@ -615,12 +638,28 @@ class BoardPlugin(private val activity: Activity) : Plugin(activity) {
      * @param invoke to invoke [none] { }
      * @return void
      * @since 1.4.0-beta.12
+     * @deprecated 1.7.0
      */
     @Command
     fun getBuildEnv(invoke: Invoke) {
         val gson = Gson()
         val ret = JSObject()
-        ret.put("value", gson.toJson(this.buildEnv))
+        ret.put("value", gson.toJson(this.configs))
+        invoke.resolve(ret)
+    }
+
+    /**
+     * command of `getConfig`
+     *
+     * @param invoke to invoke [none] { }
+     * @return void
+     * @since 1.7.0-beta.3
+     */
+    @Command
+    fun getConfig(invoke: Invoke) {
+        val gson = Gson()
+        val ret = JSObject()
+        ret.put("value", gson.toJson(this.configs))
         invoke.resolve(ret)
     }
 
@@ -667,6 +706,7 @@ class BoardPlugin(private val activity: Activity) : Plugin(activity) {
      * @param invoke to invoke [BuildBoardRequest] { input: Int }
      * @return void
      * @since 1.5.1
+     * @deprecated 1.7.0, use getConfig instead
      */
     @Command
     fun getBuildBoard(invoke: Invoke) {
@@ -697,7 +737,7 @@ class BoardPlugin(private val activity: Activity) : Plugin(activity) {
 
                 (this.humi / 10.0).apply {
                     if (this != UNAVAILABLE_VALUE) {
-                        buildBoard.temperature = this.toString()
+                        buildBoard.humidity = this.toString()
                     }
                 }
             }

@@ -8,6 +8,11 @@ CREATE TABLE `configs` (
     `screen_height` INTEGER DEFAULT 0,
     `commid` TEXT DEFAULT "/dev/ttyS0",
     `baudrate` INTEGER DEFAULT 9600,
+    `status_bar_on` INTEGER DEFAULT 0,
+    `gesture_status_bar_on` INTEGER DEFAULT 0,
+    `brightness` INTEGER DEFAULT 255,
+    `rows` INTEGER DEFAULT 0,
+    `columns` INTEGER DEFAULT 0,
     `is_with_coin` INTEGER DEFAULT 0,
     `is_with_cash` INTEGER DEFAULT 0,
     `is_with_pos` INTEGER DEFAULT 0,
@@ -16,5 +21,5 @@ CREATE TABLE `configs` (
     `code` TEXT DEFAULT "unknown"
 );
 
-insert:
-INSERT INTO configs VALUES (1, "1.0.0", "1.0.0", "123456", "unknown", 0, 0, "/dev/ttyS0", 9600, 0, 0, 0, 0, 0, "unknown");
+find:
+SELECT * FROM `configs` ORDER BY `id` DESC LIMIT 1;
