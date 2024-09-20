@@ -35,7 +35,6 @@ import cc.uling.usdk.board.wz.para.SXPReplyPara
 import cc.uling.usdk.board.wz.para.SYPReplyPara
 import cc.uling.usdk.board.wz.para.TXReplyPara
 import cc.uling.usdk.board.wz.para.TYReplyPara
-import cc.uling.usdk.board.wz.para.TempReplyPara
 import cc.uling.usdk.board.wz.para.XSReplyPara
 import cc.uling.usdk.board.wz.para.YSReplyPara
 import cc.uling.usdk.constants.CodeUtil
@@ -88,11 +87,6 @@ class SettingConfig {
 @InvokeArg
 class FileManager {
     var enable: Boolean = true
-}
-
-@InvokeArg
-class BuildBoardRequest {
-    var addr: Int? = 1
 }
 
 @InvokeArg
@@ -215,7 +209,6 @@ class BoardPlugin(private val activity: Activity) : Plugin(activity) {
     /**
      * the env of the android build
      */
-    private lateinit var buildBoard: BuildBoard
     private lateinit var configs: Configs
 
     private var taskRunning: Boolean = false
@@ -633,22 +626,6 @@ class BoardPlugin(private val activity: Activity) : Plugin(activity) {
     }
 
     /**
-     * command of `getBuildEnv`
-     *
-     * @param invoke to invoke [none] { }
-     * @return void
-     * @since 1.4.0-beta.12
-     * @deprecated 1.7.0
-     */
-    @Command
-    fun getBuildEnv(invoke: Invoke) {
-        val gson = Gson()
-        val ret = JSObject()
-        ret.put("value", gson.toJson(this.configs))
-        invoke.resolve(ret)
-    }
-
-    /**
      * command of `getConfig`
      *
      * @param invoke to invoke [none] { }
@@ -698,74 +675,6 @@ class BoardPlugin(private val activity: Activity) : Plugin(activity) {
         val ret = JSObject()
         ret.put("value", "${SDCARD_DIR}/${filename}")
         invoke.resolve()
-    }
-
-    /**
-     * command of `getBuildBoard`
-     *
-     * @param invoke to invoke [BuildBoardRequest] { input: Int }
-     * @return void
-     * @since 1.5.1
-     * @deprecated 1.7.0, use getConfig instead
-     */
-    @Command
-    fun getBuildBoard(invoke: Invoke) {
-        if (!this.driver.EF_Opened()) {
-            throw Exception("driver not opened")
-        }
-
-        val addr = invoke.parseArgs(BuildBoardRequest::class.java).addr ?: 1
-        this.buildBoard = BuildBoard(
-            temperature = "unknown",
-            humidity = "unknown",
-            hardwareVersion = "0",
-            boardRows = 10,
-            boardColumns = 10,
-            softwareVersion = "0",
-        )
-
-        // read temperature
-        TempReplyPara(addr).apply {
-            driver.ReadTemp(this)
-        }.apply {
-            if (this.isOK) {
-                (this.temp / 10.0).apply {
-                    if (this != UNAVAILABLE_VALUE) {
-                        buildBoard.temperature = this.toString()
-                    }
-                }
-
-                (this.humi / 10.0).apply {
-                    if (this != UNAVAILABLE_VALUE) {
-                        buildBoard.humidity = this.toString()
-                    }
-                }
-            }
-        }
-
-        // read hardware version
-        HCReplyPara(addr).apply {
-            driver.ReadHardwareConfig(this)
-        }.apply {
-            if (this.isOK) {
-                buildBoard.hardwareVersion = this.version
-                buildBoard.boardRows = this.row
-                buildBoard.boardColumns = this.column
-            }
-        }
-
-        SVReplyPara(addr).apply {
-            driver.GetSoftwareVersion(this)
-        }.apply {
-            if (this.isOK) {
-                buildBoard.softwareVersion = this.version
-            }
-        }
-
-        val gson = Gson()
-        val ret = JSObject()
-        ret.put("value", gson.toJson(this.buildBoard))
-        invoke.resolve(ret)
     }
 
     /**

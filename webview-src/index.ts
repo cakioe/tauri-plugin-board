@@ -146,35 +146,6 @@ export async function getSerialDevicesPath(): Promise<SerialDevice[]> {
   )
 }
 
-/**
- * @example
- * ```typescript
- * import { getBuildEnv } from '@cakioe/tauri-plugin-board';
- * await getBuildEnv({ ...options });
- * ```
- *
- * @since 1.4.0-beta.12
- * @deprecated 1.7.0
- * @see {@link getConfig}
- */
-export interface BuildEnv {
-  sdk_version: number
-  android_version: string
-  serial_sn: string
-  model_no: string
-  screen_width: number
-  screen_height: number
-  commid: string
-  baudrate: number
-  status_bar_on: string
-  gesture_status_bar_on: string
-}
-export async function getBuildEnv(options?: { no: string }): Promise<BuildEnv> {
-  return await invoke<Record<string, string>>('plugin:board|get_build_env', { ...options }).then(
-    r => JSON.parse(r.value) as unknown as BuildEnv
-  )
-}
-
 export interface Config {
     id: number
     sdk_version: string
@@ -237,31 +208,6 @@ export async function openMainActivity(): Promise<void> {
  */
 export async function takeScreenShot(): Promise<string> {
   return await invoke<Record<string, string>>('plugin:board|take_screen_shot').then(r => r.value)
-}
-
-/**
- * @example
- * ```typescript
- * import { BuildBoard } from '@cakioe/tauri-plugin-board';
- * await BuildBoard({input: input});
- * ```
- *
- * @since 1.5.1
- * @deprecated 1.7.0
- * @see {@link getConfig}
- */
-export interface BuildBoard {
-  temperature: string
-  humidity: string
-  hardware_version: string
-  software_version: string
-  board_rows: number
-  board_columns: number
-}
-export async function getBuildBoard(options?: { addr: number }): Promise<BuildBoard> {
-  return await invoke<Record<string, string>>('plugin:board|get_build_board', { ...options }).then(
-    r => JSON.parse(r.value) as unknown as BuildBoard
-  )
 }
 
 /**
