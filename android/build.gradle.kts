@@ -18,7 +18,7 @@ android {
     compileSdk = 34
 
     buildFeatures {
-        buildConfig=true
+        buildConfig = true
     }
 
     defaultConfig {
