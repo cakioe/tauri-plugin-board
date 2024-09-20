@@ -11,10 +11,8 @@ const COMMANDS: &[&str] = &[
     "open_file_manager",
     "set_app_brightness",
     "get_serial_devices_path",
-    "get_build_env",
     "open_main_activity",
     "take_screen_shot",
-    "get_build_board",
     "exec_shipment",
     "get_box_status",
     "get_y_pos",
@@ -52,7 +50,6 @@ const COMMANDS: &[&str] = &[
 ];
 
 fn main() {
-    // https://github.com/tauri-apps/plugins-workspace/blob/v2/plugins/notification/build.rs
     if let Err(error) = tauri_plugin::Builder::new(COMMANDS)
         .global_api_script_path("./api-iife.js")
         .android_path("android")
@@ -63,16 +60,4 @@ fn main() {
             std::process::exit(1);
         }
     }
-
-    // TODO: rewrite AndroidManifest.xml for service
-    // <https://github.com/tauri-apps/plugins-workspace/blob/v2/plugins/nfc/build.rs>
-    // tauri_plugin::mobile::update_android_manifest(
-    //     "BOARD PLUGIN",
-    //     "activity",
-    //     r#"<intent-filter>
-    // <service android:name="xxxx.service" />
-    // </intent-filter>"#
-    //         .to_string(),
-    // )
-    // .expect("failed to rewrite AndroidManifest.xml")
 }
