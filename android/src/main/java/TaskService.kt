@@ -1,4 +1,5 @@
 package com.plugin.board
+
 import android.annotation.SuppressLint
 import android.app.Service
 import android.content.Intent
@@ -35,10 +36,11 @@ enum class Method(val value: String) {
 /**
  * service of `TaskService`
  */
-class TaskService: Service() {
+class TaskService : Service() {
     private lateinit var client: Mqtt5AsyncClient
     private lateinit var timer: Timer
-    private val signer: Signatory = Signatory(BuildConfig.APP_KEY)
+    private lateinit var signer: Signatory
+    private var options: PluginOptions? = null
 
     // android client publish topic for server
     private val publishTopic: String = "/server/android"
@@ -63,18 +65,25 @@ class TaskService: Service() {
 
     @SuppressLint("NewApi")
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
-        intent?.getStringExtra("no").let {
-            this.no = it.toString()
-            this.subscribeTopic = "/no/${it.toString()}"
+        val no: String? = intent?.getStringExtra("no")
+        val options: String? = intent?.getStringExtra("options")
+        if (no == null || options == null) {
+            return START_STICKY
+        }
 
-            // build async client
-            this.client =  MqttClient.builder()
+        this.no = no.toString()
+        this.subscribeTopic = "/no/${this.no}"
+
+        Gson().fromJson(options, PluginOptions::class.java)?.let { it ->
+            this.options = it
+            this.signer = Signatory(it.app_key)
+
+            this.client = MqttClient.builder()
                 .useMqttVersion5()
                 .identifier(this.no)
-                .serverHost(BuildConfig.BROKER)
-                .serverPort(BuildConfig.PORT)
+                .serverHost(it.broker)
+                .serverPort(it.port)
                 .buildAsync()
-
             this.performLongTask()
         }
 
@@ -92,20 +101,20 @@ class TaskService: Service() {
             //send an async connect
             val ack = this.client.connectWith().cleanStart(true).noSessionExpiry().keepAlive(60)
                 .simpleAuth()
-                .username(BuildConfig.USERNAME)
-                .password(BuildConfig.PASSWORD.toByteArray())
+                .username(this.options!!.username)
+                .password(this.options!!.password.toByteArray())
                 .applySimpleAuth().send().whenComplete { _, throwable ->
-                if (throwable != null) {
-                    throwable.printStackTrace()
-                    return@whenComplete
-                }
+                    if (throwable != null) {
+                        throwable.printStackTrace()
+                        return@whenComplete
+                    }
 
-                // 每隔 5分钟 发送心跳检测
-                this.timer = Timer()
-                this.timer.schedule(timerTask {
-                    heartbeat()
-                }, 0, 300000) // 300000 毫秒
-            }.join()
+                    // 每隔 5分钟 发送心跳检测
+                    this.timer = Timer()
+                    this.timer.schedule(timerTask {
+                        heartbeat()
+                    }, 0, 300000) // 300000 毫秒
+                }.join()
 
             if (!ack.isSessionPresent) {
                 //only the call to join is blocking
@@ -116,10 +125,11 @@ class TaskService: Service() {
                             val params = String(publish.payloadAsBytes, StandardCharsets.UTF_8)
                             val payload: Map<String, Any> = signer.decryptBase64String(params)
 
-                            val method = if (payload.containsKey("method")) payload["method"] else null
+                            val method =
+                                if (payload.containsKey("method")) payload["method"] else null
                             val sign = if (payload.containsKey("sign")) payload["sign"] else null
                             if (method == null || sign == null) {
-                               return@callback
+                                return@callback
                             }
 
                             if (sign !is String || !this.signer.checkSignature(payload, sign)) {

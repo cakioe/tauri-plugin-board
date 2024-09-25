@@ -1,16 +1,7 @@
-import java.util.Properties
-
 plugins {
     id("com.android.library")
     id("org.jetbrains.kotlin.android")
     id("app.cash.sqldelight") version "2.0.2"
-}
-
-var localProperties = Properties().apply {
-    var propFile = file("local.properties")
-    if (propFile.exists()) {
-        propFile.inputStream().use { load(it) }
-    }
 }
 
 android {
@@ -30,16 +21,6 @@ android {
         ndk {
             abiFilters.add("armeabi-v7a")
             abiFilters.add("armeabi-v8a")
-        }
-
-        localProperties.apply {
-            buildConfigField("String", "PROTOCOL", "\"${this["protocol"] as String}\"")
-            buildConfigField("String", "BROKER", "\"${this["broker"] as String}\"")
-            buildConfigField("int", "PORT", this["port"].toString())
-            buildConfigField("String", "USERNAME", "\"${this["username"] as String}\"")
-            buildConfigField("String", "PASSWORD", "\"${this["password"] as String}\"")
-            buildConfigField("String", "MERCHANT_ID", "\"${this["merchant_id"] as String}\"")
-            buildConfigField("String", "APP_KEY", "\"${this["app_key"] as String}\"")
         }
     }
 

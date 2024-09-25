@@ -185,6 +185,17 @@ const val SDCARD_DIR = "/sdcard"
 
 const val UNAVAILABLE_VALUE = 3276.7
 
+@InvokeArg
+class PluginOptions {
+    var protocol: String = "mqtt"
+    var broker: String = "broker.emqx.io"
+    var port: Int = 1883
+    var username: String = ""
+    var password: String = ""
+    var merchant_id: String = ""
+    var app_key: String = ""
+}
+
 /**
  * vending board plugin of tauri for android use kotlin
  * @author: <cleveng@gmail.com>
@@ -213,6 +224,7 @@ class BoardPlugin(private val activity: Activity) : Plugin(activity) {
 
     private var taskRunning: Boolean = false
     private lateinit var database: Database
+    private lateinit var options: PluginOptions
 
     /**
      * the init method of the plugin
@@ -224,6 +236,11 @@ class BoardPlugin(private val activity: Activity) : Plugin(activity) {
     @OptIn(DelicateCoroutinesApi::class)
     override fun load(webView: WebView) {
         super.load(webView)
+
+        // 从 tauri.config.json 获取参数
+        getConfig(PluginOptions::class.java).let {
+            this.options = it
+        }
 
         // initialization of the displayer
         this.displayer.getContext(webView.context)
@@ -268,6 +285,9 @@ class BoardPlugin(private val activity: Activity) : Plugin(activity) {
             this.activity.application.apply {
                 val intent = Intent(this, TaskService::class.java)
                 intent.putExtra("no", it.machine_no)
+                options.let {
+                    intent.putExtra("options", Gson().toJson(it))
+                }
                 startService(intent)
                 taskRunning = true
             }
