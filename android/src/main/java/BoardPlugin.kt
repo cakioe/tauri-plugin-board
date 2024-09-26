@@ -279,7 +279,7 @@ class BoardPlugin(private val activity: Activity) : Plugin(activity) {
      * @return void
      */
     private fun startTaskService() {
-        if (this.taskRunning) return
+        if (this.taskRunning || !this::options.isInitialized) return
 
         this.database.machineQueries.find().executeAsOneOrNull()?.let {
             this.activity.application.apply {
