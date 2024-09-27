@@ -161,11 +161,11 @@ export interface Config {
     brightness: number
     rows?: number
     columns?: number
-    is_with_coin?: boolean
-    is_with_cash?: boolean
-    is_with_pos?: boolean
-    is_with_pulse?: boolean
-    is_with_identify?: boolean
+    is_with_coin?: boolean | number
+    is_with_cash?: boolean | number
+    is_with_pos?: boolean | number
+    is_with_pulse?: boolean | number
+    is_with_identify?: boolean | number
     code?: string
 }
 
