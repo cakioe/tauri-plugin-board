@@ -30,7 +30,7 @@
     "@rollup/plugin-typescript": "^11.1.6",
     "@tauri-apps/api": "^2.0.0-rc.0",
     "@tauri-apps/cli": "^2.0.0-rc.3",
-    "rollup": "4.18.0",
+    "rollup": "^4.22.4",
     "tslib": "^2.6.3"
   },
   "files": [
