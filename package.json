@@ -25,13 +25,13 @@
     "typescript": "^5.4.5"
   },
   "dependencies": {
-    "@rollup/plugin-node-resolve": "^15.2.3",
+    "@rollup/plugin-node-resolve": "^15.3.0",
     "@rollup/plugin-terser": "^0.4.4",
     "@rollup/plugin-typescript": "^11.1.6",
-    "@tauri-apps/api": "^2.0.0-rc.0",
-    "@tauri-apps/cli": "^2.0.0-rc.3",
+    "@tauri-apps/api": "^2.0.0-rc.5",
+    "@tauri-apps/cli": "^2.0.0-rc.16",
     "rollup": "^4.22.4",
-    "tslib": "^2.6.3"
+    "tslib": "^2.7.0"
   },
   "files": [
     "webview-dist",
