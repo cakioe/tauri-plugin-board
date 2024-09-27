@@ -375,6 +375,16 @@
           "const": "deny-get-drop-status"
         },
         {
+          "description": "Enables the get_floor_types command without any pre-configured scope.",
+          "type": "string",
+          "const": "allow-get-floor-types"
+        },
+        {
+          "description": "Denies the get_floor_types command without any pre-configured scope.",
+          "type": "string",
+          "const": "deny-get-floor-types"
+        },
+        {
           "description": "Enables the get_min_payout_amount command without any pre-configured scope.",
           "type": "string",
           "const": "allow-get-min-payout-amount"

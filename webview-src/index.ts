@@ -759,3 +759,21 @@ export async function setPickXY(options?: { addr: number; pos: number; mode: num
 
   return await invoke<Record<string, string>>('plugin:board|set_pick_xy', { ...options }).then(r => r.value)
 }
+
+/**
+ * @example
+ * ```typescript
+ * import { getFloorTypes } from '@cakioe/tauri-plugin-board';
+ * await getFloorTypes();
+ * ```
+ *
+ * @since 1.7.2
+ * @returns {FloorType[]}
+ */
+export interface FloorType {
+    id: number
+    display_name: string
+}
+export async function getFloorTypes(): Promise<FloorType[]> {
+  return await invoke<Record<string, string>>('plugin:board|get_floor_types').then(r => JSON.parse(r.value) as unknown as FloorType[])
+}

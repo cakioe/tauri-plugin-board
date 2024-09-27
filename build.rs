@@ -47,6 +47,7 @@ const COMMANDS: &[&str] = &[
     "moto_timeout",
     "set_pick_xy",
     "get_config",
+    "get_floor_types",
 ];
 
 fn main() {

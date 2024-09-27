@@ -42,6 +42,7 @@ import cc.uling.usdk.constants.ErrorConst
 import com.google.gson.Gson
 import com.plugin.board.database.Configs
 import com.plugin.board.database.Database
+import com.plugin.board.database.Floor_types
 import com.plugin.board.database.Serial_devices
 import com.zcapi
 import io.github.cakioe.Carbon
@@ -657,6 +658,29 @@ class BoardPlugin(private val activity: Activity) : Plugin(activity) {
         val gson = Gson()
         val ret = JSObject()
         ret.put("value", gson.toJson(this.configs))
+        invoke.resolve(ret)
+    }
+
+    /**
+     * command of `getConfig`
+     *
+     * @param invoke to invoke [none] { }
+     * @return void
+     * @since 1.7.2
+     */
+    @Command
+    fun getFloorTypes(invoke: Invoke) {
+        val gson = Gson()
+        val ret = JSObject()
+
+        var result: List<Floor_types> = emptyList()
+        if (this::database.isInitialized) {
+            this.database.floorTypeQueries.select().executeAsList().let {
+                result = it
+            }
+        }
+
+        ret.put("value", gson.toJson(result))
         invoke.resolve(ret)
     }
 

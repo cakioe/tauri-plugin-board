@@ -219,6 +219,32 @@ Denies the get_drop_status command without any pre-configured scope.
 <tr>
 <td>
 
+`board:allow-get-floor-types`
+
+</td>
+<td>
+
+Enables the get_floor_types command without any pre-configured scope.
+
+</td>
+</tr>
+
+<tr>
+<td>
+
+`board:deny-get-floor-types`
+
+</td>
+<td>
+
+Denies the get_floor_types command without any pre-configured scope.
+
+</td>
+</tr>
+
+<tr>
+<td>
+
 `board:allow-get-min-payout-amount`
 
 </td>
