@@ -469,27 +469,6 @@ export async function getSoftwareVersion(): Promise<string> {
   return await invoke<Record<string, string>>('plugin:board|get_software_version').then(r => r.value)
 }
 
-export interface MinPayoutAmount {
-  value: number
-  decimal: number
-}
-
-/**
- * @example
- * ```typescript
- * import { getMinPayoutAmount } from '@cakioe/tauri-plugin-board';
- * await getMinPayoutAmount();
- * ```
- *
- * @since 1.6.1
- * @returns {MinPayoutAmount}
- */
-export async function getMinPayoutAmount(): Promise<MinPayoutAmount> {
-  return await invoke<Record<string, string>>('plugin:board|get_min_payout_amount').then(
-    r => JSON.parse(r.value) as unknown as MinPayoutAmount
-  )
-}
-
 export interface PayAmount {
   pay_type: number
   status: number

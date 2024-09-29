@@ -385,16 +385,6 @@
           "const": "deny-get-floor-types"
         },
         {
-          "description": "Enables the get_min_payout_amount command without any pre-configured scope.",
-          "type": "string",
-          "const": "allow-get-min-payout-amount"
-        },
-        {
-          "description": "Denies the get_min_payout_amount command without any pre-configured scope.",
-          "type": "string",
-          "const": "deny-get-min-payout-amount"
-        },
-        {
           "description": "Enables the get_pay_amount command without any pre-configured scope.",
           "type": "string",
           "const": "allow-get-pay-amount"

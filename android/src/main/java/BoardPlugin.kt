@@ -1262,36 +1262,6 @@ class BoardPlugin(private val activity: Activity) : Plugin(activity) {
         invoke.resolve(ret)
     }
 
-    /**
-     * command of `getMinPayoutAmount`
-     *
-     * @description: 读取外设支持最小面额 | p4
-     * @param invoke to invoke [none] { }
-     * @return void
-     * @since 1.6.1
-     */
-    @Command
-    fun getMinPayoutAmount(invoke: Invoke) {
-        if (!this.driver.EF_Opened()) {
-            throw Exception("driver not opened")
-        }
-        val para = cc.uling.usdk.board.mdb.para.MPReplyPara().apply {
-            driver.getMinPayoutAmount(this)
-        }.apply {
-            if (!this.isOK) {
-                throw Exception("get min payout amount failed")
-            }
-        }
-        val ret = JSObject()
-        val result: Map<String, Any> = mapOf(
-            "value" to para.value,
-            "decimal" to para.decimal,
-        )
-        ret.put("value", Gson().toJson(result))
-        invoke.resolve(ret)
-    }
-
-    /**
      * command of `getPayAmount`
      *
      * @description: 查询 MDB 收款金额 | p4
