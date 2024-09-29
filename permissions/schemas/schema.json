@@ -535,16 +535,6 @@
           "const": "deny-pulse-balance"
         },
         {
-          "description": "Enables the read_hardware_config command without any pre-configured scope.",
-          "type": "string",
-          "const": "allow-read-hardware-config"
-        },
-        {
-          "description": "Denies the read_hardware_config command without any pre-configured scope.",
-          "type": "string",
-          "const": "deny-read-hardware-config"
-        },
-        {
           "description": "Enables the reboot command without any pre-configured scope.",
           "type": "string",
           "const": "allow-reboot"

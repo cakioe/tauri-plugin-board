@@ -27,7 +27,6 @@ const COMMANDS: &[&str] = &[
     "set_y_pos",
     "to_x",
     "to_y",
-    "read_hardware_config",
     "get_pay_amount",
     "init_payment",
     "notify_payment",

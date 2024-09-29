@@ -635,32 +635,6 @@ Denies the pulse_balance command without any pre-configured scope.
 <tr>
 <td>
 
-`board:allow-read-hardware-config`
-
-</td>
-<td>
-
-Enables the read_hardware_config command without any pre-configured scope.
-
-</td>
-</tr>
-
-<tr>
-<td>
-
-`board:deny-read-hardware-config`
-
-</td>
-<td>
-
-Denies the read_hardware_config command without any pre-configured scope.
-
-</td>
-</tr>
-
-<tr>
-<td>
-
 `board:allow-reboot`
 
 </td>
