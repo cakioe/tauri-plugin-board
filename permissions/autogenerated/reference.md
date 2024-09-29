@@ -323,32 +323,6 @@ Denies the get_shipment_status command without any pre-configured scope.
 <tr>
 <td>
 
-`board:allow-get-software-version`
-
-</td>
-<td>
-
-Enables the get_software_version command without any pre-configured scope.
-
-</td>
-</tr>
-
-<tr>
-<td>
-
-`board:deny-get-software-version`
-
-</td>
-<td>
-
-Denies the get_software_version command without any pre-configured scope.
-
-</td>
-</tr>
-
-<tr>
-<td>
-
 `board:allow-get-x-pos`
 
 </td>

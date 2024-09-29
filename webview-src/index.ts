@@ -455,20 +455,6 @@ export async function readHardwareConfig(): Promise<HardwareConfig> {
   )
 }
 
-/**
- * @example
- * ```typescript
- * import { getSoftwareVersion } from '@cakioe/tauri-plugin-board';
- * await getSoftwareVersion();
- * ```
- *
- * @since 1.6.1
- * @returns {string}
- */
-export async function getSoftwareVersion(): Promise<string> {
-  return await invoke<Record<string, string>>('plugin:board|get_software_version').then(r => r.value)
-}
-
 export interface PayAmount {
   pay_type: number
   status: number

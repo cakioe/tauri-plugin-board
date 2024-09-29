@@ -415,16 +415,6 @@
           "const": "deny-get-shipment-status"
         },
         {
-          "description": "Enables the get_software_version command without any pre-configured scope.",
-          "type": "string",
-          "const": "allow-get-software-version"
-        },
-        {
-          "description": "Denies the get_software_version command without any pre-configured scope.",
-          "type": "string",
-          "const": "deny-get-software-version"
-        },
-        {
           "description": "Enables the get_x_pos command without any pre-configured scope.",
           "type": "string",
           "const": "allow-get-x-pos"
