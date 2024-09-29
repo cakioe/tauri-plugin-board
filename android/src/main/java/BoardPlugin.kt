@@ -40,7 +40,6 @@ import cc.uling.usdk.board.wz.para.YSReplyPara
 import cc.uling.usdk.constants.CodeUtil
 import cc.uling.usdk.constants.ErrorConst
 import com.google.gson.Gson
-import com.google.gson.annotations.SerializedName
 import com.plugin.board.database.Configs
 import com.plugin.board.database.Database
 import com.plugin.board.database.Floor_types
@@ -195,12 +194,8 @@ class PluginOptions {
     var port: Int = 1883
     var username: String = ""
     var password: String = ""
-
-    @SerializedName("merchant_id")
-    var merchantId: String = ""
-
-    @SerializedName("app_key")
-    var appKey: String = ""
+    var merchant_id: String = ""
+    var app_key: String = ""
 }
 
 /**
