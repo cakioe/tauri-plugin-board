@@ -76,7 +76,7 @@ class TaskService : Service() {
 
         Gson().fromJson(options, PluginOptions::class.java)?.let { it ->
             this.options = it
-            this.signer = Signatory(it.app_key)
+            this.signer = Signatory(it.appKey)
 
             this.client = MqttClient.builder()
                 .useMqttVersion5()

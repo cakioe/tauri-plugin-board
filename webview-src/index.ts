@@ -166,7 +166,9 @@ export interface Config {
     is_with_pos?: boolean | number
     is_with_pulse?: boolean | number
     is_with_identify?: boolean | number
-    code?: string
+    currency_code?: string
+    currency_unit?: number
+    currency_decimal?: number
 }
 
 /**

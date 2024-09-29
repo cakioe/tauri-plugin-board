@@ -40,6 +40,7 @@ import cc.uling.usdk.board.wz.para.YSReplyPara
 import cc.uling.usdk.constants.CodeUtil
 import cc.uling.usdk.constants.ErrorConst
 import com.google.gson.Gson
+import com.google.gson.annotations.SerializedName
 import com.plugin.board.database.Configs
 import com.plugin.board.database.Database
 import com.plugin.board.database.Floor_types
@@ -187,14 +188,19 @@ const val SDCARD_DIR = "/sdcard"
 const val UNAVAILABLE_VALUE = 3276.7
 
 @InvokeArg
+@Suppress("unused")
 class PluginOptions {
     var protocol: String = "mqtt"
     var broker: String = "broker.emqx.io"
     var port: Int = 1883
     var username: String = ""
     var password: String = ""
-    var merchant_id: String = ""
-    var app_key: String = ""
+
+    @SerializedName("merchant_id")
+    var merchantId: String = ""
+
+    @SerializedName("app_key")
+    var appKey: String = ""
 }
 
 /**
@@ -384,7 +390,19 @@ class BoardPlugin(private val activity: Activity) : Plugin(activity) {
                             is_with_pos = if (it.isWithPOS) 1 else 0,
                             is_with_pulse = if (it.isWithPulse) 1 else 0,
                             is_with_identify = if (it.isWithIdentify) 1 else 0,
-                            code = it.code,
+                            currency_code = it.code,
+                        )
+                    }
+                }
+
+                // 读取外设支持最小面额
+                cc.uling.usdk.board.mdb.para.MPReplyPara().apply {
+                    driver.getMinPayoutAmount(this)
+                }.let {
+                    if (it.isOK) {
+                        this.configs = this.configs.copy(
+                            currency_unit = it.value.toLong(),
+                            currency_decimal = it.decimal.toLong()
                         )
                     }
                 }
@@ -441,7 +459,9 @@ class BoardPlugin(private val activity: Activity) : Plugin(activity) {
             is_with_coin = 0,
             is_with_pulse = 0,
             is_with_pos = 0,
-            code = "unknown"
+            currency_code = "unknown",
+            currency_unit = 1,
+            currency_decimal = 2,
         )
     }
 
