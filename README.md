@@ -1,34 +1,57 @@
 # Tauri Plugin board
-vending machine development board of kits for tauri, use java or kotlin
+This is a vending machine development board of kits for Tauri, utilizing Java or Kotlin for development.
 
-### main development board model
-zc-328, zc-356 etc
+### support development board model
+- ZC-* All with Android 11.0+
 
+## Setting Up Your Tauri Plugin
+
+Follow these steps to set up the Tauri API for your Android plugin:
+
+```bash
+# Navigate to the android folder of your plugin
+cd android
+
+# Create the tauri-api path
+mkdir -p .tauri/tauri-api
+
+# Clone the Tauri repository
+git clone https://github.com/tauri-apps/tauri
+
+# Copy the mobile API from the repository to the created path
+cp -r tauri/core/tauri/mobile/android/. .tauri/tauri-api
+
+# Remove the cloned Tauri repository
+rm -rf tauri
 ```
-# Go into the android folder of your plugin and create the tauri-api path
-$ cd android
-$ mkdir -p .tauri/tauri-api
-# Clone the api from the tauri repo
-$ git clone https://github.com/tauri-apps/tauri
-# Copy the mobile api from the repo to the created path
-$ cp -r tauri/core/tauri/mobile/android/. .tauri/tauri-api
-# Remove the tauri repo
-$ rm -rf tauri
-```
 
-### signature plugin
-+ [for kotlin](https://github.com/cakioe/signature)
-+ [for javascript](https://github.com/cakioe/kit.js)
-+ [for go](https://github.com/go-pansy/pansy)
+## Signature Plugins
 
-### storage config
+You can utilize the following signature plugins:
+
+| Language     | Plugin Link                                    |
+|--------------|------------------------------------------------|
+| Kotlin       | [Signature for Kotlin](https://github.com/cakioe/signature) |
+| JavaScript   | [Signature for JavaScript](https://github.com/cakioe/kit.js) |
+| Go           | [Signature for Go](https://github.com/go-pansy/pansy) |
+| Rust           | [Signature for Rust](https://github.com/cakioe/signatory) |
+
+## Storage Configuration
+
+To save data in a JSON format, you can use the following code snippet:
+
 ```kotlin
 File(this.applicationContext.getExternalFilesDir(null), "xxx.json").writeText(Gson().toJson(payload))
 ```
 
-### generate SqlDelight Interface
+## Generating SQLDelight Interface
+
+To generate the SQLDelight interface, run the following command:
+
 ```shell
-sudo ./gradlew generateSqlDelightInterface
+./gradlew generateSqlDelightInterface
 ```
+
+To pull the database file from your Android device, use:
 
 adb pull /sdcard/xxx/files/xxx.db ./
