@@ -220,16 +220,16 @@ export async function takeScreenShot(): Promise<string> {
  * ```
  *
  * @since 1.5.4
- * @update 1.6.0 `no` replace `motorId` field of options
+ * @update 1.7.5 rename to runShipment
  */
-export async function execShipment(options?: {
-  addr: number
-  no: number
-  floorType: number
-  isDc: boolean
-  isLp: boolean
+export async function runShipment(options?: {
+   addr: number
+   code: number
+   floorType: number
+   isDc: boolean
+   isLp: boolean
 }): Promise<string> {
-  return await invoke<Record<string, string>>('plugin:board|exec_shipment', { ...options }).then(r => r.value)
+  return await invoke<Record<string, string>>('plugin:board|run_shipment', { ...options }).then(r => r.value)
 }
 
 /**
@@ -242,10 +242,13 @@ export async function execShipment(options?: {
  * @since 1.6.0
  */
 export interface BoxStatus {
-  no: number
+  code: number
   status: number
 }
-export async function getBoxStatus(options?: { addr: number; no: number }): Promise<BoxStatus> {
+export async function getBoxStatus(options?: {
+    addr: number
+    code: number
+}): Promise<BoxStatus> {
   return await invoke<Record<string, string>>('plugin:board|get_box_status', { ...options }).then(
     r => JSON.parse(r.value) as unknown as BoxStatus
   )
@@ -363,9 +366,13 @@ export async function runMoto(options?: { addr: number; mode: number; status: nu
  *
  * @since 1.6.0
  */
-export async function getShipmentStatus(options?: { addr: number }): Promise<XYStatus> {
+export interface ShipmentStatus {
+  runStatus: number
+  faultCode: number
+}
+export async function getShipmentStatus(options?: { addr: number }): Promise<ShipmentStatus> {
   return await invoke<Record<string, string>>('plugin:board|get_shipment_status', { ...options }).then(
-    r => JSON.parse(r.value) as unknown as XYStatus
+    r => JSON.parse(r.value) as unknown as ShipmentStatus
   )
 }
 

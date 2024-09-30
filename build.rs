@@ -13,7 +13,7 @@ const COMMANDS: &[&str] = &[
     "get_serial_devices_path",
     "open_main_activity",
     "take_screen_shot",
-    "exec_shipment",
+    "run_shipment",
     "get_box_status",
     "get_y_pos",
     "get_x_pos",

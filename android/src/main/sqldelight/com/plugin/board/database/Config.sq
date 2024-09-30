@@ -18,7 +18,7 @@ CREATE TABLE `configs` (
     `is_with_pos` INTEGER DEFAULT 0,
     `is_with_pulse` INTEGER DEFAULT 0,
     `is_with_identify` INTEGER DEFAULT 0,
-    `currency_code` TEXT DEFAULT "unknown",
+    `currency_code` TEXT DEFAULT "unknown", -- 货币代码
     `currency_unit` INTEGER DEFAULT 1, -- 最小面额
     `currency_decimal` INTEGER DEFAULT 2 -- 小数位数
 );
