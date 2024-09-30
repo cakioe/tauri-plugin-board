@@ -93,7 +93,7 @@ class FileManager {
 @InvokeArg
 class ShipmentRequest {
     var addr: Int = 1 //
-    var no: Int = 0
+    var code: Int = 0
     var floorType: Int = 1
     var isDc: Boolean = false
     var isLp: Boolean = false
@@ -102,7 +102,7 @@ class ShipmentRequest {
 @InvokeArg
 class BoxStatusRequest {
     var addr: Int = 1
-    var no: Int = 0
+    var code: Int = 0
 }
 
 @InvokeArg
@@ -745,7 +745,7 @@ class BoardPlugin(private val activity: Activity) : Plugin(activity) {
      * @since 1.5.3
      */
     @Command
-    fun execShipment(invoke: Invoke) {
+    fun runShipment(invoke: Invoke) {
         if (!this.driver.EF_Opened()) {
             throw Exception("driver not opened")
         }
@@ -753,7 +753,7 @@ class BoardPlugin(private val activity: Activity) : Plugin(activity) {
         val args = invoke.parseArgs(ShipmentRequest::class.java)
         SReplyPara(
             args.addr,
-            args.no % 100,
+            args.code % 100,
             args.floorType,
             args.isDc,
             args.isLp,
@@ -787,7 +787,7 @@ class BoardPlugin(private val activity: Activity) : Plugin(activity) {
         val args = invoke.parseArgs(BoxStatusRequest::class.java)
         val para = BSReplyPara(
             args.addr,
-            args.no % 100
+            args.code % 100
         ).apply {
             driver.GetBoxStatus(this)
         }.apply {
@@ -798,7 +798,7 @@ class BoardPlugin(private val activity: Activity) : Plugin(activity) {
 
         val ret = JSObject()
         val result: Map<String, Any> = mapOf(
-            "no" to para.no,
+            "code" to para.no,
             "status" to para.status, // 0 => open, 1 => closed
         )
         ret.put("value", Gson().toJson(result))

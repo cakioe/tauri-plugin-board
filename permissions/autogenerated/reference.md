@@ -1,5 +1,5 @@
 
-## Permission Table 
+## Permission Table
 
 <table>
 <tr>
@@ -30,32 +30,6 @@ Enables the change_balance command without any pre-configured scope.
 <td>
 
 Denies the change_balance command without any pre-configured scope.
-
-</td>
-</tr>
-
-<tr>
-<td>
-
-`board:allow-exec-shipment`
-
-</td>
-<td>
-
-Enables the exec_shipment command without any pre-configured scope.
-
-</td>
-</tr>
-
-<tr>
-<td>
-
-`board:deny-exec-shipment`
-
-</td>
-<td>
-
-Denies the exec_shipment command without any pre-configured scope.
 
 </td>
 </tr>
@@ -706,6 +680,32 @@ Enables the run_moto command without any pre-configured scope.
 <td>
 
 Denies the run_moto command without any pre-configured scope.
+
+</td>
+</tr>
+
+<tr>
+<td>
+
+`board:allow-run-shipment`
+
+</td>
+<td>
+
+Enables the run_shipment command without any pre-configured scope.
+
+</td>
+</tr>
+
+<tr>
+<td>
+
+`board:deny-run-shipment`
+
+</td>
+<td>
+
+Denies the run_shipment command without any pre-configured scope.
 
 </td>
 </tr>

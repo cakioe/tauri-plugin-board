@@ -305,16 +305,6 @@
           "const": "deny-change-balance"
         },
         {
-          "description": "Enables the exec_shipment command without any pre-configured scope.",
-          "type": "string",
-          "const": "allow-exec-shipment"
-        },
-        {
-          "description": "Denies the exec_shipment command without any pre-configured scope.",
-          "type": "string",
-          "const": "deny-exec-shipment"
-        },
-        {
           "description": "Enables the find_change_result command without any pre-configured scope.",
           "type": "string",
           "const": "allow-find-change-result"
@@ -563,6 +553,16 @@
           "description": "Denies the run_moto command without any pre-configured scope.",
           "type": "string",
           "const": "deny-run-moto"
+        },
+        {
+          "description": "Enables the run_shipment command without any pre-configured scope.",
+          "type": "string",
+          "const": "allow-run-shipment"
+        },
+        {
+          "description": "Denies the run_shipment command without any pre-configured scope.",
+          "type": "string",
+          "const": "deny-run-shipment"
         },
         {
           "description": "Enables the set_accept_money command without any pre-configured scope.",
