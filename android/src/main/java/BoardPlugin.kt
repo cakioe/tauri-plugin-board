@@ -18,6 +18,21 @@ import app.tauri.plugin.JSObject
 import app.tauri.plugin.Plugin
 import cc.uling.usdk.USDK
 import cc.uling.usdk.board.UBoard
+import cc.uling.usdk.board.mdb.para.ACReplyPara
+import cc.uling.usdk.board.mdb.para.ARReplyPara
+import cc.uling.usdk.board.mdb.para.ASReplyPara
+import cc.uling.usdk.board.mdb.para.BRReplyPara
+import cc.uling.usdk.board.mdb.para.CBReplyPara
+import cc.uling.usdk.board.mdb.para.CSReplyPara
+import cc.uling.usdk.board.mdb.para.IPReplyPara
+import cc.uling.usdk.board.mdb.para.MPReplyPara
+import cc.uling.usdk.board.mdb.para.PBReplyPara
+import cc.uling.usdk.board.mdb.para.PCReplyPara
+import cc.uling.usdk.board.mdb.para.PMReplyPara
+import cc.uling.usdk.board.mdb.para.PayReplyPara
+import cc.uling.usdk.board.mdb.para.ResultReplyPara
+import cc.uling.usdk.board.mdb.para.STReplyPara
+import cc.uling.usdk.board.mdb.para.WMReplyPara
 import cc.uling.usdk.board.wz.para.BSReplyPara
 import cc.uling.usdk.board.wz.para.CXReplyPara
 import cc.uling.usdk.board.wz.para.CYReplyPara
@@ -43,6 +58,7 @@ import com.google.gson.Gson
 import com.plugin.board.database.Configs
 import com.plugin.board.database.Database
 import com.plugin.board.database.Floor_types
+import com.plugin.board.database.Machines
 import com.plugin.board.database.Serial_devices
 import com.zcapi
 import io.github.cakioe.Carbon
@@ -181,6 +197,11 @@ class PickXYRequest {
     var mode: Int = 0
 }
 
+@InvokeArg
+class ConfigOption {
+    val no: String? = null
+}
+
 @SuppressLint("SdCardPath")
 const val SDCARD_DIR = "/sdcard"
 
@@ -221,6 +242,9 @@ class BoardPlugin(private val activity: Activity) : Plugin(activity) {
 
     // the env of the android build, config instance of configs
     private lateinit var configInstance: Configs
+
+    // machine instance of machines
+    private lateinit var machineInstance: Machines
 
     private var taskRunning: Boolean = false
     private lateinit var database: Database
@@ -282,11 +306,13 @@ class BoardPlugin(private val activity: Activity) : Plugin(activity) {
         if (this.taskRunning || !this::options.isInitialized) return
 
         this.database.machineQueries.find().executeAsOneOrNull()?.let {
+            this.machineInstance = it
+
             this.activity.application.apply {
                 val intent = Intent(this, TaskService::class.java)
-                intent.putExtra("no", it.machine_no)
-                options.let {
-                    intent.putExtra("options", Gson().toJson(it))
+                intent.putExtra("no", machineInstance.no)
+                options.let { self ->
+                    intent.putExtra("options", Gson().toJson(self))
                 }
                 startService(intent)
                 taskRunning = true
@@ -389,7 +415,7 @@ class BoardPlugin(private val activity: Activity) : Plugin(activity) {
                 }
 
                 // 读取外设支持最小面额
-                cc.uling.usdk.board.mdb.para.MPReplyPara().apply {
+                MPReplyPara().apply {
                     driver.getMinPayoutAmount(this)
                 }.let {
                     if (it.isOK) {
@@ -669,6 +695,25 @@ class BoardPlugin(private val activity: Activity) : Plugin(activity) {
      */
     @Command
     fun getConfig(invoke: Invoke) {
+        val args = invoke.parseArgs(ConfigOption::class.java)
+        args.no?.let {
+            this.machineInstance = if (this::machineInstance.isInitialized) {
+                this.machineInstance.copy(no = it)
+            } else {
+                Machines(
+                    no = it,
+                    id = 0,
+                    name = "",
+                    client_id = "",
+                    imei = "",
+                    contact = "",
+                    tel = "",
+                    temperature = 0,
+                    humidity = 0
+                )
+            }
+        }
+
         val gson = Gson()
         val ret = JSObject()
         ret.put("value", gson.toJson(this.configInstance))
@@ -1206,7 +1251,7 @@ class BoardPlugin(private val activity: Activity) : Plugin(activity) {
         if (!this.driver.EF_Opened()) {
             throw Exception("driver not opened")
         }
-        val para = cc.uling.usdk.board.mdb.para.PMReplyPara().apply {
+        val para = PMReplyPara().apply {
             driver.getPayAmount(this)
         }.apply {
             if (!this.isOK) {
@@ -1240,7 +1285,7 @@ class BoardPlugin(private val activity: Activity) : Plugin(activity) {
             throw Exception("driver not opened")
         }
         val args = invoke.parseArgs(PaymentRequest::class.java)
-        cc.uling.usdk.board.mdb.para.IPReplyPara(
+        IPReplyPara(
             (args.no % 100).toShort(),
             args.multiple
         ).apply {
@@ -1269,7 +1314,7 @@ class BoardPlugin(private val activity: Activity) : Plugin(activity) {
             throw Exception("driver not opened")
         }
         val args = invoke.parseArgs(FlagRequest::class.java)
-        cc.uling.usdk.board.mdb.para.PayReplyPara(
+        PayReplyPara(
             args.flag
         ).apply {
             driver.notifyPayment(this)
@@ -1297,7 +1342,7 @@ class BoardPlugin(private val activity: Activity) : Plugin(activity) {
             throw Exception("driver not opened")
         }
         val args = invoke.parseArgs(FlagRequest::class.java)
-        cc.uling.usdk.board.mdb.para.ResultReplyPara(
+        ResultReplyPara(
             args.flag
         ).apply {
             driver.notifyResult(this)
@@ -1325,7 +1370,7 @@ class BoardPlugin(private val activity: Activity) : Plugin(activity) {
             throw Exception("driver not opened")
         }
         val args = invoke.parseArgs(BalanceRequest::class.java)
-        cc.uling.usdk.board.mdb.para.CBReplyPara(
+        CBReplyPara(
             args.multiple
         ).apply {
             driver.changeBalance(this)
@@ -1353,7 +1398,7 @@ class BoardPlugin(private val activity: Activity) : Plugin(activity) {
             throw Exception("driver not opened")
         }
 
-        val para = cc.uling.usdk.board.mdb.para.CSReplyPara().apply {
+        val para = CSReplyPara().apply {
             driver.getChangeStatus(this)
         }.apply {
             if (!this.isOK) {
@@ -1384,7 +1429,7 @@ class BoardPlugin(private val activity: Activity) : Plugin(activity) {
             throw Exception("driver not opened")
         }
 
-        val para = cc.uling.usdk.board.mdb.para.BRReplyPara().apply {
+        val para = BRReplyPara().apply {
             driver.findChangeResult(this)
         }.apply {
             if (!this.isOK) {
@@ -1416,7 +1461,7 @@ class BoardPlugin(private val activity: Activity) : Plugin(activity) {
         }
 
         val args = invoke.parseArgs(AcceptMoneyRequest::class.java)
-        cc.uling.usdk.board.mdb.para.ACReplyPara(
+        ACReplyPara(
             args.type,
             args.channels
         ).apply {
@@ -1446,7 +1491,7 @@ class BoardPlugin(private val activity: Activity) : Plugin(activity) {
             throw Exception("driver not opened")
         }
 
-        cc.uling.usdk.board.mdb.para.STReplyPara().apply {
+        STReplyPara().apply {
             driver.syncSystemTime(this)
         }.apply {
             if (!this.isOK) {
@@ -1474,7 +1519,7 @@ class BoardPlugin(private val activity: Activity) : Plugin(activity) {
         }
 
         val args = invoke.parseArgs(AgeRequest::class.java)
-        cc.uling.usdk.board.mdb.para.ASReplyPara(
+        ASReplyPara(
             args.age
         ).apply {
             driver.setAgeScope(this)
@@ -1503,7 +1548,7 @@ class BoardPlugin(private val activity: Activity) : Plugin(activity) {
             throw Exception("driver not opened")
         }
 
-        val para = cc.uling.usdk.board.mdb.para.ARReplyPara().apply {
+        val para = ARReplyPara().apply {
             driver.getAuthResult(this)
         }.apply {
             if (!this.isOK) {
@@ -1531,7 +1576,7 @@ class BoardPlugin(private val activity: Activity) : Plugin(activity) {
         }
 
         val args = invoke.parseArgs(ModeRequest::class.java)
-        cc.uling.usdk.board.mdb.para.WMReplyPara(
+        WMReplyPara(
             args.mode
         ).apply {
             driver.setWorkMode(this)
@@ -1560,7 +1605,7 @@ class BoardPlugin(private val activity: Activity) : Plugin(activity) {
             throw Exception("driver not opened")
         }
         val args = invoke.parseArgs(ModeRequest::class.java)
-        cc.uling.usdk.board.mdb.para.PCReplyPara(
+        PCReplyPara(
             args.mode
         ).apply {
             driver.setPayChannel(this)
@@ -1588,7 +1633,7 @@ class BoardPlugin(private val activity: Activity) : Plugin(activity) {
             throw Exception("driver not opened")
         }
         val args = invoke.parseArgs(PulseBalanceRequest::class.java)
-        cc.uling.usdk.board.mdb.para.PBReplyPara(
+        PBReplyPara(
             args.type,
             args.value
         ).apply {

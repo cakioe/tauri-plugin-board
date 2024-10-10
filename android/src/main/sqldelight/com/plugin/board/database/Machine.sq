@@ -5,15 +5,15 @@ CREATE TABLE `machines` (
   `imei` TEXT DEFAULT NULL,
   `contact` TEXT DEFAULT NULL,
   `tel` TEXT DEFAULT NULL,
-  `machine_no` TEXT NOT NULL,
+  `no` TEXT NOT NULL,
   `temperature` INTEGER DEFAULT 0,
   `humidity` INTEGER DEFAULT 0
 );
 
-CREATE INDEX index_machine_no ON machines(machine_no);
+CREATE INDEX index_machine_no ON machines(no);
 
 insert:
-INSERT INTO `machines` (`name`, `client_id`, `imei`, `contact`, `tel`, `machine_no`) VALUES (?, ?, ?, ?, ?, ?);
+INSERT INTO `machines` (`name`, `client_id`, `imei`, `contact`, `tel`, `no`) VALUES (?, ?, ?, ?, ?, ?);
 
 find:
 SELECT * FROM `machines` ORDER BY `id` DESC LIMIT 1;
