@@ -219,10 +219,8 @@ class BoardPlugin(private val activity: Activity) : Plugin(activity) {
     private lateinit var driver: UBoard
     private lateinit var serialsDevice: MutableList<Serial_devices>
 
-    /**
-     * the env of the android build
-     */
-    private lateinit var configs: Configs
+    // the env of the android build, config instance of configs
+    private lateinit var configInstance: Configs
 
     private var taskRunning: Boolean = false
     private lateinit var database: Database
@@ -353,7 +351,7 @@ class BoardPlugin(private val activity: Activity) : Plugin(activity) {
                     if (para.isOK && !this::driver.isInitialized) {
                         device = device.copy(active = 1, disabled = 0)
                         this.driver = it
-                        this.configs = this.configs.copy(commid = path)
+                        this.configInstance = this.configInstance.copy(commid = path)
                     }
                     records.add(device)
                 }
@@ -367,7 +365,7 @@ class BoardPlugin(private val activity: Activity) : Plugin(activity) {
                     driver.ReadHardwareConfig(this)
                 }.apply {
                     if (this.isOK) {
-                        configs = configs.copy(
+                        configInstance = configInstance.copy(
                             rows = this.row.toLong(),
                             columns = this.column.toLong()
                         )
@@ -379,7 +377,7 @@ class BoardPlugin(private val activity: Activity) : Plugin(activity) {
                     driver.readHardwareConfig(this)
                 }.let {
                     if (it.isOK) {
-                        this.configs = this.configs.copy(
+                        this.configInstance = this.configInstance.copy(
                             is_with_coin = if (it.isWithCoin) 1 else 0,
                             is_with_cash = if (it.isWithCash) 1 else 0,
                             is_with_pos = if (it.isWithPOS) 1 else 0,
@@ -395,7 +393,7 @@ class BoardPlugin(private val activity: Activity) : Plugin(activity) {
                     driver.getMinPayoutAmount(this)
                 }.let {
                     if (it.isOK) {
-                        this.configs = this.configs.copy(
+                        this.configInstance = this.configInstance.copy(
                             currency_unit = it.value.toLong(),
                             currency_decimal = it.decimal.toLong()
                         )
@@ -415,7 +413,7 @@ class BoardPlugin(private val activity: Activity) : Plugin(activity) {
      * @return void
      */
     private fun initConfig() {
-        if (this::configs.isInitialized) return
+        if (this::configInstance.isInitialized) return
 
         var screenHeight: Int
         var screenWidth: Int
@@ -434,7 +432,7 @@ class BoardPlugin(private val activity: Activity) : Plugin(activity) {
             }
         }
 
-        this.configs = Configs(
+        this.configInstance = Configs(
             id = 1,
             sdk_version = Build.VERSION.SDK_INT.toString(),
             android_version = Build.VERSION.RELEASE,
@@ -467,12 +465,12 @@ class BoardPlugin(private val activity: Activity) : Plugin(activity) {
      * @return void
      */
     private fun initDisplayer(enable: Boolean = false) {
-        this.configs.model_no.apply {
+        this.configInstance.model_no.apply {
             if (this.startsWith("zc") || this.startsWith("ZC")) {
                 displayer.setStatusBar(enable)
                 displayer.setGestureStatusBar(enable)
 
-                configs = configs.copy(
+                configInstance = configInstance.copy(
                     status_bar_on = if (enable) 1 else 0,
                     gesture_status_bar_on = if (enable) 1 else 0
                 )
@@ -516,7 +514,7 @@ class BoardPlugin(private val activity: Activity) : Plugin(activity) {
     fun setStatusBar(invoke: Invoke) {
         val argv = invoke.parseArgs(StatusBar::class.java).enable ?: false
         this.displayer.setStatusBar(argv)
-        this.configs = this.configs.copy(status_bar_on = if (argv) 1 else 0)
+        this.configInstance = this.configInstance.copy(status_bar_on = if (argv) 1 else 0)
         invoke.resolve()
     }
 
@@ -530,7 +528,7 @@ class BoardPlugin(private val activity: Activity) : Plugin(activity) {
     fun setGestureStatusBar(invoke: Invoke) {
         val argv = invoke.parseArgs(GestureStatusBar::class.java).enable ?: false
         this.displayer.setGestureStatusBar(argv)
-        this.configs = this.configs.copy(gesture_status_bar_on = if (argv) 1 else 0)
+        this.configInstance = this.configInstance.copy(gesture_status_bar_on = if (argv) 1 else 0)
         invoke.resolve()
     }
 
@@ -611,7 +609,8 @@ class BoardPlugin(private val activity: Activity) : Plugin(activity) {
     @Command
     fun setAppBrightness(invoke: Invoke) {
         val args = invoke.parseArgs(AppBrightness::class.java)
-        this.configs = this.configs.copy(brightness = args.value.coerceIn(5, 255).toLong())
+        this.configInstance =
+            this.configInstance.copy(brightness = args.value.coerceIn(5, 255).toLong())
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && !Settings.System.canWrite(activity)) {
             val intent = Intent(Settings.ACTION_MANAGE_WRITE_SETTINGS)
@@ -629,11 +628,11 @@ class BoardPlugin(private val activity: Activity) : Plugin(activity) {
                 Settings.System.putInt(
                     activity.contentResolver,
                     Settings.System.SCREEN_BRIGHTNESS,
-                    this.configs.brightness!!.toInt()
+                    this.configInstance.brightness!!.toInt()
                 )
             }
             activity.window.attributes.let {
-                it.screenBrightness = this.configs.brightness!! / 255f
+                it.screenBrightness = this.configInstance.brightness!! / 255f
                 activity.window.attributes = it
             }
         } catch (e: Exception) {
@@ -672,7 +671,7 @@ class BoardPlugin(private val activity: Activity) : Plugin(activity) {
     fun getConfig(invoke: Invoke) {
         val gson = Gson()
         val ret = JSObject()
-        ret.put("value", gson.toJson(this.configs))
+        ret.put("value", gson.toJson(this.configInstance))
         invoke.resolve(ret)
     }
 
