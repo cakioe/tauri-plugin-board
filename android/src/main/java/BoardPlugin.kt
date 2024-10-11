@@ -352,7 +352,7 @@ class BoardPlugin(private val activity: Activity) : Plugin(activity) {
     /**
      * initialization of the driver
      */
-    private fun initSerialDriver() {
+    private fun initSerialDriver(addr: Int = 1) {
         val records = mutableListOf<Serial_devices>()
         val paths = SerialPortFinder().allDevicesPath.sorted()
         try {
@@ -372,7 +372,7 @@ class BoardPlugin(private val activity: Activity) : Plugin(activity) {
                         return@forEachIndexed
                     }
 
-                    val para = SVReplyPara(1)
+                    val para = SVReplyPara(addr)
                     it.GetSoftwareVersion(para)
                     if (para.isOK && !this::driver.isInitialized) {
                         device = device.copy(active = 1, disabled = 0)
@@ -387,7 +387,7 @@ class BoardPlugin(private val activity: Activity) : Plugin(activity) {
 
             // 读取驱动版 xy轴数量
             if (this::driver.isInitialized) {
-                HCReplyPara(1).apply {
+                HCReplyPara(addr).apply {
                     driver.ReadHardwareConfig(this)
                 }.apply {
                     if (this.isOK) {
