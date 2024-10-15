@@ -781,7 +781,7 @@ class BoardPlugin(private val activity: Activity) : Plugin(activity) {
     }
 
     /**
-     * command of `execShipment`
+     * command of `runShipment`
      *
      * @description: 控制驱动板出货 | p23
      * @param invoke to invoke [ShipmentRequest] { ...arguments }
@@ -1090,10 +1090,10 @@ class BoardPlugin(private val activity: Activity) : Plugin(activity) {
 
         val ret = JSObject()
         val result: Map<String, Any> = mapOf(
-            "run_status" to para.runStatus,
-            "status_message" to CodeUtil.getXYStatusMsg(para.runStatus),
-            "fault_code" to para.faultCode,
-            "fault_message" to CodeUtil.getFaultMsg(para.faultCode),
+            "status_code" to para.runStatus,
+            "status_message" to CodeUtil.getXYStatusMsg(para.runStatus).replace("idle", ""),
+            "error_code" to para.faultCode,
+            "error_message" to CodeUtil.getFaultMsg(para.faultCode),
         )
         ret.put("value", Gson().toJson(result))
         invoke.resolve(ret)

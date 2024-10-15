@@ -1,6 +1,6 @@
 [package]
 name = "tauri-plugin-board"
-version = "1.7.4"
+version = "1.7.6"
 authors = ["cleveng <cleveng@gmail.com>"]
 description = "vending machine development board of kits for tauri, use kotlin"
 license = "MIT"

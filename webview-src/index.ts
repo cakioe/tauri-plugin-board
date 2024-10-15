@@ -365,10 +365,13 @@ export async function runMoto(options?: { addr: number; mode: number; status: nu
  * ```
  *
  * @since 1.6.0
+ * @update 1.7.6
  */
 export interface ShipmentStatus {
-  runStatus: number
-  faultCode: number
+  status_code: number
+  status_message: string
+  error_code: number
+  error_message: string
 }
 export async function getShipmentStatus(options?: { addr: number }): Promise<ShipmentStatus> {
   return await invoke<Record<string, string>>('plugin:board|get_shipment_status', { ...options }).then(
