@@ -55,3 +55,29 @@ To generate the SQLDelight interface, run the following command:
 To pull the database file from your Android device, use:
 
 adb pull /sdcard/xxx/files/xxx.db ./
+
+## [Configuration](https://github.com/tauri-apps/tauri-docs/pull/2735)
+
+you must be add [config of board plugin](https://github.com/cakioe/tauri-plugin-board/blob/main/android/src/main/java/BoardPlugin.kt#L212) in your `tauri.config.json`, like those code.
+
+```
+  "plugins": {
+    "board": {
+      "protocol": "",
+      "broker": "",
+      "port": 1883,
+      "username": "",
+      "password": "",
+      "merchant_id": "",
+      "app_key": ""
+    }
+  }
+```
+
+## hivemq-mqtt-client & proguard-rules config
+
+view `examples/build.gradle.kts.example`, `examples/proguard-rules.pro.example` codes.
+
+copy some of those code in your main tauri app project.
+
+
