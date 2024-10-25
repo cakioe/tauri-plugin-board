@@ -129,3 +129,8 @@ bun.lockb
 
 .gradle
 webview-dist
+
+# ruby
+_site
+.vendor
+.sass-cache

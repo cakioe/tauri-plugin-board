@@ -1,20 +1,13 @@
 <!DOCTYPE html>
 <html>
-<head>
-  <meta charset="UTF-8">
-  <title>{{ page.title }}</title>
-</head>
-<body>
-  <nav>
-    <ul>
-      <li><a href="./docs/index.md">首页</a></li>
-      <li><a href="./docs/zh_CN.md">页面1</a></li>
-      <li><a href="./docs/en_US.md">页面2</a></li>
-    </ul>
-  </nav>
-  
-  <main>
-    {{ content }}
-  </main>
-</body>
+  <head>
+    <title>{{ page.title }}</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://cdn.tailwindcss.com"></script>
+  </head>
+  <body>
+    <main class="min-h-[calc(100vh-80px)]">{{ content }}</main>
+    {% include footer.html %}
+  </body>
 </html>

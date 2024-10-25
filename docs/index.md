@@ -1,1 +1,6 @@
-index
+---
+layout: default
+title: Home
+---
+
+{% include header.html %}
