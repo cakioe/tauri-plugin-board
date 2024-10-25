@@ -1,25 +1,8 @@
-[中文文档](README_zh.md) |  [English](README.md)
-
-## 说明
-
-本插件可用于基于 [Tauri](https://v2.tauri.app/) 开发的APP项目。
-本项目可作用于依赖 ZC-*/卓策系列安卓开发板，同时使用到 [鼎商公司](https://www.dsjsdz.com) 提供的售卖机驱动板以及关联的MDB服务。
-
-## 可用于
-- ZC-*/卓策安卓开发板，且 Android 11.0+ 以上版本
-- [鼎商公司](https://www.dsjsdz.com) 提供的售卖机驱动板以及关联的MDB服务
-
-如果你有好的安卓版/售卖机驱动板/mdb关联产品/欧美支付盒子等，可以 [联系我们](https://www.dsjsdz.com/contact)
-
-技术支持：鼎商开发组
-
-开发语言： kotlin/rust/typescript
-
 # Tauri Plugin board
 This is a vending machine development board of kits for Tauri, utilizing Java or Kotlin for development.
 
 ### support development board model
-
+- ZC-* All with Android 11.0+
 
 ## Setting Up Your Tauri Plugin
 
