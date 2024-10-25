@@ -12,15 +12,15 @@ links = "tauri-plugin-board"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-tauri-plugin-cli = "2.0.0-beta"
-tauri = { version = "2.0.0-beta", features = [] }
-serde = { version = "1.0.203", features = ["derive"] }
-serde_json = "1.0.117"
-thiserror = "1.0.61"
+tauri-plugin-cli = "2.0.1"
+tauri = { version = "2.0.6", features = [] }
+serde = { version = "1.0.213", features = ["derive"] }
+serde_json = "1.0.132"
+thiserror = "1.0.65"
 
 [build-dependencies]
-tauri-plugin = "2.0.0-beta.17"
-tauri-build = "2.0.0-beta.17"
+tauri-plugin = "2.0.2"
+tauri-build = "2.0.2"
 
 [profile.dev]
 incremental = true
@@ -31,3 +31,6 @@ lto = true
 opt-level = "s"
 panic = "abort"
 strip = true
+
+
+exclude = ["/docs", "/_includes", "/_site", "/_layouts", "/_config.yml", "Gemfile", "Gemfile.lock"]
