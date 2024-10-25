@@ -13,7 +13,7 @@ title: 中文文档
     <div class="relative flex flex-1 flex-col items-stretch sm:flex-none">
       <a
         class="group inline-flex ring-1 items-center justify-center rounded-full py-2 px-4 text-sm focus:outline-none ring-slate-200 text-slate-700 hover:text-slate-900 hover:ring-slate-300 active:bg-slate-100 active:text-slate-600 focus-visible:outline-blue-600 focus-visible:ring-slate-300 animate-fade-in-right"
-        href="/docs/en_US"
+        href="/tauri-plugin-board/docs/en_US"
       >
         English Document
       </a>

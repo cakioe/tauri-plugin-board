@@ -5,7 +5,7 @@ title: English Document
 
 <div class="sticky top-0 z-40 flex justify-start gap-x-6 bg-white px-4 py-4 shadow-sm sm:px-10">
   <div class="flex flex-col justify-start gap-y-5 sm:flex-row sm:gap-y-0 sm:gap-x-6">
-    <a class="relative flex flex-1 flex-col items-stretch sm:flex-none" href="/docs/zh_CN">
+    <a class="relative flex flex-1 flex-col items-stretch sm:flex-none" href="/tauri-plugin-board/docs/zh_CN">
       <button
         class="group inline-flex ring-1 items-center justify-center rounded-full py-2 px-4 text-sm focus:outline-none ring-slate-200 text-slate-700 hover:text-slate-900 hover:ring-slate-300 active:bg-slate-100 active:text-slate-600 focus-visible:outline-blue-600 focus-visible:ring-slate-300 animate-fade-in-right"
       >
