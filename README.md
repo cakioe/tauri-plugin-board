@@ -1,7 +1,7 @@
 # Tauri Plugin board
 This is a vending machine development board of kits for Tauri, utilizing Java or Kotlin for development.
 
-+ Documentation: [https://cakioe.github.io/tauri-plugin-board/](https://cakioe.github.io/tauri-plugin-board/docs)
++ Documentation: [https://cakioe.github.io/tauri-plugin-board/docs](https://cakioe.github.io/tauri-plugin-board/docs/?timestamp=)
 
 ## Setting Up Your Tauri Plugin
 
