@@ -15,10 +15,10 @@ hero:
   #     link: /api-examples
 
 features:
-  - title: 安卓版
-    details: 可作用于依赖 ZC-*/卓策系列安卓开发板。
+  - title: Android development board
+    details: can be used to rely on ZC-* Android development board.
   - title: MDB
-    details: 可作用 鼎商公司 提供的售卖机驱动板以及关联的MDB服务。
+    details: can use the vending machine driver board provided by Dingshang company and the associated MDB services.
 
-  - title: 其它
-    details: 如果你有好的安卓版/售卖机驱动板/mdb关联产品/支付设备等，可兼容请联系我
+  - title: Other
+    details: If you have a good Android version/vending machine driver board /mdb related products/payment devices, you can contact us

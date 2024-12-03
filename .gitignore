@@ -130,3 +130,7 @@ bun.lockb
 .gradle
 webview-dist
 
+# vitepress
+docs/.vitepress/docs
+docs/.vitepress/dist
+docs/.vitepress/cache

@@ -1,6 +1,6 @@
 {
   "name": "@cakioe/tauri-plugin-board",
-  "version": "1.7.6",
+  "version": "1.8.0",
   "license": "MIT",
   "authors": [
     "cleveng <cleveng@gmail.com>"
@@ -15,11 +15,16 @@
     "require": "./webview-dist/index.cjs"
   },
   "scripts": {
-    "build": "rollup -c"
+    "build": "rollup -c",
+    "docs:dev": "vitepress dev docs",
+    "docs:build": "vitepress build docs",
+    "docs:preview": "vitepress preview docs"
   },
   "devDependencies": {
     "@types/bun": "latest",
-    "process": "^0.11.10"
+    "markdown-it-mathjax3": "^4.3.2",
+    "process": "^0.11.10",
+    "vitepress": "^1.5.0"
   },
   "peerDependencies": {
     "typescript": "^5.4.5"
