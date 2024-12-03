@@ -1,82 +1,50 @@
 ---
-layout: default
-title: English Document
+outline: deep
 ---
 
-<div class="sticky top-0 z-40 flex justify-start gap-x-6 bg-white px-4 py-4 shadow-sm sm:px-10">
-  <div class="flex flex-col justify-start gap-y-5 sm:flex-row sm:gap-y-0 sm:gap-x-6">
-    <a class="relative flex flex-1 flex-col items-stretch sm:flex-none" href="/tauri-plugin-board/docs/zh_CN">
-      <button
-        class="group inline-flex ring-1 items-center justify-center rounded-full py-2 px-4 text-sm focus:outline-none ring-slate-200 text-slate-700 hover:text-slate-900 hover:ring-slate-300 active:bg-slate-100 active:text-slate-600 focus-visible:outline-blue-600 focus-visible:ring-slate-300 animate-fade-in-right"
-      >
-        中文文档
-      </button>
-    </a>
-    <button
-      class="group inline-flex items-center justify-center rounded-full py-2 px-4 text-sm font-semibold focus:outline-none focus-visible:outline-2 focus-visible:outline-offset-2 bg-slate-900 text-white hover:bg-slate-700 hover:text-slate-100 active:bg-slate-800 active:text-slate-300 focus-visible:outline-slate-900 animate-fade-in-left"
-    >
-      English Document
-    </button>
-  </div>
-</div>
+## Storage Configuration
 
-<section class="container mx-auto py-5">
-  <h1 class="text-lg font-medium text-neutral-900">Document description</h1>
-  <p class="mt-1 text-base text-neutral-500">
-    This plugin can be used for mobile APP projects developed based on <a href="https://v2.tauri.app/">Tauri</a>.
-  </p>
+```kotlin
+File(this.applicationContext.getExternalFilesDir(null), "xxx.json").writeText(Gson().toJson(payload))
+```
 
-  <ul class="text-sm text-red-700 font-bold pt-5">
-    <li>1, can be used to rely on ZC-* Android development board.</li>
-    <li>
-      2, can use the vending machine driver board provided by <a href="https://www.dsjsdz.com">Dingshang</a> company and
-      the associated MDB services.
-    </li>
-  </ul>
+## Generating SQLDelight Interface
 
-  <p class="mt-1 text-base text-gray-500">
-    If you have a good Android version/vending machine driver board /mdb related products/payment devices, you can
-    <a class="text-blue-500 underline" href="https://www.dsjsdz.com/contact">contact us</a>
-  </p>
+```bash
+./android/gradlew generateSqlDelightInterface
+```
 
-  <h2 class="mt-20 text-lg font-medium text-neutral-900">A、Storage Configuration</h2>
-  <div class="mt-2 text-sm p-2 rounded bg-gray-900 text-white">
-    File(this.applicationContext.getExternalFilesDir(null), "xxx.json").writeText(Gson().toJson(payload))
-  </div>
+## Copy db file by adb
 
-  <h2 class="mt-20 text-lg font-medium text-neutral-900">B、Generating SQLDelight Interface</h2>
-  <div class="mt-2 text-sm p-2 rounded bg-gray-900 text-white">./android/gradlew generateSqlDelightInterface</div>
+```bash
+adb pull /sdcard/xxx/files/xxx.db ./
+```
 
-  <h2 class="mt-20 text-lg font-medium text-neutral-900">C、Copy db file by adb</h2>
-  <div class="mt-2 text-sm p-2 rounded bg-gray-900 text-white">adb pull /sdcard/xxx/files/xxx.db ./</div>
-
-  <h2 class="mt-20 text-lg font-medium text-neutral-900">D、tauri.config.json configuration</h2>
-  <div class="mt-2 text-sm p-2 rounded bg-gray-900 text-white">
-    <pre>
-  "plugins": {
+## tauri.config.json configuration
+```json
+"plugins": {
     "board": {
-      "protocol": "",
-      "broker": "",
-      "port": 1883,
-      "username": "",
-      "password": "",
-      "merchant_id": "",
-      "app_key": ""
+        "protocol": "", // mqtt版本
+        "broker": "", // ip地址或域名
+        "port": 1883,
+        "username": "",
+        "password": "",
+        "merchant_id": "",
+        "app_key": ""
     }
-  }
-  </pre
-    >
-  </div>
+}
+```
 
-  <h2 class="mt-20 text-lg font-medium text-neutral-900">
-    E、hivemq-mqtt-client of configuration, add missing configuration items in your main project 'build.gradle.kts'
-  </h2>
-  <div class="mt-2 text-sm p-2 rounded bg-gray-900 text-white">
-    <pre>
+## hivemq-mqtt-client of configuration
+
+add missing configuration items in your main project `build.gradle.kts`
+
+```kotlin
 import java.util.Properties
 
 ....
 
+// 签名
 var keyProperties = Properties().apply {
     var propFile = file("key.properties")
     if (propFile.exists()) {
@@ -114,16 +82,13 @@ android {
         excludes += arrayOf("META-INF/INDEX.LIST", "META-INF/io.netty.versions.properties")
     }
 }
+```
 
-  </pre
-    >
-  </div>
+## proguard-rules of configure
 
-  <h2 class="mt-20 text-lg font-medium text-neutral-900">
-    F、proguard-rules of configure, add missing configuration items in your main project 'proguard-rules.pro'
-  </h2>
-  <div class="mt-2 text-sm p-2 rounded bg-gray-900 text-white">
-    <pre>
+add missing configuration items in your main project `proguard-rules.pro`
+
+```md
 # Add project specific ProGuard rules here.
 # You can control the set of applied configuration files using the
 # proguardFiles setting in build.gradle.
@@ -213,7 +178,4 @@ android {
 -keepclassmembers class com.plugin.board.database.** {
     public *;
 }
-  </pre
-    >
-  </div>
-</section>
+```

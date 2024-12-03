@@ -1,0 +1,77 @@
+name: ci
+
+on:
+  push:
+    branches:
+      - main
+      - master
+  pull_request:
+    branches:
+      - main
+      - master
+
+jobs:
+  ci:
+    runs-on: ${{ matrix.os }}
+
+    strategy:
+      matrix:
+        os: [ubuntu-latest]
+        node: [21]
+
+    steps:
+      - name: Checkout 🛎
+        uses: actions/checkout@master
+
+      - name: Setup node env 🏗
+        uses: actions/setup-node@v2.1.5
+        with:
+          node-version: ${{ matrix.node }}
+          check-latest: true
+
+      - uses: oven-sh/setup-bun@v1
+        with:
+          bun-version: latest
+
+      - name: Cache node_modules 📦
+        uses: actions/cache@v4
+        id: bun-cache
+        with:
+          path: ~/.bun/install/cache
+          key: ${{ runner.os }}-bun-${{ hashFiles('**/bun.lockb') }}
+          restore-keys: |
+            ${{ runner.os }}-bun-
+
+      - name: Install dependencies 👨🏻‍💻
+        id: bun-install
+        run: bun install
+
+      #- name: Run linter 👀
+      #  run: bun run lint:eslint
+
+      - name: Build
+        run: bun run docs:build
+
+      - name: Get release dir path
+        id: release-dir-path
+        run: |
+          dir=${{ secrets.ROOT_DIR }}/docs
+          echo "dir=$dir" >> $GITHUB_OUTPUT
+
+      - name: Deploy to server
+        id: deploy
+        uses: Pendect/action-rsyncer@v1.1.0
+        env:
+          DEPLOY_KEY: ${{ secrets.SSH_KEY }}
+        with:
+          flags: '-azr'
+          options: ''
+          src: './docs/.vitepress/dist/' # 修改 BUILD_PATH 为 dist，默认 build
+          dest: 'root@${{ secrets.SSH_HOST }}:${{ steps.release-dir-path.outputs.dir }}'
+
+      - name: Discord notification
+        env:
+          DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
+        uses: Ilshidur/action-discord@master
+        with:
+          args: 'The project {{ EVENT_PAYLOAD.repository.full_name }} has been deployed.'

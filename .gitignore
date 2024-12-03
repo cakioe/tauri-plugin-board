@@ -130,7 +130,7 @@ bun.lockb
 .gradle
 webview-dist
 
-# ruby
-_site
-.vendor
-.sass-cache
+# vitepress
+docs/.vitepress/docs
+docs/.vitepress/dist
+docs/.vitepress/cache
