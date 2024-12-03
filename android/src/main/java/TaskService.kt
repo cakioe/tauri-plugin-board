@@ -24,13 +24,13 @@ import java.util.Timer
 import kotlin.concurrent.timerTask
 
 enum class Method(val value: String) {
-    SHUTDOWN("android.shutdown"),
-    REBOOT("android.reboot"),
-    GET_ENV("android.env.get"),
-    PUT_BRIGHTNESS("android.brightness.put"),
-    SET_POWER("android.schedule.power"),
-    DEFAULT("android.heartbeat"),
-    OFFLINE("android.offline"),
+    SHUTDOWN("android.shutdown"), // 关机, turn off the power
+    REBOOT("android.reboot"), // 重启, reboot the machine
+    GET_ENV("android.env.get"), // 环境参数, get env arguments
+    PUT_BRIGHTNESS("android.brightness.put"), // 亮度, change the brightness of android system
+    SET_POWER("android.schedule.power"), // 定时关机, timed shutdown
+    DEFAULT("android.heartbeat"), // 心跳, heartbeat of machine
+    OFFLINE("android.offline"), // 设备下线通知（遗嘱消息）, message of machine offline<mqtt>
 }
 
 /**
@@ -125,9 +125,8 @@ class TaskService : Service() {
                             val params = String(publish.payloadAsBytes, StandardCharsets.UTF_8)
                             val payload: Map<String, Any> = signer.decryptBase64String(params)
 
-                            val method =
-                                if (payload.containsKey("method")) payload["method"] else null
-                            val sign = if (payload.containsKey("sign")) payload["sign"] else null
+                            val method = payload["method"]
+                            val sign = payload["sign"]
                             if (method == null || sign == null) {
                                 return@callback
                             }
