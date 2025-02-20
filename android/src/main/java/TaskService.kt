@@ -13,7 +13,6 @@ import com.hivemq.client.mqtt.datatypes.MqttQos
 import com.hivemq.client.mqtt.datatypes.MqttUtf8String
 import com.hivemq.client.mqtt.mqtt5.Mqtt5AsyncClient
 import com.hivemq.client.mqtt.mqtt5.message.publish.Mqtt5Publish
-import com.zcapi
 import io.github.cakioe.Signatory
 import java.io.File
 import java.nio.charset.StandardCharsets
@@ -52,7 +51,7 @@ class TaskService : Service() {
     /**
      * displayer: the display board of screen, from`zc`
      */
-    private val displayer = zcapi()
+    private val displayer = getAndroidDeviceDriver(Build.MODEL)
 
     override fun onBind(p0: Intent?): IBinder? {
         return null
@@ -60,7 +59,7 @@ class TaskService : Service() {
 
     override fun onCreate() {
         super.onCreate()
-        this.displayer.getContext(applicationContext)
+        this.displayer.initialize(applicationContext)
     }
 
     @SuppressLint("NewApi")
@@ -143,7 +142,7 @@ class TaskService : Service() {
 
                             when (method) {
                                 Method.SHUTDOWN.value -> {
-                                    this.displayer.shutDown()
+                                    this.displayer.shutdown()
                                     this.onDestroy()
                                 }
 

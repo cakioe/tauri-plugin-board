@@ -1,8 +1,18 @@
 {
     "java.configuration.updateBuildConfiguration": "interactive",
     "cSpell.words": [
+        "Charsets",
+        "displayer",
         "docsrs",
+        "Gson",
         "iife",
-        "thiserror"
+        "lateinit",
+        "Millis",
+        "Powet",
+        "rkapi",
+        "SDCARD",
+        "thiserror",
+        "tmpl",
+        "zcapi"
     ]
 }

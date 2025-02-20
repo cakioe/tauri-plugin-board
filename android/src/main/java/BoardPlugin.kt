@@ -1,6 +1,5 @@
 package com.plugin.board
 
-import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Intent
 import android.os.Build
@@ -60,7 +59,6 @@ import com.plugin.board.database.Database
 import com.plugin.board.database.Floor_types
 import com.plugin.board.database.Machines
 import com.plugin.board.database.Serial_devices
-import com.zcapi
 import io.github.cakioe.Carbon
 import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.Dispatchers
@@ -202,9 +200,6 @@ class ConfigOption {
     val no: String? = null
 }
 
-@SuppressLint("SdCardPath")
-const val SDCARD_DIR = "/sdcard"
-
 const val UNAVAILABLE_VALUE = 3276.7
 
 @InvokeArg
@@ -229,9 +224,9 @@ class PluginOptions {
 @TauriPlugin
 class BoardPlugin(private val activity: Activity) : Plugin(activity) {
     /**
-     * displayer: the display board of screen, from`zc`
+     * displayer: the display board of screen, from `getAndroidDeviceDriver`
      */
-    private val displayer = zcapi()
+    private val displayer = getAndroidDeviceDriver(Build.MODEL)
 
     /**
      * the driver of the board
@@ -266,8 +261,8 @@ class BoardPlugin(private val activity: Activity) : Plugin(activity) {
             this.options = it
         }
 
-        // initialization of the displayer
-        this.displayer.getContext(webView.context)
+        // initialize driver of android device
+        displayer.initialize(webView.context)
 
         // initialization of the task service
         AndroidSqliteDriver(
@@ -462,8 +457,8 @@ class BoardPlugin(private val activity: Activity) : Plugin(activity) {
             id = 1,
             sdk_version = Build.VERSION.SDK_INT.toString(),
             android_version = Build.VERSION.RELEASE,
-            serial_sn = this.displayer.buildSerial,
-            model_no = this.displayer.buildModel,
+            serial_sn = this.displayer.getSerialNo(),
+            model_no = Build.MODEL,
             screen_width = screenWidth.toLong(),
             screen_height = screenHeight.toLong(),
             baudrate = this.baudrate.toLong(),
@@ -491,17 +486,12 @@ class BoardPlugin(private val activity: Activity) : Plugin(activity) {
      * @return void
      */
     private fun initDisplayer(enable: Boolean = false) {
-        this.configInstance.model_no.apply {
-            if (this.startsWith("zc") || this.startsWith("ZC")) {
-                displayer.setStatusBar(enable)
-                displayer.setGestureStatusBar(enable)
-
-                configInstance = configInstance.copy(
-                    status_bar_on = if (enable) 1 else 0,
-                    gesture_status_bar_on = if (enable) 1 else 0
-                )
-            }
-        }
+        this.displayer.setStatusBar(enable)
+        this.displayer.setGestureStatusBar(enable)
+        this.configInstance = this.configInstance.copy(
+            status_bar_on = if (enable) 1 else 0,
+            gesture_status_bar_on = if (enable) 1 else 0
+        )
     }
 
     /**
@@ -525,7 +515,7 @@ class BoardPlugin(private val activity: Activity) : Plugin(activity) {
      */
     @Command
     fun shutdown(invoke: Invoke) {
-        this.displayer.shutDown()
+        this.displayer.shutdown()
         this.stopTaskService()
         invoke.resolve()
     }
@@ -563,11 +553,11 @@ class BoardPlugin(private val activity: Activity) : Plugin(activity) {
      *
      * @param invoke to invoke [LcdOnOff] { enable: true }
      * @return void
+     * @deprecated 1.8.0
      */
     @Command
     fun setLcdOnOff(invoke: Invoke) {
         val argv = invoke.parseArgs(LcdOnOff::class.java)
-        this.displayer.setLcdOnOff(argv.enable ?: true)
         invoke.resolve()
     }
 
@@ -585,7 +575,11 @@ class BoardPlugin(private val activity: Activity) : Plugin(activity) {
         val onTime = Carbon(args.onTime as Long).toIntArray()
         val offTime = Carbon(args.offTime as Long).toIntArray()
 
-        this.displayer.setPowetOnOffTime(enable, onTime, offTime)
+        if (enable) {
+            this.displayer.setPowerOnOff(onTime, offTime)
+        } else {
+            this.displayer.clearPowerOnOffTime()
+        }
 
         val ret = JSObject()
         ret.put("value", "success")
@@ -772,11 +766,8 @@ class BoardPlugin(private val activity: Activity) : Plugin(activity) {
      */
     @Command
     fun takeScreenShot(invoke: Invoke) {
-        val filename = "${System.currentTimeMillis()}.png"
-        this.displayer.screenshot(SDCARD_DIR, filename)
-
         val ret = JSObject()
-        ret.put("value", "${SDCARD_DIR}/${filename}")
+        ret.put("value", this.displayer.takeScreenshot())
         invoke.resolve()
     }
 
