@@ -226,7 +226,7 @@ class BoardPlugin(private val activity: Activity) : Plugin(activity) {
     /**
      * displayer: the display board of screen, from `getAndroidDeviceDriver`
      */
-    private val displayer = getAndroidDeviceDriver(Build.MODEL)
+    private var displayer = getAndroidDeviceDriver(Build.MODEL)
 
     /**
      * the driver of the board
@@ -336,12 +336,19 @@ class BoardPlugin(private val activity: Activity) : Plugin(activity) {
      * @return void
      */
     override fun onNewIntent(intent: Intent) {
-        // 退出界面重新进入程序后 isInitialized的数据仍然保持
-        this.initConfig()
-        this.initDisplayer(false)
-        this.startTaskService()
-
         Toast.makeText(activity, "welcome back", Toast.LENGTH_SHORT).show()
+
+        try {
+            this.displayer = getAndroidDeviceDriver(Build.MODEL)
+
+            // 退出界面重新进入程序后 isInitialized的数据仍然保持
+            this.initConfig()
+            this.initDisplayer(false)
+            this.startTaskService()
+        } catch (e: Exception) {
+            Toast.makeText(activity, e.message, Toast.LENGTH_SHORT).show()
+            throw e
+        }
     }
 
     /**

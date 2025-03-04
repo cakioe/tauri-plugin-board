@@ -4,9 +4,9 @@ version = "1.7.6"
 authors = ["cleveng <cleveng@gmail.com>"]
 description = "vending machine development board of kits for tauri, use kotlin"
 license = "MIT"
-edition = "2021"
+edition = "2024"
 repository = "https://github.com/cakioe/tauri-plugin-board.git"
-rust-version = "1.60.0"
+rust-version = "1.85.0"
 exclude = []
 links = "tauri-plugin-board"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html

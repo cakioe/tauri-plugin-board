@@ -188,10 +188,11 @@ class YS : AndroidDeviceDriver {
      * @param context the context of the application
      */
     override fun initialize(context: Context) {
-        this.driver = MyManager.getInstance(context)
-        this.driver.hideStatusBar(true)
-        this.driver.hideNavBar(true)
-        this.driver.setSlideShowNavBar(false)
+        this.driver = MyManager.getInstance(context).apply {
+            setSlideShowNavBar(false) // true => open, false => close
+            hideStatusBar(true) // ture => hide, false => show
+            hideNavBar(true) // ture => hide, false => show
+        }
     }
 
     /**
@@ -281,11 +282,13 @@ class YS : AndroidDeviceDriver {
      */
     override fun setStatusBar(enable: Boolean) {
         this.driver.hideStatusBar(enable)
-        this.driver.hideNavBar(enable)
     }
 
     /**
      * Sets the gesture status bar state.
+     * Enables or disables sliding out of the status bar
+     * if `true`, allow
+     * or `false`, disallow
      *
      * This function sets the gesture status bar to be either visible or hidden.
      * The gesture status bar is the area at the bottom of the screen that allows
@@ -295,6 +298,7 @@ class YS : AndroidDeviceDriver {
      */
     override fun setGestureStatusBar(enable: Boolean) {
         this.driver.setSlideShowNavBar(enable)
+        this.driver.hideNavBar(!enable)
     }
 
     /**
@@ -347,7 +351,7 @@ class YS : AndroidDeviceDriver {
 fun getAndroidDeviceDriver(model: String): AndroidDeviceDriver {
     return when {
         model.startsWith("zc", ignoreCase = true) -> ZC()
-        listOf("rk", "ys").any { model.startsWith(it, ignoreCase = true) } -> YS()
+        listOf("rk", "ys", "a527").any { model.startsWith(it, ignoreCase = true) } -> YS()
         else -> YS()
     }
 }
