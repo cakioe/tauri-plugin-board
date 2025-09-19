@@ -65,6 +65,9 @@ dependencies {
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
     implementation(project(":tauri-android"))
+
+    // [signature](https://central.sonatype.com/artifact/io.github.cakioe/signature)
+    implementation("io.github.cakioe:signature:1.0.11")
 }
 
 sqldelight {

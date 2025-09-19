@@ -49,7 +49,7 @@
           "minimum": 1.0
         },
         "description": {
-          "description": "Human-readable description of what the permission does. Tauri convention is to use <h4> headings in markdown content for Tauri documentation generation purposes.",
+          "description": "Human-readable description of what the permission does. Tauri convention is to use `<h4>` headings in markdown content for Tauri documentation generation purposes.",
           "type": [
             "string",
             "null"
@@ -111,7 +111,7 @@
           "type": "string"
         },
         "description": {
-          "description": "Human-readable description of what the permission does. Tauri internal convention is to use <h4> headings in markdown content for Tauri documentation generation purposes.",
+          "description": "Human-readable description of what the permission does. Tauri internal convention is to use `<h4>` headings in markdown content for Tauri documentation generation purposes.",
           "type": [
             "string",
             "null"
@@ -297,442 +297,530 @@
         {
           "description": "Enables the change_balance command without any pre-configured scope.",
           "type": "string",
-          "const": "allow-change-balance"
+          "const": "allow-change-balance",
+          "markdownDescription": "Enables the change_balance command without any pre-configured scope."
         },
         {
           "description": "Denies the change_balance command without any pre-configured scope.",
           "type": "string",
-          "const": "deny-change-balance"
+          "const": "deny-change-balance",
+          "markdownDescription": "Denies the change_balance command without any pre-configured scope."
         },
         {
           "description": "Enables the find_change_result command without any pre-configured scope.",
           "type": "string",
-          "const": "allow-find-change-result"
+          "const": "allow-find-change-result",
+          "markdownDescription": "Enables the find_change_result command without any pre-configured scope."
         },
         {
           "description": "Denies the find_change_result command without any pre-configured scope.",
           "type": "string",
-          "const": "deny-find-change-result"
+          "const": "deny-find-change-result",
+          "markdownDescription": "Denies the find_change_result command without any pre-configured scope."
         },
         {
           "description": "Enables the get_auth_result command without any pre-configured scope.",
           "type": "string",
-          "const": "allow-get-auth-result"
+          "const": "allow-get-auth-result",
+          "markdownDescription": "Enables the get_auth_result command without any pre-configured scope."
         },
         {
           "description": "Denies the get_auth_result command without any pre-configured scope.",
           "type": "string",
-          "const": "deny-get-auth-result"
+          "const": "deny-get-auth-result",
+          "markdownDescription": "Denies the get_auth_result command without any pre-configured scope."
         },
         {
           "description": "Enables the get_box_status command without any pre-configured scope.",
           "type": "string",
-          "const": "allow-get-box-status"
+          "const": "allow-get-box-status",
+          "markdownDescription": "Enables the get_box_status command without any pre-configured scope."
         },
         {
           "description": "Denies the get_box_status command without any pre-configured scope.",
           "type": "string",
-          "const": "deny-get-box-status"
+          "const": "deny-get-box-status",
+          "markdownDescription": "Denies the get_box_status command without any pre-configured scope."
         },
         {
           "description": "Enables the get_change_status command without any pre-configured scope.",
           "type": "string",
-          "const": "allow-get-change-status"
+          "const": "allow-get-change-status",
+          "markdownDescription": "Enables the get_change_status command without any pre-configured scope."
         },
         {
           "description": "Denies the get_change_status command without any pre-configured scope.",
           "type": "string",
-          "const": "deny-get-change-status"
+          "const": "deny-get-change-status",
+          "markdownDescription": "Denies the get_change_status command without any pre-configured scope."
         },
         {
           "description": "Enables the get_config command without any pre-configured scope.",
           "type": "string",
-          "const": "allow-get-config"
+          "const": "allow-get-config",
+          "markdownDescription": "Enables the get_config command without any pre-configured scope."
         },
         {
           "description": "Denies the get_config command without any pre-configured scope.",
           "type": "string",
-          "const": "deny-get-config"
+          "const": "deny-get-config",
+          "markdownDescription": "Denies the get_config command without any pre-configured scope."
         },
         {
           "description": "Enables the get_drop_status command without any pre-configured scope.",
           "type": "string",
-          "const": "allow-get-drop-status"
+          "const": "allow-get-drop-status",
+          "markdownDescription": "Enables the get_drop_status command without any pre-configured scope."
         },
         {
           "description": "Denies the get_drop_status command without any pre-configured scope.",
           "type": "string",
-          "const": "deny-get-drop-status"
+          "const": "deny-get-drop-status",
+          "markdownDescription": "Denies the get_drop_status command without any pre-configured scope."
         },
         {
           "description": "Enables the get_floor_types command without any pre-configured scope.",
           "type": "string",
-          "const": "allow-get-floor-types"
+          "const": "allow-get-floor-types",
+          "markdownDescription": "Enables the get_floor_types command without any pre-configured scope."
         },
         {
           "description": "Denies the get_floor_types command without any pre-configured scope.",
           "type": "string",
-          "const": "deny-get-floor-types"
+          "const": "deny-get-floor-types",
+          "markdownDescription": "Denies the get_floor_types command without any pre-configured scope."
         },
         {
           "description": "Enables the get_pay_amount command without any pre-configured scope.",
           "type": "string",
-          "const": "allow-get-pay-amount"
+          "const": "allow-get-pay-amount",
+          "markdownDescription": "Enables the get_pay_amount command without any pre-configured scope."
         },
         {
           "description": "Denies the get_pay_amount command without any pre-configured scope.",
           "type": "string",
-          "const": "deny-get-pay-amount"
+          "const": "deny-get-pay-amount",
+          "markdownDescription": "Denies the get_pay_amount command without any pre-configured scope."
         },
         {
           "description": "Enables the get_serial_devices_path command without any pre-configured scope.",
           "type": "string",
-          "const": "allow-get-serial-devices-path"
+          "const": "allow-get-serial-devices-path",
+          "markdownDescription": "Enables the get_serial_devices_path command without any pre-configured scope."
         },
         {
           "description": "Denies the get_serial_devices_path command without any pre-configured scope.",
           "type": "string",
-          "const": "deny-get-serial-devices-path"
+          "const": "deny-get-serial-devices-path",
+          "markdownDescription": "Denies the get_serial_devices_path command without any pre-configured scope."
         },
         {
           "description": "Enables the get_shipment_status command without any pre-configured scope.",
           "type": "string",
-          "const": "allow-get-shipment-status"
+          "const": "allow-get-shipment-status",
+          "markdownDescription": "Enables the get_shipment_status command without any pre-configured scope."
         },
         {
           "description": "Denies the get_shipment_status command without any pre-configured scope.",
           "type": "string",
-          "const": "deny-get-shipment-status"
+          "const": "deny-get-shipment-status",
+          "markdownDescription": "Denies the get_shipment_status command without any pre-configured scope."
         },
         {
           "description": "Enables the get_x_pos command without any pre-configured scope.",
           "type": "string",
-          "const": "allow-get-x-pos"
+          "const": "allow-get-x-pos",
+          "markdownDescription": "Enables the get_x_pos command without any pre-configured scope."
         },
         {
           "description": "Denies the get_x_pos command without any pre-configured scope.",
           "type": "string",
-          "const": "deny-get-x-pos"
+          "const": "deny-get-x-pos",
+          "markdownDescription": "Denies the get_x_pos command without any pre-configured scope."
         },
         {
           "description": "Enables the get_x_status command without any pre-configured scope.",
           "type": "string",
-          "const": "allow-get-x-status"
+          "const": "allow-get-x-status",
+          "markdownDescription": "Enables the get_x_status command without any pre-configured scope."
         },
         {
           "description": "Denies the get_x_status command without any pre-configured scope.",
           "type": "string",
-          "const": "deny-get-x-status"
+          "const": "deny-get-x-status",
+          "markdownDescription": "Denies the get_x_status command without any pre-configured scope."
         },
         {
           "description": "Enables the get_y_pos command without any pre-configured scope.",
           "type": "string",
-          "const": "allow-get-y-pos"
+          "const": "allow-get-y-pos",
+          "markdownDescription": "Enables the get_y_pos command without any pre-configured scope."
         },
         {
           "description": "Denies the get_y_pos command without any pre-configured scope.",
           "type": "string",
-          "const": "deny-get-y-pos"
+          "const": "deny-get-y-pos",
+          "markdownDescription": "Denies the get_y_pos command without any pre-configured scope."
         },
         {
           "description": "Enables the get_y_status command without any pre-configured scope.",
           "type": "string",
-          "const": "allow-get-y-status"
+          "const": "allow-get-y-status",
+          "markdownDescription": "Enables the get_y_status command without any pre-configured scope."
         },
         {
           "description": "Denies the get_y_status command without any pre-configured scope.",
           "type": "string",
-          "const": "deny-get-y-status"
+          "const": "deny-get-y-status",
+          "markdownDescription": "Denies the get_y_status command without any pre-configured scope."
         },
         {
           "description": "Enables the init_payment command without any pre-configured scope.",
           "type": "string",
-          "const": "allow-init-payment"
+          "const": "allow-init-payment",
+          "markdownDescription": "Enables the init_payment command without any pre-configured scope."
         },
         {
           "description": "Denies the init_payment command without any pre-configured scope.",
           "type": "string",
-          "const": "deny-init-payment"
+          "const": "deny-init-payment",
+          "markdownDescription": "Denies the init_payment command without any pre-configured scope."
         },
         {
           "description": "Enables the moto_timeout command without any pre-configured scope.",
           "type": "string",
-          "const": "allow-moto-timeout"
+          "const": "allow-moto-timeout",
+          "markdownDescription": "Enables the moto_timeout command without any pre-configured scope."
         },
         {
           "description": "Denies the moto_timeout command without any pre-configured scope.",
           "type": "string",
-          "const": "deny-moto-timeout"
+          "const": "deny-moto-timeout",
+          "markdownDescription": "Denies the moto_timeout command without any pre-configured scope."
         },
         {
           "description": "Enables the notify_payment command without any pre-configured scope.",
           "type": "string",
-          "const": "allow-notify-payment"
+          "const": "allow-notify-payment",
+          "markdownDescription": "Enables the notify_payment command without any pre-configured scope."
         },
         {
           "description": "Denies the notify_payment command without any pre-configured scope.",
           "type": "string",
-          "const": "deny-notify-payment"
+          "const": "deny-notify-payment",
+          "markdownDescription": "Denies the notify_payment command without any pre-configured scope."
         },
         {
           "description": "Enables the notify_result command without any pre-configured scope.",
           "type": "string",
-          "const": "allow-notify-result"
+          "const": "allow-notify-result",
+          "markdownDescription": "Enables the notify_result command without any pre-configured scope."
         },
         {
           "description": "Denies the notify_result command without any pre-configured scope.",
           "type": "string",
-          "const": "deny-notify-result"
+          "const": "deny-notify-result",
+          "markdownDescription": "Denies the notify_result command without any pre-configured scope."
         },
         {
           "description": "Enables the open_file_manager command without any pre-configured scope.",
           "type": "string",
-          "const": "allow-open-file-manager"
+          "const": "allow-open-file-manager",
+          "markdownDescription": "Enables the open_file_manager command without any pre-configured scope."
         },
         {
           "description": "Denies the open_file_manager command without any pre-configured scope.",
           "type": "string",
-          "const": "deny-open-file-manager"
+          "const": "deny-open-file-manager",
+          "markdownDescription": "Denies the open_file_manager command without any pre-configured scope."
         },
         {
           "description": "Enables the open_main_activity command without any pre-configured scope.",
           "type": "string",
-          "const": "allow-open-main-activity"
+          "const": "allow-open-main-activity",
+          "markdownDescription": "Enables the open_main_activity command without any pre-configured scope."
         },
         {
           "description": "Denies the open_main_activity command without any pre-configured scope.",
           "type": "string",
-          "const": "deny-open-main-activity"
+          "const": "deny-open-main-activity",
+          "markdownDescription": "Denies the open_main_activity command without any pre-configured scope."
         },
         {
           "description": "Enables the open_setting_config command without any pre-configured scope.",
           "type": "string",
-          "const": "allow-open-setting-config"
+          "const": "allow-open-setting-config",
+          "markdownDescription": "Enables the open_setting_config command without any pre-configured scope."
         },
         {
           "description": "Denies the open_setting_config command without any pre-configured scope.",
           "type": "string",
-          "const": "deny-open-setting-config"
+          "const": "deny-open-setting-config",
+          "markdownDescription": "Denies the open_setting_config command without any pre-configured scope."
         },
         {
           "description": "Enables the pulse_balance command without any pre-configured scope.",
           "type": "string",
-          "const": "allow-pulse-balance"
+          "const": "allow-pulse-balance",
+          "markdownDescription": "Enables the pulse_balance command without any pre-configured scope."
         },
         {
           "description": "Denies the pulse_balance command without any pre-configured scope.",
           "type": "string",
-          "const": "deny-pulse-balance"
+          "const": "deny-pulse-balance",
+          "markdownDescription": "Denies the pulse_balance command without any pre-configured scope."
         },
         {
           "description": "Enables the reboot command without any pre-configured scope.",
           "type": "string",
-          "const": "allow-reboot"
+          "const": "allow-reboot",
+          "markdownDescription": "Enables the reboot command without any pre-configured scope."
         },
         {
           "description": "Denies the reboot command without any pre-configured scope.",
           "type": "string",
-          "const": "deny-reboot"
+          "const": "deny-reboot",
+          "markdownDescription": "Denies the reboot command without any pre-configured scope."
         },
         {
           "description": "Enables the reset_lift command without any pre-configured scope.",
           "type": "string",
-          "const": "allow-reset-lift"
+          "const": "allow-reset-lift",
+          "markdownDescription": "Enables the reset_lift command without any pre-configured scope."
         },
         {
           "description": "Denies the reset_lift command without any pre-configured scope.",
           "type": "string",
-          "const": "deny-reset-lift"
+          "const": "deny-reset-lift",
+          "markdownDescription": "Denies the reset_lift command without any pre-configured scope."
         },
         {
           "description": "Enables the run_moto command without any pre-configured scope.",
           "type": "string",
-          "const": "allow-run-moto"
+          "const": "allow-run-moto",
+          "markdownDescription": "Enables the run_moto command without any pre-configured scope."
         },
         {
           "description": "Denies the run_moto command without any pre-configured scope.",
           "type": "string",
-          "const": "deny-run-moto"
+          "const": "deny-run-moto",
+          "markdownDescription": "Denies the run_moto command without any pre-configured scope."
         },
         {
           "description": "Enables the run_shipment command without any pre-configured scope.",
           "type": "string",
-          "const": "allow-run-shipment"
+          "const": "allow-run-shipment",
+          "markdownDescription": "Enables the run_shipment command without any pre-configured scope."
         },
         {
           "description": "Denies the run_shipment command without any pre-configured scope.",
           "type": "string",
-          "const": "deny-run-shipment"
+          "const": "deny-run-shipment",
+          "markdownDescription": "Denies the run_shipment command without any pre-configured scope."
         },
         {
           "description": "Enables the set_accept_money command without any pre-configured scope.",
           "type": "string",
-          "const": "allow-set-accept-money"
+          "const": "allow-set-accept-money",
+          "markdownDescription": "Enables the set_accept_money command without any pre-configured scope."
         },
         {
           "description": "Denies the set_accept_money command without any pre-configured scope.",
           "type": "string",
-          "const": "deny-set-accept-money"
+          "const": "deny-set-accept-money",
+          "markdownDescription": "Denies the set_accept_money command without any pre-configured scope."
         },
         {
           "description": "Enables the set_age_scope command without any pre-configured scope.",
           "type": "string",
-          "const": "allow-set-age-scope"
+          "const": "allow-set-age-scope",
+          "markdownDescription": "Enables the set_age_scope command without any pre-configured scope."
         },
         {
           "description": "Denies the set_age_scope command without any pre-configured scope.",
           "type": "string",
-          "const": "deny-set-age-scope"
+          "const": "deny-set-age-scope",
+          "markdownDescription": "Denies the set_age_scope command without any pre-configured scope."
         },
         {
           "description": "Enables the set_app_brightness command without any pre-configured scope.",
           "type": "string",
-          "const": "allow-set-app-brightness"
+          "const": "allow-set-app-brightness",
+          "markdownDescription": "Enables the set_app_brightness command without any pre-configured scope."
         },
         {
           "description": "Denies the set_app_brightness command without any pre-configured scope.",
           "type": "string",
-          "const": "deny-set-app-brightness"
+          "const": "deny-set-app-brightness",
+          "markdownDescription": "Denies the set_app_brightness command without any pre-configured scope."
         },
         {
           "description": "Enables the set_gesture_status_bar command without any pre-configured scope.",
           "type": "string",
-          "const": "allow-set-gesture-status-bar"
+          "const": "allow-set-gesture-status-bar",
+          "markdownDescription": "Enables the set_gesture_status_bar command without any pre-configured scope."
         },
         {
           "description": "Denies the set_gesture_status_bar command without any pre-configured scope.",
           "type": "string",
-          "const": "deny-set-gesture-status-bar"
+          "const": "deny-set-gesture-status-bar",
+          "markdownDescription": "Denies the set_gesture_status_bar command without any pre-configured scope."
         },
         {
           "description": "Enables the set_lcd_on_off command without any pre-configured scope.",
           "type": "string",
-          "const": "allow-set-lcd-on-off"
+          "const": "allow-set-lcd-on-off",
+          "markdownDescription": "Enables the set_lcd_on_off command without any pre-configured scope."
         },
         {
           "description": "Denies the set_lcd_on_off command without any pre-configured scope.",
           "type": "string",
-          "const": "deny-set-lcd-on-off"
+          "const": "deny-set-lcd-on-off",
+          "markdownDescription": "Denies the set_lcd_on_off command without any pre-configured scope."
         },
         {
           "description": "Enables the set_pay_channel command without any pre-configured scope.",
           "type": "string",
-          "const": "allow-set-pay-channel"
+          "const": "allow-set-pay-channel",
+          "markdownDescription": "Enables the set_pay_channel command without any pre-configured scope."
         },
         {
           "description": "Denies the set_pay_channel command without any pre-configured scope.",
           "type": "string",
-          "const": "deny-set-pay-channel"
+          "const": "deny-set-pay-channel",
+          "markdownDescription": "Denies the set_pay_channel command without any pre-configured scope."
         },
         {
           "description": "Enables the set_pick_xy command without any pre-configured scope.",
           "type": "string",
-          "const": "allow-set-pick-xy"
+          "const": "allow-set-pick-xy",
+          "markdownDescription": "Enables the set_pick_xy command without any pre-configured scope."
         },
         {
           "description": "Denies the set_pick_xy command without any pre-configured scope.",
           "type": "string",
-          "const": "deny-set-pick-xy"
+          "const": "deny-set-pick-xy",
+          "markdownDescription": "Denies the set_pick_xy command without any pre-configured scope."
         },
         {
           "description": "Enables the set_power_on_off_time command without any pre-configured scope.",
           "type": "string",
-          "const": "allow-set-power-on-off-time"
+          "const": "allow-set-power-on-off-time",
+          "markdownDescription": "Enables the set_power_on_off_time command without any pre-configured scope."
         },
         {
           "description": "Denies the set_power_on_off_time command without any pre-configured scope.",
           "type": "string",
-          "const": "deny-set-power-on-off-time"
+          "const": "deny-set-power-on-off-time",
+          "markdownDescription": "Denies the set_power_on_off_time command without any pre-configured scope."
         },
         {
           "description": "Enables the set_status_bar command without any pre-configured scope.",
           "type": "string",
-          "const": "allow-set-status-bar"
+          "const": "allow-set-status-bar",
+          "markdownDescription": "Enables the set_status_bar command without any pre-configured scope."
         },
         {
           "description": "Denies the set_status_bar command without any pre-configured scope.",
           "type": "string",
-          "const": "deny-set-status-bar"
+          "const": "deny-set-status-bar",
+          "markdownDescription": "Denies the set_status_bar command without any pre-configured scope."
         },
         {
           "description": "Enables the set_work_mode command without any pre-configured scope.",
           "type": "string",
-          "const": "allow-set-work-mode"
+          "const": "allow-set-work-mode",
+          "markdownDescription": "Enables the set_work_mode command without any pre-configured scope."
         },
         {
           "description": "Denies the set_work_mode command without any pre-configured scope.",
           "type": "string",
-          "const": "deny-set-work-mode"
+          "const": "deny-set-work-mode",
+          "markdownDescription": "Denies the set_work_mode command without any pre-configured scope."
         },
         {
           "description": "Enables the set_x_pos command without any pre-configured scope.",
           "type": "string",
-          "const": "allow-set-x-pos"
+          "const": "allow-set-x-pos",
+          "markdownDescription": "Enables the set_x_pos command without any pre-configured scope."
         },
         {
           "description": "Denies the set_x_pos command without any pre-configured scope.",
           "type": "string",
-          "const": "deny-set-x-pos"
+          "const": "deny-set-x-pos",
+          "markdownDescription": "Denies the set_x_pos command without any pre-configured scope."
         },
         {
           "description": "Enables the set_y_pos command without any pre-configured scope.",
           "type": "string",
-          "const": "allow-set-y-pos"
+          "const": "allow-set-y-pos",
+          "markdownDescription": "Enables the set_y_pos command without any pre-configured scope."
         },
         {
           "description": "Denies the set_y_pos command without any pre-configured scope.",
           "type": "string",
-          "const": "deny-set-y-pos"
+          "const": "deny-set-y-pos",
+          "markdownDescription": "Denies the set_y_pos command without any pre-configured scope."
         },
         {
           "description": "Enables the shutdown command without any pre-configured scope.",
           "type": "string",
-          "const": "allow-shutdown"
+          "const": "allow-shutdown",
+          "markdownDescription": "Enables the shutdown command without any pre-configured scope."
         },
         {
           "description": "Denies the shutdown command without any pre-configured scope.",
           "type": "string",
-          "const": "deny-shutdown"
+          "const": "deny-shutdown",
+          "markdownDescription": "Denies the shutdown command without any pre-configured scope."
         },
         {
           "description": "Enables the sync_system_time command without any pre-configured scope.",
           "type": "string",
-          "const": "allow-sync-system-time"
+          "const": "allow-sync-system-time",
+          "markdownDescription": "Enables the sync_system_time command without any pre-configured scope."
         },
         {
           "description": "Denies the sync_system_time command without any pre-configured scope.",
           "type": "string",
-          "const": "deny-sync-system-time"
+          "const": "deny-sync-system-time",
+          "markdownDescription": "Denies the sync_system_time command without any pre-configured scope."
         },
         {
           "description": "Enables the take_screen_shot command without any pre-configured scope.",
           "type": "string",
-          "const": "allow-take-screen-shot"
+          "const": "allow-take-screen-shot",
+          "markdownDescription": "Enables the take_screen_shot command without any pre-configured scope."
         },
         {
           "description": "Denies the take_screen_shot command without any pre-configured scope.",
           "type": "string",
-          "const": "deny-take-screen-shot"
+          "const": "deny-take-screen-shot",
+          "markdownDescription": "Denies the take_screen_shot command without any pre-configured scope."
         },
         {
           "description": "Enables the to_x command without any pre-configured scope.",
           "type": "string",
-          "const": "allow-to-x"
+          "const": "allow-to-x",
+          "markdownDescription": "Enables the to_x command without any pre-configured scope."
         },
         {
           "description": "Denies the to_x command without any pre-configured scope.",
           "type": "string",
-          "const": "deny-to-x"
+          "const": "deny-to-x",
+          "markdownDescription": "Denies the to_x command without any pre-configured scope."
         },
         {
           "description": "Enables the to_y command without any pre-configured scope.",
           "type": "string",
-          "const": "allow-to-y"
+          "const": "allow-to-y",
+          "markdownDescription": "Enables the to_y command without any pre-configured scope."
         },
         {
           "description": "Denies the to_y command without any pre-configured scope.",
           "type": "string",
-          "const": "deny-to-y"
+          "const": "deny-to-y",
+          "markdownDescription": "Denies the to_y command without any pre-configured scope."
         }
       ]
     }

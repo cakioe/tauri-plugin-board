@@ -13,7 +13,7 @@ import com.hivemq.client.mqtt.datatypes.MqttQos
 import com.hivemq.client.mqtt.datatypes.MqttUtf8String
 import com.hivemq.client.mqtt.mqtt5.Mqtt5AsyncClient
 import com.hivemq.client.mqtt.mqtt5.message.publish.Mqtt5Publish
-import com.zcapi
+import com.plugin.board.ui.initialize
 import io.github.cakioe.Signatory
 import java.io.File
 import java.nio.charset.StandardCharsets
@@ -50,19 +50,36 @@ class TaskService : Service() {
     private lateinit var no: String
 
     /**
-     * displayer: the display board of screen, from`zc`
+     * ui: the display board of screen, from`zc`
      */
-    private val displayer = zcapi()
+    private val board = initialize(Build.MODEL)
 
     override fun onBind(p0: Intent?): IBinder? {
         return null
     }
 
+    /**
+     * Initializes the board instance with the application context.
+     *
+     * Called when the service is created.
+     */
     override fun onCreate() {
         super.onCreate()
-        this.displayer.getContext(applicationContext)
+        this.board.initialize(applicationContext)
     }
 
+    /**
+     * Starts the service with the given intent and flags.
+     *
+     * Starts the `Mqtt5AsyncClient` with the given intent and flags.
+     * The intent must contain the "no" and "options" extra strings.
+     * The "options" extra string must contain the JSON of a `PluginOptions` object.
+     *
+     * @param intent the intent to start the service with
+     * @param flags the flags to start the service with
+     * @param startId the start ID of the service
+     * @return the result of starting the service
+     */
     @SuppressLint("NewApi")
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
         val no: String? = intent?.getStringExtra("no")
@@ -91,7 +108,15 @@ class TaskService : Service() {
     }
 
     /**
-     * service of `mqtt`
+     * Long-running operation performing the initialization of the MQTT client.
+     *
+     * This function is called when the service is started and is responsible for
+     * initializing the MQTT client and connecting to the MQTT broker.
+     *
+     * If the connection is successful, it will start a timer to send a heartbeat every 5 minutes.
+     * If the connection is unsuccessful, it will log an error message.
+     *
+     * @throws Exception if an error occurs while connecting to the MQTT broker
      */
     @SuppressLint("NewApi")
     @RequiresApi(Build.VERSION_CODES.N)
@@ -143,12 +168,12 @@ class TaskService : Service() {
 
                             when (method) {
                                 Method.SHUTDOWN.value -> {
-                                    this.displayer.shutDown()
+                                    this.board.shutdown()
                                     this.onDestroy()
                                 }
 
                                 Method.REBOOT.value -> {
-                                    this.displayer.reboot()
+                                    this.board.reboot()
                                     this.onDestroy()
                                 }
 
@@ -174,8 +199,17 @@ class TaskService : Service() {
     }
 
     /**
-     * heartbeat for android online status
+     * Send a heartbeat message to the MQTT broker.
      *
+     * This function sends a message to the MQTT broker with the topic
+     * specified in `publishTopic` and the payload specified in `payload`.
+     * The message is sent with the QoS of EXACTLY_ONCE and the retain flag
+     * set to false.
+     *
+     * The payload is a Map containing the client ID and the method
+     * DEFAULT.
+     *
+     * @throws Exception if the message cannot be sent
      */
     @RequiresApi(Build.VERSION_CODES.O)
     private fun heartbeat() {
@@ -193,8 +227,19 @@ class TaskService : Service() {
     }
 
     /**
-     * 设备下线通知（遗嘱消息）
+     * Publish an offline message to the MQTT broker.
      *
+     * This function sends a message to the MQTT broker with the topic
+     * specified in `publishTopic` and the payload specified in `payload`.
+     * The message is sent with the QoS of EXACTLY_ONCE and the retain flag
+     * set to false.
+     *
+     * The payload is a Map containing the client ID and the method
+     * OFFLINE.
+     *
+     * The message is logged in the file specified in `filename`.
+     *
+     * @throws Exception if the message cannot be sent
      */
     private fun offline() {
         val payload: Map<String, Any> = mapOf(
@@ -213,8 +258,13 @@ class TaskService : Service() {
     }
 
     /**
-     * record log for android
+     * Writes a log message to the file specified by `filename`.
      *
+     * The log message is in the format of "yyyy-MM-dd HH:mm:ss:SSS | <payload>\n"
+     * where `<payload>` is the JSON representation of `payload`.
+     *
+     * @param filename the name of the file to write to
+     * @param payload the payload to write to the file
      */
     private fun logger(filename: String, payload: Map<String, Any>) {
         val now = SimpleDateFormat("yyyy-MM-dd HH:mm:ss:SSS", Locale.getDefault()).format(Date())
@@ -224,6 +274,18 @@ class TaskService : Service() {
         buf.appendText(tmpl)
     }
 
+    /**
+     * Called by the system to indicate that the service is no longer
+     * used and is being released. The service should clean up all its
+     * resources and stop any ongoing operations.
+     *
+     * This implementation calls the following methods in order:
+     * 1. `offline`
+     * 2. `cancel` on the timer
+     * 3. `unsubscribeWith` on the client with the topic filter specified in
+     *     `subscribeTopic`
+     * 4. `disconnect` on the client
+     */
     override fun onDestroy() {
         super.onDestroy()
 
